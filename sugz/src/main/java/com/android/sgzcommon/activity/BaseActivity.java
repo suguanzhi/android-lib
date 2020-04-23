@@ -25,10 +25,13 @@ import com.android.sgzcommon.volley.VolleyManager;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import de.greenrobot.event.EventBus;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -55,9 +58,8 @@ public class BaseActivity extends AppCompatActivity {
         mWindowSize = SystemUtil.getWindowSize(this);
     }
 
-    public void onEventMainThread(EmptyEntity emptyEntity) {
-
-    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(EmptyEntity event) {/* Do something */};
 
     protected LinearLayoutManager createLinearLayoutManager(@RecyclerView.Orientation int orientation){
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

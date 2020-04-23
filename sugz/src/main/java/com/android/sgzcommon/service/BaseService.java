@@ -16,8 +16,9 @@ import android.widget.TextView;
 import com.android.sgzcommon.activity.utils.EmptyEntity;
 import com.android.sgzcommon.utils.SystemUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import androidx.annotation.Nullable;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by sgz on 2017/1/3.
