@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_r10_sd_white"
+    android:minHeight="150dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text=""
+            android:textColor="@color/text"
+            android:textSize="@dimen/text"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_msg_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textColor="@color/text_second"
+            android:textSize="@dimen/text_second"
+             />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_left"
+            android:layout_width="100dp"
+            android:layout_height="@dimen/height_btn_small"
+            android:layout_marginStart="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_btn_strock_confirm"
+            android:gravity="center"
+            android:text="@string/dialog_two_button_cancle"
+            android:textColor="@color/btn_confirm"
+            android:textSize="@dimen/btn_text_small_size" />
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="100dp"
+            android:layout_height="@dimen/height_btn_small"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16sp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_btn_confirm"
+            android:gravity="center"
+            android:text="@string/dialog_two_button_confirm"
+            android:textColor="@color/white"
+            android:textSize="@dimen/btn_text_small_size" />
+    </LinearLayout>
+
+</LinearLayout>

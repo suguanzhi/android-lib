@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="text_size" format="dimension" />
+    <attr name="background" format="reference"></attr>
+    <attr name="padding" format="dimension"></attr>
+    <attr name="text_color" format="reference" />
+    <declare-styleable name="titlebar">
+        <attr name="height" format="dimension"></attr>
+        <attr name="title" format="string"></attr>
+        <attr name="text_size"></attr>
+        <attr name="back" format="boolean"></attr>
+        <attr name="left" format="reference"></attr>
+        <attr name="right" format="reference"></attr>
+        <attr name="background"></attr>
+    </declare-styleable>
+    <declare-styleable name="pager_nav">
+        <attr name="items" format="reference|string" />
+        <attr name="text_size" />
+        <attr name="line" format="reference"></attr>
+        <attr name="line_height" format="dimension"></attr>
+        <attr name="line_margin" format="dimension"></attr>
+        <attr name="nav_width" format="dimension"></attr>
+        <attr name="padding"></attr>
+        <attr name="text_color" />
+        <attr name="text_color_selected" format="reference" />
+        <attr name="background"></attr>
+    </declare-styleable>
+    <declare-styleable name="loadingview">
+        <attr name="color1" format="reference" />
+        <attr name="color2" format="reference" />
+    </declare-styleable>
+</resources>

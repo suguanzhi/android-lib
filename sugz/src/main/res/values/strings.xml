@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">sugz</string>
+    <string name="dialog_two_button_confirm">确定</string>
+    <string name="dialog_two_button_cancle">取消</string>
+</resources>
