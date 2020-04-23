@@ -1,0 +1,3 @@
+rootProject.name='androidlib'
+include ':app'
+include ':sgzlib'
