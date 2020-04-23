@@ -1,20 +1,6 @@
 apply plugin: 'com.android.library'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'youka'
-            keyPassword 'yk123456031'
-            storeFile file('F:\\projects\\YouQiang\\youka.jks')
-            storePassword 'yk123456031'
-        }
-        debug {
-            storeFile file('F:\\projects\\YouQiang\\youka.jks')
-            storePassword 'yk123456031'
-            keyAlias = 'youka'
-            keyPassword 'yk123456031'
-        }
-    }
     compileSdkVersion 29
     defaultConfig {
         minSdkVersion 21
@@ -24,16 +10,13 @@ android {
         //Volley
         useLibrary 'org.apache.http.legacy'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
         debug {
-            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled true
         }
