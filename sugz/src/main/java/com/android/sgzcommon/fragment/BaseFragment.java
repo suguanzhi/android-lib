@@ -43,7 +43,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutId();
 
-    protected abstract void init(Bundle savedInstanceState);
+    protected abstract void init(Bundle savedInstanceState,View parent);
 
     /**
      * fragment的views已完成绘制并第一次对用户可见，特别针对viewpager中的fragment懒加载数据。
@@ -70,7 +70,7 @@ public abstract class BaseFragment extends Fragment {
         ButterKnife.bind(this, view);
         isInited = true;
         mLoadingDialog = new LoadingDialog(getActivity());
-        init(savedInstanceState);
+        init(savedInstanceState,view);
         if (isVisiable){
             userVisible();
         }
