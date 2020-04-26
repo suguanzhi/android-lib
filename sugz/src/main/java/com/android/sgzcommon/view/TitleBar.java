@@ -20,7 +20,7 @@ import androidx.annotation.Nullable;
 /**
  * Created by sgz on 2019/9/24 0024.
  */
-public class TitileBar extends LinearLayout {
+public class TitleBar extends LinearLayout {
 
     private ImageView mIvLeft;
     private ImageView mIvRight;
@@ -29,7 +29,7 @@ public class TitileBar extends LinearLayout {
     private Drawable mRight;
     private OnLeftAndRightClickListener listener;
 
-    public TitileBar(Context context, @Nullable AttributeSet attrs) {
+    public TitleBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         View view = LayoutInflater.from(context).inflate(R.layout.layout_title, this);
         LinearLayout barLayout = view.findViewById(R.id.ll_content);

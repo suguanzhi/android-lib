@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import com.android.sgzcommon.activity.utils.JavascriptInterface;
 import com.android.sgzcommon.activity.utils.WebviewHandler;
 import com.android.sgzcommon.dialog.TwoButtonDialog;
-import com.android.sgzcommon.view.TitileBar;
+import com.android.sgzcommon.view.TitleBar;
 import com.android.sugz.R;
 
 /**
@@ -20,7 +20,7 @@ import com.android.sugz.R;
  */
 public abstract class BaseWebActivity extends BaseActivity implements WebviewHandler.OnLoadListener {
 
-    TitileBar mTbTitle;
+    TitleBar mTbTitle;
     WebView mWvContent;
     ProgressBar mPbLoading;
     private TwoButtonDialog mWarmDialog;

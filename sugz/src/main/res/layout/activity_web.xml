@@ -5,7 +5,7 @@
               android:background="@color/grey100"
               android:orientation="vertical">
 
-    <com.android.sgzcommon.view.TitileBar
+    <com.android.sgzcommon.view.TitleBar
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tb_title"
         android:layout_width="match_parent"
