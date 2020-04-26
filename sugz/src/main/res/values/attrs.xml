@@ -29,4 +29,15 @@
         <attr name="color1" format="reference" />
         <attr name="color2" format="reference" />
     </declare-styleable>
+    <declare-styleable name="LoadResultView">
+        <attr name="icon" format="reference"></attr>
+        <attr name="background"></attr>
+        <attr name="text" format="string"></attr>
+        <attr name="text_size"></attr>
+        <attr name="text_color"></attr>
+        <attr name="btn_text" format="dimension"></attr>
+        <attr name="btn_text_size" format="dimension"></attr>
+        <attr name="btn_text_color" format="color"></attr>
+        <attr name="btn_background" format="reference"></attr>
+    </declare-styleable>
 </resources>
