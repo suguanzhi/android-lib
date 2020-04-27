@@ -9,9 +9,10 @@
     <ImageView
         android:id="@+id/iv_add"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_add_with_frame" />
+        android:padding="10dp"
+        android:background="@drawable/shape_r10_sd_grey300"
+        android:src="@drawable/ic_add_white" />
 </LinearLayout>
