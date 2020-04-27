@@ -1,6 +1,6 @@
 package com.android.sgzcommon.utils;
 
-import android.content.Context;
+import android.content.res.Resources;
 import android.util.TypedValue;
 
 import java.math.BigDecimal;
@@ -14,23 +14,21 @@ public class UnitUtil {
     /**
      * dp转px
      *
-     * @param context
-     * @param dp      dp值
+     * @param dp dp值
      * @return
      */
-    public static int dp2px(Context context, float dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+    public static int dp2px(float dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, Resources.getSystem().getDisplayMetrics());
     }
 
     /**
      * px转dp
      *
-     * @param context
-     * @param px      px值
+     * @param px px值
      * @return
      */
-    public static int px2dp(Context context, float px) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+    public static int px2dp(float px) {
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
         return (int) (px / scale + 0.5f);
     }
 
@@ -40,8 +38,8 @@ public class UnitUtil {
      * @param pxValue px值
      * @return
      */
-    public static int px2sp(Context context, float pxValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+    public static int px2sp(float pxValue) {
+        final float fontScale = Resources.getSystem().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
     }
 
@@ -51,8 +49,8 @@ public class UnitUtil {
      * @param sp sp值
      * @return
      */
-    public static int sp2px(Context context, float sp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+    public static int sp2px(float sp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, Resources.getSystem().getDisplayMetrics());
     }
 
     public static String moneyString(double money) {
@@ -68,10 +66,11 @@ public class UnitUtil {
 
     /**
      * 分换算成元，保留2位小数
+     *
      * @param moneyFen
      * @return
      */
-    public static BigDecimal fen2Yuan(long moneyFen){
-        return MathUtil.aDividerB2(moneyFen,100d);
+    public static BigDecimal fen2Yuan(long moneyFen) {
+        return MathUtil.aDividerB2(moneyFen, 100d);
     }
 }

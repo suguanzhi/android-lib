@@ -82,7 +82,7 @@ public class TakePhotoGridImplHandler implements TakePhotoGridImpl {
         });
         if (mRecyclerView != null) {
             GridLayoutManager gridEdit = new GridLayoutManager(mActivity, mColumn);
-            MarginDecoration decoration1 = new MarginDecoration(mActivity, mColumn, mHorizontalMargin, mVerticalMargin);
+            MarginDecoration decoration1 = new MarginDecoration(mColumn, mHorizontalMargin, mVerticalMargin);
             mRecyclerView.addItemDecoration(decoration1);
             mRecyclerView.setLayoutManager(gridEdit);
             mRecyclerView.setAdapter(mAdapter);

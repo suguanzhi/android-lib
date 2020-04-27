@@ -5,10 +5,10 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
@@ -63,6 +63,20 @@ public class SystemUtil {
     }
 
     /**
+     * 获取状态栏高度
+     *
+     * @return
+     */
+    public static int getStatusBarHeight() {
+        int resourceId = Resources.getSystem().getIdentifier("status_bar_height", "dimen", "android");
+        int height = 96;
+        if (resourceId > 0) {
+            height = Resources.getSystem().getDimensionPixelSize(resourceId);
+        }
+        return height;
+    }
+
+    /**
      * 判断自己的一个Service是否已经运行
      *
      * @param serviceName service全名
@@ -90,12 +104,6 @@ public class SystemUtil {
             e.printStackTrace();
             return false;
         }
-    }
-
-    public static class TopActivityInfo {
-        public String packageName = "";
-        public String topActivityName = "";
-
     }
 
     /**
@@ -345,6 +353,12 @@ public class SystemUtil {
         return null;
     }
 
+    /**
+     *
+     * @param wifiMan
+     * @return
+     * @throws Exception
+     */
     private static String getAddressMacByFile(WifiManager wifiMan) throws Exception {
         String ret;
         int wifiState = wifiMan.getWifiState();

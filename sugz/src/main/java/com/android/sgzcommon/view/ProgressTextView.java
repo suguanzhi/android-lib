@@ -56,7 +56,7 @@ public class ProgressTextView extends TextView {
 	}
 
 	private void init(Context context, AttributeSet attr) {
-		mRadius = UnitUtil.dp2px(context, RADIUS);
+		mRadius = UnitUtil.dp2px(RADIUS);
 		mBackgroundColor = Color.parseColor(BACKGROUND_COLOR);
 		int progressColor = Color.parseColor(PROGRESS_COLOR);
 		drawBackground();

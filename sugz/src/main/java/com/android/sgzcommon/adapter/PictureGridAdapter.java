@@ -52,7 +52,7 @@ public class PictureGridAdapter extends BaseRecyclerviewAdapter<PictureGridAdapt
         public ViewHolder(View itemView) {
             super(itemView);
             mIvImage = itemView.findViewById(R.id.iv_image);
-            mIvImage.setRoundCorner(UnitUtil.dp2px(mContext,10));
+            mIvImage.setRoundCorner(UnitUtil.dp2px(10));
         }
 
         @Override

@@ -94,7 +94,7 @@ public abstract class TakePhotoActivity extends BaseActivity {
         mRecyclerView = findViewById(getImagesGridLayoutId());
         if (mRecyclerView != null) {
             GridLayoutManager grid = new GridLayoutManager(this, column);
-            MarginDecoration decoration = new MarginDecoration(this, column, horizontalMargin, verticalMargin);
+            MarginDecoration decoration = new MarginDecoration(column, horizontalMargin, verticalMargin);
             mRecyclerView.addItemDecoration(decoration);
             mRecyclerView.setLayoutManager(grid);
             mAdapter = new PictureGridAdapter(this, mUrls, new BaseViewHolder.OnItemtClickListener() {
@@ -114,7 +114,7 @@ public abstract class TakePhotoActivity extends BaseActivity {
         mEditRecyclerView = findViewById(getImagesGridEditLayoutId());
         if (mEditRecyclerView != null) {
             GridLayoutManager gridEdit = new GridLayoutManager(this, 4);
-            MarginDecoration decoration1 = new MarginDecoration(this, 4, 5, 5);
+            MarginDecoration decoration1 = new MarginDecoration(4, 5, 5);
             mEditRecyclerView.addItemDecoration(decoration1);
             mEditRecyclerView.setLayoutManager(gridEdit);
 

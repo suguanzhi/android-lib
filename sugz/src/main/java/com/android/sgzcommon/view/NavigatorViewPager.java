@@ -70,8 +70,8 @@ public class NavigatorViewPager extends LinearLayout implements ViewPager.OnPage
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.pager_nav);
         String items = a.getString(R.styleable.pager_nav_items);
-        int textSize = a.getDimensionPixelSize(R.styleable.pager_nav_text_size, UnitUtil.sp2px(getContext(), 14f));
-        int lineHeight = a.getDimensionPixelSize(R.styleable.pager_nav_line_height, UnitUtil.dp2px(getContext(), 4f));
+        int textSize = a.getDimensionPixelSize(R.styleable.pager_nav_text_size, UnitUtil.sp2px(14f));
+        int lineHeight = a.getDimensionPixelSize(R.styleable.pager_nav_line_height, UnitUtil.dp2px(4f));
         int lineMargin = a.getDimensionPixelSize(R.styleable.pager_nav_line_margin, 0);
         mTextColor = a.getColor(R.styleable.pager_nav_text_color, Color.parseColor("#212121"));
         mTextColorSelected = a.getColor(R.styleable.pager_nav_text_color_selected, Color.BLACK);
@@ -80,7 +80,7 @@ public class NavigatorViewPager extends LinearLayout implements ViewPager.OnPage
             navParentLayout.setBackground(navBackground);
         }
         int navLayoutWidth = a.getDimensionPixelSize(R.styleable.pager_nav_nav_width, LayoutParams.MATCH_PARENT);
-        mPadding = a.getDimensionPixelSize(R.styleable.pager_nav_padding, UnitUtil.dp2px(getContext(), 10f));
+        mPadding = a.getDimensionPixelSize(R.styleable.pager_nav_padding, UnitUtil.dp2px(10f));
         mLineBackground = a.getDrawable(R.styleable.pager_nav_line);
         a.recycle();
 
@@ -142,7 +142,7 @@ public class NavigatorViewPager extends LinearLayout implements ViewPager.OnPage
         mViewPager.setAdapter(adapter);
     }
 
-    public void setCurrentItem(int item){
+    public void setCurrentItem(int item) {
         mViewPager.setCurrentItem(item);
     }
 
@@ -160,8 +160,8 @@ public class NavigatorViewPager extends LinearLayout implements ViewPager.OnPage
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        if (listener!= null){
-            listener.onPageScrolled(position,positionOffset,positionOffsetPixels);
+        if (listener != null) {
+            listener.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
         if (mLines.length > 0 && position < mLines.length) {
             float x = (positionOffsetPixels / mLines.length) * mRatio;
@@ -194,25 +194,27 @@ public class NavigatorViewPager extends LinearLayout implements ViewPager.OnPage
 
     @Override
     public void onPageSelected(int position) {
-        if (listener!= null){
+        if (listener != null) {
             listener.onPageSelected(position);
         }
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (listener!= null){
+        if (listener != null) {
             listener.onPageScrollStateChanged(state);
         }
     }
 
-    public void setOnPageChangeListener(OnPageChangeListener listener){
+    public void setOnPageChangeListener(OnPageChangeListener listener) {
         this.listener = listener;
     }
 
-    public interface OnPageChangeListener{
+    public interface OnPageChangeListener {
         void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
+
         void onPageSelected(int position);
+
         void onPageScrollStateChanged(int state);
     }
 }

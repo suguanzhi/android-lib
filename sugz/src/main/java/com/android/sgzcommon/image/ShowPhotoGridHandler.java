@@ -55,7 +55,7 @@ public class ShowPhotoGridHandler implements ShowPhotoGrid {
         }, null);
         if (mRecyclerView != null) {
             GridLayoutManager grid = new GridLayoutManager(mContext, mColumn);
-            MarginDecoration decoration = new MarginDecoration(mContext, mColumn, mHorizontalMargin, mVerticalMargin);
+            MarginDecoration decoration = new MarginDecoration(mColumn, mHorizontalMargin, mVerticalMargin);
             mRecyclerView.addItemDecoration(decoration);
             mRecyclerView.setLayoutManager(grid);
             mRecyclerView.setAdapter(mAdapter);

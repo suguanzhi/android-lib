@@ -26,7 +26,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
 
     private OnClickListener listener;
 
-    public PictureGridEditAdapter(Context context, List<ImageObject> entities, BaseViewHolder.OnItemtClickListener clickListener, BaseViewHolder.OnItemtLongClickListener longClickListener) {
+    public PictureGridEditAdapter(Context context, List<? extends ImageObject> entities, BaseViewHolder.OnItemtClickListener clickListener, BaseViewHolder.OnItemtLongClickListener longClickListener) {
         super(context, entities, clickListener, longClickListener);
     }
 
@@ -84,7 +84,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                 viewHolder.mIvUploadState.setVisibility(View.GONE);
             }
             String path = entity.getPath();
-            Picasso.with(mContext).load(new File(path)).fit().centerCrop().transform(new CircleTransform(300, 300, UnitUtil.dp2px(mContext, 6))).into(viewHolder.mIvImage);
+            Picasso.with(mContext).load(new File(path)).fit().centerCrop().transform(new CircleTransform(300, 300, UnitUtil.dp2px(6))).into(viewHolder.mIvImage);
         } else {
             AddViewHolder viewHolder = (AddViewHolder) holder;
             viewHolder.mLlAdd.setOnClickListener(new View.OnClickListener() {

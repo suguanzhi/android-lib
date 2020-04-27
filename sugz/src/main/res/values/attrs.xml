@@ -10,7 +10,9 @@
         <attr name="text_size"></attr>
         <attr name="back" format="boolean"></attr>
         <attr name="left" format="reference"></attr>
+        <attr name="left_text" format="string"></attr>
         <attr name="right" format="reference"></attr>
+        <attr name="right_text" format="string"></attr>
         <attr name="background"></attr>
     </declare-styleable>
     <declare-styleable name="pager_nav">

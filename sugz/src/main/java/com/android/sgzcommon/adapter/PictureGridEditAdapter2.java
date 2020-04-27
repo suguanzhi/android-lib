@@ -48,7 +48,7 @@ public class PictureGridEditAdapter2 extends MyBaseAdapter {
                 notifyDataSetChanged();
             }
         });
-        Picasso.with(mContext).load(new File(path)).fit().centerCrop().transform(new CircleTransform(300, 300, UnitUtil.dp2px(mContext, 6))).into(viewHolder.mIvImage);
+        Picasso.with(mContext).load(new File(path)).fit().centerCrop().transform(new CircleTransform(300, 300, UnitUtil.dp2px(6))).into(viewHolder.mIvImage);
         return convertView;
     }
 

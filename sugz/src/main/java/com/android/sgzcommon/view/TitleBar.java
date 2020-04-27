@@ -11,9 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.sugz.R;
+import com.zhpan.bannerview.annotation.Visibility;
 
 import androidx.annotation.Nullable;
 
@@ -24,9 +26,11 @@ public class TitleBar extends LinearLayout {
 
     private ImageView mIvLeft;
     private ImageView mIvRight;
+    private TextView mTvLeft;
+    private TextView mTvRight;
     private TextView mTvTitle;
-    private Drawable mLeft;
-    private Drawable mRight;
+    private RelativeLayout mRlLeft;
+    private RelativeLayout mRlRight;
     private OnLeftAndRightClickListener listener;
 
     public TitleBar(Context context, @Nullable AttributeSet attrs) {
@@ -35,7 +39,11 @@ public class TitleBar extends LinearLayout {
         LinearLayout barLayout = view.findViewById(R.id.ll_content);
         mIvLeft = view.findViewById(R.id.iv_left);
         mIvRight = view.findViewById(R.id.iv_right);
+        mTvLeft = view.findViewById(R.id.tv_left);
+        mTvRight = view.findViewById(R.id.tv_right);
         mTvTitle = view.findViewById(R.id.tv_title);
+        mRlLeft = view.findViewById(R.id.rl_left);
+        mRlRight = view.findViewById(R.id.rl_right);
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.titlebar);
         Drawable backgroundDrawable = array.getDrawable(R.styleable.titlebar_background);
@@ -62,7 +70,9 @@ public class TitleBar extends LinearLayout {
         if (!back) {
             mIvLeft.setImageDrawable(leftDrawable);
         }
-        mIvLeft.setOnClickListener(new OnClickListener() {
+        String leftText = array.getString(R.styleable.titlebar_left_text);
+        mTvLeft.setText(leftText);
+        mRlLeft.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (back) {
@@ -81,7 +91,9 @@ public class TitleBar extends LinearLayout {
 
         Drawable rightDrawable = array.getDrawable(R.styleable.titlebar_right);
         mIvRight.setImageDrawable(rightDrawable);
-        mIvRight.setOnClickListener(new OnClickListener() {
+        String rightText = array.getString(R.styleable.titlebar_right_text);
+        mTvRight.setText(rightText);
+        mRlRight.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null & rightDrawable != null) {
@@ -101,8 +113,24 @@ public class TitleBar extends LinearLayout {
         mIvLeft.setImageDrawable(left);
     }
 
+    public void setLeftText(CharSequence left) {
+        mTvLeft.setText(left);
+    }
+
+    public void setLeftVisible(@Visibility int visible) {
+        mRlLeft.setVisibility(visible);
+    }
+
     public void setRight(Drawable right) {
         mIvRight.setImageDrawable(right);
+    }
+
+    public void setRightText(CharSequence right) {
+        mTvRight.setText(right);
+    }
+
+    public void setRightVisible(@Visibility int visible) {
+        mRlRight.setVisibility(visible);
     }
 
     public void setListener(OnLeftAndRightClickListener listener) {
