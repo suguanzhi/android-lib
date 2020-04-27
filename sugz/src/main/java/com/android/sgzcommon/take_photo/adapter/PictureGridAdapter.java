@@ -1,14 +1,12 @@
-package com.android.sgzcommon.adapter;
+package com.android.sgzcommon.take_photo.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
-import com.android.sgzcommon.utils.UnitUtil;
 import com.android.sgzcommon.view.imageview.CornerImageView;
 import com.android.sugz.R;
 import com.android.volley.VolleyError;
@@ -40,7 +38,7 @@ public class PictureGridAdapter extends BaseRecyclerviewAdapter<PictureGridAdapt
     public void onBindViewHolder(ViewHolder holder, int position) {
         final String url = (String) mObjects.get(position);
         if (!TextUtils.isEmpty(url)) {
-            mImageLoader.get(url,holder,300,300);
+            mImageLoader.get(url,holder,200,300);
         } else {
             holder.mIvImage.setImageResource(R.drawable.img_load_fail);
         }
@@ -52,24 +50,20 @@ public class PictureGridAdapter extends BaseRecyclerviewAdapter<PictureGridAdapt
         public ViewHolder(View itemView) {
             super(itemView);
             mIvImage = itemView.findViewById(R.id.iv_image);
-            mIvImage.setRoundCorner(UnitUtil.dp2px(10));
         }
 
         @Override
         public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
             Bitmap bitmap = response.getBitmap();
             if (bitmap == null){
-                mIvImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 mIvImage.setImageResource(R.drawable.img_loading);
             }else {
-                mIvImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 mIvImage.setImageBitmap(bitmap);
             }
         }
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            mIvImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
             mIvImage.setImageResource(R.drawable.img_load_fail);
         }
     }

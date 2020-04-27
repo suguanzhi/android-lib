@@ -10,8 +10,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.sgzcommon.activity.utils.MUploadResultSet;
-import com.android.sgzcommon.adapter.PictureGridAdapter;
-import com.android.sgzcommon.adapter.PictureGridEditAdapter;
+import com.android.sgzcommon.take_photo.adapter.PictureGridAdapter;
+import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
 import com.android.sgzcommon.adapter.utils.ImageObject;
 import com.android.sgzcommon.http.okhttp.upload.OKUploadTask;
 import com.android.sgzcommon.http.okhttp.upload.OnUploadFileListener;

@@ -1,13 +1,13 @@
-package com.android.sgzcommon.image;
+package com.android.sgzcommon.take_photo;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
 import com.android.sgzcommon.activity.PhotoViewActivity;
-import com.android.sgzcommon.adapter.PictureGridAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
 import com.android.sgzcommon.recycleview.MarginDecoration;
+import com.android.sgzcommon.take_photo.adapter.PictureGridAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.android.sgzcommon.image;
+package com.android.sgzcommon.take_photo;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,15 +11,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.sgzcommon.activity.TakePhotoActivity;
 import com.android.sgzcommon.activity.utils.MUploadResultSet;
-import com.android.sgzcommon.adapter.PictureGridEditAdapter;
 import com.android.sgzcommon.adapter.utils.ImageObject;
 import com.android.sgzcommon.http.okhttp.upload.OKUploadTask;
 import com.android.sgzcommon.http.okhttp.upload.OnUploadFileListener;
 import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
 import com.android.sgzcommon.recycleview.MarginDecoration;
+import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -241,14 +240,12 @@ public class TakePhotoGridImplHandler implements TakePhotoGridImpl {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d("TakePhotoGridImplHandler", "onRequestPermissionsResult: ");
         if (requestCode == CAMERA_REQUEST_CODE) {
             if (permissions.length > 0 && grantResults.length > 0) {
                 if (Manifest.permission.CAMERA.equals(permissions[0])) {
                     if (PackageManager.PERMISSION_DENIED == grantResults[0]) {
                         Toast.makeText(mActivity, "缺少照相机权限", Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.d("TakePhotoGridImplHandler", "onRequestPermissionsResult: grant !");
                         takePhoto();
                     }
                 }

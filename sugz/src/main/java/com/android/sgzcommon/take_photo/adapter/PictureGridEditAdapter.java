@@ -1,6 +1,7 @@
-package com.android.sgzcommon.adapter;
+package com.android.sgzcommon.take_photo.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,15 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.sgzcommon.adapter.utils.CircleTransform;
 import com.android.sgzcommon.adapter.utils.ImageObject;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
-import com.android.sgzcommon.utils.UnitUtil;
+import com.android.sgzcommon.utils.BitmapUtil;
+import com.android.sgzcommon.view.imageview.CornerImageView;
 import com.android.sugz.R;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -84,7 +83,10 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                 viewHolder.mIvUploadState.setVisibility(View.GONE);
             }
             String path = entity.getPath();
-            Picasso.with(mContext).load(new File(path)).fit().centerCrop().transform(new CircleTransform(300, 300, UnitUtil.dp2px(6))).into(viewHolder.mIvImage);
+            Bitmap bitmap = BitmapUtil.getShowBitmap(path,100,200);
+            if (bitmap != null){
+                viewHolder.mIvImage.setImageBitmap(bitmap);
+            }
         } else {
             AddViewHolder viewHolder = (AddViewHolder) holder;
             viewHolder.mLlAdd.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +97,6 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                     }
                 }
             });
-
         }
     }
 
@@ -124,7 +125,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
     }
 
     public class ViewHolder extends BaseViewHolder {
-        ImageView mIvImage;
+        CornerImageView mIvImage;
         ImageView mIvDelete;
         ProgressBar mPbProgress;
         TextView mTvProgress;
@@ -132,7 +133,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mIvImage = itemView.findViewById(R.id.iv_image);
+            mIvImage = itemView.findViewById(R.id.civ_image);
             mIvDelete = itemView.findViewById(R.id.iv_delete);
             mPbProgress = itemView.findViewById(R.id.pb_progress);
             mTvProgress = itemView.findViewById(R.id.tv_progress_tip);

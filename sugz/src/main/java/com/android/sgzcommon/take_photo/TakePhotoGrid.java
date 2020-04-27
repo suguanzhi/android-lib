@@ -1,4 +1,4 @@
-package com.android.sgzcommon.image;
+package com.android.sgzcommon.take_photo;
 
 import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
 

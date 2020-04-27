@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.android.sgzcommon.image.ShowPhotoGrid;
-import com.android.sgzcommon.image.ShowPhotoGridHandler;
-import com.android.sgzcommon.image.TakePhotoGrid;
-import com.android.sgzcommon.image.TakePhotoGridImpl;
-import com.android.sgzcommon.image.TakePhotoGridImplHandler;
+import com.android.sgzcommon.take_photo.ShowPhotoGrid;
+import com.android.sgzcommon.take_photo.ShowPhotoGridHandler;
+import com.android.sgzcommon.take_photo.TakePhotoGrid;
+import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
+import com.android.sgzcommon.take_photo.TakePhotoGridImplHandler;
 
 import java.util.List;
 import java.util.Map;

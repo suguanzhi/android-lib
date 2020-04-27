@@ -1,4 +1,4 @@
-package com.android.sgzcommon.adapter;
+package com.android.sgzcommon.take_photo.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.android.sgzcommon.adapter.MyBaseAdapter;
 import com.android.sgzcommon.adapter.utils.CircleTransform;
 import com.android.sgzcommon.utils.UnitUtil;
 import com.android.sugz.R;
