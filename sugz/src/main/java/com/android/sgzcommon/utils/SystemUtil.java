@@ -635,11 +635,11 @@ public class SystemUtil {
      * android:grantUriPermissions="true">
      * <meta-data
      * android:name="android.support.FILE_PROVIDER_PATHS"
-     * android:resource="@xml/file_paths" />
+     * android:resource="@xml/fabcd" />
      * </provider>
      * <p>
      * 2.
-     * 在res下新建 file_paths.xml，内容：
+     * 在res下新建 fabcd.xml，内容：
      * <paths>
      * <external-path
      * name="apk" //随便写，没影响

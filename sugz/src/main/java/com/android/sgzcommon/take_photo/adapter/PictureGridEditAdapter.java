@@ -9,10 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.sgzcommon.adapter.utils.ImageObject;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
+import com.android.sgzcommon.take_photo.utils.ImageObject;
 import com.android.sgzcommon.utils.BitmapUtil;
+import com.android.sgzcommon.utils.UnitUtil;
 import com.android.sgzcommon.view.imageview.CornerImageView;
 import com.android.sugz.R;
 
@@ -83,10 +84,9 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                 viewHolder.mIvUploadState.setVisibility(View.GONE);
             }
             String path = entity.getPath();
-            Bitmap bitmap = BitmapUtil.getShowBitmap(path,100,200);
-            if (bitmap != null){
-                viewHolder.mIvImage.setImageBitmap(bitmap);
-            }
+            Bitmap bitmap = BitmapUtil.getShowBitmap(path, 100, 200);
+            viewHolder.mIvImage.setImageBitmap(bitmap);
+            viewHolder.mIvImage.setRoundCorner(UnitUtil.dp2px(5));
         } else {
             AddViewHolder viewHolder = (AddViewHolder) holder;
             viewHolder.mLlAdd.setOnClickListener(new View.OnClickListener() {

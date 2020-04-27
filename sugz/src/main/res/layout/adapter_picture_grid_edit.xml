@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:maxHeight="200dp">
 
     <com.android.sgzcommon.view.imageview.CornerImageView
         android:id="@+id/civ_image"
         android:layout_width="match_parent"
-        android:padding="5dp"
-        android:layout_height="100dp" />
+        android:background="@color/grey300"
+        android:adjustViewBounds="true"
+        android:layout_margin="5dp"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/iv_delete"
@@ -21,10 +26,11 @@
     <ProgressBar
         android:id="@+id/pb_progress"
         style="@style/progressbar_horizontal"
-        android:layout_width="50dp"
+        android:layout_width="match_parent"
         android:layout_height="10dp"
         android:layout_centerInParent="true"
-        android:layout_margin="2dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:max="100" />
 
     <TextView

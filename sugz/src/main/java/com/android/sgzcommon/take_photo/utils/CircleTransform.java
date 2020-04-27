@@ -1,4 +1,4 @@
-package com.android.sgzcommon.adapter.utils;
+package com.android.sgzcommon.take_photo.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

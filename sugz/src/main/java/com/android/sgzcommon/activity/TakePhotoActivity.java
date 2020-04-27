@@ -12,7 +12,7 @@ import android.view.View;
 import com.android.sgzcommon.activity.utils.MUploadResultSet;
 import com.android.sgzcommon.take_photo.adapter.PictureGridAdapter;
 import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
-import com.android.sgzcommon.adapter.utils.ImageObject;
+import com.android.sgzcommon.take_photo.utils.ImageObject;
 import com.android.sgzcommon.http.okhttp.upload.OKUploadTask;
 import com.android.sgzcommon.http.okhttp.upload.OnUploadFileListener;
 import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
@@ -132,6 +132,7 @@ public abstract class TakePhotoActivity extends BaseActivity {
 
                 @Override
                 public void onCameraClick(View view) {
+                    Log.d("TakePhotoActivity", "onCameraClick: ");
                     takePhoto();
                 }
             });
@@ -239,6 +240,7 @@ public abstract class TakePhotoActivity extends BaseActivity {
             } else {
                 uri = Uri.fromFile(file);
             }
+            Log.d("TakePhotoActivity", "takePhoto: uri == " + uri);
             //调取系统拍照
             Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);

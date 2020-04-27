@@ -3,6 +3,7 @@ package com.android.sgzcommon.view.imageview;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.android.sgzcommon.view.provider.CircleViewOutlineProvider;
 import com.android.sgzcommon.view.provider.RoundViewOutlineProvider;
@@ -21,6 +22,13 @@ public class CornerImageView extends AppCompatImageView {
 
     public CornerImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Log.d("CornerImageView", "onMeasure: width == " + MeasureSpec.getSize(widthMeasureSpec));
+        Log.d("CornerImageView", "onMeasure: height == " + MeasureSpec.getSize(heightMeasureSpec));
     }
 
     /**

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.sgzcommon.adapter.MyBaseAdapter;
-import com.android.sgzcommon.adapter.utils.CircleTransform;
+import com.android.sgzcommon.take_photo.utils.CircleTransform;
 import com.android.sgzcommon.utils.UnitUtil;
 import com.android.sugz.R;
 import com.squareup.picasso.Picasso;

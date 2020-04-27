@@ -1,4 +1,4 @@
-package com.android.sgzcommon.adapter.utils;
+package com.android.sgzcommon.take_photo.utils;
 
 public class ImageObject {
 

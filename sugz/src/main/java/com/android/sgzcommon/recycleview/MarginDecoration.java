@@ -22,9 +22,9 @@ public class MarginDecoration extends RecyclerView.ItemDecoration {
     @Override
 
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        //由于每行都只有2个，所以第一个都是2的倍数，把左边距设为0
+        //由于每行都只有column个，所以第一个都是column的倍数，把左边距设为0
         if (parent.getChildLayoutPosition(view) % column == 0) {
-            outRect.set(hmargin, vmargin, hmargin, 0);
+            outRect.set(0, vmargin, hmargin, 0);
         } else {
             outRect.set(0, vmargin, hmargin, 0);
         }
