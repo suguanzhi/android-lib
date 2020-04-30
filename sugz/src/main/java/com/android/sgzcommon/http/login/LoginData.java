@@ -13,30 +13,30 @@ public class LoginData {
     protected static final String LOGIN_NAME = "loginname";
     protected static final String PASSWORD = "password";
 
-    protected static void saveLoginToken(Context context, String token) {
+    public static void saveLoginToken(Context context, String token) {
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE).edit().putString(TOKEN, token).apply();
     }
 
-    protected static String getLoginToken(Context context) {
+    public static String getLoginToken(Context context) {
         SharedPreferences sf = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         String token = sf.getString(TOKEN, "");
         return token;
     }
 
-    protected static void saveLoginName(Context context, String username) {
+    public static void saveLoginName(Context context, String username) {
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE).edit().putString(LOGIN_NAME, username).apply();
     }
 
-    protected static String getLoginName(Context context) {
+    public static String getLoginName(Context context) {
         SharedPreferences sf = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         return sf.getString(LOGIN_NAME, "");
     }
 
-    protected static void savePassword(Context context, String password) {
+    public static void savePassword(Context context, String password) {
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE).edit().putString(PASSWORD, password).apply();
     }
 
-    protected static String getPassword(Context context) {
+    public static String getPassword(Context context) {
         SharedPreferences sf = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         return sf.getString(PASSWORD, "");
     }
