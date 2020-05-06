@@ -10,9 +10,11 @@ import com.android.sgzcommon.take_photo.ShowImageGridImpl;
 import com.android.sgzcommon.take_photo.TakePhotoGrid;
 import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
 import com.android.sgzcommon.take_photo.utils.PhotoUpload;
 
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -94,5 +96,10 @@ public abstract class TakePhotoFragment extends BaseFragment implements TakePhot
     @Override
     public void clearPhotos() {
         mTakePhotoGrid.clearPhotos();
+    }
+
+    @Override
+    public void uploadPhotos(String url, Map<String, String> data, OnPhotoUploadListener listener) {
+        mTakePhotoGrid.uploadPhotos(url,data,listener);
     }
 }
