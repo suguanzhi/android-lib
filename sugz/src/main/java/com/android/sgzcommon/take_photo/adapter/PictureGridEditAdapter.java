@@ -11,12 +11,13 @@ import android.widget.TextView;
 
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
-import com.android.sgzcommon.take_photo.utils.ImageObject;
+import com.android.sgzcommon.take_photo.utils.PhotoUpload;
 import com.android.sgzcommon.utils.BitmapUtil;
 import com.android.sgzcommon.utils.UnitUtil;
 import com.android.sgzcommon.view.imageview.CornerImageView;
 import com.android.sugz.R;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
 
     private OnClickListener listener;
 
-    public PictureGridEditAdapter(Context context, List<? extends ImageObject> entities, BaseViewHolder.OnItemtClickListener clickListener, BaseViewHolder.OnItemtLongClickListener longClickListener) {
+    public PictureGridEditAdapter(Context context, List<? extends PhotoUpload> entities, BaseViewHolder.OnItemtClickListener clickListener, BaseViewHolder.OnItemtLongClickListener longClickListener) {
         super(context, entities, clickListener, longClickListener);
     }
 
@@ -39,7 +40,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         Log.d("PictureGridEditAdapter", "getView: position = " + position);
         if (0 == getItemViewType(position)) {
-            final ImageObject entity = (ImageObject) mObjects.get(position);
+            final PhotoUpload entity = (PhotoUpload) mObjects.get(position);
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.mIvDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,6 +51,11 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                     //                    holder.itemView.requestFocus();
                     try {
                         mObjects.remove(entity);
+                        String path = entity.getPath();
+                        File file = new File(path);
+                        if (file.exists()) {
+                            file.delete();
+                        }
                         notifyDataSetChanged();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -60,18 +66,18 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
             int progress = entity.getProgress();
             viewHolder.mTvProgress.setText(progress + "%");
             viewHolder.mPbProgress.setProgress(progress);
-            if (ImageObject.STATE_SUCCESS == state) {
+            if (PhotoUpload.STATE_SUCCESS == state) {
                 viewHolder.mIvDelete.setVisibility(View.GONE);
                 viewHolder.mTvProgress.setVisibility(View.GONE);
                 viewHolder.mPbProgress.setVisibility(View.GONE);
                 viewHolder.mIvUploadState.setVisibility(View.VISIBLE);
                 viewHolder.mIvUploadState.setImageResource(R.drawable.ic_success);
-            } else if (ImageObject.STATE_UPLOADING == state) {
+            } else if (PhotoUpload.STATE_UPLOADING == state) {
                 viewHolder.mTvProgress.setVisibility(View.VISIBLE);
                 viewHolder.mPbProgress.setVisibility(View.VISIBLE);
                 viewHolder.mIvDelete.setVisibility(View.GONE);
                 viewHolder.mIvUploadState.setVisibility(View.GONE);
-            } else if (ImageObject.STATE_FAIL == state) {
+            } else if (PhotoUpload.STATE_FAIL == state) {
                 viewHolder.mIvDelete.setVisibility(View.VISIBLE);
                 viewHolder.mTvProgress.setVisibility(View.GONE);
                 viewHolder.mPbProgress.setVisibility(View.GONE);

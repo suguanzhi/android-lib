@@ -1,6 +1,6 @@
 package com.android.sgzcommon.take_photo.utils;
 
-public class ImageObject {
+public class PhotoUpload {
 
     private int state;
     private int progress;
@@ -15,10 +15,10 @@ public class ImageObject {
     public static final int STATE_SUCCESS = 2;
 
 
-    public ImageObject() {
+    public PhotoUpload() {
     }
 
-    public ImageObject(int progress, String path) {
+    public PhotoUpload(int progress, String path) {
         this.progress = progress;
         this.path = path;
     }

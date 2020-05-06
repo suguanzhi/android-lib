@@ -1,9 +1,13 @@
 package com.android.sgzcommon.take_photo;
 
-import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
+import android.content.Intent;
 
-import java.io.File;
+import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
+
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Created by sgz on 2020/1/10.
@@ -12,31 +16,24 @@ public interface TakePhotoGrid {
 
     int CAMERA_REQUEST_CODE = 207;
 
-    int getImageSize();
+    int getPhotoSize();
 
-    void uploadImages(String url, Map<String, String> data, final OnImageUploadListener listener);
+    void uploadPhotos(String url, Map<String, String> data, final OnPhotoUploadListener listener);
 
     /**
      * 调用系统照相机拍照
+     * @param path 照片存放路径
      */
-    void takePhoto();
+    void takePhoto(@Nullable String path);
 
-    /**
-     * 清除已拍照片
-     */
-    void clearImages();
+    void clearPhotos();
+
+    void onActivityResult(int requestCode, int resultCode, Intent data);
+
+    void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
 
     void notifyTakePhotoChanged();
 
     void notifyTakePhotoChanged(int position);
-
-    interface OnImageUploadListener {
-
-        void onAllSuccess();
-
-        void onSuccess(File file, UploadResultSet result);
-
-        void onFail(File file, Exception e);
-    }
 
 }

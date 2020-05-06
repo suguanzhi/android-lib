@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by sgz on 2020/1/10.
  */
-public interface ShowPhotoGrid {
+public interface ShowImageGrid {
 
     void setImageUrls(List<String> urls);
 
