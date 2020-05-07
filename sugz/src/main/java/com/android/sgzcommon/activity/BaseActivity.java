@@ -3,6 +3,7 @@ package com.android.sgzcommon.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -29,7 +30,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +51,9 @@ public class BaseActivity extends AppCompatActivity {
     protected ImageLoader mImageLoader;
     private DatePickDialog mDatePickDialog;
     protected LoadingDialog mLoadingDialog;
+    private OnPermissionResultListener listener;
+
+    protected static final int ACTION_REQUEST_PERMISSIONS = 0x001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +69,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(EmptyEntity event) {/* Do something */};
+    public void onMessageEvent(EmptyEntity event) {/* Do something */}
 
-    protected LinearLayoutManager createLinearLayoutManager(@RecyclerView.Orientation int orientation){
+    ;
+
+    protected LinearLayoutManager createLinearLayoutManager(@RecyclerView.Orientation int orientation) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(orientation);
-        return  layoutManager;
+        return layoutManager;
     }
 
     /**
@@ -102,9 +114,9 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void showToast(String msg){
+    protected void showToast(String msg) {
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
@@ -123,7 +135,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param listener
      */
     protected void showDataPickDialog(int year, int month, int day, DatePickDialog.OnDatePickListener listener) {
-        if (mDatePickDialog != null && mDatePickDialog.isShowing()){
+        if (mDatePickDialog != null && mDatePickDialog.isShowing()) {
             return;
         }
         mDatePickDialog = new DatePickDialog(this, DatePickDialog.TYPE_DATE);
@@ -132,6 +144,7 @@ public class BaseActivity extends AppCompatActivity {
         mDatePickDialog.setOnDatePickListener(listener);
         mDatePickDialog.setCanceledOnTouchOutside(true);
     }
+
     /**
      * 显示时间选择窗口
      *
@@ -139,7 +152,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param listener
      */
     protected void showTimePickDialog(int hour, int minute, DatePickDialog.OnTimePickListener listener) {
-        if (mDatePickDialog != null && mDatePickDialog.isShowing()){
+        if (mDatePickDialog != null && mDatePickDialog.isShowing()) {
             return;
         }
         mDatePickDialog = new DatePickDialog(this, DatePickDialog.TYPE_TIME);
@@ -174,10 +187,77 @@ public class BaseActivity extends AppCompatActivity {
         mPopupWindow = null;
     }
 
+    /**
+     * 权限检查
+     *
+     * @param neededPermission 需要的权限
+     * @return 是否被允许
+     */
+    protected boolean checkPermissions(String neededPermission) {
+        if (neededPermission == null) {
+            return true;
+        }
+        return ContextCompat.checkSelfPermission(this, neededPermission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    /**
+     * 权限检查
+     *
+     * @param neededPermissions 需要的权限
+     * @return 是否被允许
+     */
+    protected void checkAndRequestePermissions(String[] neededPermissions, OnPermissionResultListener listener) {
+        this.listener = listener;
+        if (neededPermissions == null) {
+            if (listener != null) {
+                listener.onResult(null, true);
+            }
+        }
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < neededPermissions.length; i++) {
+            String permission = neededPermissions[i];
+            if (!checkPermissions(permission)) {
+                list.add(neededPermissions[i]);
+            } else {
+                if (listener != null) {
+                    listener.onResult(permission, true);
+                }
+            }
+        }
+        String[] needs = new String[list.size()];
+        list.toArray(needs);
+        if (needs.length > 0) {
+            ActivityCompat.requestPermissions(this, needs, ACTION_REQUEST_PERMISSIONS);
+        }
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == ACTION_REQUEST_PERMISSIONS) {
+            if (permissions.length > 0) {
+                for (int i = 0; i < permissions.length; i++) {
+                    String permission = permissions[i];
+                    boolean granted = false;
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        granted = true;
+                    }
+                    if (listener != null) {
+                        listener.onResult(permission, granted);
+                    }
+                }
+            }
+        }
+    }
+
+    public interface OnPermissionResultListener {
+        void onResult(String permission, boolean granted);
     }
 
     @Override
