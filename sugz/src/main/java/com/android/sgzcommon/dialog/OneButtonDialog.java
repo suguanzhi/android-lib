@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.android.sugz.R;
@@ -20,11 +21,16 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
     private TextView mBtn;
     private OnclickListener listener;
 
+    public OneButtonDialog(Context context) {
+        super(context);
+    }
+
     public OneButtonDialog(Context context, String msg) {
         super(context);
         this.msg = msg;
     }
-    public OneButtonDialog(Context context, String msg,String secondMsg) {
+
+    public OneButtonDialog(Context context, String msg, String secondMsg) {
         super(context);
         this.msg = msg;
         this.secondMsg = secondMsg;
@@ -42,7 +48,7 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
 
     @Override
     protected int getHeight() {
-        return 0;
+        return WindowManager.LayoutParams.WRAP_CONTENT;
     }
 
     @Override
