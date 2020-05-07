@@ -5,6 +5,8 @@ package com.android.sgzcommon.logutil.applog; /**
 import android.content.Context;
 import android.os.Environment;
 
+import com.android.sgzcommon.utils.FileUtil;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -18,64 +20,72 @@ import java.io.InputStreamReader;
 
 public class LogcatHelper {
 
-    private static LogcatHelper INSTANCE = null;
-    private static String PATH_LOGCAT;
-    private LogDumper mLogDumper = null;
-
-    /**
-     * 初始化目录
-     */
-    public void init(Context context, String dirName) {
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
-            PATH_LOGCAT = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + dirName;
-        } else {
-            // 如果SD卡不存在，就保存到本应用的目录下
-            PATH_LOGCAT = context.getFilesDir().getAbsolutePath() + File.separator + dirName;
-        }
-        File file = new File(PATH_LOGCAT);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-    }
-
-    public static LogcatHelper getInstance(Context context, String dirName) {
-        synchronized (LogcatHelper.class) {
-            if (INSTANCE == null) {
-                INSTANCE = new LogcatHelper(context, dirName);
-            }
-        }
-        return INSTANCE;
-    }
+    private int mFileLimit;
+    private String mLogDir;
+    private static LogcatHelper sLogcatHelper = null;
+    private LogDumpThread mLogDumpThread = null;
 
     private LogcatHelper(Context context, String dirName) {
         init(context, dirName);
     }
 
-    public void start() {
-        if (mLogDumper == null)
-            mLogDumper = new LogDumper(String.valueOf(PATH_LOGCAT));
-        mLogDumper.start();
+    /**
+     * 初始化目录
+     */
+    public void init(Context context, String dirName) {
+        init(context, dirName, 2);
     }
 
-    public void stop() {
-        if (mLogDumper != null) {
-            mLogDumper.stopLogs();
-            mLogDumper = null;
+    /**
+     * 初始化目录
+     */
+    public void init(Context context, String dirName, int limit) {
+        mFileLimit = limit;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
+            mLogDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + dirName;
+        } else {
+            mLogDir = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + File.separator + dirName;
+        }
+        try {
+            File file = new File(mLogDir);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private class LogDumper extends Thread {
+    public static LogcatHelper getInstance(Context context, String dirName) {
+        synchronized (LogcatHelper.class) {
+            if (sLogcatHelper == null) {
+                sLogcatHelper = new LogcatHelper(context, dirName);
+            }
+        }
+        return sLogcatHelper;
+    }
 
-        private String mDir;
+    public void start() {
+        if (mLogDumpThread == null) {
+            mLogDumpThread = new LogDumpThread();
+        }
+        mLogDumpThread.start();
+    }
+
+    public void stop() {
+        if (mLogDumpThread != null) {
+            mLogDumpThread.stopLogs();
+            mLogDumpThread = null;
+        }
+    }
+
+    private class LogDumpThread extends Thread {
+
         private Process logcatProc;
         private BufferedReader mReader = null;
         private boolean mRunning = true;
         private String[] cmds = {"logcat", "-v", "time", "*:D"};
         private FileOutputStream out = null;
-
-        public LogDumper(String dir) {
-            mDir = dir;
-        }
 
         public void stopLogs() {
             mRunning = false;
@@ -86,12 +96,13 @@ public class LogcatHelper {
             try {
                 logcatProc = Runtime.getRuntime().exec(cmds);
                 mReader = new BufferedReader(new InputStreamReader(logcatProc.getInputStream()), 1024);
-                String fileName = null;
                 String line = null;
+                String fileName = null;
                 while (mRunning) {
                     if (!LogcatDate.getFileName().equals(fileName)) {
                         fileName = LogcatDate.getFileName();
-                        out = new FileOutputStream(new File(mDir, "Log-" + fileName + ".log"), true);
+                        out = new FileOutputStream(new File(mLogDir, fileName + ".log"), true);
+                        new DeleteLogFileThread().start();
                     }
                     if (!mRunning) {
                         break;
@@ -133,6 +144,25 @@ public class LogcatHelper {
             }
 
         }
+    }
 
+    private class DeleteLogFileThread extends Thread {
+
+        @Override
+        public void run() {
+            File logDir = new File(mLogDir);
+            if (logDir.exists()) {
+                File[] files = logDir.listFiles();
+                if (files != null) {
+                    FileUtil.fileSort(files);
+                    int len = files.length;
+                    if (len > mFileLimit) {
+                        for (int i = 0; i < len - mFileLimit; i++) {
+                            FileUtil.deleteFile(files[i]);
+                        }
+                    }
+                }
+            }
+        }
     }
 }  
