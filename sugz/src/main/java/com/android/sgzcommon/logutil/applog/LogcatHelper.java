@@ -33,7 +33,7 @@ public class LogcatHelper {
      * 初始化目录
      */
     public void init(Context context, String dirName) {
-        init(context, dirName, 2);
+        init(context, dirName, 3);
     }
 
     /**
