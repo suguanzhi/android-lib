@@ -38,7 +38,7 @@ public class OKHttpFactory {
         mOkHttpClient = new OkHttpClient();
         mOkHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
         mOkHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
-        mExecutor = Executors.newSingleThreadExecutor();
+        mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
     public static OKHttpFactory getInstance() {
@@ -59,15 +59,20 @@ public class OKHttpFactory {
      */
     public void postRequest(String url, Map<String, String> data, final ResultSet resultSet, final OnHttpResponseListener responseListener) {
         RequestBody body = getFormEncodingBuilder(data).build();
-        try {
-            Request request = new Request.Builder().url(url).post(body).build();
-            excuteRequest(request, resultSet, responseListener);
-        } catch (Exception e) {
-            if (responseListener != null) {
-                responseListener.handleError(e);
-            }
-            e.printStackTrace();
-        }
+        Request request = new Request.Builder().url(url).post(body).build();
+        excuteRequest(request, resultSet, responseListener);
+    }
+
+    /**
+     * post请求
+     *
+     * @param url
+     * @param data
+     */
+    public void postRequest(String url, Map<String, String> data, final ResultSet resultSet) {
+        RequestBody body = getFormEncodingBuilder(data).build();
+        Request request = new Request.Builder().url(url).post(body).build();
+        excuteRequest(request, resultSet);
 
     }
 
@@ -80,20 +85,30 @@ public class OKHttpFactory {
      */
     public void postRequest(String url, Map<String, String> headers, Map<String, String> data, final ResultSet resultSet, final OnHttpResponseListener responseListener) {
         RequestBody body = getFormEncodingBuilder(data).build();
-        try {
-            Request.Builder builder = new Request.Builder().url(url).post(body);
-            Iterator<Map.Entry<String,String>> it= headers.entrySet().iterator();
-            while (it.hasNext()){
-                Map.Entry<String,String> header = it.next();
-                builder.addHeader(header.getKey(),header.getValue());
-            }
-             excuteRequest(builder.build(), resultSet, responseListener);
-        } catch (Exception e) {
-            if (responseListener != null) {
-                responseListener.handleError(e);
-            }
-            e.printStackTrace();
+        Request.Builder builder = new Request.Builder().url(url).post(body);
+        Iterator<Map.Entry<String, String>> it = headers.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, String> header = it.next();
+            builder.addHeader(header.getKey(), header.getValue());
         }
+        excuteRequest(builder.build(), resultSet, responseListener);
+    }
+
+    /**
+     * post请求
+     *
+     * @param url
+     * @param data
+     */
+    public void postRequest(String url, Map<String, String> headers, Map<String, String> data, final ResultSet resultSet) {
+        RequestBody body = getFormEncodingBuilder(data).build();
+        Request.Builder builder = new Request.Builder().url(url).post(body);
+        Iterator<Map.Entry<String, String>> it = headers.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, String> header = it.next();
+            builder.addHeader(header.getKey(), header.getValue());
+        }
+        excuteRequest(builder.build(), resultSet);
 
     }
 
@@ -106,6 +121,16 @@ public class OKHttpFactory {
     public void getRequest(String url, final ResultSet resultSet, final OnHttpResponseListener responseListener) {
         Request request = new Request.Builder().url(url).build();
         excuteRequest(request, resultSet, responseListener);
+    }
+
+    /**
+     * get请求
+     *
+     * @param url
+     */
+    public void getRequest(String url, final ResultSet resultSet) {
+        Request request = new Request.Builder().url(url).build();
+        excuteRequest(request, resultSet);
     }
 
     private void excuteRequest(final Request request, final ResultSet resultSet, final OnHttpResponseListener responseListener) {
@@ -127,6 +152,21 @@ public class OKHttpFactory {
                 }
             }
         });
+    }
+
+    private void excuteRequest(final Request request, final ResultSet resultSet) {
+        try {
+            Response response = mOkHttpClient.newCall(request).execute();
+            String result = response.body().string();
+            Log.d("OKHttpFactory", "run: result = " + result);
+            int code = response.code();
+            resultSet.setNetCode(code);
+            resultSet.parseResult(result);
+        } catch (Exception e) {
+            resultSet.setError(e);
+            e.printStackTrace();
+        }
+
     }
 
     private FormEncodingBuilder getFormEncodingBuilder(Map<String, String> data) {
