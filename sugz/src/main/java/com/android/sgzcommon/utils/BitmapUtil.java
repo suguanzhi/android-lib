@@ -12,6 +12,8 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 
 import static android.content.ContentValues.TAG;
 
@@ -20,6 +22,24 @@ import static android.content.ContentValues.TAG;
  */
 
 public class BitmapUtil {
+
+    /**
+     * 从图片的网络地址获取图片bitmap
+     * @param serverUrl
+     * @return
+     */
+    public static Bitmap getBitmapFromUrl(String serverUrl) {
+        Bitmap bitmap = null;
+        try {
+            URL url = new URL(serverUrl);
+            InputStream inputStream = url.openStream();
+            bitmap = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
 
     private static int caculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         int width = options.outWidth;
