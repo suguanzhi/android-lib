@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -35,6 +36,10 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
     private SpannableStringBuilder mMsgSpanBuilder;
     private SpannableStringBuilder mSecondMsgSpanBuilder;
 
+    public TwoButtonDialog(Context context) {
+        super(context);
+    }
+
     public TwoButtonDialog(Context context, String msg) {
         super(context);
         this.mMsg = msg;
@@ -53,27 +58,28 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
 
     @Override
     protected int getWidth() {
-        return 0;
+        return mMinSize * 4 / 5;
     }
 
     @Override
     protected int getHeight() {
-        return 0;
+        return WindowManager.LayoutParams.WRAP_CONTENT;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int width = mMinSize * 4 / 5;
-        setLayoutParamsAnim(width, WindowManager.LayoutParams.WRAP_CONTENT);
         mTvMsg = findViewById(R.id.tv_msg);
         mTvSecondMsg = findViewById(R.id.tv_msg_second);
-
         mBtnLeft = findViewById(R.id.tv_left);
         mBtnRight = findViewById(R.id.tv_right);
         mBtnLeft.setOnClickListener(this);
         mBtnRight.setOnClickListener(this::onClick);
-        mTvMsg.setText(mMsg);
+
+        mMsgSpanBuilder = new SpannableStringBuilder();
+        mSecondMsgSpanBuilder = new SpannableStringBuilder();
+
+        setMsg(mMsg);
         setSecondMsg(mSecondMsg);
         if (!TextUtils.isEmpty(mLeftText)) {
             mBtnLeft.setText(mLeftText);
@@ -81,26 +87,22 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
         if (!TextUtils.isEmpty(mRightText)) {
             mBtnRight.setText(mRightText);
         }
-
-        mMsgSpanBuilder = new SpannableStringBuilder();
-        mSecondMsgSpanBuilder = new SpannableStringBuilder();
     }
 
-    public void setMsg(String msg) {
-        this.mMsg = msg;
+    public void show(String msg, String secondMsg) {
+        show();
+        mMsg = msg;
         if (mTvMsg != null) {
             mTvMsg.setText(msg);
         }
-    }
-
-    public void setSecondMsg(CharSequence msg) {
+        mSecondMsg = secondMsg;
         if (mTvSecondMsg != null) {
+            mTvSecondMsg.setText(mSecondMsg);
             if (TextUtils.isEmpty(mSecondMsg)) {
                 mTvSecondMsg.setVisibility(View.GONE);
             } else {
                 mTvSecondMsg.setVisibility(View.VISIBLE);
             }
-            mTvSecondMsg.setText(msg);
         }
     }
 
@@ -115,7 +117,8 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
         mMsgSpanBuilder.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(color);
         mMsgSpanBuilder.setSpan(colorSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mTvMsg.setText(mMsgSpanBuilder);
+        mTvMsg.setMovementMethod(LinkMovementMethod.getInstance());
+        setMsg(mMsgSpanBuilder);
     }
 
     public void setSecondMsgSpan(ClickableSpan clickableSpan, String clickString, @ColorInt int color) {
@@ -130,7 +133,29 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(color);
         mSecondMsgSpanBuilder.setSpan(colorSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTvSecondMsg.setMovementMethod(LinkMovementMethod.getInstance());
-        mTvSecondMsg.setText(mSecondMsgSpanBuilder);
+        setSecondMsg(mSecondMsgSpanBuilder);
+    }
+
+    public void setMsg(CharSequence msg) {
+        if (mTvMsg != null) {
+            mTvMsg.setText(msg);
+            if (TextUtils.isEmpty(msg)) {
+                mTvMsg.setVisibility(View.GONE);
+            } else {
+                mTvMsg.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    public void setSecondMsg(CharSequence msg) {
+        if (mTvSecondMsg != null) {
+            mTvSecondMsg.setText(msg);
+            if (TextUtils.isEmpty(msg)) {
+                mTvSecondMsg.setVisibility(View.GONE);
+            } else {
+                mTvSecondMsg.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     public void setButtonLeftText(String text) {
