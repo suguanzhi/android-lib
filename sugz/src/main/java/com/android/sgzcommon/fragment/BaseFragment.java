@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
 
     protected boolean isInited;
-    protected boolean isVisiable;
+    protected boolean isVisiableToUser;
     protected Point mWindowSize;
     protected Context mContext;
     protected BitmapCache mCache;
@@ -43,12 +43,12 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutId();
 
-    protected abstract void init(Bundle savedInstanceState,View parent);
+    protected abstract void init(Bundle savedInstanceState, View parent);
 
     /**
      * fragment的views已完成绘制并第一次对用户可见，特别针对viewpager中的fragment懒加载数据。
      */
-    protected void userVisible(){
+    protected void visibleToUser() {
 
     }
 
@@ -70,19 +70,24 @@ public abstract class BaseFragment extends Fragment {
         ButterKnife.bind(this, view);
         isInited = true;
         mLoadingDialog = new LoadingDialog(getActivity());
-        init(savedInstanceState,view);
-        if (isVisiable){
-            userVisible();
-        }
+        init(savedInstanceState, view);
         return view;
     }
 
     @Override
+    public void onResume() {
+        if (isVisiableToUser) {
+            visibleToUser();
+        }
+        super.onResume();
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        if (isVisibleToUser){
-            isVisiable = true;
-            if (isInited){
-                userVisible();
+        this.isVisiableToUser = isVisibleToUser;
+        if (isVisibleToUser) {
+            if (isInited) {
+                visibleToUser();
             }
         }
         super.setUserVisibleHint(isVisibleToUser);
@@ -170,7 +175,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected void showToast(String text) {
         Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 }
