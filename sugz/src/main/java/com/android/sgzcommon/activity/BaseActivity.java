@@ -208,26 +208,29 @@ public class BaseActivity extends AppCompatActivity {
      */
     protected void checkAndRequestePermissions(String[] neededPermissions, OnPermissionResultListener listener) {
         this.listener = listener;
+        List<String> grants = new ArrayList<String>();
+        List<String> denies = new ArrayList<String>();
         if (neededPermissions == null) {
             if (listener != null) {
-                listener.onResult(null, true);
+                listener.onResult(grants, denies);
             }
         }
-        List<String> list = new ArrayList<String>();
         for (int i = 0; i < neededPermissions.length; i++) {
             String permission = neededPermissions[i];
             if (!checkPermissions(permission)) {
-                list.add(neededPermissions[i]);
+                denies.add(neededPermissions[i]);
             } else {
-                if (listener != null) {
-                    listener.onResult(permission, true);
-                }
+                grants.add(neededPermissions[i]);
             }
         }
-        String[] needs = new String[list.size()];
-        list.toArray(needs);
-        if (needs.length > 0) {
-            ActivityCompat.requestPermissions(this, needs, ACTION_REQUEST_PERMISSIONS);
+        String[] ds = new String[denies.size()];
+        denies.toArray(ds);
+        if (ds.length > 0) {
+            ActivityCompat.requestPermissions(this, ds, ACTION_REQUEST_PERMISSIONS);
+        } else {
+            if (listener != null) {
+                listener.onResult(grants, denies);
+            }
         }
     }
 
@@ -242,22 +245,25 @@ public class BaseActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == ACTION_REQUEST_PERMISSIONS) {
             if (permissions.length > 0) {
+                ArrayList<String> grants = new ArrayList<>();
+                ArrayList<String> denies = new ArrayList<>();
                 for (int i = 0; i < permissions.length; i++) {
                     String permission = permissions[i];
-                    boolean granted = false;
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        granted = true;
+                        grants.add(permission);
+                    } else {
+                        denies.add(permission);
                     }
-                    if (listener != null) {
-                        listener.onResult(permission, granted);
-                    }
+                }
+                if (listener != null) {
+                    listener.onResult(grants, denies);
                 }
             }
         }
     }
 
     public interface OnPermissionResultListener {
-        void onResult(String permission, boolean granted);
+        void onResult(List<String> grants, List<String> denies);
     }
 
     @Override
