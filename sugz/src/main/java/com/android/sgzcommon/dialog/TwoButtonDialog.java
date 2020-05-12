@@ -89,20 +89,9 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
     }
 
     public void show(String msg, String secondMsg) {
-        show();
         mMsg = msg;
-        if (mTvMsg != null) {
-            mTvMsg.setText(msg);
-        }
         mSecondMsg = secondMsg;
-        if (mTvSecondMsg != null) {
-            mTvSecondMsg.setText(mSecondMsg);
-            if (TextUtils.isEmpty(mSecondMsg)) {
-                mTvSecondMsg.setVisibility(View.GONE);
-            } else {
-                mTvSecondMsg.setVisibility(View.VISIBLE);
-            }
-        }
+        show();
     }
 
     public void setMsgSpan(ClickableSpan clickableSpan, String clickString, @ColorInt int color) {
