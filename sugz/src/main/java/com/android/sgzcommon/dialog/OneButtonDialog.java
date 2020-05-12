@@ -3,6 +3,7 @@ package com.android.sgzcommon.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -14,8 +15,9 @@ import com.android.sugz.R;
  */
 public class OneButtonDialog extends BaseDialog implements View.OnClickListener {
 
-    private String msg;
-    private String secondMsg;
+    private CharSequence mMsg;
+    private CharSequence mSecondMsg;
+    private CharSequence mButtonText;
     private TextView mTvMsg;
     private TextView mTvSecondMsg;
     private TextView mBtn;
@@ -27,13 +29,13 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
 
     public OneButtonDialog(Context context, String msg) {
         super(context);
-        this.msg = msg;
+        this.mMsg = msg;
     }
 
     public OneButtonDialog(Context context, String msg, String secondMsg) {
         super(context);
-        this.msg = msg;
-        this.secondMsg = secondMsg;
+        this.mMsg = msg;
+        this.mSecondMsg = secondMsg;
     }
 
     @Override
@@ -58,20 +60,45 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
         mTvSecondMsg = findViewById(R.id.tv_msg_second);
         mBtn = findViewById(R.id.tv_confirm);
         mBtn.setOnClickListener(this);
-        mTvMsg.setText(msg);
-        mTvSecondMsg.setText(secondMsg);
+        setMsg(mMsg);
+        setSecondMsg(mSecondMsg);
+        setButtonText(mButtonText);
     }
 
     public void setMsg(CharSequence msg) {
-        mTvMsg.setText(msg);
+        mMsg = msg;
+        if (mTvMsg != null){
+            if (TextUtils.isEmpty(msg)){
+                mTvMsg.setVisibility(View.GONE);
+            }else {
+                mTvMsg.setVisibility(View.VISIBLE);
+            }
+            mTvMsg.setText(msg);
+        }
     }
 
-    public void setSecondMsg(CharSequence msg) {
-        mTvSecondMsg.setText(msg);
+    public void setSecondMsg(CharSequence secondMsg) {
+        mSecondMsg = secondMsg;
+        if (mTvSecondMsg != null){
+            if (TextUtils.isEmpty(secondMsg)){
+                mTvSecondMsg.setVisibility(View.GONE);
+            }else {
+                mTvSecondMsg.setVisibility(View.VISIBLE);
+            }
+            mTvSecondMsg.setText(secondMsg);
+        }
     }
 
     public void setButtonText(CharSequence text) {
-        mBtn.setText(text);
+        mButtonText = text;
+        if (mBtn != null){
+            if (TextUtils.isEmpty(text)){
+                mBtn.setVisibility(View.GONE);
+            }else {
+                mBtn.setVisibility(View.VISIBLE);
+            }
+            mBtn.setText(text);
+        }
     }
 
     @Override

@@ -88,12 +88,6 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
         }
     }
 
-    public void show(String msg, String secondMsg) {
-        mMsg = msg;
-        mSecondMsg = secondMsg;
-        show();
-    }
-
     public void setMsgSpan(ClickableSpan clickableSpan, String clickString, @ColorInt int color) {
         int start = mSecondMsg.indexOf(clickString);
         int end = start + clickString.length();
@@ -106,7 +100,7 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(color);
         mMsgSpanBuilder.setSpan(colorSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTvMsg.setMovementMethod(LinkMovementMethod.getInstance());
-        setMsg(mMsgSpanBuilder);
+        mTvMsg.setText(mMsgSpanBuilder);
     }
 
     public void setSecondMsgSpan(ClickableSpan clickableSpan, String clickString, @ColorInt int color) {
@@ -121,10 +115,11 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(color);
         mSecondMsgSpanBuilder.setSpan(colorSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTvSecondMsg.setMovementMethod(LinkMovementMethod.getInstance());
-        setSecondMsg(mSecondMsgSpanBuilder);
+        mTvSecondMsg.setText(mSecondMsgSpanBuilder);
     }
 
-    public void setMsg(CharSequence msg) {
+    public void setMsg(String msg) {
+        mMsg = msg;
         if (mTvMsg != null) {
             mTvMsg.setText(msg);
             if (TextUtils.isEmpty(msg)) {
@@ -135,7 +130,8 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
         }
     }
 
-    public void setSecondMsg(CharSequence msg) {
+    public void setSecondMsg(String msg) {
+        mSecondMsg = msg;
         if (mTvSecondMsg != null) {
             mTvSecondMsg.setText(msg);
             if (TextUtils.isEmpty(msg)) {

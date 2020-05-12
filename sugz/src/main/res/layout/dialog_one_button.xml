@@ -32,6 +32,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:text=""
             android:textColor="@color/text_second"
             android:textSize="@dimen/text_second"
