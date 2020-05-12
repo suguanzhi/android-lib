@@ -6,9 +6,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.android.sgzcommon.utils.BitmapUtil;
 import com.android.sgzcommon.view.DragPhotoView;
 import com.android.sugz.R;
 import com.android.volley.toolbox.ImageLoader;
+
+import java.io.File;
 
 public class PhotoViewActivity extends BaseActivity {
 
@@ -21,8 +24,15 @@ public class PhotoViewActivity extends BaseActivity {
         setContentView(R.layout.activity_photo_view);
         String path = getIntent().getStringExtra("path");
         if (!TextUtils.isEmpty(path)) {
-            ImageLoader.ImageListener listener = ImageLoader.getImageListener(mDpvImage, 0, 0);
-            mImageLoader.get(path, listener, 1080, 1080);
+            if (path.startsWith("http")) {
+                ImageLoader.ImageListener listener = ImageLoader.getImageListener(mDpvImage, 0, 0);
+                mImageLoader.get(path, listener, 1080, 1080);
+            } else {
+                File file = new File(path);
+                if (file.exists()) {
+                    mDpvImage.setImageBitmap(BitmapUtil.getFitBitmap(this, path));
+                }
+            }
         }
         mDpvImage.setOnExitListener(new DragPhotoView.OnExitListener() {
             @Override
