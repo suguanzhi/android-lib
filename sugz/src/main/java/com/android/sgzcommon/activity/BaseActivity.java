@@ -190,10 +190,30 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * 权限检查
      *
+     * @param neededPermissions 需要的权限
+     * @return 是否被允许
+     */
+    protected boolean checkPermissions(String[] neededPermissions) {
+        boolean granted = true;
+        if (neededPermissions == null) {
+            return true;
+        }
+        for (int i = 0; i < neededPermissions.length; i++) {
+            if (!checkPermission(neededPermissions[i])) {
+                granted = false;
+                break;
+            }
+        }
+        return granted;
+    }
+
+    /**
+     * 权限检查
+     *
      * @param neededPermission 需要的权限
      * @return 是否被允许
      */
-    protected boolean checkPermissions(String neededPermission) {
+    protected boolean checkPermission(String neededPermission) {
         if (neededPermission == null) {
             return true;
         }
@@ -217,7 +237,7 @@ public class BaseActivity extends AppCompatActivity {
         }
         for (int i = 0; i < neededPermissions.length; i++) {
             String permission = neededPermissions[i];
-            if (!checkPermissions(permission)) {
+            if (!checkPermission(permission)) {
                 denies.add(neededPermissions[i]);
             } else {
                 grants.add(neededPermissions[i]);
