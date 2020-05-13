@@ -59,7 +59,7 @@ public abstract class BaseDialog extends OKHttpDialog {
         }
         int height = getHeight();
         if (0 == height) {
-            height = width;
+            height = WindowManager.LayoutParams.WRAP_CONTENT;
         }
         setLayoutParamsAnim(width, height);
     }

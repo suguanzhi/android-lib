@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.android.sugz.R;
@@ -50,7 +49,7 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
 
     @Override
     protected int getHeight() {
-        return WindowManager.LayoutParams.WRAP_CONTENT;
+        return 0;
     }
 
     @Override

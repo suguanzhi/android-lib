@@ -10,7 +10,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.android.sugz.R;
@@ -62,7 +61,7 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
 
     @Override
     protected int getHeight() {
-        return WindowManager.LayoutParams.WRAP_CONTENT;
+        return 0;
     }
 
     @Override
