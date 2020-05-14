@@ -2,7 +2,6 @@ package com.sgz.androidlib;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.android.sgzcommon.activity.TakePhotoActivity;
 import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
@@ -46,8 +45,8 @@ public class MainActivity extends TakePhotoActivity {
         String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         checkAndRequestePermissions(permissions, new OnPermissionResultListener() {
             @Override
-            public void onResult(String permission, boolean granted) {
-                Log.d("MainActivity", "onResult: permission == " + permission + "; granted == " + granted);
+            public void onResult(List<String> grants, List<String> denies) {
+
             }
         });
 

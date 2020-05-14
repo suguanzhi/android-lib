@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.sgzcommon.activity.PhotoViewActivity;
 import com.android.sgzcommon.activity.utils.MUploadResultSet;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
@@ -53,9 +54,6 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
     String mCurrentPath;
     List<PhotoUpload> mPhotoUploads;
     static final int REQUEST_TAKE_PHOTO_CODE = 371;
-    static final int PHOTO_RESULT_NONE = 1;
-    static final int PHOTO_RESULT_LENGTH = 2;
-    static final int PHOTO_RESULT = 3;
 
     public TakePhotoGridImpl(Activity activity, RecyclerView recyclerView) {
         this(activity, recyclerView, 4, 5, 5);
@@ -85,7 +83,10 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
             public void onItemClick(View view, int position) {
                 if (position < mPhotoUploads.size()) {
                     PhotoUpload photoUpload = mPhotoUploads.get(position);
-
+                    String path = photoUpload.getPath();
+                    Intent intent = new Intent(mActivity, PhotoViewActivity.class);
+                    intent.putExtra("path", path);
+                    mActivity.startActivity(intent);
                 }
             }
         }, null);
