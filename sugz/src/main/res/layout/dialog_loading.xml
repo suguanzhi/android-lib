@@ -13,7 +13,7 @@
         android:layout_width="54dp"
         android:layout_height="40dp"
         app:color1="@color/colorPrimary"
-        app:color2="@color/grey500"/>
+        app:color2="@color/grey_500"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

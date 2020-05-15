@@ -62,7 +62,7 @@ public class LoadResultView extends LinearLayout {
 
             String btnText = array.getString(R.styleable.LoadResultView_btn_text);
             int btnTextSize = array.getDimensionPixelSize(R.styleable.LoadResultView_btn_text_size, 14);
-            int btnTextColor = array.getColor(R.styleable.LoadResultView_btn_text_color, context.getResources().getColor(R.color.grey500));
+            int btnTextColor = array.getColor(R.styleable.LoadResultView_btn_text_color, context.getResources().getColor(R.color.grey_500));
             Drawable btnBackground = array.getDrawable(R.styleable.LoadResultView_btn_background);
             if (btnBackground != null) {
                 mTvButton.setBackground(btnBackground);

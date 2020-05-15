@@ -8,7 +8,7 @@
     <com.android.sgzcommon.view.imageview.CornerImageView
         android:id="@+id/civ_image"
         android:layout_width="match_parent"
-        android:background="@color/grey300"
+        android:background="@color/grey_300"
         android:adjustViewBounds="true"
         android:layout_margin="5dp"
         android:layout_centerInParent="true"
