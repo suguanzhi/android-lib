@@ -33,15 +33,22 @@ public class StringListAdapter extends BaseRecyclerviewAdapter<StringListAdapter
     public void onBindViewHolder(ViewHolder holder, int position) {
         String text = (String) mObjects.get(position);
         holder.mTvString.setText(text);
+        if (position == mObjects.size() - 1) {
+            holder.mVLine.setVisibility(View.GONE);
+        } else {
+            holder.mVLine.setVisibility(View.VISIBLE);
+        }
     }
 
-    class ViewHolder extends BaseViewHolder{
+    class ViewHolder extends BaseViewHolder {
 
         TextView mTvString;
+        View mVLine;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTvString = itemView.findViewById(R.id.tv_string);
+            mVLine = itemView.findViewById(R.id.v_line);
         }
     }
 }

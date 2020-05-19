@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_line"
-    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:gravity="center"
-    >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_string"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/text"
+        android:gravity="center"
+        android:minHeight="@dimen/height_line"
         android:text="123"
+        android:textColor="@color/text"
         android:textSize="@dimen/text" />
+
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/divider" />
 </LinearLayout>
