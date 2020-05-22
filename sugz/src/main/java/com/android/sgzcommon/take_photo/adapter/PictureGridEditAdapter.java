@@ -41,20 +41,21 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         Log.d("PictureGridEditAdapter", "getView: position = " + position);
         if (0 == getItemViewType(position)) {
+            ViewHolder viewHolder = (ViewHolder) holder;
             final PhotoUpload entity = (PhotoUpload) mObjects.get(position);
             entity.setOnProgressListener(new PhotoUpload.OnProgressListener() {
                 @Override
                 public void onProgress(int progress) {
-                    notifyDataSetChanged();
+                    Log.d("PictureGridEditAdapter", "onProgress: id = " + Thread.currentThread().getId());
+                    viewHolder.mPbProgress.setProgress(progress);
                     Log.d("PictureGridEditAdapter", "onProgress: position == " + position + "; progress == " + progress);
                 }
 
                 @Override
                 public void onState(UploadEntity.STATE state) {
-                    notifyDataSetChanged();
+                    PictureGridEditAdapter.this.notifyDataSetChanged();
                 }
             });
-            ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.mIvDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

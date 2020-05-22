@@ -2,12 +2,18 @@ package com.sgz.androidlib;
 
 import android.Manifest;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.android.sgzcommon.activity.TakePhotoActivity;
+import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
 import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
+import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
 import com.android.sgzcommon.take_photo.utils.PhotoUpload;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -49,7 +55,27 @@ public class MainActivity extends TakePhotoActivity {
 
             }
         });
+    }
 
+    public void upload(View v){
+        String url = "http://mildyak.xicp.net/api/uploadController.do?ajaxSaveFile";
+        Map<String, String> data = new HashMap<>();
+        uploadPhotos(url, data, new OnPhotoUploadListener() {
+            @Override
+            public void onAllSuccess() {
+                Log.d("MainActivity", "onAllSuccess: ");
+            }
+
+            @Override
+            public void onSuccess(PhotoUpload photoUpload, UploadResultSet result) {
+                Log.d("MainActivity", "onSuccess: ");
+            }
+
+            @Override
+            public void onFail(PhotoUpload photoUpload, Exception e) {
+                Log.d("MainActivity", "onFail: " + Log.getStackTraceString(e));
+            }
+        });
     }
 
     @Override

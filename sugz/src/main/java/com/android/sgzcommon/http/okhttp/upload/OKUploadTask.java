@@ -14,6 +14,7 @@ import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,16 +34,17 @@ import okio.Source;
 
 public class OKUploadTask<T extends UploadEntity> {
 
+    /**
+     * 上传参数名称
+     */
+    private String name = "uploadify";
+
     public static final int ON_START = 1;
     public static final int ON_SUCCESS = 2;
     public static final int ON_VALUE = 3;
     public static final int ON_FAIL = 4;
-    /**
-     * 上传参数名称
-     */
-    private static final String PARAMS_NAME = "upload";
-
     private static final String TAG = "OKUploadTask";
+
     private static OKUploadTask mOKUploadTask;
     private OkHttpClient mOkHttpClient;
     private ExecutorService mExecutorService;
@@ -97,74 +99,76 @@ public class OKUploadTask<T extends UploadEntity> {
     /**
      * 上传文件
      */
+    public void upLoadFileEnqueue(final String url, final T entity, final Map<String, String> data, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
+        try {
+            mHandler.sendMessage(createMessage(ON_START, entity, listener, resultSet));
+            final Request request = getRequest(url, entity, data, resultSet, listener);
+            Call call = mOkHttpClient.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+                    log("IOException=" + e.toString());
+                    resultSet.setError(e);
+                    mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                }
+
+                @Override
+                public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        String result = response.body().string();
+                        Log.d(TAG, "onResponse: result = " + result);
+                        resultSet.setResponse(result);
+                        resultSet.parseResult(result);
+                        if (resultSet.isSuccess()) {
+                            entity.setProgress(100);
+                            mHandler.sendMessage(createMessage(ON_VALUE, entity, listener, resultSet));
+                            mHandler.sendMessage(createMessage(ON_SUCCESS, entity, listener, resultSet));
+                        } else {
+                            mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                        }
+                    } else {
+                        int code = response.code();
+                        resultSet.setError(new RuntimeException("code == " + code));
+                        mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultSet.setError(e);
+            mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+        }
+
+    }
+
+    /**
+     * 上传文件
+     */
     public void upLoadFile(final String url, final T entity, final Map<String, String> data, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
         mExecutorService.execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    log("upload:run:url=" + url);
-                    if (entity == null) {
-                        resultSet.setError(new RuntimeException("UploadEntity == null"));
-                        mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
-                        return;
-                    }
-                    final File f = entity.getFile();
-                    if (f == null || !f.exists()) {
-                        resultSet.setError(new RuntimeException("file == null || file is not exists."));
-                        mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
-                        return;
-                    }
-                    mHandler.sendMessage(createMessage(ON_START, entity, listener, resultSet));
-                    MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
-                    RequestBody fileBody = createProgressRequestBody(MediaType.parse("multipart/form-data"), resultSet, entity, listener);
-
-                    Headers.Builder hb = new Headers.Builder();
-                    hb.add("Content-Disposition", "form-data; name=\"uploadify\";" + "filename=\"" + f.getName() + "\"");
-                    builder.addPart(hb.build(), fileBody);
-                    RequestBody requestBody = builder.build();
-                    //创建Request
-                    Request.Builder rb = new Request.Builder();
-                    rb.url(url);
-                    if (data != null) {
-                        for (String key : data.keySet()) {
-                            String value = data.get(key);
-                            if (!TextUtils.isEmpty(value)) {
-                                rb.addHeader(key, value);
-                            }
-                        }
-                    }
-                    rb.post(requestBody);
-                    Call call = mOkHttpClient.newCall(rb.build());
-                    log("upload:run>>>222");
-                    call.enqueue(new Callback() {
-                        @Override
-                        public void onFailure(Request request, IOException e) {
-                            log("IOException=" + e.toString());
-                            resultSet.setError(e);
+                    Request request = getRequest(url, entity, data, resultSet, listener);
+                    Call call = mOkHttpClient.newCall(request);
+                    Response response = call.execute();
+                    if (response.isSuccessful()) {
+                        String result = response.body().string();
+                        Log.d(TAG, "onResponse: result = " + result);
+                        resultSet.setResponse(result);
+                        resultSet.parseResult(result);
+                        if (resultSet.isSuccess()) {
+                            entity.setProgress(100);
+                            mHandler.sendMessage(createMessage(ON_VALUE, entity, listener, resultSet));
+                            mHandler.sendMessage(createMessage(ON_SUCCESS, entity, listener, resultSet));
+                        } else {
                             mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
                         }
-
-                        @Override
-                        public void onResponse(com.squareup.okhttp.Response response) throws IOException {
-                            if (response.isSuccessful()) {
-                                String result = response.body().string();
-                                Log.d(TAG, "onResponse: result = " + result);
-                                resultSet.setResponse(result);
-                                resultSet.parseResult(result);
-                                if (resultSet.isSuccess()) {
-                                    entity.setProgress(100);
-                                    mHandler.sendMessage(createMessage(ON_VALUE, entity, listener, resultSet));
-                                    mHandler.sendMessage(createMessage(ON_SUCCESS, entity, listener, resultSet));
-                                } else {
-                                    mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
-                                }
-                            } else {
-                                int code = response.code();
-                                resultSet.setError(new RuntimeException("code == " + code));
-                                mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
-                            }
-                        }
-                    });
+                    } else {
+                        int code = response.code();
+                        resultSet.setError(new RuntimeException("code == " + code));
+                        mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     resultSet.setError(e);
@@ -174,11 +178,38 @@ public class OKUploadTask<T extends UploadEntity> {
         });
     }
 
+    private Request getRequest(String url, T entity, Map<String, String> data, UploadResultSet resultSet, OnUploadFileListener<T> listener) {
+        final File f = entity.getFile();
+        MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
+        RequestBody fileBody = createProgressRequestBody(MediaType.parse("multipart/form-data"), resultSet, entity, listener);
+        Headers.Builder hb = new Headers.Builder();
+        hb.add("Content-Disposition", "form-data; name=\"" + name + "\";" + "filename=\"" + f.getName() + "\"");
+        builder.addPart(hb.build(), fileBody);
+        RequestBody requestBody = builder.build();
+        //创建Request
+        Request.Builder requestBuilder = new Request.Builder();
+        requestBuilder.url(url);
+        if (data != null) {
+            for (String key : data.keySet()) {
+                String value = data.get(key);
+                if (!TextUtils.isEmpty(value)) {
+                    requestBuilder.addHeader(key, value);
+                }
+            }
+        }
+        requestBuilder.post(requestBody);
+        return requestBuilder.build();
+    }
+
     private Message createMessage(int what, T entity, OnUploadFileListener listener, UploadResultSet result) {
         Message msg = new Message();
         msg.what = what;
         msg.obj = new UploadResponse(entity, listener, result);
         return msg;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     private class UploadResponse {
@@ -239,9 +270,10 @@ public class OKUploadTask<T extends UploadEntity> {
                         sink.write(buf, readCount);
                         current += readCount;
                         ratioPercent = (int) ((current * 1f / remaining) * 100);
-                        if (ratioPercent <= 98) {
+                        if (ratioPercent <= 99) {
+                            entity.setProgress(ratioPercent);
                             mHandler.sendMessage(createMessage(ON_VALUE, entity, listener, resultSet));
-                            log("createProgressRequestBody : ratio == " + ratioPercent + "%");
+                            log("createProgressRequestBody : " + entity.getFile().getName() + "；ratio == " + ratioPercent + "%");
                         }
                     }
                 } catch (Exception e) {

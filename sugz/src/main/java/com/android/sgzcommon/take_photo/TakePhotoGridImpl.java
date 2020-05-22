@@ -14,16 +14,16 @@ import android.widget.Toast;
 
 import com.android.sgzcommon.activity.PhotoViewActivity;
 import com.android.sgzcommon.activity.utils.MUploadResultSet;
-import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
-import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
-import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.utils.PhotoUpload;
 import com.android.sgzcommon.http.okhttp.upload.OKUploadTask;
 import com.android.sgzcommon.http.okhttp.upload.OnUploadFileListener;
+import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
 import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
 import com.android.sgzcommon.recycleview.MarginDecoration;
 import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
+import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
+import com.android.sgzcommon.take_photo.utils.PhotoUpload;
 import com.android.sgzcommon.utils.FileUtil;
 
 import java.io.File;
@@ -82,12 +82,16 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
         mAdapter = new PictureGridEditAdapter(mActivity, mPhotoUploads, new BaseViewHolder.OnItemtClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (position < mPhotoUploads.size()) {
-                    PhotoUpload photoUpload = mPhotoUploads.get(position);
-                    String path = photoUpload.getPath();
-                    Intent intent = new Intent(mActivity, PhotoViewActivity.class);
-                    intent.putExtra("path", path);
-                    mActivity.startActivity(intent);
+                try {
+                    if (position < mPhotoUploads.size()) {
+                        PhotoUpload photoUpload = mPhotoUploads.get(position);
+                        String path = photoUpload.getPath();
+                        Intent intent = new Intent(mActivity, PhotoViewActivity.class);
+                        intent.putExtra("path", path);
+                        mActivity.startActivity(intent);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         }, null);
