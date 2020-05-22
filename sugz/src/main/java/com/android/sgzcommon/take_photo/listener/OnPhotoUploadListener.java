@@ -1,14 +1,13 @@
 package com.android.sgzcommon.take_photo.listener;
 
 import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
-
-import java.io.File;
+import com.android.sgzcommon.take_photo.utils.PhotoUpload;
 
 public interface OnPhotoUploadListener {
 
     void onAllSuccess();
 
-    void onSuccess(File file, UploadResultSet result);
+    void onSuccess(PhotoUpload photoUpload, UploadResultSet result);
 
-    void onFail(File file, Exception e);
+    void onFail(PhotoUpload photoUpload, Exception e);
 }

@@ -1,13 +1,11 @@
 package com.android.sgzcommon.http.okhttp.upload;
 
-import java.io.File;
+public interface OnUploadFileListener<V> {
+	void onUploadStart(V v);
 
-public interface OnUploadFileListener {
-	void onUploadStart(File file);
+	void onUploadSuccess(V v, UploadResultSet result);
 
-	void onUploadSuccess(File file, UploadResultSet result);
+	void onValue(V v,int value);
 
-	void onValue(File file,int value);
-
-	void onUploadFail(File file,Exception e);
+	void onUploadFail(V v,Exception e);
 }

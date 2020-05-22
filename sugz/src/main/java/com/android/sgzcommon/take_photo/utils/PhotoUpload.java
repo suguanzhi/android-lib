@@ -1,42 +1,42 @@
 package com.android.sgzcommon.take_photo.utils;
 
-public class PhotoUpload {
+import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
 
-    private int state;
+import java.io.File;
+
+public class PhotoUpload implements UploadEntity {
+
+    private STATE state;
     private int progress;
+    private int position;
     private String path;
-    //上传失败
-    public static final int STATE_FAIL = -1;
-    //初始状态
-    public static final int STATE_INIT = 0;
-    //上传中
-    public static final int STATE_UPLOADING = 1;
-    //上传成功
-    public static final int STATE_SUCCESS = 2;
 
 
-    public PhotoUpload() {
-    }
-
-    public PhotoUpload(int progress, String path) {
-        this.progress = progress;
+    public PhotoUpload(STATE state, String path) {
+        this.state = state;
         this.path = path;
     }
 
-    public int getState() {
-        return state;
+    public int getPosition() {
+        return position;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public int getProgress() {
         return progress;
     }
 
-    public void setProgress(int progress) {
-        this.progress = progress;
+    @Override
+    public void setState(STATE state) {
+        this.state = state;
+    }
+
+    @Override
+    public STATE getState() {
+        return state;
     }
 
     public String getPath() {
@@ -45,5 +45,15 @@ public class PhotoUpload {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @Override
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+    @Override
+    public File getFile() {
+        return new File(path);
     }
 }
