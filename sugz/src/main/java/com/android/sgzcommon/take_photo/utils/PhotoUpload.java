@@ -33,6 +33,9 @@ public class PhotoUpload implements UploadEntity {
     @Override
     public void setState(STATE state) {
         this.state = state;
+        if (listener != null){
+            listener.onState(state);
+        }
     }
 
     @Override
@@ -67,5 +70,7 @@ public class PhotoUpload implements UploadEntity {
 
     public interface OnProgressListener {
         void onProgress(int progress);
+
+        void onState(STATE state);
     }
 }
