@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
 import com.android.sgzcommon.take_photo.utils.PhotoUpload;
@@ -62,22 +63,22 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                     }
                 }
             });
-            int state = entity.getState();
+            UploadEntity.STATE state = entity.getState();
             int progress = entity.getProgress();
             viewHolder.mTvProgress.setText(progress + "%");
             viewHolder.mPbProgress.setProgress(progress);
-            if (PhotoUpload.STATE_SUCCESS == state) {
+            if (PhotoUpload.STATE.STATE_SUCCESS == state) {
                 viewHolder.mIvDelete.setVisibility(View.GONE);
                 viewHolder.mTvProgress.setVisibility(View.GONE);
                 viewHolder.mPbProgress.setVisibility(View.GONE);
                 viewHolder.mIvUploadState.setVisibility(View.VISIBLE);
                 viewHolder.mIvUploadState.setImageResource(R.drawable.ic_success);
-            } else if (PhotoUpload.STATE_UPLOADING == state) {
+            } else if (PhotoUpload.STATE.STATE_UPLOADING == state) {
                 viewHolder.mTvProgress.setVisibility(View.VISIBLE);
                 viewHolder.mPbProgress.setVisibility(View.VISIBLE);
                 viewHolder.mIvDelete.setVisibility(View.GONE);
                 viewHolder.mIvUploadState.setVisibility(View.GONE);
-            } else if (PhotoUpload.STATE_FAIL == state) {
+            } else if (PhotoUpload.STATE.STATE_FAIL == state) {
                 viewHolder.mIvDelete.setVisibility(View.VISIBLE);
                 viewHolder.mTvProgress.setVisibility(View.GONE);
                 viewHolder.mPbProgress.setVisibility(View.GONE);
