@@ -42,6 +42,13 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
         Log.d("PictureGridEditAdapter", "getView: position = " + position);
         if (0 == getItemViewType(position)) {
             final PhotoUpload entity = (PhotoUpload) mObjects.get(position);
+            entity.setOnProgressListener(new PhotoUpload.OnProgressListener() {
+                @Override
+                public void onProgress(int progress) {
+                    notifyDataSetChanged();
+                    Log.d("PictureGridEditAdapter", "onProgress: position == " + position + "; progress == " + progress);
+                }
+            });
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.mIvDelete.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -52,7 +52,7 @@ public class PhotoUpload implements UploadEntity {
     public void setProgress(int progress) {
         this.progress = progress;
         if (listener != null) {
-            listener.onProgress(position, progress);
+            listener.onProgress(progress);
         }
     }
 
@@ -66,6 +66,6 @@ public class PhotoUpload implements UploadEntity {
     }
 
     public interface OnProgressListener {
-        void onProgress(int position, int progress);
+        void onProgress(int progress);
     }
 }
