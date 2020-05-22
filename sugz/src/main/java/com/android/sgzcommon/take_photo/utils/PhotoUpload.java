@@ -10,6 +10,7 @@ public class PhotoUpload implements UploadEntity {
     private int progress;
     private int position;
     private String path;
+    private OnProgressListener listener;
 
 
     public PhotoUpload(STATE state, String path) {
@@ -50,10 +51,21 @@ public class PhotoUpload implements UploadEntity {
     @Override
     public void setProgress(int progress) {
         this.progress = progress;
+        if (listener != null) {
+            listener.onProgress(position, progress);
+        }
     }
 
     @Override
     public File getFile() {
         return new File(path);
+    }
+
+    public void setOnProgressListener(OnProgressListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnProgressListener {
+        void onProgress(int position, int progress);
     }
 }
