@@ -16,14 +16,12 @@ import com.android.sgzcommon.activity.PhotoViewActivity;
 import com.android.sgzcommon.activity.utils.MUploadResultSet;
 import com.android.sgzcommon.http.okhttp.upload.OKUploadTask;
 import com.android.sgzcommon.http.okhttp.upload.OnUploadFileListener;
-import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
 import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
 import com.android.sgzcommon.recycleview.MarginDecoration;
 import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.utils.PhotoUpload;
 import com.android.sgzcommon.utils.FileUtil;
 
 import java.io.File;
@@ -125,19 +123,16 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
             for (int i = 0; i < mPhotoUploads.size(); i++) {
                 final PhotoUpload image = mPhotoUploads.get(i);
                 if (PhotoUpload.STATE.STATE_START == image.getState() || PhotoUpload.STATE.STATE_FAIL == image.getState()) {
-                    image.setProgress(0);
                     final PhotoUpload photoUpload = mPhotoUploads.get(i);
                     OKUploadTask.getInstance().upLoadFile(url, photoUpload, data, new MUploadResultSet(), new OnUploadFileListener<PhotoUpload>() {
                         @Override
                         public void onUploadStart(PhotoUpload upload) {
                             Log.d("TakePhotoGridImpl", "onUploadStart: ");
-                            upload.setState(PhotoUpload.STATE.STATE_START);
                         }
 
                         @Override
                         public void onUploadSuccess(PhotoUpload upload, UploadResultSet result) {
                             Log.d("TakePhotoGridImpl", "onUploadSuccess: ");
-                            upload.setState(PhotoUpload.STATE.STATE_SUCCESS);
                             int position = upload.getPosition();
                             if (listener != null) {
                                 listener.onSuccess(upload, result);
@@ -157,16 +152,11 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
                         @Override
                         public void onValue(PhotoUpload upload, int value) {
                             Log.d("TakePhotoGridImpl", "onValue: " + value + "%");
-                            upload.setState(UploadEntity.STATE.STATE_UPLOADING);
-                            upload.setProgress(value);
                         }
 
                         @Override
                         public void onUploadFail(PhotoUpload upload, Exception e) {
                             Log.d("TakePhotoGridImpl", "onUploadFail: " + Log.getStackTraceString(e));
-                            upload.setState(UploadEntity.STATE.STATE_FAIL);
-                            int position = upload.getPosition();
-                            mAdapter.notifyItemChanged(position);
                         }
                     });
                 }
@@ -231,7 +221,7 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
             PhotoUpload upload = null;
             if (image.exists()) {
                 Log.d("TakePhotoGridImpl", "onActivityResult: 1");
-                upload = new PhotoUpload(UploadEntity.STATE.STATE_START, mCurrentPath);
+                upload = new PhotoUpload(mCurrentPath);
                 mPhotoUploads.add(upload);
             } else {
                 Log.d("TakePhotoGridImpl", "onActivityResult: 5");

@@ -1,6 +1,6 @@
 package com.android.sgzcommon.take_photo.listener;
 
-import com.android.sgzcommon.take_photo.utils.PhotoUpload;
+import com.android.sgzcommon.take_photo.PhotoUpload;
 
 import java.util.List;
 

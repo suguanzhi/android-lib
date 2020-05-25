@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
-import com.android.sgzcommon.take_photo.utils.PhotoUpload;
+import com.android.sgzcommon.take_photo.PhotoUpload;
 import com.android.sgzcommon.utils.BitmapUtil;
 import com.android.sgzcommon.utils.UnitUtil;
 import com.android.sgzcommon.view.imageview.CornerImageView;

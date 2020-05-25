@@ -9,7 +9,7 @@ import com.android.sgzcommon.activity.TakePhotoActivity;
 import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
 import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.utils.PhotoUpload;
+import com.android.sgzcommon.take_photo.PhotoUpload;
 
 import java.util.HashMap;
 import java.util.List;

@@ -11,7 +11,7 @@ import com.android.sgzcommon.take_photo.TakePhotoGrid;
 import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.utils.PhotoUpload;
+import com.android.sgzcommon.take_photo.PhotoUpload;
 
 import java.util.List;
 import java.util.Map;
