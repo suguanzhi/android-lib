@@ -62,11 +62,12 @@ public class OKUploadTask<T extends UploadEntity> {
                         listener.onUploadStart(entity);
                         break;
                     case ON_SUCCESS:
+                        entity.setProgress(100);
                         entity.setState(UploadEntity.STATE.STATE_SUCCESS);
                         listener.onUploadSuccess(entity, result);
                         break;
                     case ON_VALUE:
-                        int value = entity.getProgress();
+                        int value = msg.arg1;
                         entity.setProgress(value);
                         entity.setState(UploadEntity.STATE.STATE_UPLOADING);
                         listener.onValue(entity, value);
@@ -120,7 +121,6 @@ public class OKUploadTask<T extends UploadEntity> {
                         resultSet.setResponse(result);
                         resultSet.parseResult(result);
                         if (resultSet.isSuccess()) {
-                            entity.setProgress(100);
                             mHandler.sendMessage(createMessage(ON_VALUE, entity, listener, resultSet));
                             mHandler.sendMessage(createMessage(ON_SUCCESS, entity, listener, resultSet));
                         } else {
@@ -158,7 +158,6 @@ public class OKUploadTask<T extends UploadEntity> {
                         resultSet.setResponse(result);
                         resultSet.parseResult(result);
                         if (resultSet.isSuccess()) {
-                            entity.setProgress(100);
                             mHandler.sendMessage(createMessage(ON_VALUE, entity, listener, resultSet));
                             mHandler.sendMessage(createMessage(ON_SUCCESS, entity, listener, resultSet));
                         } else {
@@ -271,8 +270,9 @@ public class OKUploadTask<T extends UploadEntity> {
                         current += readCount;
                         ratioPercent = (int) ((current * 1f / remaining) * 100);
                         if (ratioPercent <= 99) {
-                            entity.setProgress(ratioPercent);
-                            mHandler.sendMessage(createMessage(ON_VALUE, entity, listener, resultSet));
+                            Message msg = createMessage(ON_VALUE, entity, listener, resultSet);
+                            msg.arg1 = ratioPercent;
+                            mHandler.sendMessage(msg);
                             log("createProgressRequestBody : " + entity.getFile().getName() + "；ratio == " + ratioPercent + "%");
                         }
                     }

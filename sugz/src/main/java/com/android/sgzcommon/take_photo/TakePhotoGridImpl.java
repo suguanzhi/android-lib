@@ -139,7 +139,6 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
                             Log.d("TakePhotoGridImpl", "onUploadSuccess: ");
                             upload.setState(PhotoUpload.STATE.STATE_SUCCESS);
                             int position = upload.getPosition();
-                            mAdapter.notifyItemChanged(position);
                             if (listener != null) {
                                 listener.onSuccess(upload, result);
                                 for (int j = 0; j < mPhotoUploads.size(); j++) {
@@ -160,8 +159,6 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
                             Log.d("TakePhotoGridImpl", "onValue: " + value + "%");
                             upload.setState(UploadEntity.STATE.STATE_UPLOADING);
                             upload.setProgress(value);
-                            int position = upload.getPosition();
-                            mAdapter.notifyItemChanged(position);
                         }
 
                         @Override

@@ -41,19 +41,19 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         Log.d("PictureGridEditAdapter", "getView: position = " + position);
         if (0 == getItemViewType(position)) {
-            ViewHolder viewHolder = (ViewHolder) holder;
+            final ViewHolder viewHolder = (ViewHolder) holder;
             final PhotoUpload entity = (PhotoUpload) mObjects.get(position);
             entity.setOnProgressListener(new PhotoUpload.OnProgressListener() {
                 @Override
                 public void onProgress(int progress) {
                     Log.d("PictureGridEditAdapter", "onProgress: id = " + Thread.currentThread().getId());
-                    viewHolder.mPbProgress.setProgress(progress);
+                    updatePgrogress(viewHolder,progress);
                     Log.d("PictureGridEditAdapter", "onProgress: position == " + position + "; progress == " + progress);
                 }
 
                 @Override
                 public void onState(UploadEntity.STATE state) {
-                    PictureGridEditAdapter.this.notifyDataSetChanged();
+                    updateState(viewHolder,state);
                 }
             });
             viewHolder.mIvDelete.setOnClickListener(new View.OnClickListener() {
@@ -76,33 +76,10 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                     }
                 }
             });
-            UploadEntity.STATE state = entity.getState();
             int progress = entity.getProgress();
-            viewHolder.mTvProgress.setText(progress + "%");
-            viewHolder.mPbProgress.setProgress(progress);
-            if (PhotoUpload.STATE.STATE_SUCCESS == state) {
-                viewHolder.mIvDelete.setVisibility(View.GONE);
-                viewHolder.mTvProgress.setVisibility(View.GONE);
-                viewHolder.mPbProgress.setVisibility(View.GONE);
-                viewHolder.mIvUploadState.setVisibility(View.VISIBLE);
-                viewHolder.mIvUploadState.setImageResource(R.drawable.ic_success);
-            } else if (PhotoUpload.STATE.STATE_UPLOADING == state) {
-                viewHolder.mTvProgress.setVisibility(View.VISIBLE);
-                viewHolder.mPbProgress.setVisibility(View.VISIBLE);
-                viewHolder.mIvDelete.setVisibility(View.GONE);
-                viewHolder.mIvUploadState.setVisibility(View.GONE);
-            } else if (PhotoUpload.STATE.STATE_FAIL == state) {
-                viewHolder.mIvDelete.setVisibility(View.VISIBLE);
-                viewHolder.mTvProgress.setVisibility(View.GONE);
-                viewHolder.mPbProgress.setVisibility(View.GONE);
-                viewHolder.mIvUploadState.setVisibility(View.VISIBLE);
-                viewHolder.mIvUploadState.setImageResource(R.drawable.ic_warm_red);
-            } else {
-                viewHolder.mIvDelete.setVisibility(View.VISIBLE);
-                viewHolder.mPbProgress.setVisibility(View.GONE);
-                viewHolder.mTvProgress.setVisibility(View.GONE);
-                viewHolder.mIvUploadState.setVisibility(View.GONE);
-            }
+            updatePgrogress(viewHolder, progress);
+            UploadEntity.STATE state = entity.getState();
+            updateState(viewHolder, state);
             String path = entity.getPath();
             Bitmap bitmap = BitmapUtil.getShowBitmap(path, 100, 200);
             viewHolder.mIvImage.setImageBitmap(bitmap);
@@ -118,6 +95,37 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                 }
             });
         }
+    }
+
+    private void updateState(ViewHolder holder, UploadEntity.STATE state) {
+        if (PhotoUpload.STATE.STATE_SUCCESS == state) {
+            holder.mIvDelete.setVisibility(View.GONE);
+            holder.mTvProgress.setVisibility(View.GONE);
+            holder.mPbProgress.setVisibility(View.GONE);
+            holder.mIvUploadState.setVisibility(View.VISIBLE);
+            holder.mIvUploadState.setImageResource(R.drawable.ic_success);
+        } else if (PhotoUpload.STATE.STATE_UPLOADING == state) {
+            holder.mTvProgress.setVisibility(View.VISIBLE);
+            holder.mPbProgress.setVisibility(View.VISIBLE);
+            holder.mIvDelete.setVisibility(View.GONE);
+            holder.mIvUploadState.setVisibility(View.GONE);
+        } else if (PhotoUpload.STATE.STATE_FAIL == state) {
+            holder.mIvDelete.setVisibility(View.VISIBLE);
+            holder.mTvProgress.setVisibility(View.GONE);
+            holder.mPbProgress.setVisibility(View.GONE);
+            holder.mIvUploadState.setVisibility(View.VISIBLE);
+            holder.mIvUploadState.setImageResource(R.drawable.ic_warm_red);
+        } else {
+            holder.mIvDelete.setVisibility(View.VISIBLE);
+            holder.mPbProgress.setVisibility(View.GONE);
+            holder.mTvProgress.setVisibility(View.GONE);
+            holder.mIvUploadState.setVisibility(View.GONE);
+        }
+    }
+
+    private void updatePgrogress(ViewHolder holder, int progress) {
+        holder.mTvProgress.setText(progress + "%");
+        holder.mPbProgress.setProgress(progress);
     }
 
     @Override
