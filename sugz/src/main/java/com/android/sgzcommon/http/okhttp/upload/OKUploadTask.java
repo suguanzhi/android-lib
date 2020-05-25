@@ -121,7 +121,6 @@ public class OKUploadTask<T extends UploadEntity> {
                         resultSet.setResponse(result);
                         resultSet.parseResult(result);
                         if (resultSet.isSuccess()) {
-                            mHandler.sendMessage(createMessage(ON_VALUE, entity, listener, resultSet));
                             mHandler.sendMessage(createMessage(ON_SUCCESS, entity, listener, resultSet));
                         } else {
                             mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
@@ -149,6 +148,7 @@ public class OKUploadTask<T extends UploadEntity> {
             @Override
             public void run() {
                 try {
+                    mHandler.sendMessage(createMessage(ON_START, entity, listener, resultSet));
                     Request request = getRequest(url, entity, data, resultSet, listener);
                     Call call = mOkHttpClient.newCall(request);
                     Response response = call.execute();
@@ -158,7 +158,6 @@ public class OKUploadTask<T extends UploadEntity> {
                         resultSet.setResponse(result);
                         resultSet.parseResult(result);
                         if (resultSet.isSuccess()) {
-                            mHandler.sendMessage(createMessage(ON_VALUE, entity, listener, resultSet));
                             mHandler.sendMessage(createMessage(ON_SUCCESS, entity, listener, resultSet));
                         } else {
                             mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
