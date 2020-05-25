@@ -42,8 +42,8 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
         Log.d("PictureGridEditAdapter", "getView: position = " + position);
         if (0 == getItemViewType(position)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
-            final PhotoUpload entity = (PhotoUpload) mObjects.get(position);
-            entity.setOnProgressListener(new PhotoUpload.OnProgressListener() {
+            final PhotoUpload upload = (PhotoUpload) mObjects.get(position);
+            upload.setOnProgressListener(new PhotoUpload.OnProgressListener() {
                 @Override
                 public void onProgress(int progress) {
                     Log.d("PictureGridEditAdapter", "onProgress: id = " + Thread.currentThread().getId());
@@ -64,8 +64,8 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                     //                    holder.itemView.setFocusableInTouchMode(true);
                     //                    holder.itemView.requestFocus();
                     try {
-                        mObjects.remove(entity);
-                        String path = entity.getPath();
+                        mObjects.remove(upload);
+                        String path = upload.getPath();
                         File file = new File(path);
                         if (file.exists()) {
                             file.delete();
@@ -76,11 +76,11 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                     }
                 }
             });
-            int progress = entity.getProgress();
+            int progress = upload.getProgress();
             updatePgrogress(viewHolder, progress);
-            UploadEntity.STATE state = entity.getState();
+            UploadEntity.STATE state = upload.getState();
             updateState(viewHolder, state);
-            String path = entity.getPath();
+            String path = upload.getPath();
             Bitmap bitmap = BitmapUtil.getShowBitmap(path, 100, 200);
             viewHolder.mIvImage.setImageBitmap(bitmap);
             viewHolder.mIvImage.setRoundCorner(UnitUtil.dp2px(5));

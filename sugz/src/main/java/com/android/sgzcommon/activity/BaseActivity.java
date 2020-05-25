@@ -1,6 +1,7 @@
 package com.android.sgzcommon.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,13 +18,12 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.android.sgzcommon.activity.utils.EmptyEntity;
-import com.android.sgzcommon.cache.BitmapCache;
 import com.android.sgzcommon.dialog.DatePickDialog;
 import com.android.sgzcommon.dialog.LoadingDialog;
+import com.android.sgzcommon.dialog.OneButtonDialog;
 import com.android.sgzcommon.toast.SToast;
 import com.android.sgzcommon.utils.SystemUtil;
 import com.android.sgzcommon.volley.VolleyManager;
-import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,12 +45,11 @@ public class BaseActivity extends AppCompatActivity {
     protected Context mContext;
     protected Activity mActivity;
     protected Point mWindowSize;
-    protected BitmapCache mCache;
-    protected RequestQueue mQueue;
     protected PopupWindow mPopupWindow;
     protected ImageLoader mImageLoader;
     private DatePickDialog mDatePickDialog;
-    protected LoadingDialog mLoadingDialog;
+    private LoadingDialog mLoadingDialog;
+    private OneButtonDialog mOneButtonDialog;
     private OnPermissionResultListener listener;
 
     protected static final int ACTION_REQUEST_PERMISSIONS = 0x001;
@@ -61,17 +60,16 @@ public class BaseActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         mActivity = this;
         mContext = getApplicationContext();
-        mLoadingDialog = new LoadingDialog(this);
-        mCache = VolleyManager.getInstance(mContext).getBitmapCacheInstance();
-        mQueue = VolleyManager.getInstance(mContext).getRequestQueueInstance();
-        mImageLoader = VolleyManager.getInstance(mContext).getImageLoaderInstance();
         mWindowSize = SystemUtil.getWindowSize(this);
+        mLoadingDialog = new LoadingDialog(this);
+        mOneButtonDialog = new OneButtonDialog(this);
+        mOneButtonDialog.setButtonText("知道了");
+        mImageLoader = VolleyManager.getInstance(mContext).getImageLoaderInstance();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(EmptyEntity event) {/* Do something */}
 
-    ;
 
     protected LinearLayoutManager createLinearLayoutManager(@RecyclerView.Orientation int orientation) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -136,7 +134,7 @@ public class BaseActivity extends AppCompatActivity {
      */
     protected void showDataPickDialog(int year, int month, int day, DatePickDialog.OnDatePickListener listener) {
         if (mDatePickDialog != null && mDatePickDialog.isShowing()) {
-            return;
+            mDatePickDialog.dismiss();
         }
         mDatePickDialog = new DatePickDialog(this, DatePickDialog.TYPE_DATE);
         mDatePickDialog.show();
@@ -153,7 +151,7 @@ public class BaseActivity extends AppCompatActivity {
      */
     protected void showTimePickDialog(int hour, int minute, DatePickDialog.OnTimePickListener listener) {
         if (mDatePickDialog != null && mDatePickDialog.isShowing()) {
-            return;
+            mDatePickDialog.dismiss();
         }
         mDatePickDialog = new DatePickDialog(this, DatePickDialog.TYPE_TIME);
         mDatePickDialog.show();
@@ -180,11 +178,79 @@ public class BaseActivity extends AppCompatActivity {
         mPopupWindow.showAsDropDown(v, x, y);
     }
 
-    protected void dismissPopupWindow() {
+    protected void hidePopupWindow() {
         if (mPopupWindow != null) {
             mPopupWindow.dismiss();
         }
         mPopupWindow = null;
+    }
+
+    /**
+     * 显示只有一个按钮的提示框
+     * @param msg 提示主文本
+     */
+    protected void showOneButtonDialog(String msg) {
+        showOneButtonDialog(msg, "", new OneButtonDialog.OnclickListener() {
+            @Override
+            public void onConfirm(View view, Dialog dialog) {
+                if (mOneButtonDialog != null) {
+                    mOneButtonDialog.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 显示只有一个按钮的提示框
+     * @param msg 提示主文本
+     * @param secondMsg 提示副文本
+     */
+    protected void showOneButtonDialog(String msg, String secondMsg) {
+        showOneButtonDialog(msg, secondMsg, new OneButtonDialog.OnclickListener() {
+            @Override
+            public void onConfirm(View view, Dialog dialog) {
+                if (mOneButtonDialog != null) {
+                    mOneButtonDialog.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 显示只有一个按钮的提示框
+     * @param msg 提示主文本
+     * @param secondMsg 提示副文本
+     * @param buttonText 按钮文本
+     * @param listener 按钮点击监听
+     */
+    protected void showOneButtonDialog(String msg, String secondMsg, String buttonText, OneButtonDialog.OnclickListener listener) {
+        showOneButtonDialog(msg, secondMsg, listener);
+        mOneButtonDialog.setButtonText(buttonText);
+    }
+
+    /**
+     * 显示只有一个按钮的提示框
+     * @param msg 提示主文本
+     * @param secondMsg 提示副文本
+     * @param listener 按钮点击监听
+     */
+    protected void showOneButtonDialog(String msg, String secondMsg, OneButtonDialog.OnclickListener listener) {
+        if (mOneButtonDialog != null) {
+            mOneButtonDialog.dismiss();
+        }
+        mOneButtonDialog.setOnclickListener(listener);
+        mOneButtonDialog.setMsg(msg);
+        mOneButtonDialog.setSecondMsg(secondMsg);
+        mOneButtonDialog.show();
+    }
+
+    /**
+     * 隐藏只有一个按钮的提示框
+     */
+    protected void hideOneButtonDialog() {
+        if (mOneButtonDialog != null) {
+            mOneButtonDialog.dismiss();
+        }
     }
 
     /**
@@ -221,12 +287,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 权限检查
+     * 检查所需权限是否授权，并把没有授权的权限发起请求
      *
      * @param neededPermissions 需要的权限
      * @return 是否被允许
      */
-    protected void checkAndRequestePermissions(String[] neededPermissions, OnPermissionResultListener listener) {
+    protected void checkRequestePermissions(String[] neededPermissions, OnPermissionResultListener listener) {
         this.listener = listener;
         List<String> grants = new ArrayList<String>();
         List<String> denies = new ArrayList<String>();
