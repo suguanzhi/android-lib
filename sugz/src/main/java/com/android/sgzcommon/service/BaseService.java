@@ -17,6 +17,8 @@ import com.android.sgzcommon.activity.utils.EmptyEntity;
 import com.android.sgzcommon.utils.SystemUtil;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import androidx.annotation.Nullable;
 
@@ -47,6 +49,7 @@ public class BaseService extends Service {
         return null;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(EmptyEntity emptyEntity){
 
     }
