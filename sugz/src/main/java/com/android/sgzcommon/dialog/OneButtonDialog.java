@@ -61,7 +61,6 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
         mBtn.setOnClickListener(this);
         setMsg(mMsg);
         setSecondMsg(mSecondMsg);
-        setButtonText(mButtonText);
     }
 
     public void setMsg(CharSequence msg) {
