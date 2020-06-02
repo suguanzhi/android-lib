@@ -10,10 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.PixelFormat;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
@@ -175,81 +172,70 @@ public class SystemUtil {
      * 当前进程处于前台，但是activity不可见，则启动 c
      *
      * @param context
-     * @param c       mainActivity
+     * @param launcher Launcher Activity
      */
-    public static void frontOrStartApp(Context context, Class<?> c) {
-        frontOrStartApp(context, c, true);
-    }
-
-    /**
-     * @param context
-     * @param c
-     * @param judge   判断当前进程中的activity是否可见
-     */
-    public static void frontOrStartApp(Context context, Class<?> c, boolean judge) {
+    public static void frontOrStartApp(Context context, Class<?> launcher) {
         Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>1");
         //首先判断调用的apk是否安装
         String pakName = context.getPackageName();
         if (isInstall(context, pakName)) {
             Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>2");
-            //            if (!isRunningForeground(context)) {
             //获取ActivityManager
-            ActivityManager mAm = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+            ActivityManager activityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+            boolean startActivity = true;
+            Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>7");
             //获得当前运行的task
-            boolean startActivity = false;
-            if (judge) {
-                startActivity = true;
-            }
-            if (Build.VERSION.SDK_INT < 21) {
-                Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>3");
-                List<ActivityManager.RunningTaskInfo> taskList = mAm.getRunningTasks(100);
-                for (ActivityManager.RunningTaskInfo rti : taskList) {
-                    Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>4");
-                    //找到当前应用的task，并启动task的栈顶activity，达到程序切换到前台
-                    if (rti.topActivity.getPackageName().equals(pakName)) {
-                        Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>5");
-                        mAm.moveTaskToFront(rti.id, 0);
-                        if (rti.numActivities > 0) {
-                            Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>6");
-                            startActivity = false;
-                        }
-                    }
-                }
-            } else {
-                Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>7");
-                List<ActivityManager.AppTask> tasks = mAm.getAppTasks();
-                if (tasks.size() > 0) {
-                    Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>8");
-                    ActivityManager.RecentTaskInfo taskInfo = tasks.get(0).getTaskInfo();
-                    if (taskInfo != null) {
-                        Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>9 id = " + taskInfo.id);
-                        mAm.moveTaskToFront(taskInfo.id, ActivityManager.MOVE_TASK_WITH_HOME);
-                        if (Build.VERSION.SDK_INT >= 23 && taskInfo.numActivities > 0) {
-                            Log.d("SystemUtil", "frontOrStartApp: >>>>>>>>>>>>>>>>>>>>10");
-                            startActivity = false;
-                        }
+            List<ActivityManager.AppTask> tasks = activityManager.getAppTasks();
+            if (tasks.size() > 0) {
+                Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>8");
+                ActivityManager.RecentTaskInfo taskInfo = tasks.get(0).getTaskInfo();
+                if (taskInfo != null) {
+                    Log.d(TAG, "frontOrStartApp: >>>>>>>>>>>>>>>>>>9 id = " + taskInfo.id);
+                    activityManager.moveTaskToFront(taskInfo.id, ActivityManager.MOVE_TASK_WITH_HOME);
+                    if (Build.VERSION.SDK_INT >= 23 && taskInfo.numActivities > 0) {
+                        Log.d("SystemUtil", "frontOrStartApp: >>>>>>>>>>>>>>>>>>>>10");
+                        startActivity = false;
                     }
                 }
             }
             if (startActivity) {
-                startApp(context, c);
+                startApp(context, launcher);
             }
         } else {
             throw new IllegalArgumentException("没有找到对应的应用程序");
         }
     }
 
-    public static boolean isRunningForeground(Context context) {
+    /**
+     * 判断当前应用是否置于前台
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isForeground(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> appProcessInfos = activityManager.getRunningAppProcesses();
-        for (ActivityManager.RunningAppProcessInfo appProcessInfo : appProcessInfos) {
-            if (appProcessInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                if (appProcessInfo.processName.equals(context.getApplicationInfo().processName)) {
-                    return true;
+        try {
+            List<ActivityManager.RunningAppProcessInfo> appProcessInfos = activityManager.getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo appProcessInfo : appProcessInfos) {
+                if (appProcessInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                    if (appProcessInfo.processName.equals(context.getApplicationInfo().processName)) {
+                        return true;
+                    }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * 重启应用
+     */
+    public static void reStartApp(Context context) {
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
     }
 
     /**
@@ -282,21 +268,23 @@ public class SystemUtil {
     public static boolean isNetworkAvailable(Context context) {
         // 得到网络连接信息
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        // 去进行判断网络是否连接
-        if (manager.getActiveNetworkInfo() != null) {
+        try {
+            // 去进行判断网络是否连接
             return manager.getActiveNetworkInfo().isAvailable();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }
+
+    private static final String marshmallowMacAddress = "02:00:00:00:00:00";
+    private static final String fileAddressMac = "/sys/class/net/wlan0/address";
 
     /**
      * 获取mac地址
      *
      * @return
      */
-    private static final String marshmallowMacAddress = "02:00:00:00:00:00";
-    private static final String fileAddressMac = "/sys/class/net/wlan0/address";
-
     public static String getAdresseMAC(Context context) {
         WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInf = wifiMan.getConnectionInfo();
@@ -354,7 +342,6 @@ public class SystemUtil {
     }
 
     /**
-     *
      * @param wifiMan
      * @return
      * @throws Exception
@@ -395,7 +382,7 @@ public class SystemUtil {
 
 
     /**
-     * 获取版本号
+     * 获取当前应用版本号
      *
      * @param context
      * @return
@@ -441,7 +428,7 @@ public class SystemUtil {
      *
      * @return
      */
-    public static String getSDCardBaseDir() {
+    public static String getSDCardRootDir() {
         if (isSDCardMounted()) {
             return Environment.getExternalStorageDirectory().getAbsolutePath();
         }
@@ -456,7 +443,7 @@ public class SystemUtil {
      */
     public static long getSDCardSize() {
         if (isSDCardMounted()) {
-            return getSize(getSDCardBaseDir());
+            return getSize(getSDCardRootDir());
         }
         return 0;
     }
@@ -468,7 +455,7 @@ public class SystemUtil {
      */
     public static long getSDCardFreeSize() {
         if (isSDCardMounted()) {
-            return getFreeSize(getSDCardBaseDir());
+            return getFreeSize(getSDCardRootDir());
         }
         return 0;
     }
@@ -480,7 +467,7 @@ public class SystemUtil {
      */
     public static long getSDCardAvailableSize() {
         if (isSDCardMounted()) {
-            return getAvailableSize(getSDCardBaseDir());
+            return getAvailableSize(getSDCardRootDir());
         }
         return 0;
     }
@@ -600,29 +587,6 @@ public class SystemUtil {
     }
 
     /**
-     * drawable转bitmap
-     *
-     * @param drawable
-     * @return
-     */
-    public static Bitmap drawable2Bitmap(Drawable drawable) {
-        // 取 drawable 的长宽
-        int w = drawable.getIntrinsicWidth();
-        int h = drawable.getIntrinsicHeight();
-
-        // 取 drawable 的颜色格式
-        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565;
-        // 建立对应 bitmap
-        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
-        // 建立对应 bitmap 的画布
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, w, h);
-        // 把 drawable 内容画到画布中
-        drawable.draw(canvas);
-        return bitmap;
-    }
-
-    /**
      * 安装apk
      * <p>
      * 1.
@@ -646,7 +610,7 @@ public class SystemUtil {
      * path="DispalySystem/apk" /> //根目录后的目录，有多少级都要写全
      * </paths>
      * <p>
-     * 3.调用一下方法
+     * 3.调用以下方法
      *
      * @param context
      * @param fileprovider manifests.xml 文件中 <provider> 标签的 android:authorities 属性
@@ -672,28 +636,28 @@ public class SystemUtil {
     }
 
 
-    public static final int REQUEST_CODE_PAIZHAO = 1;
-    public static final int REQUEST_CODE_ZHAOPIAN = 2;
-    public static final int REQUEST_CODE_CAIQIE = 3;
+    public static final int REQUEST_CODE_TAKE_PHOTO = 1000;
+    public static final int REQUEST_CODE_SELECTE_PICTURE = 1001;
+    public static final int REQUEST_CODE_CROP = 1002;
 
-    public static void paizhao(Activity activity, File outputFile) {
+    public static void takePhoto(Activity activity, File outputFile) {
         Intent intent = new Intent();
         intent.setAction("android.media.action.IMAGE_CAPTURE");
         intent.addCategory("android.intent.category.DEFAULT");
         Uri uri = FileProviderUtils.uriFromFile(activity, outputFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        activity.startActivityForResult(intent, REQUEST_CODE_PAIZHAO);
+        activity.startActivityForResult(intent, REQUEST_CODE_TAKE_PHOTO);
     }
 
-    public static void zhaopian(Activity activity) {
+    public static void selectePicture(Activity activity) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction("android.intent.action.PICK");
         intent.addCategory("android.intent.category.DEFAULT");
-        activity.startActivityForResult(intent, REQUEST_CODE_ZHAOPIAN);
+        activity.startActivityForResult(intent, REQUEST_CODE_SELECTE_PICTURE);
     }
 
-    public static void Caiqie(Activity activity, Uri uri, File outputFile) {
+    public static void cropPicture(Activity activity, Uri uri, File outputFile) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         FileProviderUtils.setIntentDataAndType(activity, intent, "image/*", uri, true);
         intent.putExtra("crop", "true");
@@ -710,7 +674,7 @@ public class SystemUtil {
 
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true);
-        activity.startActivityForResult(intent, REQUEST_CODE_CAIQIE);
+        activity.startActivityForResult(intent, REQUEST_CODE_CROP);
     }
 
 }

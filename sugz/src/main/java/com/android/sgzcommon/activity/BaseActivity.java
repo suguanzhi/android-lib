@@ -80,15 +80,6 @@ public class BaseActivity extends AppCompatActivity {
         return layoutManager;
     }
 
-    /**
-     * 重启应用
-     */
-    protected void reStartApp() {
-        Intent intent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -101,12 +92,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void showLoading() {
-        if (mLoadingDialog != null) {
-            if (mLoadingDialog.isShowing()) {
-                return;
-            }
-            mLoadingDialog.show();
+        showLoading("加载中");
+    }
+
+    protected void showLoading(String tip) {
+        if (mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
         }
+        mLoadingDialog.show(tip);
     }
 
     protected void hideLoading() {

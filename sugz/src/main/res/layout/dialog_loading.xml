@@ -3,22 +3,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="90dp"
     android:layout_height="90dp"
+    android:layout_gravity="center"
     android:background="@drawable/shape_r10_sd_white"
     android:gravity="center"
-    android:layout_gravity="center"
     android:orientation="vertical">
 
-    <com.android.sgzcommon.view.LoadingView
-        android:id="@+id/lv_loading"
-        android:layout_width="54dp"
-        android:layout_height="40dp"
-        app:color1="@color/colorPrimary"
-        app:color2="@color/grey_500"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.android.sgzcommon.view.LoadingView
+            android:id="@+id/lv_loading"
+            android:layout_width="54dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            app:color1="@color/colorPrimary"
+            app:color2="@color/grey_500" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+    </RelativeLayout>
+
     <TextView
+        android:id="@+id/tv_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="加载中"
         android:textColor="@color/text"
-        android:textSize="@dimen/text_second"
-        android:text="加载中"/>
+        android:textSize="@dimen/text_second" />
 
 </LinearLayout>
