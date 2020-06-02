@@ -70,14 +70,14 @@ public class LoadingDialog extends Dialog {
                 mProgressbar.setVisibility(View.GONE);
             }
             if (mLoading != null) {
-                mProgressbar.setVisibility(View.VISIBLE);
+                mLoading.setVisibility(View.VISIBLE);
             }
         } else {
             if (mProgressbar != null) {
                 mProgressbar.setVisibility(View.VISIBLE);
             }
             if (mLoading != null) {
-                mProgressbar.setVisibility(View.GONE);
+                mLoading.setVisibility(View.GONE);
             }
         }
     }
