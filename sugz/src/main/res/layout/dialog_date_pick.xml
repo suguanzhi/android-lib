@@ -33,24 +33,24 @@
 
         <TextView
             android:id="@+id/tv_dialog_date_pick_confirm"
-            android:layout_width="100dp"
-            android:layout_height="@dimen/height_btn"
+            android:layout_width="@dimen/btn_width2"
+            android:layout_height="@dimen/btn_height2"
             android:layout_margin="10dp"
             android:background="@drawable/shape_btn_confirm"
             android:gravity="center"
             android:text="确定"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/btn_text_size"/>
+            android:textSize="@dimen/btn_text_size2"/>
 
         <TextView
             android:id="@+id/tv_dialog_date_pick_cancle"
-            android:layout_width="100dp"
-            android:layout_height="@dimen/height_btn"
+            android:layout_width="@dimen/btn_width2"
+            android:layout_height="@dimen/btn_height2"
             android:background="@drawable/shape_btn_disable"
             android:gravity="center"
             android:layout_margin="10dp"
             android:text="取消"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/btn_text_size"/>
+            android:textSize="@dimen/btn_text_size2"/>
     </LinearLayout>
 </LinearLayout>

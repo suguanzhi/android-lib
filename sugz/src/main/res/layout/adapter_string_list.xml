@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:minHeight="@dimen/height_line"
-        android:text="123"
+        android:text=""
         android:textColor="@color/text"
         android:textSize="@dimen/text" />
 

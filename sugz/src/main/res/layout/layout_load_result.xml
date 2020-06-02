@@ -25,7 +25,7 @@
     <TextView
         android:id="@+id/tv_button"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/height_btn"
+        android:layout_height="@dimen/btn_height"
         android:layout_marginTop="20dp"
         android:background="@drawable/shape_r5_sk_grey300"
         android:gravity="center"

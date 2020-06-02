@@ -5,18 +5,23 @@
     <dimen name="height_titlebar">48dp</dimen>
     <dimen name="height_nav">54dp</dimen>
     <dimen name="height_divider">0.4dp</dimen>
-    <dimen name="height_btn">36dp</dimen>
-    <dimen name="height_btn_small">30dp</dimen>
+
     <dimen name="height_input">44dp</dimen>
     <dimen name="height_line">50dp</dimen>
     <dimen name="height_line2">40dp</dimen>
-    <dimen name="width_btn">240dp</dimen>
+
     <dimen name="icon_small">14dp</dimen>
     <dimen name="icon">20dp</dimen>
     <dimen name="icon_big">25dp</dimen>
     <dimen name="text">14sp</dimen>
     <dimen name="text_second">12sp</dimen>
+
+    <!--Button-->
+    <dimen name="btn_width">240dp</dimen>
+    <dimen name="btn_width2">100dp</dimen>
+    <dimen name="btn_height">36dp</dimen>
+    <dimen name="btn_height2">30dp</dimen>
     <dimen name="btn_text_size">14sp</dimen>
-    <dimen name="btn_text_small_size">12sp</dimen>
+    <dimen name="btn_text_size2">12sp</dimen>
 
 </resources>
