@@ -253,14 +253,19 @@ public abstract class BaseFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_TAKE_PHOTO_CODE) {//获取系统照片上传
             Log.d("BaseFragment", "onActivityResult: path = " + mCurrentPath);
             if (mPhotoListener != null) {
+                Log.d("BaseFragment", "onActivityResult: path = 1");
                 if (!TextUtils.isEmpty(mCurrentPath)) {
+                    Log.d("BaseFragment", "onActivityResult: path = 2");
                     File image = new File(mCurrentPath);
                     if (image.exists()) {
+                        Log.d("BaseFragment", "onActivityResult: path = 3");
                         mPhotoListener.onPhoto(image);
                     } else {
+                        Log.d("BaseFragment", "onActivityResult: path = 4");
                         mPhotoListener.onPhoto(null);
                     }
                 } else {
+                    Log.d("BaseFragment", "onActivityResult: path = 5");
                     mPhotoListener.onPhoto(null);
                 }
             }

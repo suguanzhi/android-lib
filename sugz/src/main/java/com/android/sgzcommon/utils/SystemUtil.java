@@ -56,6 +56,7 @@ public class SystemUtil {
         Point size = new Point();
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         wm.getDefaultDisplay().getSize(size);
+
         return size;
     }
 

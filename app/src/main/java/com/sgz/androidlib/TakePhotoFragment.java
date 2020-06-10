@@ -2,7 +2,6 @@ package com.sgz.androidlib;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.ImageView;
 
 import com.android.sgzcommon.fragment.NavigationFragment;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
+import com.android.sgzcommon.utils.BitmapUtil;
 
 import java.io.File;
 
@@ -57,12 +57,14 @@ public class TakePhotoFragment extends NavigationFragment {
         takePhoto(null, new OnTakePhotoListener() {
             @Override
             public void onPhoto(File photo) {
+                Log.d("TakePhotoFragment", "onPhoto: 1");
                 if (photo != null){
-                    Bitmap bitmap = BitmapFactory.decodeFile(photo.getAbsolutePath());
+                    Log.d("TakePhotoFragment", "onPhoto: 2");
+                    Bitmap bitmap = BitmapUtil.getFitBitmap(mContext,photo.getAbsolutePath());
                     mIvPhoto.setImageBitmap(bitmap);
                 }
             }
         });
-        Log.d("OneFragment", "onViewClicked: ");
+        Log.d("TakePhotoFragment", "onViewClicked: ");
     }
 }

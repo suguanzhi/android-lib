@@ -25,6 +25,7 @@ public class BitmapUtil {
 
     /**
      * 从图片的网络地址获取图片bitmap
+     *
      * @param serverUrl
      * @return
      */
@@ -114,22 +115,7 @@ public class BitmapUtil {
     public static Bitmap getFitBitmap(Context context, String path) {
         Bitmap bitmap = null;
         try {
-            BitmapFactory.Options opts = new BitmapFactory.Options();
-            opts.inJustDecodeBounds = true;
-            opts.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            BitmapFactory.decodeFile(path, opts);
-            int width = opts.outWidth;
-            int height = opts.outHeight;
-            int windWidth = SystemUtil.getWindowSize(context).x;
-            int windHeight = SystemUtil.getWindowSize(context).y;
-            int widthRatio = width / windWidth;
-            int heightRatio = height / windHeight;
-            int inSampleSize = 1;
-            if (!(widthRatio > 1 && heightRatio > 1)) {
-                inSampleSize = Math.max(widthRatio, heightRatio);
-            }
-            opts.inJustDecodeBounds = false;
-            opts.inSampleSize = inSampleSize;
+            BitmapFactory.Options opts = getOptions(path, SystemUtil.getWindowSize(context).x, SystemUtil.getWindowSize(context).y);
             bitmap = BitmapFactory.decodeFile(path, opts);
         } catch (Exception e) {
             e.printStackTrace();
