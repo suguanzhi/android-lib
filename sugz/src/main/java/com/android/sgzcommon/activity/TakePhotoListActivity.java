@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by sgz on 2019/5/10 0010.
  */
-public abstract class TakePhotoActivity extends BaseActivity implements TakePhotoGrid, ShowImageGrid {
+public abstract class TakePhotoListActivity extends BaseActivity implements TakePhotoGrid, ShowImageGrid {
 
     private RecyclerView mShowPhotoView;
     private RecyclerView mTakePhotoView;

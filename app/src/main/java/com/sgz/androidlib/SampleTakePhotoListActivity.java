@@ -3,17 +3,12 @@ package com.sgz.androidlib;
 import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import com.android.sgzcommon.activity.TakePhotoActivity;
-import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
+import com.android.sgzcommon.activity.TakePhotoListActivity;
 import com.android.sgzcommon.take_photo.PhotoUpload;
 import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
-import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -25,7 +20,7 @@ import butterknife.BindView;
  * @author sgz
  * @date 2020/6/10
  */
-public class SecondActivity extends TakePhotoActivity {
+public class SampleTakePhotoListActivity extends TakePhotoListActivity {
 
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
@@ -34,7 +29,7 @@ public class SecondActivity extends TakePhotoActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_second;
+        return R.layout.activity_sample_take_photo_list;
     }
 
     @Override
@@ -107,32 +102,5 @@ public class SecondActivity extends TakePhotoActivity {
             TestResource testResource = (TestResource) o;
             return testResource.score - this.score;
         }
-    }
-
-    public void upload(View v) {
-        String url = "http://mildyak.xicp.net/api/uploadController.do?ajaxSaveFile";
-        Map<String, String> data = new HashMap<>();
-        uploadPhotos(url, data, new OnPhotoUploadListener() {
-            @Override
-            public void onAllSuccess() {
-                Log.d("MainActivity", "onAllSuccess: ");
-            }
-
-            @Override
-            public void onSuccess(PhotoUpload photoUpload, UploadResultSet result) {
-                Log.d("MainActivity", "onSuccess: ");
-            }
-
-            @Override
-            public void onFail(PhotoUpload photoUpload, Exception e) {
-                Log.d("MainActivity", "onFail: " + Log.getStackTraceString(e));
-            }
-        });
-    }
-
-    @Override
-    protected void onDestroy() {
-        clearPhotos();
-        super.onDestroy();
     }
 }

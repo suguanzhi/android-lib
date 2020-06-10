@@ -1,5 +1,6 @@
 package com.android.sgzcommon.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -8,7 +9,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +28,7 @@ import com.android.sgzcommon.dialog.DatePickDialog;
 import com.android.sgzcommon.dialog.LoadingDialog;
 import com.android.sgzcommon.dialog.OneButtonDialog;
 import com.android.sgzcommon.dialog.TwoButtonDialog;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
 import com.android.sgzcommon.toast.SToast;
 import com.android.sgzcommon.utils.SystemUtil;
 import com.android.sgzcommon.volley.VolleyManager;
@@ -31,6 +38,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +46,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,7 +63,11 @@ public class BaseActivity extends AppCompatActivity {
     private TwoButtonDialog mTwoButtonDialog;
     private OnPermissionResultListener listener;
 
+    private static final int REQUEST_TAKE_PHOTO_CODE = 510;
     protected static final int ACTION_REQUEST_PERMISSIONS = 0x001;
+    private File mPhotoDir;
+    private String mCurrentPath;
+    private OnTakePhotoListener mPhotoListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -404,10 +417,81 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    private void createPhotoDir() {
+        mPhotoDir = new File(mActivity.getExternalCacheDir().getAbsolutePath() + File.separator + "takephoto");
+        if (!mPhotoDir.exists()) {
+            mPhotoDir.mkdirs();
+        }
+    }
+
+    /**
+     * 调用系统照相机拍照
+     */
+    protected void takePhoto(String path, OnTakePhotoListener listener) {
+        mCurrentPath = path;
+        mPhotoListener = listener;
+        if (TextUtils.isEmpty(mCurrentPath)) {
+            createPhotoDir();
+            mCurrentPath = mPhotoDir.getAbsolutePath() + File.separator + System.currentTimeMillis() + ".png";
+        }
+        String[] permissions = new String[]{Manifest.permission.CAMERA};
+        checkRequestePermissions(permissions, new OnPermissionResultListener() {
+            @Override
+            public void onResult(List<String> grants, List<String> denies) {
+                boolean cameraGranted = false;
+                for (String permisssion : grants) {
+                    if (Manifest.permission.CAMERA.equals(permisssion)) {
+                        cameraGranted = true;
+                        break;
+                    }
+                }
+                if (cameraGranted) {
+                    if (denies.size() == 0) {
+                        Log.d("BaseFragment", "takePhoto: PERMISSION_GRANTED");
+                        try {
+                            Uri uri;
+                            Log.d("BaseFragment", "takePhoto: path = " + mCurrentPath);
+                            File file = new File(mCurrentPath);
+                            if (Build.VERSION.SDK_INT >= 24) {
+                                //Android 7.0及以上获取文件 Uri
+                                uri = FileProvider.getUriForFile(mActivity, mActivity.getPackageName(), file);
+                            } else {
+                                uri = Uri.fromFile(file);
+                            }
+                            //调取系统拍照
+                            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                            mActivity.startActivityForResult(intent, REQUEST_TAKE_PHOTO_CODE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    Toast.makeText(mActivity, "缺少照相机权限", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("BaseFragment", "onActivityResult: requestCode = " + requestCode);
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_TAKE_PHOTO_CODE) {//获取系统照片上传
+            Log.d("BaseFragment", "onActivityResult: path = " + mCurrentPath);
+            if (mPhotoListener != null) {
+                if (!TextUtils.isEmpty(mCurrentPath)) {
+                    File image = new File(mCurrentPath);
+                    if (image.exists()) {
+                        mPhotoListener.onPhoto(image);
+                    } else {
+                        mPhotoListener.onPhoto(null);
+                    }
+                } else {
+                    mPhotoListener.onPhoto(null);
+                }
+            }
+        }
     }
 
     @Override

@@ -4,14 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <com.sgz.androidlib.ScrollerLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
 
         <Button
             android:layout_width="match_parent"
@@ -22,7 +18,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:text="2" />
+            android:onClick="take"
+            android:text="拍照" />
 
         <Button
             android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.android.sgzcommon.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -65,6 +66,7 @@ public abstract class BaseMainActivity extends BaseActivity {
                 return showFragment(position);
             }
         });
+        selecteNavItem(0);
     }
 
     public void selecteNavItem(int position) {
@@ -114,5 +116,29 @@ public abstract class BaseMainActivity extends BaseActivity {
             }
         }
         return result;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mNavigationFragments != null) {
+            for (NavigationFragment fragment : mNavigationFragments) {
+                if (fragment.isAdded()) {
+                    fragment.onActivityResult(requestCode, resultCode, data);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (mNavigationFragments != null) {
+            for (NavigationFragment fragment : mNavigationFragments) {
+                if (fragment.isAdded()) {
+                    fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                }
+            }
+        }
     }
 }

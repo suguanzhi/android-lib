@@ -10,6 +10,7 @@ import java.util.List;
 
 public class MainActivity extends BaseMainActivity {
 
+    ArrayList<NavigationFragment> fragments;
 
     @Override
     protected int getContentViewId() {
@@ -30,7 +31,7 @@ public class MainActivity extends BaseMainActivity {
     protected NavigationFragment newNavigationFragment(int position) {
         switch (position) {
             case 0:
-                return new OneFragment();
+                return new TakePhotoFragment();
             case 1:
                 return new TwoFragment();
             case 2:
@@ -45,8 +46,8 @@ public class MainActivity extends BaseMainActivity {
 
     @Override
     protected List<NavigationFragment> getNavigationFragments() {
-        ArrayList<NavigationFragment> fragments = new ArrayList<>();
-        fragments.add(new OneFragment());
+        fragments = new ArrayList<>();
+        fragments.add(new TakePhotoFragment());
         fragments.add(new TwoFragment());
         fragments.add(new ThreeFragment());
         fragments.add(new FourFragment());
@@ -58,4 +59,5 @@ public class MainActivity extends BaseMainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 }

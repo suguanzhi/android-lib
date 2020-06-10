@@ -23,8 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SecondActivity" />
+        <activity android:name=".SampleTakePhotoListActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".TakePhotoActivity" />
+        <activity android:name=".ScrollerLayoutActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

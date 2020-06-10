@@ -25,7 +25,7 @@ public class ThreeFragment extends NavigationFragment {
 
     @Override
     public void onOnlyClick(Activity activity) {
-        Intent intent = new Intent(activity,LoginActivity.class);
+        Intent intent = new Intent(activity,TakePhotoActivity.class);
         activity.startActivity(intent);
     }
 

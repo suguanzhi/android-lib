@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.android.sgzcommon.take_photo.PhotoUpload;
 import com.android.sgzcommon.take_photo.ShowImageGrid;
 import com.android.sgzcommon.take_photo.ShowImageGridImpl;
 import com.android.sgzcommon.take_photo.TakePhotoGrid;
 import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.PhotoUpload;
 
 import java.util.List;
 import java.util.Map;
