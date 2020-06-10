@@ -28,16 +28,6 @@ public class LoginActivity extends BaseLoginActivity {
     Button mBtnLogin;
 
     @Override
-    protected int getPasswordViewId() {
-        return R.id.et_password;
-    }
-
-    @Override
-    protected int getVisiableViewId() {
-        return R.id.iv_password_visiable;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
