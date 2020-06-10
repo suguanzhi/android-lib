@@ -7,37 +7,17 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="15dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <com.sgz.androidlib.ScrollerLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:text="上传"
-                android:onClick="upload"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:text="2" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:text="3" />
-
-        </com.sgz.androidlib.ScrollerLayout>
-    </LinearLayout>
+        android:background="@color/white"
+        app:menu="@menu/navigation"
+        />
 </LinearLayout>

@@ -14,5 +14,5 @@
         android:adjustViewBounds="true"
         android:padding="10dp"
         android:background="@drawable/shape_r10_sd_grey300"
-        android:src="@drawable/ic_add_white" />
+        android:src="@drawable/ic_sgz_add_white" />
 </LinearLayout>

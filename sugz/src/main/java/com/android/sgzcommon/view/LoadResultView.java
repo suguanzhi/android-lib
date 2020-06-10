@@ -84,7 +84,7 @@ public class LoadResultView extends LinearLayout {
     }
 
     public void empty(String tip, String btnText) {
-        mIvIcon.setImageResource(R.drawable.ic_empty);
+        mIvIcon.setImageResource(R.drawable.ic_sgz_empty);
         setTipText(tip);
         setBtnText(btnText);
     }
@@ -98,7 +98,7 @@ public class LoadResultView extends LinearLayout {
     }
 
     public void networkError(String tip, String btnText) {
-        mIvIcon.setImageResource(R.drawable.ic_network_error);
+        mIvIcon.setImageResource(R.drawable.ic_sgz_network_error);
         setTipText(tip);
         setBtnText(btnText);
     }
@@ -112,7 +112,7 @@ public class LoadResultView extends LinearLayout {
     }
 
     public void networkFail(String tip, String btnText) {
-        mIvIcon.setImageResource(R.drawable.ic_load_fail);
+        mIvIcon.setImageResource(R.drawable.ic_sgz_load_fail);
         setTipText(tip);
         setBtnText(btnText);
     }

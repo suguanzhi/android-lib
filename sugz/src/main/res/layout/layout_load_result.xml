@@ -13,7 +13,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_margin="10dp"
-        android:src="@drawable/ic_empty" />
+        android:src="@drawable/ic_sgz_empty" />
 
     <TextView
         android:id="@+id/tv_tip"
