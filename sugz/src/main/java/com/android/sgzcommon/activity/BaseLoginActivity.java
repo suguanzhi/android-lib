@@ -18,16 +18,12 @@ public abstract class BaseLoginActivity extends BaseActivity {
     protected EditText mEtPassword;
     protected ImageView mIvPasswordVisiable;
 
-    protected abstract int getPasswordViewId();
-
-    protected abstract int getVisiableViewId();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sgz_login);
-        mEtPassword = findViewById(getPasswordViewId());
-        mIvPasswordVisiable = findViewById(getVisiableViewId());
+        mEtPassword = findViewById(R.id.et_password);
+        mIvPasswordVisiable = findViewById(R.id.iv_password_visiable);
         mIvPasswordVisiable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
