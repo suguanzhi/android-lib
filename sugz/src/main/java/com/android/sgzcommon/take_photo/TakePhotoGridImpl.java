@@ -115,7 +115,7 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
     }
 
     @Override
-    public void uploadPhotos(String url, Map<String, String> data, final OnPhotoUploadListener listener) {
+    public void uploadPhotos(String url, Map<String, String> data,Map<String, String> headers, final OnPhotoUploadListener listener) {
         if (mPhotoUploads.size() == 0) {
             listener.onAllSuccess();
         } else {
@@ -124,7 +124,7 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
                 final PhotoUpload image = mPhotoUploads.get(i);
                 if (PhotoUpload.STATE.STATE_START == image.getState() || PhotoUpload.STATE.STATE_FAIL == image.getState()) {
                     final PhotoUpload photoUpload = mPhotoUploads.get(i);
-                    OKUploadTask.getInstance().upLoadFile(url, photoUpload, data, new MUploadResultSet(), new OnUploadFileListener<PhotoUpload>() {
+                    OKUploadTask.getInstance().upLoadFile(url, photoUpload, data,headers, new MUploadResultSet(), new OnUploadFileListener<PhotoUpload>() {
                         @Override
                         public void onUploadStart(PhotoUpload upload) {
                             Log.d("TakePhotoGridImpl", "onUploadStart: ");

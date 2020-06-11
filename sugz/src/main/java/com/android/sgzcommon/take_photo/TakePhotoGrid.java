@@ -18,7 +18,7 @@ public interface TakePhotoGrid {
 
     int getPhotoSize();
 
-    void uploadPhotos(String url, Map<String, String> data, final OnPhotoUploadListener listener);
+    void uploadPhotos(String url, Map<String, String> data,Map<String, String> headers, final OnPhotoUploadListener listener);
 
     /**
      * 调用系统照相机拍照

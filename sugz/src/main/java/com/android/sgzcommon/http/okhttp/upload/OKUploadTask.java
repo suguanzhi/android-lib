@@ -98,12 +98,12 @@ public class OKUploadTask<T extends UploadEntity> {
     }
 
     /**
-     * 上传文件
+     * 上传文件，按队列顺序上传
      */
-    public void upLoadFileEnqueue(final String url, final T entity, final Map<String, String> data, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
+    public void upLoadFileEnqueue(final String url, final T entity, final Map<String, String> data, Map<String, String> headers, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
         try {
             mHandler.sendMessage(createMessage(ON_START, entity, listener, resultSet));
-            final Request request = getRequest(url, entity, data, resultSet, listener);
+            final Request request = getRequest(url, entity, data, headers, resultSet, listener);
             Call call = mOkHttpClient.newCall(request);
             call.enqueue(new Callback() {
                 @Override
@@ -143,13 +143,13 @@ public class OKUploadTask<T extends UploadEntity> {
     /**
      * 上传文件
      */
-    public void upLoadFile(final String url, final T entity, final Map<String, String> data, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
+    public void upLoadFile(final String url, final T entity, final Map<String, String> data, Map<String, String> headers, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
         mExecutorService.execute(new Runnable() {
             @Override
             public void run() {
                 try {
                     mHandler.sendMessage(createMessage(ON_START, entity, listener, resultSet));
-                    Request request = getRequest(url, entity, data, resultSet, listener);
+                    Request request = getRequest(url, entity, data, headers, resultSet, listener);
                     Call call = mOkHttpClient.newCall(request);
                     Response response = call.execute();
                     if (response.isSuccessful()) {
@@ -176,20 +176,26 @@ public class OKUploadTask<T extends UploadEntity> {
         });
     }
 
-    private Request getRequest(String url, T entity, Map<String, String> data, UploadResultSet resultSet, OnUploadFileListener<T> listener) {
+    private Request getRequest(String url, T entity, Map<String, String> data, Map<String, String> headers, UploadResultSet resultSet, OnUploadFileListener<T> listener) {
         final File f = entity.getFile();
         MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
         RequestBody fileBody = createProgressRequestBody(MediaType.parse("multipart/form-data"), resultSet, entity, listener);
         Headers.Builder hb = new Headers.Builder();
         hb.add("Content-Disposition", "form-data; name=\"" + name + "\";" + "filename=\"" + f.getName() + "\"");
         builder.addPart(hb.build(), fileBody);
+        if (data != null) {
+            for (String key : data.keySet()) {
+                String value = data.get(key);
+                builder.addFormDataPart(key, value);
+            }
+        }
         RequestBody requestBody = builder.build();
         //创建Request
         Request.Builder requestBuilder = new Request.Builder();
         requestBuilder.url(url);
-        if (data != null) {
-            for (String key : data.keySet()) {
-                String value = data.get(key);
+        if (headers != null) {
+            for (String key : headers.keySet()) {
+                String value = headers.get(key);
                 if (!TextUtils.isEmpty(value)) {
                     requestBuilder.addHeader(key, value);
                 }

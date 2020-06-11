@@ -99,8 +99,8 @@ public abstract class TakePhotoListActivity extends BaseActivity implements Take
     }
 
     @Override
-    public void uploadPhotos(String url, Map<String, String> data, OnPhotoUploadListener listener) {
-        mTakePhotoGrid.uploadPhotos(url,data,listener);
+    public void uploadPhotos(String url, Map<String, String> data,Map<String, String> headers, OnPhotoUploadListener listener) {
+        mTakePhotoGrid.uploadPhotos(url,data,headers,listener);
     }
 
 }
