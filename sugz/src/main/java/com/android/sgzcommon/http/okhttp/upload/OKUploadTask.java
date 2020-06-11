@@ -97,6 +97,11 @@ public class OKUploadTask<T extends UploadEntity> {
         return mOKUploadTask;
     }
 
+    public OKUploadTask setName(String name) {
+        this.name = name;
+        return mOKUploadTask;
+    }
+
     /**
      * 上传文件，按队列顺序上传
      */
@@ -210,10 +215,6 @@ public class OKUploadTask<T extends UploadEntity> {
         msg.what = what;
         msg.obj = new UploadResponse(entity, listener, result);
         return msg;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     private class UploadResponse {
