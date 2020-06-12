@@ -6,7 +6,6 @@ import com.android.sgzcommon.activity.BaseMainActivity;
 import com.android.sgzcommon.fragment.NavigationFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends BaseMainActivity {
 
@@ -45,19 +44,15 @@ public class MainActivity extends BaseMainActivity {
     }
 
     @Override
-    protected List<NavigationFragment> getNavigationFragments() {
-        fragments = new ArrayList<>();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ArrayList<NavigationFragment> fragments = new ArrayList<>();
         fragments.add(new TakePhotoFragment());
         fragments.add(new TwoFragment());
         fragments.add(new ThreeFragment());
         fragments.add(new FourFragment());
-        fragments.add(new FiveFragment());
-        return fragments;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        addFragment(fragments);
+        selecteNavItem(0);
     }
 
 }
