@@ -50,36 +50,27 @@ public abstract class BaseMainActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.d("BaseMainActivity", "onNavigationItemSelected:");
-                return showFragment(item.getItemId());
+                return showFragment(getNavigationPosition(item.getItemId()));
             }
         });
         selecteNavItem(0);
     }
 
-    protected void selecteNavItem(int itemId) {
-        mNavigation.setSelectedItemId(itemId);
-    }
-
-    protected int getSelectedItemId() {
-        return mNavigation.getSelectedItemId();
+    public void selecteNavItem(int position) {
+        Menu menu = mNavigation.getMenu();
+        if (position < menu.size()) {
+            MenuItem menuItem = menu.getItem(position);
+            mNavigation.setSelectedItemId(menuItem.getItemId());
+        }
     }
 
     /**
-     * @param itemId
+     * @param position
      * @return
      */
-    private boolean showFragment(int itemId) {
+    private boolean showFragment(int position) {
         Log.d("BaseMainActivity", "showFragment: 1");
         boolean result = true;
-        int position = 0;
-        Menu menu = mNavigation.getMenu();
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem menuItem = menu.getItem(i);
-            if (menuItem.getItemId() == itemId) {
-                position = i;
-                break;
-            }
-        }
         FragmentManager fm = getSupportFragmentManager();
         List<Fragment> fragments = fm.getFragments();
         FragmentTransaction ft = fm.beginTransaction();
@@ -125,6 +116,29 @@ public abstract class BaseMainActivity extends BaseActivity {
             }
         }
         return result;
+    }
+
+    /**
+     * @return
+     */
+    protected int getNavigationPosition() {
+        return getNavigationPosition(mNavigation.getSelectedItemId());
+    }
+
+    /**
+     * @return
+     */
+    private int getNavigationPosition(int itemId) {
+        int position = 0;
+        Menu menu = mNavigation.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            if (menuItem.getItemId() == itemId) {
+                position = i;
+                break;
+            }
+        }
+        return position;
     }
 
     /**
