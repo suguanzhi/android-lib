@@ -60,7 +60,7 @@ public abstract class BaseMainActivity extends BaseActivity {
         mNavigation.setSelectedItemId(itemId);
     }
 
-    protected int getSelectedItemId(int itemId) {
+    protected int getSelectedItemId() {
         return mNavigation.getSelectedItemId();
     }
 

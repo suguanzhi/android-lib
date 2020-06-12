@@ -1,6 +1,7 @@
 package com.sgz.androidlib;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.android.sgzcommon.activity.BaseMainActivity;
@@ -59,6 +60,13 @@ public class MainActivity extends BaseMainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int itemId = getSelectedItemId();
+        Log.d("MainActivity", "onResume: id == " + itemId);
     }
 
     public void clear(View v){
