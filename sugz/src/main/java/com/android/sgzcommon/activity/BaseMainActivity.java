@@ -35,6 +35,8 @@ public abstract class BaseMainActivity extends BaseActivity {
 
     protected abstract NavigationFragment newNavigationFragment(int position);
 
+    protected abstract List<NavigationFragment> getNavigationFragments();
+
     public int getLabelVisibilityMode() {
         return LabelVisibilityMode.LABEL_VISIBILITY_LABELED;
     }
@@ -48,7 +50,6 @@ public abstract class BaseMainActivity extends BaseActivity {
         mNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Log.d("BaseMainActivity", "onNavigationItemSelected: ");
                 int position = 0;
                 Menu menu = mNavigation.getMenu();
                 for (int i = 0; i < menu.size(); i++) {
@@ -65,36 +66,6 @@ public abstract class BaseMainActivity extends BaseActivity {
         selecteNavItem(0);
     }
 
-    /**
-     * @param fragment
-     */
-    protected void addFragment(NavigationFragment fragment) {
-        try {
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            int size = fm.getFragments().size();
-            String tag = fragment.getTag();
-            Fragment f = fm.findFragmentByTag(tag);
-            if (f == null) {
-                ft.add(getFrameLayoutId(), fragment, size + "");
-            }
-            ft.commitAllowingStateLoss();
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    /**
-     * @return
-     */
-    protected List<Fragment> getFragments() {
-        return getSupportFragmentManager().getFragments();
-    }
-
-    /**
-     * @param position
-     */
     public void selecteNavItem(int position) {
         Menu menu = mNavigation.getMenu();
         if (position < menu.size()) {
@@ -104,11 +75,11 @@ public abstract class BaseMainActivity extends BaseActivity {
     }
 
     /**
+     *
      * @param position
      * @return
      */
     private boolean showFragment(int position) {
-        Log.d("BaseMainActivity", "showFragment: position == " + position);
         boolean result = true;
         FragmentManager fm = getSupportFragmentManager();
         List<Fragment> fragments = fm.getFragments();
@@ -116,29 +87,34 @@ public abstract class BaseMainActivity extends BaseActivity {
         for (Fragment fragment : fragments) {
             ft.hide(fragment);
         }
-        String tag = position + "";
-        NavigationFragment fragment = (NavigationFragment) fm.findFragmentByTag(tag);
-        Log.d("BaseMainActivity", "showFragment: 1");
-        if (fragment != null) {
-
-            boolean isCreate = fragment.isCreate();
-            if (isCreate) {
-                ft.remove(fragment);
-                fragment = newNavigationFragment(position);
-            }
-            if (fragment.isOnlyClick()) {
-                fragment.onOnlyClick(this);
-                result = false;
-            } else {
-                Fragment f = fm.findFragmentByTag(tag);
-                if (f == null) {
-                    ft.add(getFrameLayoutId(), fragment, tag);
+        if (getNavigationFragments() != null) {
+            String tag = position + "";
+            if (position < getNavigationFragments().size()) {
+                NavigationFragment fragment = (NavigationFragment) fm.findFragmentByTag(tag);
+                if (fragment == null) {
+                    fragment = getNavigationFragments().get(position);
+                } else {
+                    boolean isCreate = fragment.isCreate();
+                    if (isCreate) {
+                        ft.remove(fragment);
+                        getNavigationFragments().remove(position);
+                        fragment = newNavigationFragment(position);
+                        getNavigationFragments().add(position, fragment);
+                    }
                 }
-                mCurrentFragment = fragment;
-                mCurrentPosition = position;
-                if (mCurrentFragment != null) {
-                    ft.show(mCurrentFragment);
-                    ft.commitAllowingStateLoss();
+                if (fragment.isOnlyClick()) {
+                    fragment.onOnlyClick(this);
+                    result = false;
+                } else {
+                    if (!fragment.isAdded()) {
+                        ft.add(getFrameLayoutId(), fragment, tag);
+                    }
+                    mCurrentFragment = fragment;
+                    mCurrentPosition = position;
+                    if (mCurrentFragment != null) {
+                        ft.show(mCurrentFragment);
+                        ft.commitAllowingStateLoss();
+                    }
                 }
             }
         }
@@ -146,7 +122,7 @@ public abstract class BaseMainActivity extends BaseActivity {
     }
 
     /**
-     *
+     *移除已添加的Fragments
      */
     protected void clearFragments() {
         try {
@@ -157,18 +133,19 @@ public abstract class BaseMainActivity extends BaseActivity {
                 ft.remove(fragment);
             }
             ft.commitAllowingStateLoss();
-        } catch (Exception e) {
-            e.printStackTrace();
-
+        }catch (Exception e){
+           e.printStackTrace();
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        for (Fragment fragment : getFragments()) {
-            if (fragment.isAdded()) {
-                fragment.onActivityResult(requestCode, resultCode, data);
+        if (getNavigationFragments() != null) {
+            for (NavigationFragment fragment : getNavigationFragments()) {
+                if (fragment.isAdded()) {
+                    fragment.onActivityResult(requestCode, resultCode, data);
+                }
             }
         }
     }
@@ -176,9 +153,11 @@ public abstract class BaseMainActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (Fragment fragment : getFragments()) {
-            if (fragment.isAdded()) {
-                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (getNavigationFragments() != null) {
+            for (NavigationFragment fragment : getNavigationFragments()) {
+                if (fragment.isAdded()) {
+                    fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                }
             }
         }
     }

@@ -1,11 +1,13 @@
 package com.sgz.androidlib;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.android.sgzcommon.activity.BaseMainActivity;
 import com.android.sgzcommon.fragment.NavigationFragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseMainActivity {
 
@@ -44,15 +46,23 @@ public class MainActivity extends BaseMainActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ArrayList<NavigationFragment> fragments = new ArrayList<>();
+    protected List<NavigationFragment> getNavigationFragments() {
+        fragments = new ArrayList<>();
         fragments.add(new TakePhotoFragment());
         fragments.add(new TwoFragment());
         fragments.add(new ThreeFragment());
         fragments.add(new FourFragment());
-        addFragment(fragments);
-        selecteNavItem(0);
+        fragments.add(new FiveFragment());
+        return fragments;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    public void clear(View v){
+        clearFragments();
     }
 
 }
