@@ -64,6 +64,11 @@ public abstract class BaseMainActivity extends BaseActivity {
         }
     }
 
+    protected Fragment getFrgment(int position) {
+        FragmentManager fm = getSupportFragmentManager();
+        return fm.findFragmentByTag(position + "");
+    }
+
     /**
      * @param position
      * @return

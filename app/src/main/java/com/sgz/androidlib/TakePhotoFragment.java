@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.sgzcommon.fragment.NavigationFragment;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
@@ -26,6 +27,8 @@ public class TakePhotoFragment extends NavigationFragment {
     ImageView mIvPhoto;
     @BindView(R.id.btn_take_photo)
     Button mBtnTakePhoto;
+    @BindView(R.id.tv_msg)
+    TextView mTvMsg;
 
     @Override
     public boolean isCreate() {
@@ -40,6 +43,10 @@ public class TakePhotoFragment extends NavigationFragment {
     @Override
     public void onOnlyClick(Activity activity) {
 
+    }
+
+    public void setMsg(String msg){
+        mTvMsg.setText(msg);
     }
 
     @Override
@@ -58,9 +65,9 @@ public class TakePhotoFragment extends NavigationFragment {
             @Override
             public void onPhoto(File photo) {
                 Log.d("TakePhotoFragment", "onPhoto: 1");
-                if (photo != null){
+                if (photo != null) {
                     Log.d("TakePhotoFragment", "onPhoto: 2");
-                    Bitmap bitmap = BitmapUtil.getFitBitmap(mContext,photo.getAbsolutePath());
+                    Bitmap bitmap = BitmapUtil.getFitBitmap(mContext, photo.getAbsolutePath());
                     mIvPhoto.setImageBitmap(bitmap);
                 }
             }

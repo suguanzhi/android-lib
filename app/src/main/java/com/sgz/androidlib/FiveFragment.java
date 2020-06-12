@@ -12,9 +12,10 @@ import com.android.sgzcommon.fragment.NavigationFragment;
  * @date 2020/6/10
  */
 public class FiveFragment extends NavigationFragment {
+
     @Override
     public boolean isCreate() {
-        return true;
+        return false;
     }
 
     @Override

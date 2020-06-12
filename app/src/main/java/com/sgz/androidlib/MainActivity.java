@@ -10,6 +10,8 @@ import com.android.sgzcommon.fragment.NavigationFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+
 public class MainActivity extends BaseMainActivity {
 
     ArrayList<NavigationFragment> fragments;
@@ -65,16 +67,26 @@ public class MainActivity extends BaseMainActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        int itemId = getSelectedItemId();
+        int itemId = getNavigationId();
         Log.d("MainActivity", "onResume: id == " + itemId);
     }
 
     public void clear(View v){
-        clearFragments();
-        selecteNavItem(R.id.navigation_home);
+//        clearFragments();
+        Fragment fragment = getFrgment(0);
+        if (fragment != null){
+            if (fragment instanceof TakePhotoFragment){
+                TakePhotoFragment takePhotoFragment = (TakePhotoFragment) fragment;
+                takePhotoFragment.setMsg("ddddddd");
+            }
+            Log.d("MainActivity", "clear: fragment != null ");
+        }else {
+            Log.d("MainActivity", "clear: null !");
+        }
+        selecteNavItem(0);
     }
     public void home(View v){
-        selecteNavItem(R.id.navigation_home);
+        selecteNavItem(0);
     }
 
 }

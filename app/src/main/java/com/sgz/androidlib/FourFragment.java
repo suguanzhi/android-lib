@@ -12,6 +12,7 @@ import com.android.sgzcommon.fragment.NavigationFragment;
  * @date 2020/6/10
  */
 public class FourFragment extends NavigationFragment {
+
     @Override
     public boolean isCreate() {
         return false;
