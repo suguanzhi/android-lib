@@ -118,6 +118,27 @@ public abstract class BaseMainActivity extends BaseActivity {
         return result;
     }
 
+    /**
+     *
+     */
+    protected void clearFragments() {
+        try {
+            if (mNavigationFragments != null) {
+                mNavigationFragments.clear();
+            }
+            FragmentManager fm = getSupportFragmentManager();
+            List<Fragment> fragments = fm.getFragments();
+            FragmentTransaction ft = fm.beginTransaction();
+            for (Fragment fragment : fragments) {
+                ft.remove(fragment);
+            }
+            ft.commitAllowingStateLoss();
+        }catch (Exception e){
+           e.printStackTrace();
+
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -142,3 +163,5 @@ public abstract class BaseMainActivity extends BaseActivity {
         }
     }
 }
+
+
