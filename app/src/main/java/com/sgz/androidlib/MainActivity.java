@@ -63,6 +63,10 @@ public class MainActivity extends BaseMainActivity {
 
     public void clear(View v){
         clearFragments();
+        selecteNavItem(R.id.navigation_home);
+    }
+    public void home(View v){
+        selecteNavItem(R.id.navigation_home);
     }
 
 }

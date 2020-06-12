@@ -23,6 +23,12 @@
             android:text="Clear"
             android:layout_centerInParent="true"
             android:onClick="clear"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:layout_centerHorizontal="true"
+            android:onClick="home"/>
     </RelativeLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
