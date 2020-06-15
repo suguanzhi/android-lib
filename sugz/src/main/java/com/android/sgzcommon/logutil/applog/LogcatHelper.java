@@ -99,6 +99,10 @@ public class LogcatHelper {
                 String line = null;
                 String fileName = null;
                 while (mRunning) {
+                    File dir = new File(mLogDir);
+                    if (!dir.exists()) {
+                        dir.mkdirs();
+                    }
                     if (!LogcatDate.getFileName().equals(fileName)) {
                         fileName = LogcatDate.getFileName();
                         out = new FileOutputStream(new File(mLogDir, fileName + ".log"), true);
