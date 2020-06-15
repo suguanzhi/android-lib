@@ -24,15 +24,12 @@ import androidx.fragment.app.FragmentTransaction;
 public abstract class BaseMainActivity extends BaseActivity {
 
     private BottomNavigationView mNavigation;
-    private NavigationFragment mCurrentFragment;
 
     protected abstract int getContentViewId();
 
     protected abstract int getNavigationId();
 
     protected abstract int getFrameLayoutId();
-
-    protected abstract NavigationFragment newNavigationFragment(int position);
 
     protected abstract List<NavigationFragment> getNavigationFragments();
 
@@ -50,7 +47,7 @@ public abstract class BaseMainActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.d("BaseMainActivity", "onNavigationItemSelected:");
-                return showFragment(getNavigationPosition(item.getItemId()));
+                return showFragment(false,getNavigationPosition(item.getItemId()));
             }
         });
         selecteNavItem(0);
@@ -70,54 +67,52 @@ public abstract class BaseMainActivity extends BaseActivity {
     }
 
     /**
-     * @param position
+     * @param reset
      * @return
      */
-    private boolean showFragment(int position) {
-        Log.d("BaseMainActivity", "showFragment: 1");
+    private boolean showFragment(boolean reset, final int position) {
         boolean result = true;
+        Log.d("BaseMainActivity", "showFragment: 1 position == " + position);
         FragmentManager fm = getSupportFragmentManager();
         List<Fragment> fragments = fm.getFragments();
+        Log.d("BaseMainActivity", "showFragment: fragments.size == " + fragments.size());
         FragmentTransaction ft = fm.beginTransaction();
         for (Fragment fragment : fragments) {
-            ft.hide(fragment);
+            if (reset) {
+                ft.remove(fragment);
+            } else {
+                ft.hide(fragment);
+            }
         }
-        if (getNavigationFragments() != null) {
-            Log.d("BaseMainActivity", "showFragment: 2");
-            String tag = position + "";
-            if (position < getNavigationFragments().size()) {
-                Log.d("BaseMainActivity", "showFragment: 3");
-                NavigationFragment fragment = (NavigationFragment) fm.findFragmentByTag(tag);
-                if (fragment == null) {
-                    Log.d("BaseMainActivity", "showFragment: 4");
+        Log.d("BaseMainActivity", "showFragment: 2");
+        String tag = position + "";
+        NavigationFragment fragment = (NavigationFragment) fm.findFragmentByTag(tag);
+        if (position < getNavigationFragments().size()) {
+            Log.d("BaseMainActivity", "showFragment: 3");
+            if (fragment == null || reset) {
+                Log.d("BaseMainActivity", "showFragment: 4");
+                fragment = getNavigationFragments().get(position);
+            } else {
+                Log.d("BaseMainActivity", "showFragment: 5");
+                if (fragment.isInitShow()) {
+                    Log.d("BaseMainActivity", "showFragment: 6");
+                    ft.remove(fragment);
                     fragment = getNavigationFragments().get(position);
-                } else {
-                    Log.d("BaseMainActivity", "showFragment: 5");
-                    boolean isCreate = fragment.isCreate();
-                    if (isCreate) {
-                        Log.d("BaseMainActivity", "showFragment: 6");
-                        ft.remove(fragment);
-                        getNavigationFragments().remove(position);
-                        fragment = newNavigationFragment(position);
-                        getNavigationFragments().add(position, fragment);
-                    }
                 }
-                if (fragment.isOnlyClick()) {
-                    Log.d("BaseMainActivity", "showFragment: 7");
-                    fragment.onOnlyClick(this);
-                    result = false;
-                } else {
-                    if (!fragment.isAdded()) {
-                        Log.d("BaseMainActivity", "showFragment: 8");
-                        ft.add(getFrameLayoutId(), fragment, tag);
-                    }
-                    mCurrentFragment = fragment;
-                    if (mCurrentFragment != null) {
-                        Log.d("BaseMainActivity", "showFragment: 9");
-                        ft.show(mCurrentFragment);
-                        ft.commitAllowingStateLoss();
-                    }
+            }
+            Log.d("BaseMainActivity", "showFragment: 7");
+            if (fragment.isOnlyClick()) {
+                Log.d("BaseMainActivity", "showFragment: 8");
+                fragment.onOnlyClick(this);
+                result = false;
+            } else {
+                if (!fragment.isAdded()) {
+                    Log.d("BaseMainActivity", "showFragment: 9");
+                    ft.add(getFrameLayoutId(), fragment, tag);
                 }
+                Log.d("BaseMainActivity", "showFragment: 10");
+                ft.show(fragment);
+                ft.commitAllowingStateLoss();
             }
         }
         return result;
@@ -161,6 +156,13 @@ public abstract class BaseMainActivity extends BaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 重置Fragments
+     */
+    protected void resetFragments() {
+        showFragment(true,getNavigationPosition());
     }
 
     @Override

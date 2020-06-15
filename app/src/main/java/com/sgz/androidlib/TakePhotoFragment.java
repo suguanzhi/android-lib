@@ -31,11 +31,6 @@ public class TakePhotoFragment extends NavigationFragment {
     TextView mTvMsg;
 
     @Override
-    public boolean isCreate() {
-        return false;
-    }
-
-    @Override
     public boolean isOnlyClick() {
         return false;
     }

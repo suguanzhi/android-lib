@@ -1,6 +1,8 @@
 package com.sgz.androidlib;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 
@@ -10,6 +12,7 @@ import com.android.sgzcommon.fragment.NavigationFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 public class MainActivity extends BaseMainActivity {
@@ -29,23 +32,6 @@ public class MainActivity extends BaseMainActivity {
     @Override
     protected int getFrameLayoutId() {
         return R.id.fl_container;
-    }
-
-    @Override
-    protected NavigationFragment newNavigationFragment(int position) {
-        switch (position) {
-            case 0:
-                return new TakePhotoFragment();
-            case 1:
-                return new TwoFragment();
-            case 2:
-                return new ThreeFragment();
-            case 3:
-                return new FourFragment();
-            case 4:
-                return new FiveFragment();
-        }
-        return null;
     }
 
     @Override
@@ -71,22 +57,35 @@ public class MainActivity extends BaseMainActivity {
         Log.d("MainActivity", "onResume: id == " + itemId);
     }
 
-    public void clear(View v){
-//        clearFragments();
+    public void clear(View v) {
         Fragment fragment = getFrgment(0);
-        if (fragment != null){
-            if (fragment instanceof TakePhotoFragment){
+        if (fragment != null) {
+            if (fragment instanceof TakePhotoFragment) {
                 TakePhotoFragment takePhotoFragment = (TakePhotoFragment) fragment;
                 takePhotoFragment.setMsg("ddddddd");
             }
             Log.d("MainActivity", "clear: fragment != null ");
-        }else {
+        } else {
             Log.d("MainActivity", "clear: null !");
         }
         selecteNavItem(0);
     }
-    public void home(View v){
-        selecteNavItem(0);
+
+    public void home(View v) {
+        resetFragments();
+        //        mHandler.sendEmptyMessageDelayed(1,1000);
     }
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case 1:
+                    selecteNavItem(0);
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
 }

@@ -14,11 +14,6 @@ import com.android.sgzcommon.fragment.NavigationFragment;
 public class FiveFragment extends NavigationFragment {
 
     @Override
-    public boolean isCreate() {
-        return false;
-    }
-
-    @Override
     public boolean isOnlyClick() {
         return false;
     }
