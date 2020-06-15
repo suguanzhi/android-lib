@@ -4,12 +4,15 @@ import android.app.Application;
 import android.util.Log;
 
 import com.android.sgzcommon.logutil.SLogUtil;
+import com.android.sgzcommon.logutil.applog.LogcatHelper;
 
 /**
  * Created by sgz on 2017/4/13.
  */
 
-public class BaseApplication extends Application {
+public abstract class BaseApplication extends Application {
+
+    protected abstract boolean isRunningLog();
 
     private Thread.UncaughtExceptionHandler restartHandler = new Thread.UncaughtExceptionHandler() {
         public void uncaughtException(Thread thread, Throwable ex) {
@@ -23,5 +26,12 @@ public class BaseApplication extends Application {
         super.onCreate();
         Thread.setDefaultUncaughtExceptionHandler(restartHandler);
         SLogUtil.initLog(this, getPackageName());
+        if (isRunningLog()) {
+            LogcatHelper.getInstance(this, getPackageName() + "/normal").start();
+        }
+    }
+
+    public static void e(String e) {
+        SLogUtil.i("qfy/slog", e);
     }
 }
