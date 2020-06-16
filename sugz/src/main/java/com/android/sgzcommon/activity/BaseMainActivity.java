@@ -93,7 +93,7 @@ public abstract class BaseMainActivity extends BaseActivity {
             fragment = getNewNavigationFragment(position);
         } else {
             Log.d("BaseMainActivity", "showFragment: 5");
-            if (fragment.isInitShow()) {
+            if (fragment.isInitEveryShow()) {
                 Log.d("BaseMainActivity", "showFragment: 6");
                 ft.remove(fragment);
                 fragment = getNewNavigationFragment(position);
@@ -113,7 +113,7 @@ public abstract class BaseMainActivity extends BaseActivity {
                 }
                 Log.d("BaseMainActivity", "showFragment: end ");
                 ft.show(fragment);
-                ft.commitAllowingStateLoss();
+                ft.commitNow();
             }
         }
         return result;

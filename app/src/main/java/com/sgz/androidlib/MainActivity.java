@@ -59,6 +59,7 @@ public class MainActivity extends BaseMainActivity {
     }
 
     public void clear(View v) {
+        resetFragments();
         Fragment fragment = getFrgment(0);
         if (fragment != null) {
             if (fragment instanceof TakePhotoFragment) {
@@ -69,7 +70,7 @@ public class MainActivity extends BaseMainActivity {
         } else {
             Log.d("MainActivity", "clear: null !");
         }
-        selecteNavItem(0);
+        selecteNavItem(3);
     }
 
     public void home(View v) {
