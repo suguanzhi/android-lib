@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 public abstract class BaseMainActivity extends BaseActivity {
 
     private BottomNavigationView mNavigation;
+    FragmentManager fm;
 
     protected abstract int getContentViewId();
 
@@ -41,6 +42,7 @@ public abstract class BaseMainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
+        fm = getSupportFragmentManager();
         mNavigation = findViewById(getNavigationId());
         mNavigation.setLabelVisibilityMode(getLabelVisibilityMode());
         mNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -73,7 +75,6 @@ public abstract class BaseMainActivity extends BaseActivity {
     private boolean showFragment(boolean reset, final int position) {
         boolean result = true;
         Log.d("BaseMainActivity", "showFragment: 1 position == " + position);
-        FragmentManager fm = getSupportFragmentManager();
         List<Fragment> fragments = fm.getFragments();
         Log.d("BaseMainActivity", "showFragment: fragments.size == " + fragments.size());
         FragmentTransaction ft = fm.beginTransaction();
@@ -92,12 +93,14 @@ public abstract class BaseMainActivity extends BaseActivity {
             if (fragment == null || reset) {
                 Log.d("BaseMainActivity", "showFragment: 4");
                 fragment = getNavigationFragments().get(position);
+                ft.add(getFrameLayoutId(), fragment, tag);
             } else {
                 Log.d("BaseMainActivity", "showFragment: 5");
                 if (fragment.isInitShow()) {
                     Log.d("BaseMainActivity", "showFragment: 6");
                     ft.remove(fragment);
                     fragment = getNavigationFragments().get(position);
+                    ft.add(getFrameLayoutId(), fragment, tag);
                 }
             }
             Log.d("BaseMainActivity", "showFragment: 7");
@@ -108,7 +111,6 @@ public abstract class BaseMainActivity extends BaseActivity {
             } else {
                 if (!fragment.isAdded()) {
                     Log.d("BaseMainActivity", "showFragment: 9");
-                    ft.add(getFrameLayoutId(), fragment, tag);
                 }
                 Log.d("BaseMainActivity", "showFragment: 10");
                 ft.show(fragment);
