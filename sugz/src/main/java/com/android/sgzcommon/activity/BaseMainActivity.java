@@ -24,7 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 public abstract class BaseMainActivity extends BaseActivity {
 
     private BottomNavigationView mNavigation;
-    FragmentManager fm;
+    private FragmentManager mManager;
 
     protected abstract int getContentViewId();
 
@@ -32,7 +32,7 @@ public abstract class BaseMainActivity extends BaseActivity {
 
     protected abstract int getFrameLayoutId();
 
-    protected abstract List<NavigationFragment> getNavigationFragments();
+    protected abstract NavigationFragment getNewNavigationFragment(int position);
 
     public int getLabelVisibilityMode() {
         return LabelVisibilityMode.LABEL_VISIBILITY_LABELED;
@@ -42,14 +42,14 @@ public abstract class BaseMainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
-        fm = getSupportFragmentManager();
+        mManager = getSupportFragmentManager();
         mNavigation = findViewById(getNavigationId());
         mNavigation.setLabelVisibilityMode(getLabelVisibilityMode());
         mNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.d("BaseMainActivity", "onNavigationItemSelected:");
-                return showFragment(false,getNavigationPosition(item.getItemId()));
+                return showFragment(false, getNavigationPosition(item.getItemId()));
             }
         });
         selecteNavItem(0);
@@ -64,8 +64,7 @@ public abstract class BaseMainActivity extends BaseActivity {
     }
 
     protected Fragment getFrgment(int position) {
-        FragmentManager fm = getSupportFragmentManager();
-        return fm.findFragmentByTag(position + "");
+        return mManager.findFragmentByTag(position + "");
     }
 
     /**
@@ -74,10 +73,10 @@ public abstract class BaseMainActivity extends BaseActivity {
      */
     private boolean showFragment(boolean reset, final int position) {
         boolean result = true;
-        Log.d("BaseMainActivity", "showFragment: 1 position == " + position);
-        List<Fragment> fragments = fm.getFragments();
+        Log.d("BaseMainActivity", "showFragment: position == " + position);
+        List<Fragment> fragments = mManager.getFragments();
         Log.d("BaseMainActivity", "showFragment: fragments.size == " + fragments.size());
-        FragmentTransaction ft = fm.beginTransaction();
+        FragmentTransaction ft = mManager.beginTransaction();
         for (Fragment fragment : fragments) {
             if (reset) {
                 ft.remove(fragment);
@@ -87,35 +86,33 @@ public abstract class BaseMainActivity extends BaseActivity {
         }
         Log.d("BaseMainActivity", "showFragment: 2");
         String tag = position + "";
-        NavigationFragment fragment = (NavigationFragment) fm.findFragmentByTag(tag);
-        if (position < getNavigationFragments().size()) {
-            Log.d("BaseMainActivity", "showFragment: 3");
-            if (fragment == null || reset) {
-                Log.d("BaseMainActivity", "showFragment: 4");
-                fragment = getNavigationFragments().get(position);
+        NavigationFragment fragment = (NavigationFragment) mManager.findFragmentByTag(tag);
+        Log.d("BaseMainActivity", "showFragment: 3");
+        if (fragment == null || reset) {
+            Log.d("BaseMainActivity", "showFragment: 4");
+            fragment = getNewNavigationFragment(position);
+        } else {
+            Log.d("BaseMainActivity", "showFragment: 5");
+            if (fragment.isInitShow()) {
+                Log.d("BaseMainActivity", "showFragment: 6");
+                ft.remove(fragment);
+                fragment = getNewNavigationFragment(position);
+            }
+        }
+        Log.d("BaseMainActivity", "showFragment: 7");
+        if (fragment.isOnlyClick()) {
+            Log.d("BaseMainActivity", "showFragment: 8");
+            fragment.onOnlyClick(this);
+            result = false;
+        } else {
+            Log.d("BaseMainActivity", "showFragment: 10");
+            if (!fragment.isAdded()) {
+                Log.d("BaseMainActivity", "showFragment: 11");
                 ft.add(getFrameLayoutId(), fragment, tag);
-            } else {
-                Log.d("BaseMainActivity", "showFragment: 5");
-                if (fragment.isInitShow()) {
-                    Log.d("BaseMainActivity", "showFragment: 6");
-                    ft.remove(fragment);
-                    fragment = getNavigationFragments().get(position);
-                    ft.add(getFrameLayoutId(), fragment, tag);
-                }
             }
-            Log.d("BaseMainActivity", "showFragment: 7");
-            if (fragment.isOnlyClick()) {
-                Log.d("BaseMainActivity", "showFragment: 8");
-                fragment.onOnlyClick(this);
-                result = false;
-            } else {
-                if (!fragment.isAdded()) {
-                    Log.d("BaseMainActivity", "showFragment: 9");
-                }
-                Log.d("BaseMainActivity", "showFragment: 10");
-                ft.show(fragment);
-                ft.commitAllowingStateLoss();
-            }
+            Log.d("BaseMainActivity", "showFragment: end ");
+            ft.show(fragment);
+            ft.commitAllowingStateLoss();
         }
         return result;
     }
@@ -164,17 +161,15 @@ public abstract class BaseMainActivity extends BaseActivity {
      * 重置Fragments
      */
     protected void resetFragments() {
-        showFragment(true,getNavigationPosition());
+        showFragment(true, getNavigationPosition());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (getNavigationFragments() != null) {
-            for (NavigationFragment fragment : getNavigationFragments()) {
-                if (fragment.isAdded()) {
-                    fragment.onActivityResult(requestCode, resultCode, data);
-                }
+        for (Fragment fragment : mManager.getFragments()) {
+            if (fragment.isAdded()) {
+                fragment.onActivityResult(requestCode, resultCode, data);
             }
         }
     }
@@ -182,11 +177,9 @@ public abstract class BaseMainActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (getNavigationFragments() != null) {
-            for (NavigationFragment fragment : getNavigationFragments()) {
-                if (fragment.isAdded()) {
-                    fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
-                }
+        for (Fragment fragment : mManager.getFragments()) {
+            if (fragment.isAdded()) {
+                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
             }
         }
     }

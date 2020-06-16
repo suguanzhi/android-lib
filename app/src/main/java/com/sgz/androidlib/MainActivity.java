@@ -9,15 +9,10 @@ import android.view.View;
 import com.android.sgzcommon.activity.BaseMainActivity;
 import com.android.sgzcommon.fragment.NavigationFragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 public class MainActivity extends BaseMainActivity {
-
-    ArrayList<NavigationFragment> fragments;
 
     @Override
     protected int getContentViewId() {
@@ -35,14 +30,20 @@ public class MainActivity extends BaseMainActivity {
     }
 
     @Override
-    protected List<NavigationFragment> getNavigationFragments() {
-        fragments = new ArrayList<>();
-        fragments.add(new TakePhotoFragment());
-        fragments.add(new TwoFragment());
-        fragments.add(new ThreeFragment());
-        fragments.add(new FourFragment());
-        fragments.add(new FiveFragment());
-        return fragments;
+    protected NavigationFragment getNewNavigationFragment(int position) {
+        switch (position){
+            case 0:
+                return new TakePhotoFragment();
+            case 1:
+                return new TwoFragment();
+            case 2:
+                return new ThreeFragment();
+            case 3:
+                return new FourFragment();
+            case 4:
+                return new FiveFragment();
+        }
+        return null;
     }
 
     @Override
