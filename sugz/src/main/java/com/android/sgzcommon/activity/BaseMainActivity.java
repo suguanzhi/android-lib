@@ -99,20 +99,22 @@ public abstract class BaseMainActivity extends BaseActivity {
                 fragment = getNewNavigationFragment(position);
             }
         }
-        Log.d("BaseMainActivity", "showFragment: 7");
-        if (fragment.isOnlyClick()) {
-            Log.d("BaseMainActivity", "showFragment: 8");
-            fragment.onOnlyClick(this);
-            result = false;
-        } else {
-            Log.d("BaseMainActivity", "showFragment: 10");
-            if (!fragment.isAdded()) {
-                Log.d("BaseMainActivity", "showFragment: 11");
-                ft.add(getFrameLayoutId(), fragment, tag);
+        if (fragment != null) {
+            Log.d("BaseMainActivity", "showFragment: 7");
+            if (fragment.isOnlyClick()) {
+                Log.d("BaseMainActivity", "showFragment: 8");
+                fragment.onOnlyClick(this);
+                result = false;
+            } else {
+                Log.d("BaseMainActivity", "showFragment: 10");
+                if (!fragment.isAdded()) {
+                    Log.d("BaseMainActivity", "showFragment: 11");
+                    ft.add(getFrameLayoutId(), fragment, tag);
+                }
+                Log.d("BaseMainActivity", "showFragment: end ");
+                ft.show(fragment);
+                ft.commitAllowingStateLoss();
             }
-            Log.d("BaseMainActivity", "showFragment: end ");
-            ft.show(fragment);
-            ft.commitAllowingStateLoss();
         }
         return result;
     }
