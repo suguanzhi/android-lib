@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -15,14 +16,18 @@ import com.android.sugz.R;
  */
 public abstract class BaseLoginActivity extends BaseActivity {
 
+    protected EditText mEtUsername;
     protected EditText mEtPassword;
+    protected Button mBtnLogin;
     protected ImageView mIvPasswordVisiable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sgz_login);
+        mEtUsername = findViewById(R.id.et_username);
         mEtPassword = findViewById(R.id.et_password);
+        mBtnLogin = findViewById(R.id.btn_login);
         mIvPasswordVisiable = findViewById(R.id.iv_password_visiable);
         mIvPasswordVisiable.setOnClickListener(new View.OnClickListener() {
             @Override
