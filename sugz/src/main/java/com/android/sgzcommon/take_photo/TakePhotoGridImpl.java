@@ -17,7 +17,7 @@ import com.android.sgzcommon.activity.utils.MUploadResultSet;
 import com.android.sgzcommon.http.okhttp.upload.OKUploadTask;
 import com.android.sgzcommon.http.okhttp.upload.OnUploadFileListener;
 import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
-import com.android.sgzcommon.recycleview.BaseViewHolder;
+import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.MarginDecoration;
 import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
@@ -77,7 +77,7 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
 
     private void init() {
         mPhotoUploads = new ArrayList<>();
-        mAdapter = new PictureGridEditAdapter(mActivity, mPhotoUploads, new BaseViewHolder.OnItemtClickListener() {
+        mAdapter = new PictureGridEditAdapter(mActivity, mPhotoUploads, new BaseRecyclerviewAdapter.OnItemtClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 try {

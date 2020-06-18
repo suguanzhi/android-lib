@@ -28,7 +28,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
 
     private OnClickListener listener;
 
-    public PictureGridEditAdapter(Context context, List<? extends PhotoUpload> photoUploads, BaseViewHolder.OnItemtClickListener clickListener, BaseViewHolder.OnItemtLongClickListener longClickListener) {
+    public PictureGridEditAdapter(Context context, List<? extends PhotoUpload> photoUploads, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         super(context, photoUploads, clickListener, longClickListener);
     }
 

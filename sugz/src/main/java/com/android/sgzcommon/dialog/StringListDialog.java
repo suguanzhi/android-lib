@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.android.sgzcommon.adapter.StringListAdapter;
-import com.android.sgzcommon.recycleview.BaseViewHolder;
+import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sugz.R;
 
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class StringListDialog extends BaseDialog {
         divider.setDrawable(ContextCompat.getDrawable(mContext,R.drawable.shape_divider));
         mRvList.addItemDecoration(divider);
 
-        mAdapter = new StringListAdapter(mContext, mStrings, new BaseViewHolder.OnItemtClickListener() {
+        mAdapter = new StringListAdapter(mContext, mStrings, new BaseRecyclerviewAdapter.OnItemtClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 if (listener != null) {

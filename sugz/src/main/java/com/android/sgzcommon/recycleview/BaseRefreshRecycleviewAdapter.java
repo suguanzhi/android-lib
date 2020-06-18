@@ -53,7 +53,7 @@ public abstract class BaseRefreshRecycleviewAdapter<V extends BaseViewHolder> ex
         return super.getItemCount() + 1;
     }
 
-    public BaseRefreshRecycleviewAdapter(Context context, List list, BaseViewHolder.OnItemtClickListener clickListener, BaseViewHolder.OnItemtLongClickListener longClickListener) {
+    public BaseRefreshRecycleviewAdapter(Context context, List list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         super(context, list, clickListener, longClickListener);
     }
 

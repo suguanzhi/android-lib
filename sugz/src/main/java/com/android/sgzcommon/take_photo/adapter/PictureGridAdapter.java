@@ -21,7 +21,7 @@ import java.util.List;
 public class PictureGridAdapter extends BaseRecyclerviewAdapter<PictureGridAdapter.ViewHolder> {
 
 
-    public PictureGridAdapter(Context context, List list, BaseViewHolder.OnItemtClickListener clickListener, BaseViewHolder.OnItemtLongClickListener longClickListener) {
+    public PictureGridAdapter(Context context, List list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         super(context, list, clickListener, longClickListener);
     }
 

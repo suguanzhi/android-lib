@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.android.sgzcommon.activity.PhotoViewActivity;
-import com.android.sgzcommon.recycleview.BaseViewHolder;
+import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.MarginDecoration;
 import com.android.sgzcommon.take_photo.adapter.PictureGridAdapter;
 
@@ -43,7 +43,7 @@ final public class ShowImageGridImpl implements ShowImageGrid {
 
     private void init() {
         mUrls = new ArrayList<>();
-        mAdapter = new PictureGridAdapter(mContext, mUrls, new BaseViewHolder.OnItemtClickListener() {
+        mAdapter = new PictureGridAdapter(mContext, mUrls, new BaseRecyclerviewAdapter.OnItemtClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 if (position < mUrls.size()) {

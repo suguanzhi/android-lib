@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class StringListAdapter extends BaseRecyclerviewAdapter<StringListAdapter.ViewHolder> {
 
-    public StringListAdapter(Context context, List list, BaseViewHolder.OnItemtClickListener clickListener, BaseViewHolder.OnItemtLongClickListener longClickListener) {
+    public StringListAdapter(Context context, List list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         super(context, list, clickListener, longClickListener);
     }
 
