@@ -11,10 +11,7 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
-import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
@@ -22,20 +19,11 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.WindowManager;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.NetworkInterface;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import androidx.core.content.FileProvider;
@@ -260,127 +248,6 @@ public class SystemUtil {
     public static boolean isInstall(Context context, Intent intent) {
         return context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
     }
-
-    /**
-     * 检测网络是否连接
-     *
-     * @return
-     */
-    public static boolean isNetworkAvailable(Context context) {
-        // 得到网络连接信息
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        try {
-            // 去进行判断网络是否连接
-            return manager.getActiveNetworkInfo().isAvailable();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    private static final String marshmallowMacAddress = "02:00:00:00:00:00";
-    private static final String fileAddressMac = "/sys/class/net/wlan0/address";
-
-    /**
-     * 获取mac地址
-     *
-     * @return
-     */
-    public static String getAdresseMAC(Context context) {
-        WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wifiInf = wifiMan.getConnectionInfo();
-
-        if (wifiInf != null && marshmallowMacAddress.equals(wifiInf.getMacAddress())) {
-            String result = null;
-            try {
-                result = getAdressMacByInterface();
-                if (result != null) {
-                    return result;
-                } else {
-                    result = getAddressMacByFile(wifiMan);
-                    return result;
-                }
-            } catch (Exception e) {
-                Log.e("MobileAcces", "Erreur lecture propriete Adresse MAC ");
-                e.printStackTrace();
-            }
-        } else {
-            if (wifiInf != null && wifiInf.getMacAddress() != null) {
-                return wifiInf.getMacAddress();
-            } else {
-                return "";
-            }
-        }
-        return marshmallowMacAddress;
-    }
-
-    private static String getAdressMacByInterface() {
-        try {
-            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
-            for (NetworkInterface nif : all) {
-                if (nif.getName().equalsIgnoreCase("wlan0")) {
-                    byte[] macBytes = nif.getHardwareAddress();
-                    if (macBytes == null) {
-                        return "";
-                    }
-
-                    StringBuilder res1 = new StringBuilder();
-                    for (byte b : macBytes) {
-                        res1.append(String.format("%02X:", b));
-                    }
-
-                    if (res1.length() > 0) {
-                        res1.deleteCharAt(res1.length() - 1);
-                    }
-                    return res1.toString();
-                }
-            }
-
-        } catch (Exception e) {
-            Log.e("MobileAcces", "Erreur lecture propriete Adresse MAC ");
-        }
-        return null;
-    }
-
-    /**
-     * @param wifiMan
-     * @return
-     * @throws Exception
-     */
-    private static String getAddressMacByFile(WifiManager wifiMan) throws Exception {
-        String ret;
-        int wifiState = wifiMan.getWifiState();
-
-        wifiMan.setWifiEnabled(true);
-        File fl = new File(fileAddressMac);
-        FileInputStream fin = new FileInputStream(fl);
-        ret = crunchifyGetStringFromStream(fin);
-        fin.close();
-
-        boolean enabled = WifiManager.WIFI_STATE_ENABLED == wifiState;
-        wifiMan.setWifiEnabled(enabled);
-        return ret;
-    }
-
-    private static String crunchifyGetStringFromStream(InputStream crunchifyStream) throws IOException {
-        if (crunchifyStream != null) {
-            Writer crunchifyWriter = new StringWriter();
-            char[] crunchifyBuffer = new char[2048];
-            try {
-                Reader crunchifyReader = new BufferedReader(new InputStreamReader(crunchifyStream, "UTF-8"));
-                int counter;
-                while ((counter = crunchifyReader.read(crunchifyBuffer)) != -1) {
-                    crunchifyWriter.write(crunchifyBuffer, 0, counter);
-                }
-            } finally {
-                crunchifyStream.close();
-            }
-            return crunchifyWriter.toString();
-        } else {
-            return "No Contents";
-        }
-    }
-
 
     /**
      * 获取当前应用版本号

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <stroke android:color="@color/btn_disable" android:width="0.5dp"/>
+    <stroke android:color="@color/btn_normal" android:width="0.5dp"/>
+    <solid android:color="@color/transparent"/>
     <corners android:radius="@dimen/btn_height"/>
 </shape>

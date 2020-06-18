@@ -299,4 +299,10 @@
 
     <color name="text">#212121</color>
     <color name="text_second">#757575</color>
+
+    <color name="progressbar_horizontal_start">@color/colorPrimary</color>
+    <color name="progressbar_horizontal_end">@color/colorPrimaryDark</color>
+
+    <color name="progressbar_horizontal_load_start">@color/red_500</color>
+    <color name="progressbar_horizontal_load_end">@color/red_500</color>
 </resources>

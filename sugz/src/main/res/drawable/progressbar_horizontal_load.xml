@@ -5,7 +5,7 @@
         android:id="@android:id/background">
         <shape>
             <corners android:radius="20dp"/>
-            <solid android:color="@color/grey_300"/>
+            <solid android:color="@color/grey_500"/>
         </shape>
     </item>
 
@@ -15,8 +15,8 @@
             <shape>
                 <corners android:radius="20dp"/>
                 <gradient
-                    android:endColor="@color/red_500"
-                    android:startColor="@color/red_500" />
+                    android:endColor="@color/progressbar_horizontal_load_end"
+                    android:startColor="@color/progressbar_horizontal_load_start" />
             </shape>
         </clip>
     </item>

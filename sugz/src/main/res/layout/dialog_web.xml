@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:layout_alignParentTop="true"
-            android:progressDrawable="@drawable/progressbar_horizontal_red" />
+            android:progressDrawable="@drawable/progressbar_horizontal_load" />
     </RelativeLayout>
 
 </LinearLayout>

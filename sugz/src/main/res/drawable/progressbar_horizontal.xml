@@ -15,8 +15,8 @@
             <shape>
                 <corners android:radius="20dp"/>
                 <gradient
-                    android:endColor="@color/amber_600"
-                    android:startColor="@color/amber_500" />
+                    android:endColor="@color/progressbar_horizontal_end"
+                    android:startColor="@color/progressbar_horizontal_start" />
             </shape>
         </clip>
     </item>

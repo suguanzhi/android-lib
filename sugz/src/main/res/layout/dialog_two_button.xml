@@ -51,7 +51,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/shape_btn_strock_confirm"
+            android:background="@drawable/shape_btn_sk_confirm"
             android:gravity="center"
             android:text="@string/dialog_two_button_cancle"
             android:textColor="@color/btn_confirm"
