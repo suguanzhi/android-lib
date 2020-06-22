@@ -47,9 +47,9 @@ public class BitmapUtil {
         int height = options.outHeight;
         int inSampleSize = 1;
         if (height > reqHeight || width > reqWidth) {
-            int heightRatio = Math.round((float) height / (float) reqHeight);
-            int widthRatio = Math.round((float) width / (float) reqWidth);
-            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+            int heightRatio = (int) Math.floor((double) height / (double) reqHeight);
+            int widthRatio = (int) Math.floor((double) width / (double) reqWidth);
+            inSampleSize = Math.min(heightRatio, widthRatio);
         }
         return inSampleSize;
     }
