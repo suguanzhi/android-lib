@@ -21,7 +21,7 @@ public interface TakePhotoGrid {
 
     void addPhotoUploads(List<? extends PhotoUpload> photoUploads);
 
-    int getPhotoSize();
+    List<PhotoUpload> getPhotoUploads();
 
     void setOnTakePhotoClickListener(OnTakePhotoClickListener listener);
 

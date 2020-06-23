@@ -106,8 +106,8 @@ public abstract class TakePhotoListActivity extends BaseActivity implements Take
     }
 
     @Override
-    public int getPhotoSize() {
-        return mTakePhotoGrid.getPhotoSize();
+    public List<PhotoUpload> getPhotoUploads() {
+        return mTakePhotoGrid.getPhotoUploads();
     }
 
     @Override

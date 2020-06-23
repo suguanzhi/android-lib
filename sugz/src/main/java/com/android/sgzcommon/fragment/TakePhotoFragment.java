@@ -105,8 +105,8 @@ public abstract class TakePhotoFragment extends BaseFragment implements TakePhot
     }
 
     @Override
-    public int getPhotoSize() {
-        return mTakePhotoGrid.getPhotoSize();
+    public List<PhotoUpload> getPhotoUploads() {
+        return mTakePhotoGrid.getPhotoUploads();
     }
 
     @Override

@@ -121,8 +121,8 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
     }
 
     @Override
-    public int getPhotoSize() {
-        return mPhotoUploads.size();
+    public List<PhotoUpload> getPhotoUploads() {
+        return mPhotoUploads;
     }
 
     @Override

@@ -10,7 +10,6 @@ import android.media.MediaMetadataRetriever;
 import android.util.Log;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -136,7 +135,7 @@ public class BitmapUtil {
         try {
             fos = new FileOutputStream(new File(targetPath));
             result = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
