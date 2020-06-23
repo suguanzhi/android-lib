@@ -7,9 +7,11 @@ import com.android.sgzcommon.take_photo.ShowImageGrid;
 import com.android.sgzcommon.take_photo.ShowImageGridImpl;
 import com.android.sgzcommon.take_photo.TakePhotoGrid;
 import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
+import com.android.sgzcommon.take_photo.listener.OnPhotoDeleteListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
 import com.android.sgzcommon.take_photo.PhotoUpload;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
 
 import java.util.List;
 import java.util.Map;
@@ -45,10 +47,15 @@ public abstract class TakePhotoListActivity extends BaseActivity implements Take
         mTakePhotoGrid = new TakePhotoGridImpl(this, mTakePhotoView);
         mTakePhotoGrid.setOnPhotoListener(new OnPhotoListener() {
             @Override
-            public void onPhoto(List<PhotoUpload> uploads, PhotoUpload photo) {
-                onPhotoResult(uploads,photo);
+            public void onAddPhoto(List<PhotoUpload> uploads, PhotoUpload photo) {
+                onPhotoResult(uploads, photo);
             }
         });
+    }
+
+    @Override
+    public void addPhotoUploads(List<? extends PhotoUpload> photoUploads) {
+        mTakePhotoGrid.addPhotoUploads(photoUploads);
     }
 
     @Override
@@ -59,6 +66,16 @@ public abstract class TakePhotoListActivity extends BaseActivity implements Take
     @Override
     public void takePhoto(String path) {
         mTakePhotoGrid.takePhoto(path);
+    }
+
+    @Override
+    public void setOnTakePhotoClickListener(OnTakePhotoClickListener listener) {
+        mTakePhotoGrid.setOnTakePhotoClickListener(listener);
+    }
+
+    @Override
+    public void setOnPhotoDeleteListener(OnPhotoDeleteListener listener) {
+        mTakePhotoGrid.setOnPhotoDeleteListener(listener);
     }
 
     @Override
@@ -99,8 +116,8 @@ public abstract class TakePhotoListActivity extends BaseActivity implements Take
     }
 
     @Override
-    public void uploadPhotos(String url, Map<String, String> data,Map<String, String> headers, OnPhotoUploadListener listener) {
-        mTakePhotoGrid.uploadPhotos(url,data,headers,listener);
+    public void uploadPhotos(String url, Map<String, String> data, Map<String, String> headers, OnPhotoUploadListener listener) {
+        mTakePhotoGrid.uploadPhotos(url, data, headers, listener);
     }
 
 }

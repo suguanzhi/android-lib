@@ -13,12 +13,14 @@ import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
 import com.android.sgzcommon.take_photo.PhotoUpload;
+import com.android.sgzcommon.take_photo.listener.OnPhotoDeleteListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
 import com.android.sgzcommon.utils.BitmapUtil;
+import com.android.sgzcommon.utils.FileUtil;
 import com.android.sgzcommon.utils.UnitUtil;
 import com.android.sgzcommon.view.imageview.CornerImageView;
 import com.android.sugz.R;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -26,7 +28,8 @@ import java.util.List;
  */
 public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHolder> {
 
-    private OnClickListener listener;
+    private OnPhotoDeleteListener mPhotoDeleteListener;
+    private OnTakePhotoClickListener mTakePhotoClickListener;
 
     public PictureGridEditAdapter(Context context, List<? extends PhotoUpload> photoUploads, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         super(context, photoUploads, clickListener, longClickListener);
@@ -38,7 +41,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, final int position) {
         Log.d("PictureGridEditAdapter", "getView: position = " + position);
         if (0 == getItemViewType(position)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
@@ -47,13 +50,13 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                 @Override
                 public void onProgress(int progress) {
                     Log.d("PictureGridEditAdapter", "onProgress: id = " + Thread.currentThread().getId());
-                    updatePgrogress(viewHolder,progress);
+                    updatePgrogress(viewHolder, progress);
                     Log.d("PictureGridEditAdapter", "onProgress: position == " + position + "; progress == " + progress);
                 }
 
                 @Override
                 public void onState(UploadEntity.STATE state) {
-                    updateState(viewHolder,state);
+                    updateState(viewHolder, state);
                 }
             });
             viewHolder.mIvDelete.setOnClickListener(new View.OnClickListener() {
@@ -64,11 +67,11 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                     //                    holder.itemView.setFocusableInTouchMode(true);
                     //                    holder.itemView.requestFocus();
                     try {
-                        mObjects.remove(upload);
+                        mObjects.remove(position);
                         String path = upload.getPath();
-                        File file = new File(path);
-                        if (file.exists()) {
-                            file.delete();
+                        FileUtil.deleteFile(path);
+                        if (mPhotoDeleteListener != null) {
+                            mPhotoDeleteListener.onDelete(position, upload);
                         }
                         notifyDataSetChanged();
                     } catch (Exception e) {
@@ -89,8 +92,8 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
             viewHolder.mLlAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
-                        listener.onCameraClick(v);
+                    if (mTakePhotoClickListener != null) {
+                        mTakePhotoClickListener.onClick(v);
                     }
                 }
             });
@@ -178,14 +181,11 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
         }
     }
 
-    public void setOnClickListener(OnClickListener listener) {
-        this.listener = listener;
+    public void setOnPhotoDeleteListener(OnPhotoDeleteListener listener) {
+        this.mPhotoDeleteListener = listener;
     }
 
-    public interface OnClickListener {
-
-        void onCameraClick(View view);
+    public void setOnTakePhotoClickListener(OnTakePhotoClickListener listener) {
+        this.mTakePhotoClickListener = listener;
     }
-
-
 }

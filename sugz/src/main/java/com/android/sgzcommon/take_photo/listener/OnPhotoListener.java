@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface OnPhotoListener {
 
-    void onPhoto(List<PhotoUpload> uploads, PhotoUpload photo);
+    void onAddPhoto(List<PhotoUpload> uploads, PhotoUpload photo);
+
 }
