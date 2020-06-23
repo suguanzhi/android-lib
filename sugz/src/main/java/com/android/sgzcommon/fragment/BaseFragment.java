@@ -48,7 +48,6 @@ public abstract class BaseFragment extends Fragment {
     protected boolean isInited;
     protected boolean isVisiableToUser;
     private String mCurrentPath;
-    private File mPhotoDir;
 
     protected Point mWindowSize;
     protected Context mContext;
@@ -203,11 +202,15 @@ public abstract class BaseFragment extends Fragment {
         toast.show();
     }
 
-    private void createPhotoDir() {
-        mPhotoDir = new File(mActivity.getExternalCacheDir().getAbsolutePath() + File.separator + "takephoto");
-        if (!mPhotoDir.exists()) {
-            mPhotoDir.mkdirs();
+    /**
+     * @return
+     */
+    protected File getTakePhotoDir() {
+        File dir = new File(mActivity.getExternalCacheDir().getAbsolutePath() + File.separator + "takephoto");
+        if (!dir.exists()) {
+            dir.mkdirs();
         }
+        return dir;
     }
 
     /**
@@ -217,8 +220,8 @@ public abstract class BaseFragment extends Fragment {
         mCurrentPath = path;
         mPhotoListener = listener;
         if (TextUtils.isEmpty(mCurrentPath)) {
-            createPhotoDir();
-            mCurrentPath = mPhotoDir.getAbsolutePath() + File.separator + System.currentTimeMillis() + ".png";
+            getTakePhotoDir();
+            mCurrentPath = getTakePhotoDir().getAbsolutePath() + File.separator + System.currentTimeMillis() + ".png";
         }
         int result = PermissionChecker.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
         if (result == PackageManager.PERMISSION_GRANTED) {
