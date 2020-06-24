@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * @author sgz
  * @date 2020/6/10
  */
-public class TakePhotoActivity extends com.android.sgzcommon.activity.TakePhotoActivity {
+public class SampleTakePhotoActivity extends com.android.sgzcommon.activity.TakePhotoActivity {
 
     @BindView(R.id.iv_photo)
     ImageView mIvPhoto;

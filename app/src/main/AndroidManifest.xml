@@ -26,7 +26,7 @@
         </activity>
         <activity android:name=".SampleTakePhotosActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".TakePhotoActivity" />
+        <activity android:name=".SampleTakePhotoActivity" />
         <activity android:name=".ScrollerLayoutActivity" />
 
         <provider

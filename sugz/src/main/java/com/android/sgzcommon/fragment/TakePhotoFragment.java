@@ -44,6 +44,16 @@ public abstract class TakePhotoFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 调用选取照片
+     */
+    protected void choosePhoto(OnTakePhotoListener listener) {
+        if (mTakePhoto != null) {
+            mTakePhoto.setOnTakePhotoListener(listener);
+            mTakePhoto.choosePhoto();
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
