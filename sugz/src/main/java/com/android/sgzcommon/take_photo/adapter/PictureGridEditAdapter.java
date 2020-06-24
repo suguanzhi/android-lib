@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
-import com.android.sgzcommon.take_photo.PhotoUpload;
-import com.android.sgzcommon.take_photo.listener.OnPhotoDeleteListener;
+import com.android.sgzcommon.take_photo.entity.PhotoUpload;
+import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
 import com.android.sgzcommon.utils.BitmapUtil;
 import com.android.sgzcommon.utils.FileUtil;
@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHolder> {
 
-    private OnPhotoDeleteListener mPhotoDeleteListener;
+    private OnDeletePhotoListener mDeletePhotoListener;
     private OnTakePhotoClickListener mTakePhotoClickListener;
 
     public PictureGridEditAdapter(Context context, List<? extends PhotoUpload> photoUploads, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
@@ -70,8 +70,8 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                         mObjects.remove(position);
                         String path = upload.getPath();
                         FileUtil.deleteFile(path);
-                        if (mPhotoDeleteListener != null) {
-                            mPhotoDeleteListener.onDelete(position, upload);
+                        if (mDeletePhotoListener != null) {
+                            mDeletePhotoListener.onDelete(position, upload);
                         }
                         notifyDataSetChanged();
                     } catch (Exception e) {
@@ -181,8 +181,8 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
         }
     }
 
-    public void setOnPhotoDeleteListener(OnPhotoDeleteListener listener) {
-        this.mPhotoDeleteListener = listener;
+    public void setOnDeletePhotoListener(OnDeletePhotoListener listener) {
+        this.mDeletePhotoListener = listener;
     }
 
     public void setOnTakePhotoClickListener(OnTakePhotoClickListener listener) {

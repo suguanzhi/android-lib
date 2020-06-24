@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by sgz on 2020/1/10.
  */
-final public class ShowImageGridImpl implements ShowImageGrid {
+final public class ShowImagesImpl implements ShowImages {
 
     Context mContext;
     RecyclerView mRecyclerView;
@@ -28,11 +28,11 @@ final public class ShowImageGridImpl implements ShowImageGrid {
     int mVerticalMargin;
     List<String> mUrls;
 
-    public ShowImageGridImpl(Context context, RecyclerView recyclerView) {
+    public ShowImagesImpl(Context context, RecyclerView recyclerView) {
         this(context, recyclerView, 4, 5, 5);
     }
 
-    public ShowImageGridImpl(Context context, RecyclerView recyclerView, int column, int horizontalMargin, int verticalmargin) {
+    public ShowImagesImpl(Context context, RecyclerView recyclerView, int column, int horizontalMargin, int verticalmargin) {
         mContext = context;
         mRecyclerView = recyclerView;
         mColumn = column;

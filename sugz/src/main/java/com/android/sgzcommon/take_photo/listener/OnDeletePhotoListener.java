@@ -1,8 +1,8 @@
 package com.android.sgzcommon.take_photo.listener;
 
-import com.android.sgzcommon.take_photo.PhotoUpload;
+import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 
-public interface OnPhotoDeleteListener {
+public interface OnDeletePhotoListener {
 
     void onDelete(int position, PhotoUpload photoUpload);
 }

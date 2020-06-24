@@ -3,14 +3,14 @@ package com.android.sgzcommon.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.sgzcommon.take_photo.ShowImageGrid;
-import com.android.sgzcommon.take_photo.ShowImageGridImpl;
-import com.android.sgzcommon.take_photo.TakePhotoGrid;
-import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
-import com.android.sgzcommon.take_photo.listener.OnPhotoDeleteListener;
-import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
+import com.android.sgzcommon.take_photo.ShowImages;
+import com.android.sgzcommon.take_photo.ShowImagesImpl;
+import com.android.sgzcommon.take_photo.TakePhotos;
+import com.android.sgzcommon.take_photo.TakePhotosImpl;
+import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.PhotoUpload;
+import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
 
 import java.util.List;
@@ -22,12 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by sgz on 2019/5/10 0010.
  */
-public abstract class TakePhotoListActivity extends BaseActivity implements TakePhotoGrid, ShowImageGrid {
+public abstract class TakePhotosActivity extends BaseActivity implements TakePhotos, ShowImages {
 
     private RecyclerView mShowPhotoView;
     private RecyclerView mTakePhotoView;
-    private TakePhotoGridImpl mTakePhotoGrid;
-    private ShowImageGrid mShowImageGrid;
+    private TakePhotosImpl mTakePhotoGrid;
+    private ShowImages mShowImages;
 
     protected abstract int getContentViewId();
 
@@ -35,7 +35,7 @@ public abstract class TakePhotoListActivity extends BaseActivity implements Take
 
     protected abstract int getTakePhotoGridViewId();
 
-    protected abstract void onPhotoResult(List<PhotoUpload> uploads, PhotoUpload photo);
+    protected abstract void onPhotos(List<PhotoUpload> uploads);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +43,12 @@ public abstract class TakePhotoListActivity extends BaseActivity implements Take
         setContentView(getContentViewId());
         mShowPhotoView = findViewById(getShowImageGridViewId());
         mTakePhotoView = findViewById(getTakePhotoGridViewId());
-        mShowImageGrid = new ShowImageGridImpl(this, mShowPhotoView);
-        mTakePhotoGrid = new TakePhotoGridImpl(this, mTakePhotoView);
-        mTakePhotoGrid.setOnPhotoListener(new OnPhotoListener() {
+        mShowImages = new ShowImagesImpl(this, mShowPhotoView);
+        mTakePhotoGrid = new TakePhotosImpl(this, mTakePhotoView);
+        mTakePhotoGrid.setOnPhotoGridListener(new OnTakePhotoGridListener() {
             @Override
-            public void onAddPhoto(List<PhotoUpload> uploads, PhotoUpload photo) {
-                onPhotoResult(uploads, photo);
+            public void onPhotos(List<PhotoUpload> uploads) {
+                TakePhotosActivity.this.onPhotos(uploads);
             }
         });
     }
@@ -60,7 +60,7 @@ public abstract class TakePhotoListActivity extends BaseActivity implements Take
 
     @Override
     public void setImageUrls(List<String> urls) {
-        mShowImageGrid.setImageUrls(urls);
+        mShowImages.setImageUrls(urls);
     }
 
     @Override
@@ -69,13 +69,18 @@ public abstract class TakePhotoListActivity extends BaseActivity implements Take
     }
 
     @Override
+    public void choosePhoto() {
+        mTakePhotoGrid.choosePhoto();
+    }
+
+    @Override
     public void setOnTakePhotoClickListener(OnTakePhotoClickListener listener) {
         mTakePhotoGrid.setOnTakePhotoClickListener(listener);
     }
 
     @Override
-    public void setOnPhotoDeleteListener(OnPhotoDeleteListener listener) {
-        mTakePhotoGrid.setOnPhotoDeleteListener(listener);
+    public void setOnDeletePhotoListener(OnDeletePhotoListener listener) {
+        mTakePhotoGrid.setOnDeletePhotoListener(listener);
     }
 
     @Override
@@ -92,7 +97,7 @@ public abstract class TakePhotoListActivity extends BaseActivity implements Take
 
     @Override
     public void notifyPhotoChanged() {
-        mShowImageGrid.notifyPhotoChanged();
+        mShowImages.notifyPhotoChanged();
     }
 
     @Override

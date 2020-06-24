@@ -1,7 +1,7 @@
 package com.android.sgzcommon.take_photo.listener;
 
 import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
-import com.android.sgzcommon.take_photo.PhotoUpload;
+import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 
 public interface OnPhotoUploadListener {
 

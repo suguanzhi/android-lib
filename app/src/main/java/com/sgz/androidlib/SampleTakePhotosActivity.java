@@ -3,10 +3,12 @@ package com.sgz.androidlib;
 import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
-import com.android.sgzcommon.activity.TakePhotoListActivity;
-import com.android.sgzcommon.take_photo.PhotoUpload;
-import com.android.sgzcommon.take_photo.TakePhotoGridImpl;
+import com.android.sgzcommon.activity.TakePhotosActivity;
+import com.android.sgzcommon.take_photo.entity.PhotoUpload;
+import com.android.sgzcommon.take_photo.TakePhotosImpl;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
 
 import java.util.List;
 import java.util.PriorityQueue;
@@ -20,12 +22,12 @@ import butterknife.BindView;
  * @author sgz
  * @date 2020/6/10
  */
-public class SampleTakePhotoListActivity extends TakePhotoListActivity {
+public class SampleTakePhotosActivity extends TakePhotosActivity {
 
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
 
-    private TakePhotoGridImpl mTakePhotoGrid;
+    private TakePhotosImpl mTakePhotoGrid;
 
     @Override
     protected int getContentViewId() {
@@ -43,7 +45,7 @@ public class SampleTakePhotoListActivity extends TakePhotoListActivity {
     }
 
     @Override
-    protected void onPhotoResult(List<PhotoUpload> uploads, PhotoUpload photo) {
+    protected void onPhotos(List<PhotoUpload> uploads) {
 
     }
 
@@ -80,6 +82,13 @@ public class SampleTakePhotoListActivity extends TakePhotoListActivity {
         Log.d("MainActivity", "onCreate: size == " + queue.size());
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(3);
 
+        setOnTakePhotoClickListener(new OnTakePhotoClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("SampleTakePhotoListActivity", "onClick: ---------------------");
+                choosePhoto();
+            }
+        });
     }
 
     class TestResource implements Comparable {

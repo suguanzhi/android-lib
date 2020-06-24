@@ -1,16 +1,9 @@
 package com.android.sgzcommon.take_photo;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.android.sgzcommon.activity.PhotoViewActivity;
 import com.android.sgzcommon.activity.utils.MUploadResultSet;
@@ -20,10 +13,12 @@ import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.MarginDecoration;
 import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
-import com.android.sgzcommon.take_photo.listener.OnPhotoDeleteListener;
-import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
+import com.android.sgzcommon.take_photo.entity.PhotoUpload;
+import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
 import com.android.sgzcommon.utils.FileUtil;
 
 import java.io.File;
@@ -32,49 +27,52 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
-import androidx.core.content.PermissionChecker;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by sgz on 2020/1/10.
  */
-final public class TakePhotoGridImpl implements TakePhotoGrid {
+final public class TakePhotosImpl implements TakePhotos {
 
     Activity mActivity;
     RecyclerView mRecyclerView;
     PictureGridEditAdapter mAdapter;
-    OnPhotoListener mListener;
-    File mPhotoDir;
+    OnTakePhotoGridListener mListener;
+    TakePhotoImpl mTakePhoto;
 
     int mColumn;
     int mHorizontalMargin;
     int mVerticalMargin;
-    String mCurrentPath;
     List<PhotoUpload> mPhotoUploads;
-    static final int REQUEST_TAKE_PHOTO_CODE = 371;
 
-    public TakePhotoGridImpl(Activity activity, RecyclerView recyclerView) {
+    public TakePhotosImpl(Activity activity, RecyclerView recyclerView) {
         this(activity, recyclerView, 4, 5, 5);
     }
 
-    public TakePhotoGridImpl(Activity activity, RecyclerView recyclerView, int column, int horizontalMargin, int verticalmargin) {
+    public TakePhotosImpl(Activity activity, RecyclerView recyclerView, int column, int horizontalMargin, int verticalmargin) {
         mActivity = activity;
         mRecyclerView = recyclerView;
         mColumn = column;
         mHorizontalMargin = horizontalMargin;
         mVerticalMargin = verticalmargin;
-        createPhotoDir();
+        mTakePhoto = new TakePhotoImpl(activity);
+        mTakePhoto.setOnTakePhotoListener(new OnTakePhotoListener() {
+            @Override
+            public void onPhoto(File photo) {
+                if (photo != null) {
+                    String path = photo.getAbsolutePath();
+                    mPhotoUploads.add(new PhotoUpload(path));
+                }
+                mListener.onPhotos(mPhotoUploads);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
         init();
     }
 
-    private void createPhotoDir() {
-        mPhotoDir = new File(mActivity.getExternalCacheDir().getAbsolutePath() + File.separator + "takephoto");
-        if (!mPhotoDir.exists()) {
-            mPhotoDir.mkdirs();
-        }
+    public File getPhotoDir() {
+        return mTakePhoto.getPhotoDir();
     }
 
     private void init() {
@@ -131,8 +129,8 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
     }
 
     @Override
-    public void setOnPhotoDeleteListener(OnPhotoDeleteListener listener) {
-        mAdapter.setOnPhotoDeleteListener(listener);
+    public void setOnDeletePhotoListener(OnDeletePhotoListener listener) {
+        mAdapter.setOnDeletePhotoListener(listener);
     }
 
     @Override
@@ -185,7 +183,7 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
         }
     }
 
-    public void setOnPhotoListener(OnPhotoListener listener) {
+    public void setOnPhotoGridListener(OnTakePhotoGridListener listener) {
         mListener = listener;
     }
 
@@ -194,77 +192,31 @@ final public class TakePhotoGridImpl implements TakePhotoGrid {
      */
     @Override
     public void takePhoto(String path) {
-        mCurrentPath = path;
-        if (TextUtils.isEmpty(mCurrentPath)) {
-            createPhotoDir();
-            mCurrentPath = mPhotoDir.getAbsolutePath() + File.separator + System.currentTimeMillis() + ".png";
-        }
-        int result = PermissionChecker.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            Log.d("TakePhotoGridImpl", "takePhoto: PERMISSION_GRANTED");
-            try {
-                Uri uri;
-                Log.d("TakePhotoGridImpl", "takePhoto: path = " + mCurrentPath);
-                File file = new File(mCurrentPath);
-                if (Build.VERSION.SDK_INT >= 24) {
-                    //Android 7.0及以上获取文件 Uri
-                    uri = FileProvider.getUriForFile(mActivity, mActivity.getPackageName(), file);
-                } else {
-                    uri = Uri.fromFile(file);
-                }
-                //调取系统拍照
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                mActivity.startActivityForResult(intent, REQUEST_TAKE_PHOTO_CODE);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            Log.d("TakePhotoGridImpl", "takePhoto: PERMISSION_DENIED");
-            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
-        }
+        mTakePhoto.takePhoto(path);
+    }
+
+    @Override
+    public void choosePhoto() {
+        mTakePhoto.choosePhoto();
     }
 
     @Override
     public void clearPhotos() {
         mPhotoUploads.clear();
-        if (mPhotoDir != null && mPhotoDir.exists()) {
-            FileUtil.deleteFile(mPhotoDir);
+        if (getPhotoDir().exists()) {
+            FileUtil.deleteFile(getPhotoDir());
         }
         notifyTakePhotoChanged();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mTakePhoto.onActivityResult(requestCode, resultCode, data);
         Log.d("TakePhotoGridImpl", "onActivityResult: requestCode = " + requestCode);
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_TAKE_PHOTO_CODE) {//获取系统照片上传
-            Log.d("TakePhotoGridImpl", "onActivityResult: path = " + mCurrentPath);
-            File image = new File(mCurrentPath);
-            PhotoUpload upload = null;
-            if (image.exists()) {
-                Log.d("TakePhotoGridImpl", "onActivityResult: 1");
-                upload = new PhotoUpload(mCurrentPath);
-                mPhotoUploads.add(upload);
-            } else {
-                Log.d("TakePhotoGridImpl", "onActivityResult: 5");
-                mCurrentPath = "";
-            }
-            mListener.onAddPhoto(mPhotoUploads, upload);
-            mAdapter.notifyDataSetChanged();
-        }
     }
 
+
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            if (permissions.length > 0 && grantResults.length > 0) {
-                if (Manifest.permission.CAMERA.equals(permissions[0])) {
-                    if (PackageManager.PERMISSION_DENIED == grantResults[0]) {
-                        Toast.makeText(mActivity, "缺少照相机权限", Toast.LENGTH_SHORT).show();
-                    } else {
-                        takePhoto(null);
-                    }
-                }
-            }
-        }
+        mTakePhoto.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 

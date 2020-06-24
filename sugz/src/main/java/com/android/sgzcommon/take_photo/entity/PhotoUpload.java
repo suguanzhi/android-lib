@@ -1,4 +1,4 @@
-package com.android.sgzcommon.take_photo;
+package com.android.sgzcommon.take_photo.entity;
 
 import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
 

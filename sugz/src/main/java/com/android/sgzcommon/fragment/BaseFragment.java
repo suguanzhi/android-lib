@@ -1,19 +1,11 @@
 package com.android.sgzcommon.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,13 +23,8 @@ import com.android.sgzcommon.volley.VolleyManager;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 
-import java.io.File;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
-import androidx.core.content.PermissionChecker;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -84,7 +71,6 @@ public abstract class BaseFragment extends Fragment {
         mQueue = VolleyManager.getInstance(mContext).getRequestQueueInstance();
         mImageLoader = VolleyManager.getInstance(mContext).getImageLoaderInstance();
     }
-
 
     @Nullable
     @Override
@@ -201,95 +187,4 @@ public abstract class BaseFragment extends Fragment {
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
-
-    /**
-     * @return
-     */
-    protected File getTakePhotoDir() {
-        File dir = new File(mActivity.getExternalCacheDir().getAbsolutePath() + File.separator + "takephoto");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        return dir;
-    }
-
-    /**
-     * 调用系统照相机拍照
-     */
-    protected void takePhoto(String path, OnTakePhotoListener listener) {
-        mCurrentPath = path;
-        mPhotoListener = listener;
-        if (TextUtils.isEmpty(mCurrentPath)) {
-            getTakePhotoDir();
-            mCurrentPath = getTakePhotoDir().getAbsolutePath() + File.separator + System.currentTimeMillis() + ".png";
-        }
-        int result = PermissionChecker.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            Log.d("BaseFragment", "takePhoto: PERMISSION_GRANTED");
-            try {
-                Uri uri;
-                Log.d("BaseFragment", "takePhoto: path = " + mCurrentPath);
-                File file = new File(mCurrentPath);
-                if (Build.VERSION.SDK_INT >= 24) {
-                    //Android 7.0及以上获取文件 Uri
-                    uri = FileProvider.getUriForFile(mActivity, mActivity.getPackageName(), file);
-                } else {
-                    uri = Uri.fromFile(file);
-                }
-                //调取系统拍照
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                mActivity.startActivityForResult(intent, REQUEST_TAKE_PHOTO_CODE);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            Log.d("BaseFragment", "takePhoto: PERMISSION_DENIED");
-            ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d("BaseFragment", "onActivityResult: requestCode = " + requestCode);
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_TAKE_PHOTO_CODE) {//获取系统照片上传
-            Log.d("BaseFragment", "onActivityResult: path = " + mCurrentPath);
-            if (mPhotoListener != null) {
-                Log.d("BaseFragment", "onActivityResult: path = 1");
-                if (!TextUtils.isEmpty(mCurrentPath)) {
-                    Log.d("BaseFragment", "onActivityResult: path = 2");
-                    File image = new File(mCurrentPath);
-                    if (image.exists()) {
-                        Log.d("BaseFragment", "onActivityResult: path = 3");
-                        mPhotoListener.onPhoto(image);
-                    } else {
-                        Log.d("BaseFragment", "onActivityResult: path = 4");
-                        mPhotoListener.onPhoto(null);
-                    }
-                } else {
-                    Log.d("BaseFragment", "onActivityResult: path = 5");
-                    mPhotoListener.onPhoto(null);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            if (permissions.length > 0 && grantResults.length > 0) {
-                if (Manifest.permission.CAMERA.equals(permissions[0])) {
-                    if (PackageManager.PERMISSION_DENIED == grantResults[0]) {
-                        Toast.makeText(mActivity, "缺少照相机权限", Toast.LENGTH_SHORT).show();
-                    } else {
-                        takePhoto(null, mPhotoListener);
-                    }
-                }
-            }
-        }
-    }
-
-
 }

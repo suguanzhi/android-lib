@@ -1,7 +1,7 @@
-package com.android.sgzcommon.fragment;
+package com.android.sgzcommon.activity;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.android.sgzcommon.take_photo.TakePhotoImpl;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
@@ -14,14 +14,14 @@ import androidx.annotation.NonNull;
  * @author sgz
  * @date 2020/6/24
  */
-public abstract class TakePhotoFragment extends BaseFragment {
+public class TakePhotoActivity extends BaseActivity {
 
     private TakePhotoImpl mTakePhoto;
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mTakePhoto = new TakePhotoImpl(mActivity);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mTakePhoto = new TakePhotoImpl(this);
     }
 
     /**
@@ -59,5 +59,4 @@ public abstract class TakePhotoFragment extends BaseFragment {
             mTakePhoto.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
 }

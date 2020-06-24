@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
 
 import java.io.File;
@@ -20,7 +19,7 @@ import butterknife.ButterKnife;
  * @author sgz
  * @date 2020/6/10
  */
-public class TakePhotoActivity extends BaseActivity {
+public class TakePhotoActivity extends com.android.sgzcommon.activity.TakePhotoActivity {
 
     @BindView(R.id.iv_photo)
     ImageView mIvPhoto;
