@@ -131,7 +131,7 @@ public class TitleBar extends LinearLayout {
 
     private void left() {
         Drawable leftDrawable = mIvLeft.getDrawable();
-        Drawable backDrawable = mIvLeft.getDrawable();
+        Drawable backDrawable = mIvBack.getDrawable();
         String leftText = mTvLeft.getText().toString();
         if (leftDrawable == null && backDrawable == null && TextUtils.isEmpty(leftText)) {
             mRlLeft.setVisibility(GONE);
