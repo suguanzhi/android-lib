@@ -67,6 +67,11 @@ public abstract class TakePhotosFragment extends BaseFragment implements TakePho
     }
 
     @Override
+    public void choosePhoto() {
+        mTakePhotos.choosePhoto();
+    }
+
+    @Override
     public void setOnTakePhotoClickListener(OnTakePhotoClickListener listener) {
         mTakePhotos.setOnTakePhotoClickListener(listener);
     }
