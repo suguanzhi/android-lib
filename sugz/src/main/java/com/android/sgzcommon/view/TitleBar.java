@@ -70,7 +70,9 @@ public class TitleBar extends LinearLayout {
         Drawable leftDrawable = array.getDrawable(R.styleable.titlebar_left);
         setLeft(leftDrawable);
         Drawable backDrawable = array.getDrawable(R.styleable.titlebar_back);
-        setBack(backDrawable);
+        if (backDrawable != null) {
+            setBack(backDrawable);
+        }
         String leftText = array.getString(R.styleable.titlebar_left_text);
         setLeftText(leftText);
         mIvBack.setOnClickListener(new OnClickListener() {
