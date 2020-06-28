@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.sugz.R;
-import com.zhpan.bannerview.annotation.Visibility;
 
 import androidx.annotation.Nullable;
 
@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
  */
 public class TitleBar extends LinearLayout {
 
+    private ImageView mIvBack;
     private ImageView mIvLeft;
     private ImageView mIvRight;
     private TextView mTvLeft;
@@ -31,12 +32,13 @@ public class TitleBar extends LinearLayout {
     private TextView mTvTitle;
     private RelativeLayout mRlLeft;
     private RelativeLayout mRlRight;
-    private OnLeftAndRightClickListener listener;
+    private OnLeftRightClickListener listener;
 
     public TitleBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         View view = LayoutInflater.from(context).inflate(R.layout.layout_title, this);
         LinearLayout barLayout = view.findViewById(R.id.ll_content);
+        mIvBack = view.findViewById(R.id.iv_back);
         mIvLeft = view.findViewById(R.id.iv_left);
         mIvRight = view.findViewById(R.id.iv_right);
         mTvLeft = view.findViewById(R.id.tv_left);
@@ -58,7 +60,7 @@ public class TitleBar extends LinearLayout {
         }
 
         String title = array.getString(R.styleable.titlebar_title);
-        mTvTitle.setText(title);
+        setTitle(title);
 
         int textSize = array.getDimensionPixelSize(R.styleable.titlebar_text_size, 0);
         if (textSize != 0) {
@@ -66,37 +68,38 @@ public class TitleBar extends LinearLayout {
         }
 
         Drawable leftDrawable = array.getDrawable(R.styleable.titlebar_left);
-        boolean back = array.getBoolean(R.styleable.titlebar_back, true);
-        if (!back) {
-            mIvLeft.setImageDrawable(leftDrawable);
-        }
+        setLeft(leftDrawable);
+        Drawable backDrawable = array.getDrawable(R.styleable.titlebar_back);
+        setBack(backDrawable);
         String leftText = array.getString(R.styleable.titlebar_left_text);
-        mTvLeft.setText(leftText);
+        setLeftText(leftText);
+        mIvBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    ((Activity) getContext()).finish();
+                } catch (Throwable t) {
+                    t.printStackTrace();
+                }
+            }
+        });
         mRlLeft.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (back) {
-                    try {
-                        ((Activity) getContext()).finish();
-                    } catch (Throwable t) {
-                        t.printStackTrace();
-                    }
-                } else {
-                    if (listener != null && leftDrawable != null) {
-                        listener.onLeftClick(v);
-                    }
+                if (listener != null) {
+                    listener.onLeftClick(v);
                 }
             }
         });
 
         Drawable rightDrawable = array.getDrawable(R.styleable.titlebar_right);
-        mIvRight.setImageDrawable(rightDrawable);
+        setRight(rightDrawable);
         String rightText = array.getString(R.styleable.titlebar_right_text);
-        mTvRight.setText(rightText);
+        setRightText(rightText);
         mRlRight.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null & rightDrawable != null) {
+                if (listener != null) {
                     listener.onRightClick(v);
                 }
             }
@@ -111,34 +114,56 @@ public class TitleBar extends LinearLayout {
 
     public void setLeft(Drawable left) {
         mIvLeft.setImageDrawable(left);
+        left();
+    }
+
+    public void setBack(Drawable back) {
+        mIvBack.setImageDrawable(back);
+        left();
     }
 
     public void setLeftText(CharSequence left) {
         mTvLeft.setText(left);
+        left();
     }
 
-    public void setLeftVisible(@Visibility int visible) {
-        mRlLeft.setVisibility(visible);
+    private void left() {
+        Drawable leftDrawable = mIvLeft.getDrawable();
+        Drawable backDrawable = mIvLeft.getDrawable();
+        String leftText = mTvLeft.getText().toString();
+        if (leftDrawable == null && backDrawable == null && TextUtils.isEmpty(leftText)) {
+            mRlLeft.setVisibility(GONE);
+        } else {
+            mRlLeft.setVisibility(VISIBLE);
+        }
     }
 
     public void setRight(Drawable right) {
         mIvRight.setImageDrawable(right);
+        right();
     }
 
     public void setRightText(CharSequence right) {
         mTvRight.setText(right);
+        right();
     }
 
-    public void setRightVisible(@Visibility int visible) {
-        mRlRight.setVisibility(visible);
+    private void right() {
+        Drawable rightDrawable = mIvRight.getDrawable();
+        String rightText = mTvRight.getText().toString();
+        if (rightDrawable == null && TextUtils.isEmpty(rightText)) {
+            mRlRight.setVisibility(GONE);
+        } else {
+            mRlRight.setVisibility(VISIBLE);
+        }
     }
 
-    public void setListener(OnLeftAndRightClickListener listener) {
+    public void setOnLeftRightClickListener(OnLeftRightClickListener listener) {
         this.listener = listener;
     }
 
 
-    public interface OnLeftAndRightClickListener {
+    public interface OnLeftRightClickListener {
         void onLeftClick(View v);
 
         void onRightClick(View v);
