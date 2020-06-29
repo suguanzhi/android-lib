@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         app:left_text="dddddd"
         app:right_text="是独立访客"
-        app:title="是的分裂势力的" />
+        app:title="是的分裂势水电" />
 
     <ImageView
         android:id="@+id/iv_photo"

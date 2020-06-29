@@ -134,7 +134,7 @@ public class TitleBar extends LinearLayout {
         Drawable backDrawable = mIvBack.getDrawable();
         String leftText = mTvLeft.getText().toString();
         if (leftDrawable == null && backDrawable == null && TextUtils.isEmpty(leftText)) {
-            mRlLeft.setVisibility(GONE);
+            mRlLeft.setVisibility(INVISIBLE);
         } else {
             mRlLeft.setVisibility(VISIBLE);
             if (leftDrawable == null && TextUtils.isEmpty(leftText)) {
@@ -173,7 +173,7 @@ public class TitleBar extends LinearLayout {
         Drawable rightDrawable = mIvRight.getDrawable();
         String rightText = mTvRight.getText().toString();
         if (rightDrawable == null && TextUtils.isEmpty(rightText)) {
-            mRlRight.setVisibility(GONE);
+            mRlRight.setVisibility(INVISIBLE);
         } else {
             mRlRight.setVisibility(VISIBLE);
             if (!TextUtils.isEmpty(rightText)) {
