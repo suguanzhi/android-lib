@@ -137,6 +137,25 @@ public class TitleBar extends LinearLayout {
             mRlLeft.setVisibility(GONE);
         } else {
             mRlLeft.setVisibility(VISIBLE);
+            if (leftDrawable == null && TextUtils.isEmpty(leftText)) {
+                if (backDrawable != null) {
+                    mIvBack.setVisibility(VISIBLE);
+                } else {
+                    mIvBack.setVisibility(GONE);
+                }
+            } else {
+                mIvBack.setVisibility(GONE);
+                if (!TextUtils.isEmpty(leftText)) {
+                    mTvLeft.setVisibility(VISIBLE);
+                } else {
+                    mTvLeft.setVisibility(GONE);
+                }
+                if (leftDrawable != null) {
+                    mIvLeft.setVisibility(VISIBLE);
+                } else {
+                    mIvLeft.setVisibility(GONE);
+                }
+            }
         }
     }
 
@@ -157,6 +176,16 @@ public class TitleBar extends LinearLayout {
             mRlRight.setVisibility(GONE);
         } else {
             mRlRight.setVisibility(VISIBLE);
+            if (!TextUtils.isEmpty(rightText)) {
+                mTvRight.setVisibility(VISIBLE);
+            } else {
+                mTvRight.setVisibility(GONE);
+            }
+            if (rightDrawable != null) {
+                mIvRight.setVisibility(VISIBLE);
+            } else {
+                mIvRight.setVisibility(GONE);
+            }
         }
     }
 
