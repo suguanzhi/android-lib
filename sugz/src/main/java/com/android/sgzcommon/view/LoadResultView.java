@@ -70,9 +70,9 @@ public class LoadResultView extends LinearLayout {
             mTvButton.setTextColor(btnTextColor);
             mTvButton.setTextSize(btnTextSize);
             setBtnText(btnText);
-
             array.recycle();
         }
+        gone();
     }
 
     public void empty() {
@@ -87,6 +87,7 @@ public class LoadResultView extends LinearLayout {
         mIvIcon.setImageResource(R.drawable.ic_sgz_empty);
         setTipText(tip);
         setBtnText(btnText);
+        setVisibility(VISIBLE);
     }
 
     public void networkError() {
@@ -115,6 +116,7 @@ public class LoadResultView extends LinearLayout {
         mIvIcon.setImageResource(R.drawable.ic_sgz_load_fail);
         setTipText(tip);
         setBtnText(btnText);
+        setVisibility(VISIBLE);
     }
 
     public void setBtnText(String btnText) {
@@ -133,5 +135,9 @@ public class LoadResultView extends LinearLayout {
         } else {
             mTvTip.setVisibility(VISIBLE);
         }
+    }
+
+    public void gone() {
+        setVisibility(GONE);
     }
 }
