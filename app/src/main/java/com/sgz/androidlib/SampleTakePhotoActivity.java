@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.android.sgzcommon.activity.TakePhotoActivity;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
+import com.android.sgzcommon.view.LoadResultView;
 
 import java.io.File;
 
@@ -19,12 +21,14 @@ import butterknife.ButterKnife;
  * @author sgz
  * @date 2020/6/10
  */
-public class SampleTakePhotoActivity extends com.android.sgzcommon.activity.TakePhotoActivity {
+public class SampleTakePhotoActivity extends TakePhotoActivity {
 
     @BindView(R.id.iv_photo)
     ImageView mIvPhoto;
     @BindView(R.id.btn_take_photo)
     Button mBtnTakePhoto;
+    @BindView(R.id.lrv)
+    LoadResultView mLrv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class SampleTakePhotoActivity extends com.android.sgzcommon.activity.Take
     }
 
     public void take(View v) {
+        mLrv.empty();
         takePhoto(null, new OnTakePhotoListener() {
             @Override
             public void onPhoto(File photo) {
