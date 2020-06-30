@@ -11,55 +11,54 @@ import java.lang.ref.WeakReference;
  */
 
 public abstract class BaseAutoDismissDialog extends BaseDialog {
-    private boolean isStop;
+
     private long mDelay;
-    private int mTime = 0;
-    protected Handler mHandler;
+    private Handler mHandler;
 
-    public BaseAutoDismissDialog(Context context, int time) {
+    public BaseAutoDismissDialog(Context context, long delay) {
         super(context);
-        init(time);
-    }
-
-    public BaseAutoDismissDialog(Context context, int time, int theme) {
-        super(context);
-        init(time);
-    }
-
-    private void init(int time) {
-        mTime = time;
-        mHandler = new MyHandler(this);
-    }
-
-    public void show(boolean delay) {
-        super.show();
-        if (delay) {
-            dismissDelay(mTime);
-        }
-    }
-
-    public void dismissDelay(long delay) {
-        stopTimeCount(false);
         mDelay = delay;
-        mHandler.sendEmptyMessageDelayed(DISMISS, mDelay);
-    }
-
-    public void stopTimeCount(boolean stop) {
-        isStop = stop;
     }
 
     @Override
-    public void onDetachedFromWindow() {
-        mDelay = 0;
-        isStop = false;
-        super.onDetachedFromWindow();
+    protected void onStart() {
+        super.onStart();
+        if (mHandler == null) {
+            mHandler = new MyHandler(this);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+        mHandler = null;
+    }
+
+    /**
+     *
+     * @param delay
+     */
+    public void show(long delay) {
+        mDelay = delay;
+        dismissDelay();
+        super.show();
+    }
+
+    /**
+     *
+     */
+    private void dismissDelay() {
+        mHandler.sendEmptyMessageDelayed(DISMISS, mDelay);
     }
 
     private static class MyHandler extends Handler {
 
         private WeakReference<BaseAutoDismissDialog> mReference;
 
-        public MyHandler(BaseAutoDismissDialog dialog) {
+        private MyHandler(BaseAutoDismissDialog dialog) {
             mReference = new WeakReference<>(dialog);
         }
 
@@ -69,10 +68,7 @@ public abstract class BaseAutoDismissDialog extends BaseDialog {
             if (dialog != null) {
                 switch (msg.what) {
                     case DISMISS:
-                        if (!dialog.isStop) {
-                            dialog.dismiss();
-                            dialog.onDismiss();
-                        }
+                        dialog.dismiss();
                         break;
                 }
             }
@@ -83,11 +79,6 @@ public abstract class BaseAutoDismissDialog extends BaseDialog {
     @Override
     public void show() {
         super.show();
-        dismissDelay(mTime);
-    }
-
-    @Override
-    public void onBackPressed() {
-
+        dismissDelay();
     }
 }

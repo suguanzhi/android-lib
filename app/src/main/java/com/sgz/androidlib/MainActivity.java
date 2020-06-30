@@ -35,7 +35,7 @@ public class MainActivity extends BaseMainActivity {
             case 0:
                 return new TakePhotoFragment();
             case 1:
-                return new TwoFragment();
+                return new FunctionTestFragment();
             case 2:
                 return new ThreeFragment();
             case 3:
