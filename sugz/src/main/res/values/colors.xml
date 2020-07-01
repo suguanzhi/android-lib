@@ -305,4 +305,7 @@
 
     <color name="progressbar_horizontal_load_start">@color/red_500</color>
     <color name="progressbar_horizontal_load_end">@color/red_500</color>
+
+    <color name="img_loading">@color/grey_400</color>
+    <color name="img_load_failure">@color/grey_400</color>
 </resources>

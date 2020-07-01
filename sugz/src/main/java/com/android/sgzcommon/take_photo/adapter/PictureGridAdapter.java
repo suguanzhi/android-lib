@@ -41,11 +41,11 @@ public class PictureGridAdapter extends BaseRecyclerviewAdapter<PictureGridAdapt
         if (!TextUtils.isEmpty(url)) {
             if (url.startsWith("http")) {
                 mImageLoader.get(url, holder, 200, 300);
-            }else {
-                holder.mIvImage.setImageBitmap(BitmapUtil.getShowBitmap(url,200,300));
+            } else {
+                holder.mIvImage.setImageBitmap(BitmapUtil.getShowBitmap(url, 200, 300));
             }
         } else {
-            holder.mIvImage.setImageResource(R.drawable.img_load_fail);
+            holder.mIvImage.setImageResource(R.drawable.ic_sgz_img_load_failure);
         }
     }
 
@@ -61,7 +61,7 @@ public class PictureGridAdapter extends BaseRecyclerviewAdapter<PictureGridAdapt
         public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
             Bitmap bitmap = response.getBitmap();
             if (bitmap == null) {
-                mIvImage.setImageResource(R.drawable.img_loading);
+                mIvImage.setImageResource(R.drawable.ic_sgz_img_loading);
             } else {
                 mIvImage.setImageBitmap(bitmap);
             }
@@ -69,7 +69,7 @@ public class PictureGridAdapter extends BaseRecyclerviewAdapter<PictureGridAdapt
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            mIvImage.setImageResource(R.drawable.img_load_fail);
+            mIvImage.setImageResource(R.drawable.ic_sgz_img_load_failure);
         }
     }
 
