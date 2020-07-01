@@ -15,10 +15,8 @@
 
     <Button
         android:id="@+id/btn_string_list_dialog"
-        android:layout_width="@dimen/btn_width"
-        android:layout_height="@dimen/btn_height"
+        style="@style/Button.Danger"
         android:layout_marginTop="10dp"
-        android:background="@drawable/shape_btn_sk_confirm"
         android:text="文本列表Dialog" />
 
 </LinearLayout>

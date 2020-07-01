@@ -27,4 +27,59 @@
         <item name="android:minHeight">6dp</item>
     </style>
 
+    <style name="Button">
+        <item name="android:textSize">@dimen/btn_text_size</item>
+        <item name="android:layout_width">@dimen/btn_width</item>
+        <item name="android:layout_height">@dimen/btn_height</item>
+    </style>
+
+    <style name="Button.Danger" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_danger</item>
+    </style>
+
+    <style name="Button.Confirm" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_confirm</item>
+    </style>
+
+    <style name="Button.Disable" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_disable</item>
+    </style>
+
+    <style name="Button.Warm" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_warm</item>
+    </style>
+
+    <style name="Button.Primary" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_primary</item>
+    </style>
+
+    <style name="Button.Normal" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_sk_normal</item>
+    </style>
+
+    <style name="Button.Strock.Confirm" parent="Button">
+        <item name="android:textColor">@color/btn_confirm</item>
+        <item name="android:background">@drawable/shape_btn_sk_confirm_sd_white</item>
+    </style>
+
+    <style name="Button.Strock.Danger" parent="Button">
+        <item name="android:textColor">@color/btn_danger</item>
+        <item name="android:background">@drawable/shape_btn_sk_danger_sd_white</item>
+    </style>
+
+    <style name="Button.Strock.Disable" parent="Button">
+        <item name="android:textColor">@color/btn_danger</item>
+        <item name="android:background">@drawable/shape_btn_sk_disable_sd_white</item>
+    </style>
+
+    <style name="Button.Strock.Normal" parent="Button">
+        <item name="android:textColor">@color/btn_normal</item>
+        <item name="android:background">@drawable/shape_btn_sk_normal_sd_white</item>
+    </style>
 </resources>
