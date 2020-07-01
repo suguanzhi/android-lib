@@ -102,6 +102,7 @@ public class LoadResultView extends LinearLayout {
         mIvIcon.setImageResource(R.drawable.ic_sgz_network_error);
         setTipText(tip);
         setBtnText(btnText);
+        setVisibility(VISIBLE);
     }
 
     public void networkFail() {
