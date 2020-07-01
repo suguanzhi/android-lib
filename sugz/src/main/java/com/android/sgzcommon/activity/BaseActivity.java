@@ -92,7 +92,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void showLoading() {
-        showLoading("加载中");
+        showLoading("正在加载");
     }
 
     protected void showLoading(String tip) {

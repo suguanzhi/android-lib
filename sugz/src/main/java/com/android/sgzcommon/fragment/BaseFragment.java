@@ -103,12 +103,14 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void showLoading() {
-        if (mLoadingDialog != null) {
-            if (mLoadingDialog.isShowing()) {
-                return;
-            }
-            mLoadingDialog.show();
+        showLoading("正在加载");
+    }
+
+    protected void showLoading(String tip) {
+        if (mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
         }
+        mLoadingDialog.show(tip);
     }
 
     protected void hideLoading() {
