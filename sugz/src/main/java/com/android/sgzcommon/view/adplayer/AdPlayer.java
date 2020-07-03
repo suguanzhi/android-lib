@@ -207,7 +207,7 @@ public class AdPlayer extends RelativeLayout {
         mAudioIconIV = new ImageView(context);
         mAudioIconIV.setVisibility(GONE);
         mAudioIconIV.setScaleType(ImageView.ScaleType.FIT_XY);
-        mAudioIconIV.setImageResource(R.drawable.music);
+        mAudioIconIV.setImageResource(R.drawable.sgz_music);
         addView(mAudioIconIV, lp2);
 
         mImageAdIV = new ImageView(context);

@@ -106,7 +106,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
             holder.mTvProgress.setVisibility(View.GONE);
             holder.mPbProgress.setVisibility(View.GONE);
             holder.mIvUploadState.setVisibility(View.VISIBLE);
-            holder.mIvUploadState.setImageResource(R.drawable.ic_success);
+            holder.mIvUploadState.setImageResource(R.drawable.ic_sgz_success);
         } else if (PhotoUpload.STATE.STATE_UPLOADING == state) {
             holder.mTvProgress.setVisibility(View.VISIBLE);
             holder.mPbProgress.setVisibility(View.VISIBLE);
@@ -117,7 +117,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
             holder.mTvProgress.setVisibility(View.GONE);
             holder.mPbProgress.setVisibility(View.GONE);
             holder.mIvUploadState.setVisibility(View.VISIBLE);
-            holder.mIvUploadState.setImageResource(R.drawable.ic_warm_red);
+            holder.mIvUploadState.setImageResource(R.drawable.ic_sgz_warm_red);
         } else {
             holder.mIvDelete.setVisibility(View.VISIBLE);
             holder.mPbProgress.setVisibility(View.GONE);

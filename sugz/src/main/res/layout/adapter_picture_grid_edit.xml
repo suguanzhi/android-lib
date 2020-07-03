@@ -49,5 +49,5 @@
         android:layout_height="20dp"
         android:layout_centerInParent="true"
         android:background="@drawable/shape_r20_sd_white"
-        android:src="@drawable/ic_success" />
+        android:src="@drawable/ic_sgz_success" />
 </RelativeLayout>
