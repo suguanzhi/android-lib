@@ -84,7 +84,8 @@
     </style>
 
     <style name="Input">
-        <item name="android:height">@dimen/height_input</item>
+        <item name="android:layout_width">@dimen/input_width</item>
+        <item name="android:layout_height">@dimen/input_height</item>
         <item name="android:textColor">@color/text</item>
         <item name="android:paddingStart">10dp</item>
         <item name="android:paddingEnd">10dp</item>
