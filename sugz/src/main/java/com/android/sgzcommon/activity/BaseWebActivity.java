@@ -31,7 +31,7 @@ public abstract class BaseWebActivity extends BaseActivity implements WebviewHan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
+        setContentView(R.layout.activity_sgz_web);
         mTbTitle = findViewById(R.id.tb_title);
         mWvContent = findViewById(R.id.wv_content);
         mPbLoading = findViewById(R.id.pb_loading);

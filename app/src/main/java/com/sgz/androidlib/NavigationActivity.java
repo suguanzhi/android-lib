@@ -6,13 +6,18 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 
-import com.android.sgzcommon.activity.BaseMainActivity;
+import com.android.sgzcommon.activity.BaseNavigationActivity;
 import com.android.sgzcommon.fragment.NavigationFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-public class MainActivity extends BaseMainActivity {
+public class NavigationActivity extends BaseNavigationActivity {
+
+    @Override
+    protected int getNavigationMenuId() {
+        return R.menu.navigation;
+    }
 
     @Override
     protected int getContentViewId() {
@@ -20,7 +25,7 @@ public class MainActivity extends BaseMainActivity {
     }
 
     @Override
-    protected int getNavigationId() {
+    protected int getNavigationViewId() {
         return R.id.nav;
     }
 
@@ -54,7 +59,7 @@ public class MainActivity extends BaseMainActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        int itemId = getNavigationId();
+        int itemId = getNavigationViewId();
         Log.d("MainActivity", "onResume: id == " + itemId);
     }
 

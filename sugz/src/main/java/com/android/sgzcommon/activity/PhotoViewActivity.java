@@ -21,7 +21,7 @@ public class PhotoViewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_photo_view);
+        setContentView(R.layout.activity_sgz_photo_view);
         String path = getIntent().getStringExtra("path");
         if (!TextUtils.isEmpty(path)) {
             if (path.startsWith("http")) {

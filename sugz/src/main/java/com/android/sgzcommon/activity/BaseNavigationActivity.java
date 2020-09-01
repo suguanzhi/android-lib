@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.sgzcommon.fragment.NavigationFragment;
+import com.android.sugz.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
@@ -21,16 +22,24 @@ import androidx.fragment.app.FragmentTransaction;
  * @author sgz
  * @date 2020/6/10
  */
-public abstract class BaseMainActivity extends BaseActivity {
+public abstract class BaseNavigationActivity extends BaseActivity {
 
     private BottomNavigationView mNavigation;
     private FragmentManager mManager;
 
-    protected abstract int getContentViewId();
+    protected abstract int getNavigationMenuId();
 
-    protected abstract int getNavigationId();
+    protected int getContentViewId() {
+        return R.layout.activity_sgz_navigation;
+    }
 
-    protected abstract int getFrameLayoutId();
+    protected int getNavigationViewId() {
+        return R.id.navigation;
+    }
+
+    protected int getFrameLayoutId() {
+        return R.id.fl_nav_fragments;
+    }
 
     protected abstract NavigationFragment getNewNavigationFragment(int position);
 
@@ -43,7 +52,8 @@ public abstract class BaseMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
         mManager = getSupportFragmentManager();
-        mNavigation = findViewById(getNavigationId());
+        mNavigation = findViewById(getNavigationViewId());
+        mNavigation.inflateMenu(getNavigationMenuId());
         mNavigation.setLabelVisibilityMode(getLabelVisibilityMode());
         mNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -52,6 +62,7 @@ public abstract class BaseMainActivity extends BaseActivity {
                 return showFragment(false, getNavigationPosition(item.getItemId()));
             }
         });
+
         selecteNavItem(0);
     }
 
