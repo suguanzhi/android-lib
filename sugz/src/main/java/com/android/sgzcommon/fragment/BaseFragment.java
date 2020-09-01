@@ -1,6 +1,7 @@
 package com.android.sgzcommon.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import com.android.sgzcommon.cache.BitmapCache;
 import com.android.sgzcommon.dialog.DatePickDialog;
 import com.android.sgzcommon.dialog.LoadingDialog;
+import com.android.sgzcommon.dialog.OneButtonDialog;
+import com.android.sgzcommon.dialog.TwoButtonDialog;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
 import com.android.sgzcommon.utils.SystemUtil;
 import com.android.sgzcommon.volley.VolleyManager;
@@ -46,6 +49,8 @@ public abstract class BaseFragment extends Fragment {
     private OnTakePhotoListener mPhotoListener;
     private DatePickDialog mDatePickDialog;
     private LoadingDialog mLoadingDialog;
+    private OneButtonDialog mOneButtonDialog;
+    private TwoButtonDialog mTwoButtonDialog;
 
     private static final int CAMERA_REQUEST_CODE = 436;
     private static final int REQUEST_TAKE_PHOTO_CODE = 127;
@@ -79,6 +84,9 @@ public abstract class BaseFragment extends Fragment {
         ButterKnife.bind(this, view);
         isInited = true;
         mLoadingDialog = new LoadingDialog(getActivity());
+        mOneButtonDialog = new OneButtonDialog(getActivity());
+        mOneButtonDialog.setButtonText("知道了");
+        mTwoButtonDialog = new TwoButtonDialog(getActivity());
         init(savedInstanceState, view);
         return view;
     }
@@ -188,5 +196,161 @@ public abstract class BaseFragment extends Fragment {
         Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+    }
+
+    /**
+     * 显示只有一个按钮的提示框
+     *
+     * @param msg 提示主文本
+     */
+    protected void showOneButtonDialog(String msg) {
+        showOneButtonDialog(msg, "", new OneButtonDialog.OnclickListener() {
+            @Override
+            public void onConfirm(View view, Dialog dialog) {
+                if (mOneButtonDialog != null) {
+                    mOneButtonDialog.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 显示只有一个按钮的提示框
+     *
+     * @param msg       提示主文本
+     * @param secondMsg 提示副文本
+     */
+    protected void showOneButtonDialog(String msg, String secondMsg) {
+        showOneButtonDialog(msg, secondMsg, new OneButtonDialog.OnclickListener() {
+            @Override
+            public void onConfirm(View view, Dialog dialog) {
+                if (mOneButtonDialog != null) {
+                    mOneButtonDialog.dismiss();
+                }
+            }
+        });
+    }
+
+    /**
+     * 显示只有一个按钮的提示框
+     *
+     * @param msg        提示主文本
+     * @param secondMsg  提示副文本
+     * @param buttonText 按钮文本
+     * @param listener   按钮点击监听
+     */
+    protected void showOneButtonDialog(String msg, String secondMsg, String buttonText, OneButtonDialog.OnclickListener listener) {
+        showOneButtonDialog(msg, secondMsg, listener);
+        mOneButtonDialog.setButtonText(buttonText);
+    }
+
+    /**
+     * 显示只有一个按钮的提示框
+     *
+     * @param msg       提示主文本
+     * @param secondMsg 提示副文本
+     * @param listener  按钮点击监听
+     */
+    protected void showOneButtonDialog(String msg, String secondMsg, OneButtonDialog.OnclickListener listener) {
+        if (mOneButtonDialog != null) {
+            mOneButtonDialog.dismiss();
+        }
+        mOneButtonDialog.setOnclickListener(listener);
+        mOneButtonDialog.setMsg(msg);
+        mOneButtonDialog.setSecondMsg(secondMsg);
+        mOneButtonDialog.show();
+    }
+
+    /**
+     * 隐藏只有一个按钮的提示框
+     */
+    protected void hideOneButtonDialog() {
+        if (mOneButtonDialog != null) {
+            mOneButtonDialog.dismiss();
+        }
+    }
+
+    /**
+     * 显示有两个按钮的提示框
+     *
+     * @param msg 提示主文本
+     */
+    protected void showTwoButtonDialog(String msg) {
+        showTwoButtonDialog(msg, "", new TwoButtonDialog.OnclickListener() {
+            @Override
+            public void onCancle(View view, Dialog dialog) {
+                if (mOneButtonDialog != null) {
+                    mOneButtonDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onConfirm(View view, Dialog dialog) {
+
+            }
+        });
+    }
+
+    /**
+     * 显示有两个按钮的提示框
+     *
+     * @param msg       提示主文本
+     * @param secondMsg 提示副文本
+     */
+    protected void showTwoButtonDialog(String msg, String secondMsg) {
+        showTwoButtonDialog(msg, secondMsg, new TwoButtonDialog.OnclickListener() {
+            @Override
+            public void onCancle(View view, Dialog dialog) {
+                if (mTwoButtonDialog != null) {
+                    mTwoButtonDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onConfirm(View view, Dialog dialog) {
+
+            }
+        });
+    }
+
+    /**
+     * 显示有两个按钮的提示框
+     *
+     * @param msg       提示主文本
+     * @param secondMsg 提示副文本
+     * @param leftText  左边按钮文本
+     * @param rightText 右边按钮文本
+     * @param listener  按钮点击监听
+     */
+    protected void showTwoButtonDialog(String msg, String secondMsg, String leftText, String rightText, TwoButtonDialog.OnclickListener listener) {
+        showTwoButtonDialog(msg, secondMsg, listener);
+        mTwoButtonDialog.setButtonLeftText(leftText);
+        mTwoButtonDialog.setButtonRightText(rightText);
+    }
+
+    /**
+     * 显示有两个按钮的提示框
+     *
+     * @param msg       提示主文本
+     * @param secondMsg 提示副文本
+     * @param listener  按钮点击监听
+     */
+    protected void showTwoButtonDialog(String msg, String secondMsg, TwoButtonDialog.OnclickListener listener) {
+        if (mTwoButtonDialog != null) {
+            mTwoButtonDialog.dismiss();
+        }
+        mTwoButtonDialog.setOnclickListener(listener);
+        mTwoButtonDialog.setMsg(msg);
+        mTwoButtonDialog.setSecondMsg(secondMsg);
+        mTwoButtonDialog.show();
+    }
+
+    /**
+     * 显示有两个按钮的提示框
+     */
+    protected void hideTwoButtonDialog() {
+        if (mTwoButtonDialog != null) {
+            mTwoButtonDialog.dismiss();
+        }
     }
 }
