@@ -21,6 +21,8 @@ public abstract class BaseLoginActivity extends BaseActivity {
     protected Button mBtnLogin;
     protected ImageView mIvPasswordVisiable;
 
+    protected abstract void onLoginClick(View v);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,12 @@ public abstract class BaseLoginActivity extends BaseActivity {
         mEtUsername = findViewById(R.id.et_username);
         mEtPassword = findViewById(R.id.et_password);
         mBtnLogin = findViewById(R.id.btn_login);
+        mBtnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLoginClick(v);
+            }
+        });
         mIvPasswordVisiable = findViewById(R.id.iv_password_visiable);
         mIvPasswordVisiable.setOnClickListener(new View.OnClickListener() {
             @Override
