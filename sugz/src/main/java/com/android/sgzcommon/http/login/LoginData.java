@@ -12,6 +12,7 @@ public class LoginData {
     protected static final String TOKEN = "token";
     protected static final String LOGIN_NAME = "loginname";
     protected static final String PASSWORD = "password";
+    protected static final String USER_ID = "userId";
 
     public static void saveLoginToken(Context context, String token) {
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE).edit().putString(TOKEN, token).apply();
@@ -39,5 +40,14 @@ public class LoginData {
     public static String getPassword(Context context) {
         SharedPreferences sf = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         return sf.getString(PASSWORD, "");
+    }
+
+    public static void saveUserId(Context context, String userId) {
+        context.getSharedPreferences(NAME, Context.MODE_PRIVATE).edit().putString(USER_ID, userId).apply();
+    }
+
+    public static String getUserId(Context context) {
+        SharedPreferences sf = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        return sf.getString(USER_ID, "");
     }
 }
