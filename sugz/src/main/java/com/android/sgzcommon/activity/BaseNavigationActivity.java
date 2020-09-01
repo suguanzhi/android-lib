@@ -29,6 +29,13 @@ public abstract class BaseNavigationActivity extends BaseActivity {
 
     protected abstract int getNavigationMenuId();
 
+    /**
+     * 获取position显示的fragment，return new fragment()；
+     * @param position
+     * @return
+     */
+    protected abstract NavigationFragment getNewNavigationFragment(int position);
+
     protected int getContentViewId() {
         return R.layout.activity_sgz_navigation;
     }
@@ -40,8 +47,6 @@ public abstract class BaseNavigationActivity extends BaseActivity {
     protected int getFrameLayoutId() {
         return R.id.fl_nav_fragments;
     }
-
-    protected abstract NavigationFragment getNewNavigationFragment(int position);
 
     public int getLabelVisibilityMode() {
         return LabelVisibilityMode.LABEL_VISIBILITY_LABELED;
