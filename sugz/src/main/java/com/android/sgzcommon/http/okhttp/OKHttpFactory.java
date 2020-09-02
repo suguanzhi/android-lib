@@ -137,7 +137,7 @@ public class OKHttpFactory {
     }
 
     /**
-     * 一步请求网络
+     * 异步请求网络
      *
      * @param request
      * @param resultSet
@@ -203,6 +203,7 @@ public class OKHttpFactory {
 
     private FormEncodingBuilder getFormEncodingBuilder(Map<String, String> data) {
         FormEncodingBuilder builder = new FormEncodingBuilder();
+        builder.add("test","1");
         if (data != null) {
             Set<String> set = data.keySet();
             Iterator<String> it = set.iterator();
