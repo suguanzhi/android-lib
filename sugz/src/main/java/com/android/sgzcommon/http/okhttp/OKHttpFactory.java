@@ -28,9 +28,8 @@ import java.util.concurrent.TimeUnit;
 
 public class OKHttpFactory {
 
-    private OkHttpClient mOkHttpClient;
-    //private Executor mExecutor;
-    private Handler mHandler;
+    protected Handler mHandler;
+    protected OkHttpClient mOkHttpClient;
     private static OKHttpFactory mOKHttpFactory;
     private static String TAG = "OKHttpFactory";
 
@@ -39,7 +38,6 @@ public class OKHttpFactory {
         mOkHttpClient = new OkHttpClient();
         mOkHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
         mOkHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
-        //mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
     public static OKHttpFactory getInstance() {
@@ -49,6 +47,10 @@ public class OKHttpFactory {
             }
         }
         return mOKHttpFactory;
+    }
+
+    public Handler getHandler() {
+        return mHandler;
     }
 
     /**
@@ -136,6 +138,7 @@ public class OKHttpFactory {
 
     /**
      * 一步请求网络
+     *
      * @param request
      * @param resultSet
      * @param responseListener
@@ -176,6 +179,7 @@ public class OKHttpFactory {
 
     /**
      * 同步请求网络
+     *
      * @param request
      * @param resultSet
      */
