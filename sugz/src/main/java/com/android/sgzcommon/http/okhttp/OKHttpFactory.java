@@ -163,6 +163,7 @@ public class OKHttpFactory {
                         }
                     } catch (Exception ex) {
                         e.printStackTrace();
+                        resultSet.setMessage(ex.getMessage());
                         resultSet.setError(e);
                     } finally {
                         mHandler.post(new OKResponseRunnable(resultSet, listener));
@@ -172,6 +173,7 @@ public class OKHttpFactory {
             call.enqueue(callback);
         } catch (Exception e) {
             e.printStackTrace();
+            resultSet.setMessage(e.getMessage());
             resultSet.setError(e);
             mHandler.post(new OKResponseRunnable(resultSet, responseListener));
         }
