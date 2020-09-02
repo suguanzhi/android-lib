@@ -194,6 +194,7 @@ public class OKHttpFactory {
             resultSet.setNetCode(code);
             resultSet.parseResult(result);
         } catch (Exception e) {
+            resultSet.setMessage(e.getMessage());
             resultSet.setError(e);
             e.printStackTrace();
         }
