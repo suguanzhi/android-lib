@@ -9,10 +9,6 @@ public interface OnResponseListener<V> {
     /**
      * 操作失败
      */
-    void onFailed(ResultSet resultSet);
+    void onFailure(ResultSet resultSet);
 
-    /**
-     * 操作出错（处理网络错误）
-     */
-    void onError(Exception error);
 }
