@@ -27,7 +27,7 @@ public class OKResponseRunnable implements Runnable {
         if (mResultSet.isSuccess()) {
             mResponseListener.handleSuccess(mResultSet.getResponse(), mResultSet);
         } else {
-            mResponseListener.handleError(mResultSet);
+            mResponseListener.handleFailure(mResultSet);
         }
     }
 }
