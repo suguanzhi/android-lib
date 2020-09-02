@@ -6,12 +6,10 @@ package com.android.sgzcommon.http.util;
  */
 public class UnLoginException extends Exception {
 
-    private String message;
-
     public UnLoginException() {
     }
 
     public UnLoginException(String message) {
-        this.message = message;
+        super(message);
     }
 }
