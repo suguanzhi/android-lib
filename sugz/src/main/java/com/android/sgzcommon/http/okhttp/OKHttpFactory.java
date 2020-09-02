@@ -16,9 +16,7 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 
@@ -61,9 +59,7 @@ public class OKHttpFactory {
      * @param responseListener
      */
     public void postEnqueueRequest(String url, Map<String, String> data, final ResultSet resultSet, final OnHttpResponseListener responseListener) {
-        RequestBody body = getFormEncodingBuilder(data).build();
-        Request request = new Request.Builder().url(url).post(body).build();
-        enqueueRequest(request, resultSet, responseListener);
+        enqueueRequest(getPostRequest(url, null,data), resultSet, responseListener);
     }
 
     /**
@@ -73,9 +69,7 @@ public class OKHttpFactory {
      * @param data
      */
     public void postRequest(String url, Map<String, String> data, final ResultSet resultSet) {
-        RequestBody body = getFormEncodingBuilder(data).build();
-        Request request = new Request.Builder().url(url).post(body).build();
-        excuteRequest(request, resultSet);
+        excuteRequest(getPostRequest(url,null, data), resultSet);
 
     }
 
@@ -87,14 +81,7 @@ public class OKHttpFactory {
      * @param responseListener
      */
     public void postEnqueueRequest(String url, Map<String, String> headers, Map<String, String> data, final ResultSet resultSet, final OnHttpResponseListener responseListener) {
-        RequestBody body = getFormEncodingBuilder(data).build();
-        Request.Builder builder = new Request.Builder().url(url).post(body);
-        Iterator<Map.Entry<String, String>> it = headers.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, String> header = it.next();
-            builder.addHeader(header.getKey(), header.getValue());
-        }
-        enqueueRequest(builder.build(), resultSet, responseListener);
+        enqueueRequest(getPostRequest(url,headers,data), resultSet, responseListener);
     }
 
     /**
@@ -104,14 +91,7 @@ public class OKHttpFactory {
      * @param data
      */
     public void postRequest(String url, Map<String, String> headers, Map<String, String> data, final ResultSet resultSet) {
-        RequestBody body = getFormEncodingBuilder(data).build();
-        Request.Builder builder = new Request.Builder().url(url).post(body);
-        Iterator<Map.Entry<String, String>> it = headers.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, String> header = it.next();
-            builder.addHeader(header.getKey(), header.getValue());
-        }
-        excuteRequest(builder.build(), resultSet);
+        excuteRequest(getPostRequest(url,headers,data), resultSet);
 
     }
 
@@ -131,7 +111,7 @@ public class OKHttpFactory {
      *
      * @param url
      */
-    public void getRequest(String url, final ResultSet resultSet) {
+    public void getPostRequest(String url, final ResultSet resultSet) {
         Request request = new Request.Builder().url(url).build();
         excuteRequest(request, resultSet);
     }
@@ -201,20 +181,39 @@ public class OKHttpFactory {
 
     }
 
-    private FormEncodingBuilder getFormEncodingBuilder(Map<String, String> data) {
-        FormEncodingBuilder builder = new FormEncodingBuilder();
-        builder.add("test","1");
-        if (data != null) {
-            Set<String> set = data.keySet();
-            Iterator<String> it = set.iterator();
-            while (it.hasNext()) {
-                String key = it.next();
-                String value = data.get(key);
+    /**
+     *
+     * @param url
+     * @param headers
+     * @param data
+     * @return
+     */
+    private Request getPostRequest(String url, Map<String, String> headers, Map<String, String> data) {
+        Request request;
+        Request.Builder requestBuilder = new Request.Builder();
+        if (headers != null) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
                 if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(value)) {
-                    builder.add(key, value);
+                    requestBuilder.addHeader(key, value);
                 }
             }
         }
-        return builder;
+        if (data == null || data.size() == 0) {
+            request = requestBuilder.url(url).post(RequestBody.create(null, "")).build();
+        } else {
+            FormEncodingBuilder bodyBuilder = new FormEncodingBuilder();
+            for (Map.Entry<String, String> entry : data.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(value)) {
+                    bodyBuilder.add(key, value);
+                }
+            }
+            RequestBody body = bodyBuilder.build();
+            request = requestBuilder.url(url).post(body).build();
+        }
+        return request;
     }
 }
