@@ -1,6 +1,7 @@
 package com.sgz.androidlib;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,8 @@ public class FunctionTestFragment extends NavigationFragment {
     Button mBtnAutoDismissDialog;
     @BindView(R.id.btn_string_list_dialog)
     Button mBtnStringListDialog;
+    @BindView(R.id.btn_web_layout)
+    Button mBtnWebLayout;
 
     @Override
     public boolean isOnlyClick() {
@@ -44,11 +47,11 @@ public class FunctionTestFragment extends NavigationFragment {
         Log.d("NavigationFragment", "init: two init !");
     }
 
-    @OnClick({R.id.btn_auto_dismiss_dialog, R.id.btn_string_list_dialog})
+    @OnClick({R.id.btn_auto_dismiss_dialog, R.id.btn_string_list_dialog,R.id.btn_web_layout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_auto_dismiss_dialog:
-                TestAutoDismissDialog dismissDialog = new TestAutoDismissDialog(mActivity,5000);
+                TestAutoDismissDialog dismissDialog = new TestAutoDismissDialog(mActivity, 5000);
                 dismissDialog.show();
                 break;
             case R.id.btn_string_list_dialog:
@@ -61,6 +64,10 @@ public class FunctionTestFragment extends NavigationFragment {
                 });
                 dialog.setTitle("请选择");
                 dialog.show();
+                break;
+            case R.id.btn_web_layout:
+                Intent intent = new Intent(mContext,TestWebLayoutActivity.class);
+                startActivity(intent);
                 break;
         }
     }

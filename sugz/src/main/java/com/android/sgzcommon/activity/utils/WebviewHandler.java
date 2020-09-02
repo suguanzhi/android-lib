@@ -1,4 +1,5 @@
 package com.android.sgzcommon.activity.utils;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -91,9 +92,10 @@ public final class WebviewHandler {
                         }
                     }
                 } catch (Exception e) {
+                    Log.d("WebviewHandler", "shouldOverrideUrlLoading: -----------6");
                     e.printStackTrace();
-                    return false;
                 }
+                Log.d("WebviewHandler", "shouldOverrideUrlLoading: -----------7");
                 return false;
             }
 
@@ -177,10 +179,12 @@ public final class WebviewHandler {
 
     public void goBack() {
         Log.d("WebviewHandler", "goBack: " + mWebView.canGoBack());
-        mWebView.goBack();
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+        }
     }
 
-    public boolean canGoBack(){
+    public boolean canGoBack() {
         return mWebView.canGoBack();
     }
 

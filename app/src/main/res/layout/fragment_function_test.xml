@@ -18,6 +18,11 @@
         style="@style/Button.Danger"
         android:layout_marginTop="10dp"
         android:text="文本列表Dialog" />
+    <Button
+        android:id="@+id/btn_web_layout"
+        style="@style/Button.Confirm"
+        android:layout_marginTop="10dp"
+        android:text="weblayout" />
 
     <EditText
         style="@style/Input.R50.White"
