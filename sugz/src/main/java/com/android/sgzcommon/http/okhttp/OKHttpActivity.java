@@ -15,10 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class OKHttpActivity extends AppCompatActivity {
 
     protected void postRequest(final String url, final Map<String, String> data, final ResultSet resultSet, final OnHttpResponseListener responseListener) {
-        OKHttpFactory.getInstance().postRequest(url, data, resultSet, responseListener);
+        OKHttpFactory.getInstance().postEnqueueRequest(url, data, resultSet, responseListener);
     }
 
     protected void getRequest(final String url, final ResultSet resultSet, final OnHttpResponseListener responseListener) {
-        OKHttpFactory.getInstance().getRequest(url, resultSet, responseListener);
+        OKHttpFactory.getInstance().getEnqueueRequest(url, resultSet, responseListener);
     }
 }

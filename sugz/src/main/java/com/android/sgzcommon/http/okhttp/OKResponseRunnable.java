@@ -25,14 +25,9 @@ public class OKResponseRunnable implements Runnable {
         }
         mResponseListener.onResponse(mResultSet.getResponse());
         if (mResultSet.isSuccess()) {
-            mResponseListener.handleSuccess(mResultSet.getResponse(),mResultSet);
+            mResponseListener.handleSuccess(mResultSet.getResponse(), mResultSet);
         } else {
-            Exception error = mResultSet.getError();
-            if (error != null) {
-                mResponseListener.handleError(error);
-            } else {
-                mResponseListener.handleFailed(mResultSet);
-            }
+            mResponseListener.handleError(mResultSet);
         }
     }
 }

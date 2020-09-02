@@ -14,10 +14,10 @@ import androidx.fragment.app.Fragment;
 public class OKHttpFragment extends Fragment {
 
     protected void postRequest(final String url, final Map<String, String> data, final ResultSet resultSet, final OnHttpResponseListener responseListener) {
-        OKHttpFactory.getInstance().postRequest(url, data,resultSet, responseListener);
+        OKHttpFactory.getInstance().postEnqueueRequest(url, data,resultSet, responseListener);
     }
 
     protected void getRequest(final String url, final ResultSet resultSet, final OnHttpResponseListener responseListener) {
-        OKHttpFactory.getInstance().getRequest(url,resultSet, responseListener);
+        OKHttpFactory.getInstance().getEnqueueRequest(url,resultSet, responseListener);
     }
 }

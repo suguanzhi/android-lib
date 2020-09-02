@@ -1,7 +1,7 @@
 package com.sgz.androidlib;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -9,8 +9,6 @@ import android.widget.ImageView;
 import com.android.sgzcommon.activity.BaseLoginActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author sgz
@@ -28,13 +26,12 @@ public class LoginActivity extends BaseLoginActivity {
     Button mBtnLogin;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
+    protected void onLoginClick(View v) {
+
     }
 
-    @OnClick(R.id.btn_login)
-    public void onViewClicked() {
-        Log.d("LoginActivity", "onViewClicked: ");
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 }

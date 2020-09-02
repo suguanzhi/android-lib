@@ -16,12 +16,7 @@ public interface OnHttpResponseListener {
     void handleSuccess(String response, ResultSet resultSet);
 
     /**
-     * 操作失败
-     */
-    void handleFailed(ResultSet resultSet);
-
-    /**
      * 操作出错（处理网络错误）
      */
-    void handleError(Exception error);
+    void handleError(ResultSet resultSet);
 }
