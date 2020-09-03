@@ -35,13 +35,13 @@ public abstract class BaseNavigationActivity extends BaseActivity {
      * @param position
      * @return
      */
-    protected abstract NavigationFragment getNewNavigationFragment(int position);
+    protected abstract Fragment getNewFragment(int position);
 
     protected int getContentViewId() {
         return R.layout.activity_sgz_navigation;
     }
 
-    protected int getNavigationViewId() {
+    protected int getBottomNavigationViewId() {
         return R.id.navigation;
     }
 
@@ -72,7 +72,7 @@ public abstract class BaseNavigationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
         mManager = getSupportFragmentManager();
-        mNavigation = findViewById(getNavigationViewId());
+        mNavigation = findViewById(getBottomNavigationViewId());
         mNavigation.inflateMenu(getNavigationMenuId());
         mNavigation.setLabelVisibilityMode(getLabelVisibilityMode());
         mNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -82,8 +82,8 @@ public abstract class BaseNavigationActivity extends BaseActivity {
                 int position = getNavigationPosition(item.getItemId());
                 Intent intent = clickStartActivity(position);
                 if (intent == null) {
-                    boolean reset = newFragment4ItemSelect(position);
-                    showFragment(reset, position);
+                    boolean newFragment = newFragment4ItemSelect(position);
+                    showFragment(newFragment, position);
                     return true;
                 } else {
                     startActivity(intent);
@@ -108,7 +108,7 @@ public abstract class BaseNavigationActivity extends BaseActivity {
     }
 
     /**
-     * @param remove
+     * @param remove 是否移除旧的创建新的fragment并显示
      * @return
      */
     private void showFragment(boolean remove, final int position) {
@@ -121,14 +121,14 @@ public abstract class BaseNavigationActivity extends BaseActivity {
         }
         Log.d("BaseMainActivity", "showFragment: 2");
         String tag = position + "";
-        NavigationFragment fragment = (NavigationFragment) mManager.findFragmentByTag(tag);
+        Fragment fragment = (NavigationFragment) mManager.findFragmentByTag(tag);
         if (remove){
             ft.remove(fragment);
         }
         Log.d("BaseMainActivity", "showFragment: 3");
         if (fragment == null || remove) {
             Log.d("BaseMainActivity", "showFragment: 4");
-            fragment = getNewNavigationFragment(position);
+            fragment = getNewFragment(position);
         }
         if (fragment != null) {
             Log.d("BaseMainActivity", "showFragment: 7");

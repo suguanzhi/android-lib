@@ -25,7 +25,7 @@ public class NavigationActivity extends BaseNavigationActivity {
     }
 
     @Override
-    protected int getNavigationViewId() {
+    protected int getBottomNavigationViewId() {
         return R.id.nav;
     }
 
@@ -35,7 +35,7 @@ public class NavigationActivity extends BaseNavigationActivity {
     }
 
     @Override
-    protected NavigationFragment getNewNavigationFragment(int position) {
+    protected NavigationFragment getNewFragment(int position) {
         switch (position){
             case 0:
                 return new TakePhotoFragment();
@@ -59,7 +59,7 @@ public class NavigationActivity extends BaseNavigationActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        int itemId = getNavigationViewId();
+        int itemId = getBottomNavigationViewId();
         Log.d("MainActivity", "onResume: id == " + itemId);
     }
 
