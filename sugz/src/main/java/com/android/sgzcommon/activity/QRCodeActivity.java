@@ -36,7 +36,8 @@ public class QRCodeActivity extends BaseActivity implements SurfaceHolder.Callba
     RelativeLayout mRlScrop;
     ImageView mIvClose;
     private DecodeCaptureManager mDecodeCaptureManager;
-    private static final String RESULT_NAME = "result";
+
+    public static final String RESULT_NAME = "result";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
