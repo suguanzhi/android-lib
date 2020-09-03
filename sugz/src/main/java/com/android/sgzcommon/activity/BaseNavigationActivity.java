@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.sgzcommon.fragment.NavigationFragment;
 import com.android.sugz.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
@@ -121,14 +120,18 @@ public abstract class BaseNavigationActivity extends BaseActivity {
         }
         Log.d("BaseMainActivity", "showFragment: 2");
         String tag = position + "";
-        Fragment fragment = (NavigationFragment) mManager.findFragmentByTag(tag);
-        if (remove){
-            ft.remove(fragment);
-        }
+        Fragment fragment = mManager.findFragmentByTag(tag);
         Log.d("BaseMainActivity", "showFragment: 3");
-        if (fragment == null || remove) {
+        if (fragment == null) {
             Log.d("BaseMainActivity", "showFragment: 4");
             fragment = getNewFragment(position);
+        }else {
+            Log.d("BaseMainActivity", "showFragment: 5");
+            if (remove){
+                Log.d("BaseMainActivity", "showFragment: 6");
+                ft.remove(fragment);
+                fragment = getNewFragment(position);
+            }
         }
         if (fragment != null) {
             Log.d("BaseMainActivity", "showFragment: 7");

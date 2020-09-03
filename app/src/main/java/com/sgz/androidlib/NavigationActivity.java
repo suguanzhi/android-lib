@@ -1,5 +1,6 @@
 package com.sgz.androidlib;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.sgzcommon.activity.BaseNavigationActivity;
-import com.android.sgzcommon.fragment.NavigationFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -35,7 +35,7 @@ public class NavigationActivity extends BaseNavigationActivity {
     }
 
     @Override
-    protected NavigationFragment getNewFragment(int position) {
+    protected Fragment getNewFragment(int position) {
         switch (position){
             case 0:
                 return new TakePhotoFragment();
@@ -49,6 +49,23 @@ public class NavigationActivity extends BaseNavigationActivity {
                 return new FiveFragment();
         }
         return null;
+    }
+
+    @Override
+    protected Intent clickStartActivity(int position) {
+        if (2 == position){
+            Intent intent = new Intent(this, SampleTakePhotoActivity.class);
+            return intent;
+        }
+        return super.clickStartActivity(position);
+    }
+
+    @Override
+    protected boolean newFragment4ItemSelect(int position) {
+        if (0 == position){
+            return true;
+        }
+        return super.newFragment4ItemSelect(position);
     }
 
     @Override

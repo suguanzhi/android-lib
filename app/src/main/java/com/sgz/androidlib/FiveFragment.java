@@ -1,27 +1,16 @@
 package com.sgz.androidlib;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.android.sgzcommon.fragment.NavigationFragment;
+import com.android.sgzcommon.fragment.BaseFragment;
 
 /**
  * @author sgz
  * @date 2020/6/10
  */
-public class FiveFragment extends NavigationFragment {
-
-    @Override
-    public boolean isOnlyClick() {
-        return false;
-    }
-
-    @Override
-    public void onOnlyClick(Activity activity) {
-
-    }
+public class FiveFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {

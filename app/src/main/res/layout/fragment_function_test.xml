@@ -6,14 +6,13 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <EditText
-        style="@style/Input.R50.White"
-        android:layout_marginTop="10dp" />
+    <EditText style="@style/Input.R50.White" />
 
     <Button
         android:id="@+id/btn_auto_dismiss_dialog"
         android:layout_width="@dimen/btn_width"
         android:layout_height="@dimen/btn_height"
+        android:layout_marginTop="10dp"
         android:background="@drawable/shape_btn_sk_confirm"
         android:text="定时隐藏Dialog" />
 

@@ -1,6 +1,5 @@
 package com.sgz.androidlib;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +8,7 @@ import android.widget.Button;
 
 import com.android.sgzcommon.activity.QRCodeActivity;
 import com.android.sgzcommon.dialog.BaseLoadListDialog;
-import com.android.sgzcommon.fragment.NavigationFragment;
+import com.android.sgzcommon.fragment.BaseFragment;
 import com.sgz.androidlib.entity.LoadListEntity;
 
 import butterknife.BindView;
@@ -19,7 +18,7 @@ import butterknife.OnClick;
  * @author sgz
  * @date 2020/6/10
  */
-public class FunctionTestFragment extends NavigationFragment {
+public class FunctionTestFragment extends BaseFragment {
 
     @BindView(R.id.btn_auto_dismiss_dialog)
     Button mBtnAutoDismissDialog;
@@ -29,16 +28,6 @@ public class FunctionTestFragment extends NavigationFragment {
     Button mBtnWebLayout;
     @BindView(R.id.btn_qrcodet)
     Button mBtnQrcodet;
-
-    @Override
-    public boolean isOnlyClick() {
-        return false;
-    }
-
-    @Override
-    public void onOnlyClick(Activity activity) {
-
-    }
 
     @Override
     protected int getLayoutId() {

@@ -1,6 +1,5 @@
 package com.sgz.androidlib;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +8,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.sgzcommon.fragment.NavigationFragment;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
 import com.android.sgzcommon.utils.BitmapUtil;
 
@@ -22,23 +20,13 @@ import butterknife.OnClick;
  * @author sgz
  * @date 2020/6/10
  */
-public class TakePhotoFragment extends NavigationFragment {
+public class TakePhotoFragment extends com.android.sgzcommon.fragment.TakePhotoFragment {
     @BindView(R.id.iv_photo)
     ImageView mIvPhoto;
     @BindView(R.id.btn_take_photo)
     Button mBtnTakePhoto;
     @BindView(R.id.tv_msg)
     TextView mTvMsg;
-
-    @Override
-    public boolean isOnlyClick() {
-        return false;
-    }
-
-    @Override
-    public void onOnlyClick(Activity activity) {
-
-    }
 
     public void setMsg(String msg){
         mTvMsg.setText(msg);
