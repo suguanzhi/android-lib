@@ -16,7 +16,7 @@ import com.android.sugz.R;
 import com.zbar.lib.DecodeCaptureManager;
 
 /**
- * 1.需要在app的build.gradle中
+ * 1.app的build.gradle中添加：
  * defaultConfig {
  * ......
  * ndk {
@@ -24,8 +24,15 @@ import com.zbar.lib.DecodeCaptureManager;
  * }
  * }
  *
- * 2.通过startActivityForResult启动该activity
- * 3.onActivityResult中获取返回结果
+ *  2.AndroidManifest文件中：
+ *  a）添加拍照权限
+ *  <uses-permission android:name="android.permission.CAMERA" />
+ *  b)activity组件注册
+ *  <activity android:name="com.android.sgzcommon.activity.QRCodeActivity" />
+ *
+ * 3.通过startActivityForResult启动该activity
+ *
+ * 4.onActivityResult中获取返回结果
  *
  * Created by sgz on 2019/4/19 0019.
  */
