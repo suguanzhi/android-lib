@@ -3,6 +3,7 @@ package com.android.sgzcommon.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -51,6 +52,7 @@ public class BaseActivity extends AppCompatActivity {
     private LoadingDialog mLoadingDialog;
     private OneButtonDialog mOneButtonDialog;
     private TwoButtonDialog mTwoButtonDialog;
+    private TwoButtonDialog mPermissionDialog;
     private OnPermissionResultListener listener;
 
     private static final int REQUEST_TAKE_PHOTO_CODE = 510;
@@ -371,10 +373,31 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 权限检查，并弹窗提示，适用于必须权限授权，
+     *
+     * @param neededPermissions
+     */
+    protected void checkRequestePermissions(String[] neededPermissions) {
+        boolean granted = checkPermissions(neededPermissions);
+        if (!granted) {
+            if (mPermissionDialog == null) {
+                initPermissionDialog(neededPermissions);
+            }
+            if (!mPermissionDialog.isShowing()) {
+                mPermissionDialog.show();
+            }
+        } else {
+            if (mPermissionDialog != null) {
+                mPermissionDialog.dismiss();
+            }
+        }
+    }
+
+    /**
      * 检查所需权限是否授权，并把没有授权的权限发起请求
      *
      * @param neededPermissions 需要的权限
-     * @return 是否被允许
+     * @param listener  监听允许的权限和禁止的权限
      */
     protected void checkRequestePermissions(String[] neededPermissions, OnPermissionResultListener listener) {
         this.listener = listener;
@@ -402,6 +425,43 @@ public class BaseActivity extends AppCompatActivity {
                 listener.onResult(grants, denies);
             }
         }
+    }
+
+    /**
+     * 如果有未授权的权限，初始化弹窗，点击“去授权”发起权限请求，点击“不用了”或者返回，退出应用
+     * @param needPermissions
+     */
+    private void initPermissionDialog(final String[] needPermissions) {
+        mPermissionDialog = new TwoButtonDialog(this);
+        mPermissionDialog.setMsg("温馨提示");
+        mPermissionDialog.setSecondMsg("请授权必须权限后再使用服务。");
+        mPermissionDialog.setButtonLeftText("不用了");
+        mPermissionDialog.setButtonRightText("去授权");
+        mPermissionDialog.setCanceledOnTouchOutside(false);
+        mPermissionDialog.setOnclickListener(new TwoButtonDialog.OnclickListener() {
+            @Override
+            public void onCancle(View view, Dialog dialog) {
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onConfirm(View view, Dialog dialog) {
+                checkRequestePermissions(needPermissions, new OnPermissionResultListener() {
+                    @Override
+                    public void onResult(List<String> grants, List<String> denies) {
+                    }
+                });
+            }
+        });
+        mPermissionDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                boolean granted = checkPermissions(needPermissions);
+                if (!granted) {
+                    finish();
+                }
+            }
+        });
     }
 
     @Override

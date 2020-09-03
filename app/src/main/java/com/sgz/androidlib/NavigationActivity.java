@@ -1,5 +1,6 @@
 package com.sgz.androidlib;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 public class NavigationActivity extends BaseNavigationActivity {
+
+    private static String[] PERMISSIONS = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     @Override
     protected int getNavigationMenuId() {
@@ -78,6 +81,7 @@ public class NavigationActivity extends BaseNavigationActivity {
         super.onResume();
         int itemId = getBottomNavigationViewId();
         Log.d("MainActivity", "onResume: id == " + itemId);
+        checkRequestePermissions(PERMISSIONS);
     }
 
     public void clear(View v) {
