@@ -2,4 +2,6 @@
     <string name="app_name">sugz</string>
     <string name="dialog_two_button_confirm">确定</string>
     <string name="dialog_two_button_cancle">取消</string>
+
+    <string name="qrcode_scan_tip">将二维码/条形码放入框内即可自动扫描</string>
 </resources>

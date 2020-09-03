@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.sgzcommon.activity.QRCodeActivity;
 import com.android.sgzcommon.dialog.BaseLoadListDialog;
 import com.android.sgzcommon.fragment.NavigationFragment;
 import com.sgz.androidlib.entity.LoadListEntity;
@@ -26,6 +27,8 @@ public class FunctionTestFragment extends NavigationFragment {
     Button mBtnStringListDialog;
     @BindView(R.id.btn_web_layout)
     Button mBtnWebLayout;
+    @BindView(R.id.btn_qrcodet)
+    Button mBtnQrcodet;
 
     @Override
     public boolean isOnlyClick() {
@@ -47,7 +50,7 @@ public class FunctionTestFragment extends NavigationFragment {
         Log.d("NavigationFragment", "init: two init !");
     }
 
-    @OnClick({R.id.btn_auto_dismiss_dialog, R.id.btn_string_list_dialog,R.id.btn_web_layout})
+    @OnClick({R.id.btn_auto_dismiss_dialog, R.id.btn_string_list_dialog, R.id.btn_web_layout,R.id.btn_qrcodet})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_auto_dismiss_dialog:
@@ -66,8 +69,12 @@ public class FunctionTestFragment extends NavigationFragment {
                 dialog.show();
                 break;
             case R.id.btn_web_layout:
-                Intent intent = new Intent(mContext,TestWebLayoutActivity.class);
+                Intent intent = new Intent(mContext, TestWebLayoutActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.btn_qrcodet:
+                Intent intent2 = new Intent(mContext, QRCodeActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

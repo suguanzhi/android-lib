@@ -13,6 +13,6 @@
     <com.android.sgzcommon.view.WebLayout
         android:id="@+id/wl"
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

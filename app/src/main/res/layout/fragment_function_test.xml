@@ -6,6 +6,10 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <EditText
+        style="@style/Input.R50.White"
+        android:layout_marginTop="10dp" />
+
     <Button
         android:id="@+id/btn_auto_dismiss_dialog"
         android:layout_width="@dimen/btn_width"
@@ -18,14 +22,17 @@
         style="@style/Button.Danger"
         android:layout_marginTop="10dp"
         android:text="文本列表Dialog" />
+
     <Button
         android:id="@+id/btn_web_layout"
         style="@style/Button.Confirm"
         android:layout_marginTop="10dp"
         android:text="weblayout" />
 
-    <EditText
-        style="@style/Input.R50.White"
-        android:layout_marginTop="10dp"/>
+    <Button
+        android:id="@+id/btn_qrcodet"
+        style="@style/Button.Warm"
+        android:layout_marginTop="10dp"
+        android:text="扫码" />
 
 </LinearLayout>

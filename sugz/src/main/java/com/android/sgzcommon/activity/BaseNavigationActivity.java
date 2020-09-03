@@ -31,6 +31,7 @@ public abstract class BaseNavigationActivity extends BaseActivity {
 
     /**
      * 获取position显示的fragment，return new fragment()；
+     *
      * @param position
      * @return
      */
@@ -46,6 +47,20 @@ public abstract class BaseNavigationActivity extends BaseActivity {
 
     protected int getFrameLayoutId() {
         return R.id.fl_nav_fragments;
+    }
+
+    /**
+     * @return
+     */
+    protected boolean newFragment4ItemSelect(int position) {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    protected Intent clickStartActivity(int position) {
+        return null;
     }
 
     public int getLabelVisibilityMode() {
@@ -64,7 +79,16 @@ public abstract class BaseNavigationActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.d("BaseMainActivity", "onNavigationItemSelected:");
-                return showFragment(false, getNavigationPosition(item.getItemId()));
+                int position = getNavigationPosition(item.getItemId());
+                Intent intent = clickStartActivity(position);
+                if (intent == null) {
+                    boolean reset = newFragment4ItemSelect(position);
+                    showFragment(reset, position);
+                    return true;
+                } else {
+                    startActivity(intent);
+                    return false;
+                }
             }
         });
 
@@ -84,55 +108,39 @@ public abstract class BaseNavigationActivity extends BaseActivity {
     }
 
     /**
-     * @param reset
+     * @param remove
      * @return
      */
-    private boolean showFragment(boolean reset, final int position) {
-        boolean result = true;
+    private void showFragment(boolean remove, final int position) {
         Log.d("BaseMainActivity", "showFragment: position == " + position);
         List<Fragment> fragments = mManager.getFragments();
         Log.d("BaseMainActivity", "showFragment: fragments.size == " + fragments.size());
         FragmentTransaction ft = mManager.beginTransaction();
         for (Fragment fragment : fragments) {
-            if (reset) {
-                ft.remove(fragment);
-            } else {
-                ft.hide(fragment);
-            }
+            ft.hide(fragment);
         }
         Log.d("BaseMainActivity", "showFragment: 2");
         String tag = position + "";
         NavigationFragment fragment = (NavigationFragment) mManager.findFragmentByTag(tag);
+        if (remove){
+            ft.remove(fragment);
+        }
         Log.d("BaseMainActivity", "showFragment: 3");
-        if (fragment == null || reset) {
+        if (fragment == null || remove) {
             Log.d("BaseMainActivity", "showFragment: 4");
             fragment = getNewNavigationFragment(position);
-        } else {
-            Log.d("BaseMainActivity", "showFragment: 5");
-            if (fragment.isInitEveryShow()) {
-                Log.d("BaseMainActivity", "showFragment: 6");
-                ft.remove(fragment);
-                fragment = getNewNavigationFragment(position);
-            }
         }
         if (fragment != null) {
             Log.d("BaseMainActivity", "showFragment: 7");
-            if (fragment.isOnlyClick()) {
-                Log.d("BaseMainActivity", "showFragment: 8");
-                fragment.onOnlyClick(this);
-                result = false;
-            } else {
-                Log.d("BaseMainActivity", "showFragment: 10");
-                if (!fragment.isAdded()) {
-                    Log.d("BaseMainActivity", "showFragment: 11");
-                    ft.add(getFrameLayoutId(), fragment, tag);
-                }
-                Log.d("BaseMainActivity", "showFragment: end ");
-                ft.show(fragment);
-                ft.commitNow();
+            Log.d("BaseMainActivity", "showFragment: 10");
+            if (!fragment.isAdded()) {
+                Log.d("BaseMainActivity", "showFragment: 11");
+                ft.add(getFrameLayoutId(), fragment, tag);
             }
+            Log.d("BaseMainActivity", "showFragment: end ");
+            ft.show(fragment);
+            ft.commitNow();
         }
-        return result;
     }
 
     /**
