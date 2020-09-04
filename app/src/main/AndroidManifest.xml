@@ -32,7 +32,7 @@
         <activity android:name=".SampleTakePhotoActivity" />
         <activity android:name=".ScrollerLayoutActivity" />
         <activity android:name=".TestWebLayoutActivity" />
-        <activity android:name="com.android.sgzcommon.activity.QRCodeActivity" />
+        <activity android:name="com.android.sgzcommon.activity.BarCodeActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

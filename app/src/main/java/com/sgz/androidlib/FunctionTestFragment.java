@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.android.sgzcommon.activity.QRCodeActivity;
+import com.android.sgzcommon.activity.BarCodeActivity;
 import com.android.sgzcommon.dialog.BaseLoadListDialog;
 import com.android.sgzcommon.fragment.BaseFragment;
 import com.sgz.androidlib.entity.LoadListEntity;
@@ -62,7 +62,7 @@ public class FunctionTestFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.btn_qrcodet:
-                Intent intent2 = new Intent(mContext, QRCodeActivity.class);
+                Intent intent2 = new Intent(mContext, BarCodeActivity.class);
                 startActivity(intent2);
                 break;
         }

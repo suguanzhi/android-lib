@@ -19,7 +19,7 @@ import com.zbar.lib.camera.CameraManager;
 public final class CaptureActivityHandler extends Handler {
 
     DecodeThread decodeThread = null;
-    DecodeCaptureManager activity = null;
+    DecodeCaptureManager captureManager = null;
     private State state;
     public static final int MSG_PREVIEW = 181;
     public static final int MSG_AUTO_FOCUS = 727;
@@ -33,9 +33,9 @@ public final class CaptureActivityHandler extends Handler {
         PREVIEW, SUCCESS, DONE
     }
 
-    public CaptureActivityHandler(DecodeCaptureManager activity) {
-        this.activity = activity;
-        decodeThread = new DecodeThread(activity);
+    public CaptureActivityHandler(DecodeCaptureManager captureManager) {
+        this.captureManager = captureManager;
+        decodeThread = new DecodeThread(this.captureManager);
         decodeThread.start();
         state = State.SUCCESS;
         CameraManager.get().startPreview();
@@ -52,7 +52,7 @@ public final class CaptureActivityHandler extends Handler {
             restartPreviewAndDecode();
         } else if (message.what == MSG_DECODE_SUCCESS) {
             state = State.SUCCESS;
-            activity.onDecodeResult((String) message.obj);// 解析成功，回调
+            captureManager.onDecodeResult((String) message.obj);// 解析成功，回调
         } else if (message.what == MSG_DECODE_FAIL) {
             state = State.PREVIEW;
             CameraManager.get().requestPreviewFrame(decodeThread.getHandler(), MSG_DECODE);
