@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="width" format="dimension"></attr>
+    <attr name="height" format="dimension"></attr>
     <attr name="text_size" format="dimension" />
     <attr name="background" format="reference"></attr>
     <attr name="padding" format="dimension"></attr>
     <attr name="text_color" format="reference" />
+
     <declare-styleable name="titlebar">
-        <attr name="height" format="dimension"></attr>
+        <attr name="height"></attr>
         <attr name="title" format="string"></attr>
         <attr name="text_size"></attr>
         <attr name="back" format="reference"></attr>
@@ -15,6 +18,7 @@
         <attr name="right_text" format="string"></attr>
         <attr name="background"></attr>
     </declare-styleable>
+
     <declare-styleable name="pager_nav">
         <attr name="items" format="reference|string" />
         <attr name="text_size" />
@@ -27,10 +31,12 @@
         <attr name="text_color_selected" format="reference" />
         <attr name="background"></attr>
     </declare-styleable>
+
     <declare-styleable name="loadingview">
         <attr name="color1" format="reference" />
         <attr name="color2" format="reference" />
     </declare-styleable>
+
     <declare-styleable name="LoadResultView">
         <attr name="icon" format="reference"></attr>
         <attr name="background"></attr>
@@ -42,4 +48,17 @@
         <attr name="btn_text_color" format="color"></attr>
         <attr name="btn_background" format="reference"></attr>
     </declare-styleable>
+
+    <declare-styleable name="InputEditView">
+        <attr name="width" />
+        <attr name="height" />
+        <attr name="background" />
+        <attr name="text_size" />
+        <attr name="text_color" />
+        <attr name="add" format="reference" />
+        <attr name="sub" format="reference" />
+        <attr name="value" format="string" />
+        <attr name="input_background" format="reference" />
+    </declare-styleable>
+
 </resources>

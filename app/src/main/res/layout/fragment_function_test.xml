@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/green_50"
     android:gravity="center"
     android:orientation="vertical">
@@ -31,7 +32,15 @@
     <Button
         android:id="@+id/btn_qrcodet"
         style="@style/Button.Warm"
+        android:textSize="14sp"
         android:layout_marginTop="10dp"
-        android:text="扫码" />
+        android:text="扫码0" />
+
+    <com.android.sgzcommon.view.InputEditView
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        app:value="2"
+        app:text_size="25sp"/>
 
 </LinearLayout>
