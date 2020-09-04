@@ -118,7 +118,7 @@ public class InputEditView extends LinearLayout {
         if (TextUtils.isEmpty(defaultValue)) {
             defaultValue = "0";
         }
-        mEtInput.setText(defaultValue);
+        setValue(defaultValue);
         Drawable backgroundDrawable = array.getDrawable(R.styleable.InputEditView_background);
         if (backgroundDrawable != null) {
             container.setBackground(backgroundDrawable);
@@ -140,6 +140,10 @@ public class InputEditView extends LinearLayout {
             mIvSub.setImageDrawable(subDrawable);
         }
         array.recycle();
+    }
+
+    public void setValue(String value){
+        mEtInput.setText(value);
     }
 
     public void setOnAddOrSubClickListener(OnAddOrSubClickListener listener) {
