@@ -59,6 +59,7 @@
         <attr name="sub" format="reference" />
         <attr name="value" format="string" />
         <attr name="input_background" format="reference" />
+        <attr name="add_sub_padding" format="dimension" />
     </declare-styleable>
 
 </resources>

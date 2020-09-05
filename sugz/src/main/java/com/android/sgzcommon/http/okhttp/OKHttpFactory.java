@@ -70,7 +70,6 @@ public class OKHttpFactory {
      */
     public void postRequest(String url, Map<String, String> data, final ResultSet resultSet) {
         excuteRequest(getPostRequest(url,null, data), resultSet);
-
     }
 
     /**

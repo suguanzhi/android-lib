@@ -130,7 +130,7 @@ public class InputEditView extends LinearLayout {
         int inputTextColor = array.getColor(R.styleable.InputEditView_text_color, Color.BLACK);
         mEtInput.setTextColor(inputTextColor);
         float inputTextSize = array.getDimension(R.styleable.InputEditView_text_size, UnitUtil.sp2px(14));
-        mEtInput.setTextSize(TypedValue.COMPLEX_UNIT_PX,inputTextSize);
+        mEtInput.setTextSize(TypedValue.COMPLEX_UNIT_PX, inputTextSize);
         Drawable addDrawable = array.getDrawable(R.styleable.InputEditView_add);
         if (addDrawable != null) {
             mIvAdd.setImageDrawable(addDrawable);
@@ -139,10 +139,13 @@ public class InputEditView extends LinearLayout {
         if (subDrawable != null) {
             mIvSub.setImageDrawable(subDrawable);
         }
+        int addSubPadding = array.getDimensionPixelSize(R.styleable.InputEditView_add_sub_padding, 0);
+        mIvAdd.setPadding(addSubPadding, addSubPadding, addSubPadding, addSubPadding);
+        mIvSub.setPadding(addSubPadding, addSubPadding, addSubPadding, addSubPadding);
         array.recycle();
     }
 
-    public void setValue(String value){
+    public void setValue(String value) {
         mEtInput.setText(value);
     }
 
