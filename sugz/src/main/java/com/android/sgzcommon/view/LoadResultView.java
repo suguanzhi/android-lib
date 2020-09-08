@@ -76,45 +76,38 @@ public class LoadResultView extends LinearLayout {
     }
 
     public void empty() {
-        empty("暂无数据", null);
+        empty("暂无数据");
     }
 
-    public void empty(String btnText) {
-        empty("暂无数据", btnText);
+    public void empty(String tip) {
+        empty(tip, null);
     }
 
     public void empty(String tip, String btnText) {
-        mIvIcon.setImageResource(R.drawable.ic_sgz_empty);
+        empty(tip, btnText, R.drawable.ic_sgz_empty);
+    }
+
+    public void empty(String tip, String btnText, int resId) {
+        mIvIcon.setImageResource(resId);
         setTipText(tip);
         setBtnText(btnText);
         setVisibility(VISIBLE);
     }
 
-    public void networkError() {
-        networkError("网络异常", null);
+    public void error() {
+        error("数据异常");
     }
 
-    public void networkError(String btnText) {
-        networkError("网络异常", btnText);
+    public void error(String tip) {
+        error(tip, null);
     }
 
-    public void networkError(String tip, String btnText) {
-        mIvIcon.setImageResource(R.drawable.ic_sgz_network_error);
-        setTipText(tip);
-        setBtnText(btnText);
-        setVisibility(VISIBLE);
+    public void error(String tip, String btnText) {
+        error(tip, btnText, R.drawable.ic_sgz_load_fail);
     }
 
-    public void networkFail() {
-        networkFail("加载失败", null);
-    }
-
-    public void networkFail(String btnText) {
-        networkFail("加载失败", btnText);
-    }
-
-    public void networkFail(String tip, String btnText) {
-        mIvIcon.setImageResource(R.drawable.ic_sgz_load_fail);
+    public void error(String tip, String btnText, int resId) {
+        mIvIcon.setImageResource(resId);
         setTipText(tip);
         setBtnText(btnText);
         setVisibility(VISIBLE);

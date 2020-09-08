@@ -89,7 +89,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
             @Override
             public void onFailed() {
                 mPbLoading.setVisibility(View.GONE);
-                mLrv.networkFail();
+                mLrv.error("加载失败！");
             }
         };
         mAdapter = new BaseLoadListAdapter(mContext, mItems, new BaseRecyclerviewAdapter.OnItemtClickListener() {

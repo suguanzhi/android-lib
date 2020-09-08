@@ -77,8 +77,8 @@ public abstract class BaseNavigationActivity extends BaseActivity {
         mNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Log.d("BaseMainActivity", "onNavigationItemSelected:");
                 int position = getNavigationPosition(item.getItemId());
+                Log.d("BaseMainActivity", "onNavigationItemSelected: position == " + position);
                 Intent intent = clickStartActivity(position);
                 if (intent == null) {
                     boolean newFragment = newFragment4ItemSelect(position);
@@ -99,6 +99,7 @@ public abstract class BaseNavigationActivity extends BaseActivity {
         if (position < menu.size()) {
             MenuItem menuItem = menu.getItem(position);
             mNavigation.setSelectedItemId(menuItem.getItemId());
+            menuItem.setChecked(true);
         }
     }
 
