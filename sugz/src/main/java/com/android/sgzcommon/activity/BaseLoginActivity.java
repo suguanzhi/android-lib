@@ -19,8 +19,10 @@ public abstract class BaseLoginActivity extends BaseActivity {
     protected EditText mEtUsername;
     protected EditText mEtPassword;
     protected Button mBtnLogin;
+    protected ImageView mIvLogo;
     protected ImageView mIvPasswordVisiable;
 
+    protected abstract void onLogoClick(View v);
     protected abstract void onLoginClick(View v);
 
     @Override
@@ -34,6 +36,13 @@ public abstract class BaseLoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 onLoginClick(v);
+            }
+        });
+        mIvLogo = findViewById(R.id.iv_login_logo);
+        mIvLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLogoClick(v);
             }
         });
         mIvPasswordVisiable = findViewById(R.id.iv_password_visiable);

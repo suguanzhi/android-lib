@@ -26,6 +26,11 @@ public class LoginActivity extends BaseLoginActivity {
     Button mBtnLogin;
 
     @Override
+    protected void onLogoClick(View v) {
+
+    }
+
+    @Override
     protected void onLoginClick(View v) {
 
     }
