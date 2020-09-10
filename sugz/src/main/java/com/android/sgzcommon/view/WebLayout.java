@@ -95,4 +95,9 @@ public class WebLayout extends RelativeLayout {
         mWebviewHandler.goBack();
     }
 
+    public void release() {
+        this.removeAllViews();
+        mWebviewHandler.release();
+    }
+
 }

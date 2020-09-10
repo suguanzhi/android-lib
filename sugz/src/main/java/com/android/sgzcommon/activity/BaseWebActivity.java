@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.android.sgzcommon.activity.utils.JavascriptInterface;
 import com.android.sgzcommon.activity.utils.WebviewHandler;
@@ -23,6 +24,7 @@ public abstract class BaseWebActivity extends BaseActivity implements WebviewHan
     TitleBar mTbTitle;
     WebView mWvContent;
     ProgressBar mPbLoading;
+    RelativeLayout mRlWebContainer;
     private TwoButtonDialog mWarmDialog;
     private WebviewHandler mWebviewHandler;
 
@@ -35,6 +37,7 @@ public abstract class BaseWebActivity extends BaseActivity implements WebviewHan
         mTbTitle = findViewById(R.id.tb_title);
         mWvContent = findViewById(R.id.wv_content);
         mPbLoading = findViewById(R.id.pb_loading);
+        mRlWebContainer = findViewById(R.id.rl_web_container);
         String url = getIntent().getStringExtra("url");
         String title = getIntent().getStringExtra("title");
         Log.d("BaseWebActivity", "onCreate: url = " + url + "; title = " + title);
@@ -107,5 +110,12 @@ public abstract class BaseWebActivity extends BaseActivity implements WebviewHan
     @Override
     public void reload() {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        mRlWebContainer.removeAllViews();
+        mWebviewHandler.release();
+        super.onDestroy();
     }
 }

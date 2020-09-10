@@ -32,6 +32,7 @@
         <activity android:name=".SampleTakePhotoActivity" />
         <activity android:name=".ScrollerLayoutActivity" />
         <activity android:name=".TestWebLayoutActivity" />
+        <activity android:name=".MyWebActivity" />
         <activity android:name="com.android.sgzcommon.activity.BarCodeActivity" />
 
         <provider

@@ -211,6 +211,16 @@ public final class WebviewHandler {
         mListener = listener;
     }
 
+    public void release() {
+        if (mWebView != null) {
+            mWebView.clearHistory();
+            mWebView.clearCache(true);
+            mWebView.loadUrl("about:blank"); // clearView() should be changed to loadUrl("about:blank"), since clearView() is deprecated now
+//            mWebView.pauseTimers();
+            mWebView = null;
+        }
+    }
+
     public interface OnLoadListener {
         void loadStart(String url);
 

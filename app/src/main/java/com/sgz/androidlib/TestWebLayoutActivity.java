@@ -47,6 +47,12 @@ public class TestWebLayoutActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        mWl.release();
+        super.onDestroy();
+    }
+
+    @Override
     public void onBackPressed() {
         if (mWl.canGoBack()){
             mWl.goBack();

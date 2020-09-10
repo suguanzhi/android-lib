@@ -28,6 +28,11 @@
         style="@style/Button.Confirm"
         android:layout_marginTop="10dp"
         android:text="weblayout" />
+    <Button
+        android:id="@+id/btn_web_ac"
+        style="@style/Button.Confirm"
+        android:layout_marginTop="10dp"
+        android:text="BaseWebActivity" />
 
     <Button
         android:id="@+id/btn_qrcodet"

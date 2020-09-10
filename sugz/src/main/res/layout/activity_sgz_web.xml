@@ -13,6 +13,7 @@
         app:title="" />
 
     <RelativeLayout
+        android:id="@+id/rl_web_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

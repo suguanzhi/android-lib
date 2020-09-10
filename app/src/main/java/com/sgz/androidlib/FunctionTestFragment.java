@@ -28,6 +28,8 @@ public class FunctionTestFragment extends BaseFragment {
     Button mBtnWebLayout;
     @BindView(R.id.btn_qrcodet)
     Button mBtnQrcodet;
+    @BindView(R.id.btn_web_ac)
+    Button mBtnWebAc;
 
     @Override
     protected int getLayoutId() {
@@ -39,7 +41,7 @@ public class FunctionTestFragment extends BaseFragment {
         Log.d("NavigationFragment", "init: two init !");
     }
 
-    @OnClick({R.id.btn_auto_dismiss_dialog, R.id.btn_string_list_dialog, R.id.btn_web_layout,R.id.btn_qrcodet})
+    @OnClick({R.id.btn_auto_dismiss_dialog, R.id.btn_string_list_dialog, R.id.btn_web_layout,R.id.btn_web_ac, R.id.btn_qrcodet})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_auto_dismiss_dialog:
@@ -60,6 +62,11 @@ public class FunctionTestFragment extends BaseFragment {
             case R.id.btn_web_layout:
                 Intent intent = new Intent(mContext, TestWebLayoutActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.btn_web_ac:
+                Intent intent1 = new Intent(mContext, MyWebActivity.class);
+                intent1.putExtra("url","http://www.hao123.com");
+                startActivity(intent1);
                 break;
             case R.id.btn_qrcodet:
                 Intent intent2 = new Intent(mContext, BarCodeActivity.class);
