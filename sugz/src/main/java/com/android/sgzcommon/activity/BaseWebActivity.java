@@ -71,11 +71,20 @@ public abstract class BaseWebActivity extends BaseActivity implements WebviewHan
         mTbTitle.setTitle(title);
     }
 
+    /**
+     * @param title
+     */
+    public void setTitle(String title) {
+        if (mTbTitle != null) {
+            mTbTitle.setTitle(title);
+        }
+    }
+
     @Override
     public void onBackPressed() {
         if (mWebviewHandler.canGoBack()) {
             mWebviewHandler.goBack();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
