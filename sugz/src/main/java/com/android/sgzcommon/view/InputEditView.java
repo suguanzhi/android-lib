@@ -149,6 +149,18 @@ public class InputEditView extends LinearLayout {
         mEtInput.setText(value);
     }
 
+    public int getValue() {
+        int value = 0;
+        try {
+            String s = mEtInput.getText().toString();
+            value = Integer.parseInt(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return value;
+    }
+
     public void setOnAddOrSubClickListener(OnAddOrSubClickListener listener) {
         clickistener = listener;
     }
