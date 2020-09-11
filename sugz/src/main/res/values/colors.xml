@@ -308,4 +308,7 @@
 
     <color name="img_loading">@color/grey_400</color>
     <color name="img_load_failure">@color/grey_400</color>
+
+    <color name="sgz_icon_setting">@color/white</color>
+    <color name="sgz_icon_head">@color/white</color>
 </resources>
