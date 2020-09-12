@@ -22,6 +22,7 @@
     <dimen name="btn_height2">30dp</dimen>
     <dimen name="btn_text_size">14sp</dimen>
     <dimen name="btn_text_size2">12sp</dimen>
+    <dimen name="btn_border_width">0.5dp</dimen>
 
     <dimen name="input_width">240dp</dimen>
     <dimen name="input_height">44dp</dimen>

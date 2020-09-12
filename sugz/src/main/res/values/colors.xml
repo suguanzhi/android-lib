@@ -290,7 +290,7 @@
 
     <color name="btn_confirm">@color/colorPrimary</color>
     <color name="btn_danger">@color/red_500</color>
-    <color name="btn_warm">@color/amber_500</color>
+    <color name="btn_warn">@color/amber_500</color>
     <color name="btn_disable">@color/grey_500</color>
     <color name="btn_normal">#212121</color>
 
@@ -311,4 +311,7 @@
 
     <color name="sgz_icon_setting">@color/white</color>
     <color name="sgz_icon_head">@color/white</color>
+
+    <color name="input_background">@color/grey_200</color>
+    <color name="shadow_color">@color/grey_300</color>
 </resources>

@@ -50,7 +50,7 @@
 
     <style name="Button.Warm" parent="Button">
         <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_warm</item>
+        <item name="android:background">@drawable/shape_btn_warn</item>
     </style>
 
     <style name="Button.Primary" parent="Button">
@@ -83,6 +83,11 @@
         <item name="android:background">@drawable/shape_btn_sk_normal_sd_white</item>
     </style>
 
+    <style name="Card">
+        <item name="cardCornerRadius">10dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
     <style name="Input">
         <item name="android:layout_width">@dimen/input_width</item>
         <item name="android:layout_height">@dimen/input_height</item>
@@ -97,7 +102,7 @@
     </style>
 
     <style name="Input.R5.White" parent="Input">
-        <item name="android:background">@drawable/shape_r10_input2</item>
+        <item name="android:background">@drawable/shape_r10_input_with_background</item>
     </style>
 
     <style name="Input.R10" parent="Input">
@@ -105,7 +110,7 @@
     </style>
 
     <style name="Input.R10.White" parent="Input">
-        <item name="android:background">@drawable/shape_r10_input2</item>
+        <item name="android:background">@drawable/shape_r10_input_with_background</item>
     </style>
 
     <style name="Input.R50" parent="Input">
@@ -113,6 +118,6 @@
     </style>
 
     <style name="Input.R50.White" parent="Input">
-        <item name="android:background">@drawable/shape_r50_input2</item>
+        <item name="android:background">@drawable/shape_r50_input_with_background</item>
     </style>
 </resources>

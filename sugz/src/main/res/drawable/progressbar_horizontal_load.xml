@@ -4,7 +4,7 @@
     <item
         android:id="@android:id/background">
         <shape>
-            <corners android:radius="20dp"/>
+            <corners android:radius="0dp"/>
             <solid android:color="@color/grey_500"/>
         </shape>
     </item>
@@ -13,7 +13,7 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <corners android:radius="20dp"/>
+                <corners android:radius="0dp"/>
                 <gradient
                     android:endColor="@color/progressbar_horizontal_load_end"
                     android:startColor="@color/progressbar_horizontal_load_start" />

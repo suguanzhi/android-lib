@@ -3,7 +3,7 @@
     android:insetLeft="0dp">
     <!--android:insetLeft="10dp" 分割线距离左侧10dp-->
     <shape>
-        <size android:height="0.5dp" />
+        <size android:height="@dimen/divider_height" />
         <!--分割线的颜色-->
         <solid android:color="@color/divider" />
     </shape>
