@@ -76,7 +76,7 @@ public class BaseActivity extends AppCompatActivity {
     public void onMessageEvent(EmptyEntity event) {/* Do something */}
 
 
-    protected LinearLayoutManager createLinearLayoutManager(@RecyclerView.Orientation int orientation) {
+    public LinearLayoutManager createLinearLayoutManager(@RecyclerView.Orientation int orientation) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(orientation);
         return layoutManager;
@@ -93,34 +93,34 @@ public class BaseActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
-    protected void showLoading() {
+    public void showLoading() {
         showLoading("正在加载");
     }
 
-    protected void showLoading(String tip) {
+    public void showLoading(String tip) {
         if (mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
         mLoadingDialog.show(tip);
     }
 
-    protected void hideLoading() {
+    public void hideLoading() {
         if (mLoadingDialog != null) {
             mLoadingDialog.dismiss();
         }
     }
 
-    protected void showToast(String msg) {
+    public void showToast(String msg) {
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
-    protected void showBigToast(String text) {
+    public void showBigToast(String text) {
         SToast.getInstance(this).showText(text);
     }
 
-    protected void showSmallToast(String text) {
+    public void showSmallToast(String text) {
         SToast.getInstance(this).showSmallText(text);
     }
 
@@ -130,7 +130,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param month    0~11
      * @param listener
      */
-    protected void showDataPickDialog(int year, int month, int day, DatePickDialog.OnDatePickListener listener) {
+    public void showDataPickDialog(int year, int month, int day, DatePickDialog.OnDatePickListener listener) {
         if (mDatePickDialog != null && mDatePickDialog.isShowing()) {
             mDatePickDialog.dismiss();
         }
@@ -147,7 +147,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param
      * @param listener
      */
-    protected void showTimePickDialog(int hour, int minute, DatePickDialog.OnTimePickListener listener) {
+    public void showTimePickDialog(int hour, int minute, DatePickDialog.OnTimePickListener listener) {
         if (mDatePickDialog != null && mDatePickDialog.isShowing()) {
             mDatePickDialog.dismiss();
         }
@@ -158,15 +158,15 @@ public class BaseActivity extends AppCompatActivity {
         mDatePickDialog.setCanceledOnTouchOutside(true);
     }
 
-    protected void showPopupWindow(View v, View contentView, PopupWindow.OnDismissListener listener) {
+    public void showPopupWindow(View v, View contentView, PopupWindow.OnDismissListener listener) {
         showPopupWindow(v, contentView, v.getWidth(), WindowManager.LayoutParams.WRAP_CONTENT, listener);
     }
 
-    protected void showPopupWindow(View v, View contentView, int width, int height, PopupWindow.OnDismissListener listener) {
+    public void showPopupWindow(View v, View contentView, int width, int height, PopupWindow.OnDismissListener listener) {
         showPopupWindow(v, contentView, width, height, 0, 0, listener);
     }
 
-    protected void showPopupWindow(View v, View contentView, int width, int height, int x, int y, PopupWindow.OnDismissListener listener) {
+    public void showPopupWindow(View v, View contentView, int width, int height, int x, int y, PopupWindow.OnDismissListener listener) {
         mPopupWindow = new PopupWindow(width, height);
         mPopupWindow.setContentView(contentView);
         mPopupWindow.setFocusable(true);
@@ -176,7 +176,7 @@ public class BaseActivity extends AppCompatActivity {
         mPopupWindow.showAsDropDown(v, x, y);
     }
 
-    protected void hidePopupWindow() {
+    public void hidePopupWindow() {
         if (mPopupWindow != null) {
             mPopupWindow.dismiss();
         }
@@ -188,7 +188,7 @@ public class BaseActivity extends AppCompatActivity {
      *
      * @param msg 提示主文本
      */
-    protected void showOneButtonDialog(String msg) {
+    public void showOneButtonDialog(String msg) {
         showOneButtonDialog(msg, "", new OneButtonDialog.OnclickListener() {
             @Override
             public void onConfirm(View view, Dialog dialog) {
@@ -205,7 +205,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param msg       提示主文本
      * @param secondMsg 提示副文本
      */
-    protected void showOneButtonDialog(String msg, String secondMsg) {
+    public void showOneButtonDialog(String msg, String secondMsg) {
         showOneButtonDialog(msg, secondMsg, new OneButtonDialog.OnclickListener() {
             @Override
             public void onConfirm(View view, Dialog dialog) {
@@ -224,7 +224,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param buttonText 按钮文本
      * @param listener   按钮点击监听
      */
-    protected void showOneButtonDialog(String msg, String secondMsg, String buttonText, OneButtonDialog.OnclickListener listener) {
+    public void showOneButtonDialog(String msg, String secondMsg, String buttonText, OneButtonDialog.OnclickListener listener) {
         showOneButtonDialog(msg, secondMsg, listener);
         mOneButtonDialog.setButtonText(buttonText);
     }
@@ -236,7 +236,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param secondMsg 提示副文本
      * @param listener  按钮点击监听
      */
-    protected void showOneButtonDialog(String msg, String secondMsg, OneButtonDialog.OnclickListener listener) {
+    public void showOneButtonDialog(String msg, String secondMsg, OneButtonDialog.OnclickListener listener) {
         if (mOneButtonDialog != null) {
             mOneButtonDialog.dismiss();
         }
@@ -249,7 +249,7 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * 隐藏只有一个按钮的提示框
      */
-    protected void hideOneButtonDialog() {
+    public void hideOneButtonDialog() {
         if (mOneButtonDialog != null) {
             mOneButtonDialog.dismiss();
         }
@@ -260,7 +260,7 @@ public class BaseActivity extends AppCompatActivity {
      *
      * @param msg 提示主文本
      */
-    protected void showTwoButtonDialog(String msg) {
+    public void showTwoButtonDialog(String msg) {
         showTwoButtonDialog(msg, "", new TwoButtonDialog.OnclickListener() {
             @Override
             public void onCancle(View view, Dialog dialog) {
@@ -282,7 +282,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param msg       提示主文本
      * @param secondMsg 提示副文本
      */
-    protected void showTwoButtonDialog(String msg, String secondMsg) {
+    public void showTwoButtonDialog(String msg, String secondMsg) {
         showTwoButtonDialog(msg, secondMsg, new TwoButtonDialog.OnclickListener() {
             @Override
             public void onCancle(View view, Dialog dialog) {
@@ -307,7 +307,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param rightText 右边按钮文本
      * @param listener  按钮点击监听
      */
-    protected void showTwoButtonDialog(String msg, String secondMsg, String leftText, String rightText, TwoButtonDialog.OnclickListener listener) {
+    public void showTwoButtonDialog(String msg, String secondMsg, String leftText, String rightText, TwoButtonDialog.OnclickListener listener) {
         showTwoButtonDialog(msg, secondMsg, listener);
         mTwoButtonDialog.setButtonLeftText(leftText);
         mTwoButtonDialog.setButtonRightText(rightText);
@@ -320,7 +320,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param secondMsg 提示副文本
      * @param listener  按钮点击监听
      */
-    protected void showTwoButtonDialog(String msg, String secondMsg, TwoButtonDialog.OnclickListener listener) {
+    public void showTwoButtonDialog(String msg, String secondMsg, TwoButtonDialog.OnclickListener listener) {
         if (mTwoButtonDialog != null) {
             mTwoButtonDialog.dismiss();
         }
@@ -333,7 +333,7 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * 显示有两个按钮的提示框
      */
-    protected void hideTwoButtonDialog() {
+    public void hideTwoButtonDialog() {
         if (mTwoButtonDialog != null) {
             mTwoButtonDialog.dismiss();
         }
@@ -345,7 +345,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param neededPermissions 需要的权限
      * @return 是否被允许
      */
-    protected boolean checkPermissions(String[] neededPermissions) {
+    public boolean checkPermissions(String[] neededPermissions) {
         boolean granted = true;
         if (neededPermissions == null) {
             return true;
@@ -365,7 +365,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param neededPermission 需要的权限
      * @return 是否被允许
      */
-    protected boolean checkPermission(String neededPermission) {
+    public boolean checkPermission(String neededPermission) {
         if (neededPermission == null) {
             return true;
         }
@@ -377,7 +377,7 @@ public class BaseActivity extends AppCompatActivity {
      *
      * @param neededPermissions
      */
-    protected void checkRequestePermissions(String[] neededPermissions) {
+    public void checkRequestePermissions(String[] neededPermissions) {
         boolean granted = checkPermissions(neededPermissions);
         if (!granted) {
             if (mPermissionDialog == null) {
@@ -399,7 +399,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param neededPermissions 需要的权限
      * @param listener  监听允许的权限和禁止的权限
      */
-    protected void checkRequestePermissions(String[] neededPermissions, OnPermissionResultListener listener) {
+    public void checkRequestePermissions(String[] neededPermissions, OnPermissionResultListener listener) {
         this.listener = listener;
         List<String> grants = new ArrayList<String>();
         List<String> denies = new ArrayList<String>();
