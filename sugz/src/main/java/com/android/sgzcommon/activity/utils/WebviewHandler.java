@@ -208,6 +208,10 @@ public final class WebviewHandler {
         mHandler.obtainMessage(MyHandler.RELOAD).sendToTarget();
     }
 
+    public void post(Runnable runnable) {
+        mWebView.post(runnable);
+    }
+
     public void setOnLoadListener(OnLoadListener listener) {
         mListener = listener;
     }
@@ -217,7 +221,7 @@ public final class WebviewHandler {
             mWebView.clearHistory();
             mWebView.clearCache(true);
             mWebView.loadUrl("about:blank"); // clearView() should be changed to loadUrl("about:blank"), since clearView() is deprecated now
-//            mWebView.pauseTimers();
+            //            mWebView.pauseTimers();
             mWebView = null;
         }
     }
