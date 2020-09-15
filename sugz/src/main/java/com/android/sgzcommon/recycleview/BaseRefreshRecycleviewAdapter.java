@@ -20,7 +20,7 @@ import static androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_SETTLING;
 /**
  * Created by sgz on 2019/11/25.
  */
-public abstract class BaseRefreshRecycleviewAdapter<V extends BaseViewHolder> extends BaseRecyclerviewAdapter<BaseViewHolder> {
+public abstract class BaseRefreshRecycleviewAdapter<E,V extends BaseViewHolder> extends BaseRecyclerviewAdapter<E,BaseViewHolder> {
 
     private long mTotalItemCount;
     private RecyclerView mRecyclerView;
@@ -42,7 +42,7 @@ public abstract class BaseRefreshRecycleviewAdapter<V extends BaseViewHolder> ex
 
     @Override
     public int getItemViewType(int position) {
-        if (position == mObjects.size()) {
+        if (position == mItems.size()) {
             return TYPE_FOOTER;
         }
         return super.getItemViewType(position);
@@ -136,7 +136,7 @@ public abstract class BaseRefreshRecycleviewAdapter<V extends BaseViewHolder> ex
     }
 
     private boolean isAllDataLoad() {
-        return mTotalItemCount != 0 && mObjects.size() >= mTotalItemCount;
+        return mTotalItemCount != 0 && mItems.size() >= mTotalItemCount;
     }
 
 

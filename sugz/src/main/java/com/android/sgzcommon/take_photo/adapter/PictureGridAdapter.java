@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by sgz on 2019/5/6 0006.
  */
-public class PictureGridAdapter extends BaseRecyclerviewAdapter<PictureGridAdapter.ViewHolder> {
+public class PictureGridAdapter extends BaseRecyclerviewAdapter<String,PictureGridAdapter.ViewHolder> {
 
 
     public PictureGridAdapter(Context context, List list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
@@ -37,7 +37,7 @@ public class PictureGridAdapter extends BaseRecyclerviewAdapter<PictureGridAdapt
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final String url = (String) mObjects.get(position);
+        final String url = getItem(position);
         if (!TextUtils.isEmpty(url)) {
             if (url.startsWith("http")) {
                 mImageLoader.get(url, holder, 200, 300);

@@ -17,10 +17,10 @@ import androidx.annotation.NonNull;
  * @author sgz
  * @date 2020/6/30
  */
-public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<BaseLoadListAdapter.ViewHolder> {
+public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<LoadListItem,BaseLoadListAdapter.ViewHolder> {
 
 
-    public BaseLoadListAdapter(Context context, List<? extends LoadListItem> list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
+    public BaseLoadListAdapter(Context context, List list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         super(context, list, clickListener, longClickListener);
     }
 
@@ -36,9 +36,8 @@ public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<BaseLoadListAda
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        LoadListItem item = (LoadListItem) mObjects.get(position);
-        holder.mTvName.setText(item.getItemName());
-        if (position == mObjects.size() - 1) {
+        holder.mTvName.setText(getItem(position).getItemName());
+        if (position == mItems.size() - 1) {
             holder.mVLine.setVisibility(View.GONE);
         } else {
             holder.mVLine.setVisibility(View.VISIBLE);

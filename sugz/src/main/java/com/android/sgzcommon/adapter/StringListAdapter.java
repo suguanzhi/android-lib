@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by sgz on 2019/12/14.
  */
-public class StringListAdapter extends BaseRecyclerviewAdapter<StringListAdapter.ViewHolder> {
+public class StringListAdapter extends BaseRecyclerviewAdapter<String,StringListAdapter.ViewHolder> {
 
     public StringListAdapter(Context context, List list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         super(context, list, clickListener, longClickListener);
@@ -31,9 +31,8 @@ public class StringListAdapter extends BaseRecyclerviewAdapter<StringListAdapter
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String text = (String) mObjects.get(position);
-        holder.mTvString.setText(text);
-        if (position == mObjects.size() - 1) {
+        holder.mTvString.setText(getItem(position));
+        if (position == mItems.size() - 1) {
             holder.mVLine.setVisibility(View.GONE);
         } else {
             holder.mVLine.setVisibility(View.VISIBLE);

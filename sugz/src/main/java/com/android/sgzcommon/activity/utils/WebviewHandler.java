@@ -190,7 +190,9 @@ public final class WebviewHandler {
 
     @SuppressLint("JavascriptInterface")
     public void addJavascriptInterface(JavascriptInterface javascriptInterface) {
-        javascriptInterface.setTarget(this);
+        if (javascriptInterface != null) {
+            javascriptInterface.setTarget(this);
+        }
         mWebView.addJavascriptInterface(javascriptInterface, "androidJs");
     }
 

@@ -16,13 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by sgz on 2016/a12/22.
  */
 
-public abstract class BaseRecyclerviewAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class BaseRecyclerviewAdapter<E, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     protected final static int TYPE_NORMAL = 0;//正常内容
     protected final static int TYPE_FOOTER = 1;//下拉刷新
 
     protected Context mContext;
-    protected List<Object> mObjects;
+    protected List<E> mItems;
     protected LayoutInflater mInflater;
     protected ImageLoader mImageLoader;
     protected OnItemtClickListener mClickListener;
@@ -32,13 +32,13 @@ public abstract class BaseRecyclerviewAdapter<VH extends RecyclerView.ViewHolder
 
     protected abstract VH getViewHolder(int viewType, View itemView);
 
-    public BaseRecyclerviewAdapter(Context context, List<? extends Object> objects) {
-        this(context, objects, null, null);
+    public BaseRecyclerviewAdapter(Context context, List<E> items) {
+        this(context, items, null, null);
     }
 
-    public BaseRecyclerviewAdapter(Context context, List<? extends Object> objects, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
+    public BaseRecyclerviewAdapter(Context context, List<E> items, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         mContext = context;
-        mObjects = (List<Object>) objects;
+        mItems = items;
         mInflater = LayoutInflater.from(context);
         mClickListener = clickListener;
         mClickLongListener = longClickListener;
@@ -78,19 +78,23 @@ public abstract class BaseRecyclerviewAdapter<VH extends RecyclerView.ViewHolder
     }
 
 
-    public void addItemData(Object obj, int position) {
-        mObjects.add(position, obj);
+    public void addItemData(E e, int position) {
+        mItems.add(position, e);
         notifyItemInserted(position);
     }
 
     public void removeData(int position) {
-        mObjects.remove(position);
+        mItems.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public E getItem(int position) {
+        return mItems.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return mObjects.size();
+        return mItems.size();
     }
 
     public interface OnItemtClickListener {

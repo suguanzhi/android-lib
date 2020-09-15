@@ -26,12 +26,12 @@ import java.util.List;
 /**
  * Created by sgz on 2019/5/6 0006.
  */
-public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHolder> {
+public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,BaseViewHolder> {
 
     private OnDeletePhotoListener mDeletePhotoListener;
     private OnTakePhotoClickListener mTakePhotoClickListener;
 
-    public PictureGridEditAdapter(Context context, List<? extends PhotoUpload> photoUploads, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
+    public PictureGridEditAdapter(Context context, List photoUploads, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         super(context, photoUploads, clickListener, longClickListener);
     }
 
@@ -45,7 +45,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
         Log.d("PictureGridEditAdapter", "getView: position = " + position);
         if (0 == getItemViewType(position)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
-            final PhotoUpload upload = (PhotoUpload) mObjects.get(position);
+            final PhotoUpload upload = mItems.get(position);
             upload.setOnProgressListener(new PhotoUpload.OnProgressListener() {
                 @Override
                 public void onProgress(int progress) {
@@ -67,7 +67,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
                     //                    holder.itemView.setFocusableInTouchMode(true);
                     //                    holder.itemView.requestFocus();
                     try {
-                        mObjects.remove(position);
+                        mItems.remove(position);
                         String path = upload.getPath();
                         FileUtil.deleteFile(path);
                         if (mDeletePhotoListener != null) {
@@ -133,7 +133,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<BaseViewHold
 
     @Override
     public int getItemViewType(int position) {
-        if (position == mObjects.size()) {
+        if (position == mItems.size()) {
             return 1;
         }
         return 0;
