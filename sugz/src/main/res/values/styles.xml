@@ -120,4 +120,24 @@
     <style name="Input.R50.White" parent="Input">
         <item name="android:background">@drawable/shape_r50_input_with_background</item>
     </style>
+
+    <style name="Divider">
+        <item name="background">@color/divider</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
+    </style>
+
+    <style name="TextMain">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">@dimen/text</item>
+    </style>
+
+    <style name="TextSecond">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_second</item>
+        <item name="android:textSize">@dimen/text_second</item>
+    </style>
 </resources>
