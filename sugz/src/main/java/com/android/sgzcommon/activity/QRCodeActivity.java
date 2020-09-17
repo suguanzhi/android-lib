@@ -70,8 +70,7 @@ public class QRCodeActivity extends BaseActivity implements SurfaceHolder.Callba
      * @param result
      * @return
      */
-    protected boolean onCodeResult(String result) {
-        return true;
+    protected void onCodeResult(String result) {
     }
 
     @Override
