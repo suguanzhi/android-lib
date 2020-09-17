@@ -66,10 +66,11 @@ public class QRCodeActivity extends BaseActivity implements SurfaceHolder.Callba
 
     /**
      * 获取扫码结果后是否销毁当前activity，并返回扫码结果result。
+     *
      * @param result
      * @return
      */
-    protected boolean onCodeResultFinish(String result) {
+    protected boolean onCodeResult(String result) {
         return true;
     }
 
@@ -89,18 +90,15 @@ public class QRCodeActivity extends BaseActivity implements SurfaceHolder.Callba
                 public void onResult(String result) {
                     Log.d("QRCodeActivity", "onResult: " + result);
                     stopScan();
-                    if (onCodeResultFinish(result)) {
-                        Intent intent = new Intent();
-                        intent.putExtra(RESULT_NAME, result);
-                        setResult(RESULT_OK, intent);
-                        finish();
-                    }
+                    Intent intent = new Intent();
+                    intent.putExtra(RESULT_NAME, result);
+                    setResult(RESULT_OK, intent);
+                    onCodeResult(result);
                 }
 
                 @Override
                 public void onError(String error) {
                     showToast("扫码异常：" + error);
-                    finish();
                 }
             });
             startScan();
