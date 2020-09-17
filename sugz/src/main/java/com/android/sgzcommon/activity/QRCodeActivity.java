@@ -23,17 +23,17 @@ import com.zbar.lib.DecodeCaptureManager;
  * abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
  * }
  * }
- *
- *  2.AndroidManifest文件中：
- *  a）添加拍照权限
- *  <uses-permission android:name="android.permission.CAMERA" />
- *  b)activity组件注册
- *  <activity android:name="com.android.sgzcommon.activity.QRCodeActivity" />
- *
+ * <p>
+ * 2.AndroidManifest文件中：
+ * a）添加拍照权限
+ * <uses-permission android:name="android.permission.CAMERA" />
+ * b)activity组件注册
+ * <activity android:name="com.android.sgzcommon.activity.QRCodeActivity" />
+ * <p>
  * 3.通过startActivityForResult启动该activity
- *
+ * <p>
  * 4.onActivityResult中获取返回结果
- *
+ * <p>
  * Created by sgz on 2019/4/19 0019.
  */
 public class QRCodeActivity extends BaseActivity implements SurfaceHolder.Callback {
@@ -64,6 +64,15 @@ public class QRCodeActivity extends BaseActivity implements SurfaceHolder.Callba
         holder.addCallback(QRCodeActivity.this);
     }
 
+    /**
+     * 获取扫码结果后是否销毁当前activity，并返回扫码结果result。
+     * @param result
+     * @return
+     */
+    protected boolean onCodeResultFinish(String result) {
+        return true;
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Log.d("QRCodeActivity", "surfaceCreated: 000000000");
@@ -80,15 +89,17 @@ public class QRCodeActivity extends BaseActivity implements SurfaceHolder.Callba
                 public void onResult(String result) {
                     Log.d("QRCodeActivity", "onResult: " + result);
                     stopScan();
-                    Intent intent = new Intent();
-                    intent.putExtra(RESULT_NAME, result);
-                    setResult(RESULT_OK, intent);
-                    finish();
+                    if (onCodeResultFinish(result)) {
+                        Intent intent = new Intent();
+                        intent.putExtra(RESULT_NAME, result);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
                 }
 
                 @Override
                 public void onError(String error) {
-                    showToast("" + error);
+                    showToast("扫码异常：" + error);
                     finish();
                 }
             });
