@@ -1,4 +1,4 @@
-package com.sgz.androidlib;
+package com.sgz.androidlib.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

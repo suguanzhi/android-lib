@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <com.android.sgzcommon.view.TitleBar
+        android:id="@+id/tb_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Activity" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/btn_qrcodet"
+                style="@style/Button.Warm"
+                android:layout_marginTop="10dp"
+                android:text="扫码"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_take_photo"
+                style="@style/Button.Strock.Normal"
+                android:layout_marginTop="10dp"
+                android:text="拍一张照片"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_take_photos"
+                style="@style/Button.Strock.Normal"
+                android:layout_marginTop="10dp"
+                android:text="拍多张照片"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_web"
+                style="@style/Button.Strock.Normal"
+                android:layout_marginTop="10dp"
+                android:text="WebActivity"
+                android:textAllCaps="false"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_web_layout"
+                style="@style/Button.Strock.Normal"
+                android:layout_marginTop="10dp"
+                android:text="WebLayout"
+                android:textAllCaps="false"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

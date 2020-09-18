@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <com.android.sgzcommon.view.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:left_text="dddddd"
-        app:right_text="是独立访客"
-        app:title="是的分裂势水电" />
+        app:title="拍照" />
 
     <ImageView
         android:id="@+id/iv_photo"
@@ -27,10 +26,5 @@
         android:layout_marginTop="50dp"
         android:onClick="take"
         android:text="拍照" />
-
-    <com.android.sgzcommon.view.LoadResultView
-        android:id="@+id/lrv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </LinearLayout>

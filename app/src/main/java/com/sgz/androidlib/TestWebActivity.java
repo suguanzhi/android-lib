@@ -7,7 +7,7 @@ import com.android.sgzcommon.activity.utils.JavascriptInterface;
  * @author sgz
  * @date 2020/9/10
  */
-public class MyWebActivity extends BaseWebActivity {
+public class TestWebActivity extends BaseWebActivity {
     @Override
     protected JavascriptInterface getJavascriptInterface() {
         return null;

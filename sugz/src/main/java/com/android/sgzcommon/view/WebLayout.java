@@ -95,6 +95,9 @@ public class WebLayout extends RelativeLayout {
         mWebviewHandler.goBack();
     }
 
+    /**
+     * 移除Webview，释放缓存
+     */
     public void release() {
         this.removeAllViews();
         mWebviewHandler.release();

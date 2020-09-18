@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <com.android.sgzcommon.view.TitleBar
+        android:id="@+id/tb_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="自定义控件" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <EditText
+                style="@style/Input.R50.White"
+                android:hint="输入框" />
+
+            <Button
+                android:id="@+id/btn_web_layout"
+                style="@style/Button.Confirm"
+                android:layout_marginTop="10dp"
+                android:text="Weblayout"
+                android:textAllCaps="false" />
+
+            <com.android.sgzcommon.view.InputEditView
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                app:text_size="25sp"
+                app:value="2" />
+
+            <com.android.sgzcommon.view.LoadResultView
+                android:id="@+id/lrv"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

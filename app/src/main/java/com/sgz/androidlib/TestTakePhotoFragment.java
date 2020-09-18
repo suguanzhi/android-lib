@@ -20,7 +20,7 @@ import butterknife.OnClick;
  * @author sgz
  * @date 2020/6/10
  */
-public class TakePhotoFragment extends com.android.sgzcommon.fragment.TakePhotoFragment {
+public class TestTakePhotoFragment extends com.android.sgzcommon.fragment.TakePhotoFragment {
     @BindView(R.id.iv_photo)
     ImageView mIvPhoto;
     @BindView(R.id.btn_take_photo)

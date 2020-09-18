@@ -1,8 +1,9 @@
-package com.sgz.androidlib;
+package com.sgz.androidlib.dialog;
 
 import android.content.Context;
 
 import com.android.sgzcommon.dialog.BaseAutoDismissDialog;
+import com.sgz.androidlib.R;
 
 /**
  * @author sgz

@@ -7,21 +7,8 @@
         android:title="首页" />
 
     <item
-        android:id="@+id/navigation_record"
-        android:icon="@drawable/ic_record"
-        android:title="记录" />
-
-    <item
         android:id="@+id/navigation_saoyisao"
         android:icon="@drawable/ic_saoyisao"
-        android:title="扫一扫" />
-    <item
-        android:id="@+id/navigation_tongji"
-        android:icon="@drawable/ic_tongji"
-        android:title="统计" />
-    <item
-        android:id="@+id/navigation_mine"
-        android:icon="@drawable/ic_mine"
-        android:title="我的" />
+        android:title="跳转" />
 
 </menu>

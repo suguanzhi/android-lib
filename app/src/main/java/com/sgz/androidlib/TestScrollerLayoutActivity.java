@@ -8,7 +8,7 @@ import com.android.sgzcommon.activity.BaseActivity;
  * @author sgz
  * @date 2020/6/10
  */
-public class ScrollerLayoutActivity extends BaseActivity {
+public class TestScrollerLayoutActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

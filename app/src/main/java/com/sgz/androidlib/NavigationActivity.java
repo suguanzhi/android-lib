@@ -41,23 +41,15 @@ public class NavigationActivity extends BaseNavigationActivity {
     protected Fragment getNewFragment(int position) {
         switch (position){
             case 0:
-                return new TakePhotoFragment();
-            case 1:
-                return new FunctionTestFragment();
-            case 2:
-                return new ThreeFragment();
-            case 3:
-                return new FourFragment();
-            case 4:
-                return new FiveFragment();
+                return new HomeFragment();
         }
         return null;
     }
 
     @Override
     protected Intent clickStartActivity(int position) {
-        if (2 == position){
-            Intent intent = new Intent(this, SampleTakePhotoActivity.class);
+        if (1 == position){
+            Intent intent = new Intent(this, TestTakePhotoActivity.class);
             return intent;
         }
         return super.clickStartActivity(position);
@@ -89,9 +81,9 @@ public class NavigationActivity extends BaseNavigationActivity {
         selecteNavItem(0);
         Fragment fragment = getFrgment(0);
         if (fragment != null) {
-            if (fragment instanceof TakePhotoFragment) {
-                TakePhotoFragment takePhotoFragment = (TakePhotoFragment) fragment;
-                takePhotoFragment.setMsg("ddddddd");
+            if (fragment instanceof TestTakePhotoFragment) {
+                TestTakePhotoFragment testTakePhotoFragment = (TestTakePhotoFragment) fragment;
+                testTakePhotoFragment.setMsg("ddddddd");
             }
             Log.d("MainActivity", "clear: fragment != null ");
         } else {

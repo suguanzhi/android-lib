@@ -22,7 +22,7 @@ import butterknife.BindView;
  * @author sgz
  * @date 2020/6/10
  */
-public class SampleTakePhotosActivity extends TakePhotosActivity {
+public class TestTakePhotosActivity extends TakePhotosActivity {
 
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
@@ -86,7 +86,10 @@ public class SampleTakePhotosActivity extends TakePhotosActivity {
             @Override
             public void onClick(View view) {
                 Log.d("SampleTakePhotoListActivity", "onClick: ---------------------");
-                choosePhoto();
+                //选择照片
+                //                choosePhoto();
+                //拍照
+                takePhoto(null);
             }
         });
     }

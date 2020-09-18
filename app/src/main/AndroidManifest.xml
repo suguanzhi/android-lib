@@ -27,12 +27,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SampleTakePhotosActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SampleTakePhotoActivity" />
-        <activity android:name=".ScrollerLayoutActivity" />
+        <activity android:name=".TestLoginActivity" />
+        <activity android:name=".TestTakePhotoActivity" />
+        <activity android:name=".TestTakePhotosActivity" />
+        <activity android:name=".TestScrollerLayoutActivity" />
         <activity android:name=".TestWebLayoutActivity" />
-        <activity android:name=".MyWebActivity" />
+        <activity android:name=".TestWebActivity" />
+        <activity android:name=".TestDatePickActivity" />
+        <activity android:name=".TestViewActivity" />
+        <activity android:name=".TestActivityActivity" />
+        <activity android:name=".TestDialogActivity" />
+        <activity android:name=".TestFragmentActivity" />
+        <activity android:name="com.android.sgzcommon.activity.QRCodeActivity" />
         <activity android:name="com.android.sgzcommon.activity.BarCodeActivity" />
 
         <provider

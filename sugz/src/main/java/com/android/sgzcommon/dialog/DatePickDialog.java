@@ -69,7 +69,7 @@ public class DatePickDialog extends BaseDialog implements View.OnClickListener {
             String yearStr = DateUtil.getDateStr(date.getTime(), "yyyy");
             String monthStr = DateUtil.getDateStr(date.getTime(), "MM");
             String dayOfMonthStr = DateUtil.getDateStr(date.getTime(), "dd");
-            mDatePicker.init(Integer.valueOf(yearStr), Integer.valueOf(monthStr) - 1, Integer.valueOf(dayOfMonthStr), null);
+            mDatePicker.init(Integer.parseInt(yearStr), Integer.parseInt(monthStr) - 1, Integer.parseInt(dayOfMonthStr), null);
         }
     }
 

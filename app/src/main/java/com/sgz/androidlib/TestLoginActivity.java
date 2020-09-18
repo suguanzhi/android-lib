@@ -14,7 +14,7 @@ import butterknife.BindView;
  * @author sgz
  * @date 2020/6/10
  */
-public class LoginActivity extends BaseLoginActivity {
+public class TestLoginActivity extends BaseLoginActivity {
 
     @BindView(R.id.et_username)
     EditText mEtUsername;
