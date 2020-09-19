@@ -306,12 +306,14 @@
     <color name="progressbar_horizontal_load_start">@color/red_500</color>
     <color name="progressbar_horizontal_load_end">@color/red_500</color>
 
-    <color name="img_loading">@color/grey_400</color>
-    <color name="img_load_failure">@color/grey_400</color>
+    <color name="sgz_icon_loading">@color/grey_400</color>
+    <color name="sgz_icon_load_failure">@color/grey_400</color>
 
     <color name="sgz_icon_setting">@color/white</color>
     <color name="sgz_icon_head">@color/white</color>
 
-    <color name="input_background">@color/grey_200</color>
-    <color name="shadow_color">@color/grey_300</color>
+    <color name="sgz_input_background">@color/grey_200</color>
+    <color name="sgz_shadow_color">@color/grey_300</color>
+
+    <color name="sgz_icon_version_update">@color/grey_400</color>
 </resources>
