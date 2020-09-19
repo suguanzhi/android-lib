@@ -1,4 +1,4 @@
-package com.sgz.androidlib;
+package com.sgz.androidlib.activity.sample;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.android.sgzcommon.activity.TakePhotoActivity;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
+import com.sgz.androidlib.R;
 
 import java.io.File;
 

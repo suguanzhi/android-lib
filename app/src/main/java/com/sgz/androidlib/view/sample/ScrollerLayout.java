@@ -1,4 +1,4 @@
-package com.sgz.androidlib.view;
+package com.sgz.androidlib.view.sample;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,4 +1,4 @@
-package com.sgz.androidlib;
+package com.sgz.androidlib.activity.sample;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import com.android.sgzcommon.activity.TakePhotosActivity;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 import com.android.sgzcommon.take_photo.TakePhotosImpl;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
+import com.sgz.androidlib.R;
 
 import java.util.List;
 import java.util.PriorityQueue;

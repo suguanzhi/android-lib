@@ -1,10 +1,11 @@
-package com.sgz.androidlib;
+package com.sgz.androidlib.view.sample;
 
 import android.os.Bundle;
 
 import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.activity.utils.WebviewHandler;
 import com.android.sgzcommon.view.WebLayout;
+import com.sgz.androidlib.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

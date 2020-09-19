@@ -1,4 +1,4 @@
-package com.sgz.androidlib;
+package com.sgz.androidlib.dialog;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +10,9 @@ import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.dialog.BaseLoadListDialog;
 import com.android.sgzcommon.dialog.DatePickDialog;
 import com.android.sgzcommon.view.TitleBar;
-import com.sgz.androidlib.dialog.TestAutoDismissDialog;
-import com.sgz.androidlib.dialog.TestBaseLoadListDialog;
+import com.sgz.androidlib.R;
+import com.sgz.androidlib.dialog.sample.TestAutoDismissDialog;
+import com.sgz.androidlib.dialog.sample.TestBaseLoadListDialog;
 import com.sgz.androidlib.entity.LoadListEntity;
 
 import java.util.Calendar;

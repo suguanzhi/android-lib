@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.sgzcommon.activity.BaseNavigationActivity;
+import com.sgz.androidlib.activity.sample.TestTakePhotoActivity;
+import com.sgz.androidlib.fragment.sample.TestTakePhotoFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

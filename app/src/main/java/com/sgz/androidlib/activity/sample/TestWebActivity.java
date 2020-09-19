@@ -1,4 +1,4 @@
-package com.sgz.androidlib;
+package com.sgz.androidlib.activity.sample;
 
 import com.android.sgzcommon.activity.BaseWebActivity;
 import com.android.sgzcommon.activity.utils.JavascriptInterface;

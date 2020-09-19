@@ -1,4 +1,4 @@
-package com.sgz.androidlib;
+package com.sgz.androidlib.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import android.widget.Button;
 import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.activity.QRCodeActivity;
 import com.android.sgzcommon.view.TitleBar;
+import com.sgz.androidlib.R;
+import com.sgz.androidlib.activity.sample.TestTakePhotoActivity;
+import com.sgz.androidlib.activity.sample.TestTakePhotosActivity;
+import com.sgz.androidlib.activity.sample.TestWebActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +41,7 @@ public class TestActivityActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_qrcodet, R.id.btn_take_photo, R.id.btn_take_photos, R.id.btn_web, R.id.btn_web_layout})
+    @OnClick({R.id.btn_qrcodet, R.id.btn_take_photo, R.id.btn_take_photos, R.id.btn_web})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -54,9 +58,6 @@ public class TestActivityActivity extends BaseActivity {
                 intent = new Intent(mContext, TestWebActivity.class);
                 intent.putExtra("title", "WebActivity");
                 intent.putExtra("url", "http://www.hao123.com");
-                break;
-            case R.id.btn_web_layout:
-                intent = new Intent(mContext, TestWebLayoutActivity.class);
                 break;
         }
         if (intent != null) {

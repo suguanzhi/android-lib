@@ -1,4 +1,4 @@
-package com.sgz.androidlib.dialog;
+package com.sgz.androidlib.dialog.sample;
 
 import android.content.Context;
 

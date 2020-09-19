@@ -29,9 +29,16 @@
 
             <Button
                 android:id="@+id/btn_web_layout"
-                style="@style/Button.Confirm"
+                style="@style/Button.Strock.Confirm"
                 android:layout_marginTop="10dp"
                 android:text="Weblayout"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_refresh"
+                style="@style/Button.Strock.Confirm"
+                android:layout_marginTop="10dp"
+                android:text="SmartRefreshLayout"
                 android:textAllCaps="false" />
 
             <com.android.sgzcommon.view.InputEditView

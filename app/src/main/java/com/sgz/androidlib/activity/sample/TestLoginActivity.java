@@ -1,4 +1,4 @@
-package com.sgz.androidlib;
+package com.sgz.androidlib.activity.sample;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.android.sgzcommon.activity.BaseLoginActivity;
+import com.sgz.androidlib.R;
 
 import butterknife.BindView;
 

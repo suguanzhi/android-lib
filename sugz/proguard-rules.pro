@@ -37,12 +37,14 @@
 -dontwarn javax.**
 -dontwarn freemarker.**
 -dontwarn com.smarttop.**
+-dontwarn com.scwang.**
 -dontwarn com.alibaba.fastjson.**
 -dontwarn com.android.volley.**
 -dontwarn com.zhpan.bannerview.**
 -dontwarn com.github.githubwing.**
 
 -keep class okhttp3.**{  *;}
+-keep class com.scwang.**{  *;}
 -keep class com.zhpan.bannerview.** {*;}
 -keep class com.android.volley.** {*;}
 -keep class de.greenrobot.**{  *;}

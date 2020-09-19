@@ -6,13 +6,13 @@ import com.android.sgzcommon.activity.BaseActivity;
 
 /**
  * @author sgz
- * @date 2020/6/10
+ * @date 2020/9/19
  */
-public class TestScrollerLayoutActivity extends BaseActivity {
+public class AActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scrollerlayout);
+        setContentView(0);
     }
 }

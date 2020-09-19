@@ -27,17 +27,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestLoginActivity" />
-        <activity android:name=".TestTakePhotoActivity" />
-        <activity android:name=".TestTakePhotosActivity" />
-        <activity android:name=".TestScrollerLayoutActivity" />
-        <activity android:name=".TestWebLayoutActivity" />
-        <activity android:name=".TestWebActivity" />
-        <activity android:name=".TestDatePickActivity" />
-        <activity android:name=".TestViewActivity" />
-        <activity android:name=".TestActivityActivity" />
-        <activity android:name=".TestDialogActivity" />
-        <activity android:name=".TestFragmentActivity" />
+        <activity android:name=".activity.sample.TestLoginActivity" />
+        <activity android:name=".activity.sample.TestTakePhotoActivity" />
+        <activity android:name=".activity.sample.TestTakePhotosActivity" />
+        <activity android:name=".view.sample.TestScrollerLayoutActivity" />
+        <activity android:name=".view.sample.TestWebLayoutActivity" />
+        <activity android:name=".activity.sample.TestWebActivity" />
+        <activity android:name=".dialog.sample.TestDatePickActivity" />
+        <activity android:name=".view.TestViewActivity" />
+        <activity android:name=".activity.TestActivityActivity" />
+        <activity android:name=".dialog.TestDialogActivity" />
+        <activity android:name=".fragment.TestFragmentActivity" />
+        <activity android:name=".view.sample.TestSmartRefreshLayoutActivity" />
         <activity android:name="com.android.sgzcommon.activity.QRCodeActivity" />
         <activity android:name="com.android.sgzcommon.activity.BarCodeActivity" />
 

@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.android.sgzcommon.fragment.BaseFragment;
+import com.sgz.androidlib.activity.TestActivityActivity;
+import com.sgz.androidlib.dialog.TestDialogActivity;
+import com.sgz.androidlib.fragment.TestFragmentActivity;
+import com.sgz.androidlib.view.TestViewActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
