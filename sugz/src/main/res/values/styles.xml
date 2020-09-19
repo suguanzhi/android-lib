@@ -74,7 +74,7 @@
     </style>
 
     <style name="Button.Strock.Disable" parent="Button">
-        <item name="android:textColor">@color/btn_danger</item>
+        <item name="android:textColor">@color/btn_disable</item>
         <item name="android:background">@drawable/shape_btn_sk_disable_sd_white</item>
     </style>
 

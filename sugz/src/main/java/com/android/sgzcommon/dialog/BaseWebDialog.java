@@ -55,7 +55,7 @@ public abstract class BaseWebDialog extends BaseDialog implements WebviewHandler
 
     @Override
     protected int getContentViewId() {
-        return R.layout.dialog_web;
+        return R.layout.dialog_sgz_webview;
     }
 
     @Override
