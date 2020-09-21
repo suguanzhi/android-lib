@@ -54,7 +54,7 @@ public class TestTakePhotosActivity extends TakePhotosActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        checkRequestePermissions(permissions, new OnPermissionResultListener() {
+        checkRequestPermissions(permissions, new OnPermissionResultListener() {
             @Override
             public void onResult(List<String> grants, List<String> denies) {
 

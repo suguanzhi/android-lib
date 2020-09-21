@@ -376,8 +376,9 @@ public class BaseActivity extends AppCompatActivity {
      * 权限检查，并弹窗提示，适用于必须权限授权，
      *
      * @param neededPermissions
+     * @return 权限已授权
      */
-    public void checkRequestePermissions(String[] neededPermissions) {
+    public boolean checkRequestPermissions(String[] neededPermissions) {
         boolean granted = checkPermissions(neededPermissions);
         if (!granted) {
             if (mPermissionDialog == null) {
@@ -391,15 +392,16 @@ public class BaseActivity extends AppCompatActivity {
                 mPermissionDialog.dismiss();
             }
         }
+        return granted;
     }
 
     /**
      * 检查所需权限是否授权，并把没有授权的权限发起请求
      *
      * @param neededPermissions 需要的权限
-     * @param listener  监听允许的权限和禁止的权限
+     * @param listener          监听允许的权限和禁止的权限
      */
-    public void checkRequestePermissions(String[] neededPermissions, OnPermissionResultListener listener) {
+    public void checkRequestPermissions(String[] neededPermissions, OnPermissionResultListener listener) {
         this.listener = listener;
         List<String> grants = new ArrayList<String>();
         List<String> denies = new ArrayList<String>();
@@ -429,6 +431,7 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * 如果有未授权的权限，初始化弹窗，点击“去授权”发起权限请求，点击“不用了”或者返回，退出应用
+     *
      * @param needPermissions
      */
     private void initPermissionDialog(final String[] needPermissions) {
@@ -446,7 +449,7 @@ public class BaseActivity extends AppCompatActivity {
 
             @Override
             public void onConfirm(View view, Dialog dialog) {
-                checkRequestePermissions(needPermissions, new OnPermissionResultListener() {
+                checkRequestPermissions(needPermissions, new OnPermissionResultListener() {
                     @Override
                     public void onResult(List<String> grants, List<String> denies) {
                     }

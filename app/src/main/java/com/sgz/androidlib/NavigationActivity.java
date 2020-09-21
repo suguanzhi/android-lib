@@ -75,7 +75,7 @@ public class NavigationActivity extends BaseNavigationActivity {
         super.onResume();
         int itemId = getBottomNavigationViewId();
         Log.d("MainActivity", "onResume: id == " + itemId);
-        checkRequestePermissions(PERMISSIONS);
+        checkRequestPermissions(PERMISSIONS);
     }
 
     public void clear(View v) {
