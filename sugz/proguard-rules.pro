@@ -31,19 +31,23 @@
 -optimizations !netCode/simplification/arithmetic,!field/*,!class/merging/*
 
 -keepattributes Signature
+-dontwarn rx.**
 -dontwarn org.**
 -dontwarn okio.**
 -dontwarn java.**
 -dontwarn javax.**
 -dontwarn freemarker.**
 -dontwarn com.smarttop.**
+-dontwarn com.sun.**
 -dontwarn com.scwang.**
--dontwarn com.alibaba.fastjson.**
+-dontwarn com.alibaba.**
 -dontwarn com.android.volley.**
 -dontwarn com.zhpan.bannerview.**
 -dontwarn com.github.githubwing.**
 
+-keep class rx.**{  *;}
 -keep class okhttp3.**{  *;}
+-keep class com.sun.**{  *;}
 -keep class com.scwang.**{  *;}
 -keep class com.zhpan.bannerview.** {*;}
 -keep class com.android.volley.** {*;}
@@ -53,8 +57,6 @@
 -keep class com.android.volley.**{  *;}
 -keep class com.jiongbull.jlog.** { *; }
 -keep class com.smarttop.library.** { *; }
--keep class org.greenrobot.greendao.**{  *;}
--keep class com.alibaba.fastjson.** {*;}
 -keep class com.github.githubwing.** {*;}
 -keep class com.google.android.material.** {*;}
 
@@ -106,6 +108,12 @@
   public static final android.os.Parcelable$Creator *;
 }
 -keepattributes SourceFile, LineNumberTable
+
+#greendao
+-dontwarn org.greenrobot.**
+-dontwarn net.sqlcipher.database.**
+-keep class net.sqlcipher.database.** { *; }
+-keep class org.greenrobot.greendao.**{  *;}
 
 #butterknife
 -keep class butterknife.** { *; }
