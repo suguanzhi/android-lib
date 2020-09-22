@@ -489,7 +489,7 @@ public class SystemUtil {
         File apkFile = new File(filePath);
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
-        //intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Log.d("SystemUtil", "installAPK sdk : " + Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

@@ -77,7 +77,7 @@ public class VersionDialog extends BaseDialog {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onConfirm(url);
+                    listener.onConfirm(VersionDialog.this, url);
                 }
             }
         });
@@ -104,6 +104,6 @@ public class VersionDialog extends BaseDialog {
     public interface OnConfirmListener {
         void onCancle();
 
-        void onConfirm(String url);
+        void onConfirm(VersionDialog dialog, String url);
     }
 }
