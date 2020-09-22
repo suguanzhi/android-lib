@@ -316,4 +316,5 @@
     <color name="sgz_shadow_color">@color/grey_300</color>
 
     <color name="sgz_icon_version_update">@color/grey_400</color>
+    <color name="sgz_icon_download">@color/grey_400</color>
 </resources>

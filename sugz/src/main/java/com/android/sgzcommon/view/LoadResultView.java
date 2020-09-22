@@ -38,7 +38,7 @@ public class LoadResultView extends LinearLayout {
     }
 
     private void init(Context context, @Nullable AttributeSet attrs) {
-        LayoutInflater.from(context).inflate(R.layout.layout_load_result, this);
+        LayoutInflater.from(context).inflate(R.layout.layout_sgz_load_result, this);
         mIvIcon = findViewById(R.id.iv_icon);
         mTvTip = findViewById(R.id.tv_tip);
         mTvButton = findViewById(R.id.tv_button);

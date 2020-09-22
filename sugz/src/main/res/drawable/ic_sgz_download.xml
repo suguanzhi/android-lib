@@ -1,0 +1,12 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="192dp"
+    android:height="192dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+    <path
+        android:fillColor="@color/sgz_icon_download"
+        android:pathData="M694.1,469.4V143H326v326.4H11.9L510,899.3l498.2,-429.9zM18.5,940.8h983v83.2h-983z" />
+    <path
+        android:fillColor="@color/sgz_icon_download"
+        android:pathData="M326,0.3h368.1v62H326z" />
+</vector>
