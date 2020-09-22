@@ -7,7 +7,7 @@
     <!--external-path  相当于 Environment.getExternalStorageDirectory()-->
     <external-path name="ep" path="/"/>
     <!--external-files-path  相当于 getExternalFilesDir("") -->
-    <external-files-path name="efp" path="/"/>
+    <external-files-path name="efp" path="/Download"/>
     <!--external-cache-path  相当于 getExternalCacheDir（） -->
     <external-cache-path  name="ecp" path="/"/>
 </paths>

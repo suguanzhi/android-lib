@@ -1,4 +1,4 @@
-package com.sgz.androidlib.dialog.sample;
+package com.sgz.androidlib.dialog;
 
 import android.os.Bundle;
 

@@ -19,6 +19,14 @@ public class FilePathUtil {
         return rootDir;
     }
 
+    public static File getAppDir(Context context) {
+        File rootDir = context.getExternalFilesDir(null);
+        if (!rootDir.exists()) {
+            rootDir.mkdirs();
+        }
+        return rootDir;
+    }
+
     public static File getAppPictureDir(Context context) {
         File rootDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         if (!rootDir.exists()) {
@@ -29,6 +37,15 @@ public class FilePathUtil {
 
     public static File getAppDownloadDir(Context context) {
         File rootDir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        if (!rootDir.exists()) {
+            rootDir.mkdirs();
+        }
+        return rootDir;
+    }
+
+    public static File getAppApkDownloadDir(Context context) {
+        String path = getAppDownloadDir(context).getAbsolutePath() + File.separator + "apk";
+        File rootDir = new File(path);
         if (!rootDir.exists()) {
             rootDir.mkdirs();
         }

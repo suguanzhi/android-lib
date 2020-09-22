@@ -485,19 +485,26 @@ public class SystemUtil {
      * @param filePath
      */
     public static void installAPK(Context context, String fileprovider, String filePath) {
+        Uri uri;
         File apkFile = new File(filePath);
-        Intent installIntent = new Intent();
-        installIntent.setAction(Intent.ACTION_VIEW);
-        installIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        installIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-            installIntent.setDataAndType(FileProvider.getUriForFile(context.getApplicationContext(), fileprovider, apkFile), "application/vnd.android.package-archive");
-            installIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        //intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Log.d("SystemUtil", "installAPK sdk : " + Build.VERSION.SDK_INT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            uri = FileProvider.getUriForFile(context.getApplicationContext(), fileprovider, apkFile);
+            Log.d("SystemUtil", "installAPK 1 : " + uri.getPath());
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
-            installIntent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+            uri = Uri.fromFile(apkFile);
+            Log.d("SystemUtil", "installAPK: 2" + uri.getPath());
         }
-        if (context.getPackageManager().queryIntentActivities(installIntent, 0).size() > 0) {
-            context.startActivity(installIntent);
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        Log.d("SystemUtil", "installAPK: 3");
+        if (context.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+            Log.d("SystemUtil", "installAPK: 4");
+            context.startActivity(intent);
         }
         //关闭旧版本的应用程序的进程
         android.os.Process.killProcess(android.os.Process.myPid());

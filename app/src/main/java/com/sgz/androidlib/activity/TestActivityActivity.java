@@ -11,6 +11,7 @@ import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
 import com.sgz.androidlib.activity.sample.TestTakePhotoActivity;
 import com.sgz.androidlib.activity.sample.TestTakePhotosActivity;
+import com.sgz.androidlib.activity.sample.TestUpdateVersionActivity;
 import com.sgz.androidlib.activity.sample.TestWebActivity;
 
 import butterknife.BindView;
@@ -33,6 +34,8 @@ public class TestActivityActivity extends BaseActivity {
     Button mBtnTakePhotos;
     @BindView(R.id.btn_web)
     Button mBtnWeb;
+    @BindView(R.id.btn_version)
+    Button mBtnVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class TestActivityActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_qrcodet, R.id.btn_take_photo, R.id.btn_take_photos, R.id.btn_web})
+    @OnClick({R.id.btn_qrcodet, R.id.btn_take_photo, R.id.btn_take_photos, R.id.btn_web,R.id.btn_version})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -59,9 +62,16 @@ public class TestActivityActivity extends BaseActivity {
                 intent.putExtra("title", "WebActivity");
                 intent.putExtra("url", "http://www.hao123.com");
                 break;
+            case R.id.btn_version:
+                intent = new Intent(mContext, TestUpdateVersionActivity.class);
+                break;
         }
         if (intent != null) {
             startActivity(intent);
         }
+    }
+
+    @OnClick()
+    public void onViewClicked() {
     }
 }
