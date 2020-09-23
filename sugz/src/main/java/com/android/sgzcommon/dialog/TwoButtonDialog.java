@@ -51,7 +51,7 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
 
     @Override
     protected int getContentViewId() {
-        return R.layout.dialog_two_button;
+        return R.layout.dialog_sgz_two_button;
     }
 
     @Override

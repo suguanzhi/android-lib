@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -57,6 +58,7 @@ public class BaseActivity extends AppCompatActivity {
 
     private static final int REQUEST_TAKE_PHOTO_CODE = 510;
     protected static final int ACTION_REQUEST_PERMISSIONS = 0x001;
+    private long mBackTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,14 @@ public class BaseActivity extends AppCompatActivity {
         mOneButtonDialog.setButtonText("知道了");
         mTwoButtonDialog = new TwoButtonDialog(this);
         mImageLoader = VolleyManager.getInstance(mContext).getImageLoaderInstance();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getBooleanExtra("exit", false)) {
+            finish();
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -491,6 +501,30 @@ public class BaseActivity extends AppCompatActivity {
 
     public interface OnPermissionResultListener {
         void onResult(List<String> grants, List<String> denies);
+    }
+
+    /**
+     * 连续按两次“返回”退出当前activity
+     *
+     * @return
+     */
+    public boolean backTwiceFinish() {
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backTwiceFinish()) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - mBackTime <= 2 * 1000) {
+                finish();
+                return;
+            }
+            mBackTime = currentTime;
+            Toast.makeText(this, "再按一次退出应用", Toast.LENGTH_SHORT).show();
+        }else {
+            super.onBackPressed();
+        }
     }
 
     @Override

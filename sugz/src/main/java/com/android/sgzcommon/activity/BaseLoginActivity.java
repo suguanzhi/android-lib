@@ -1,8 +1,10 @@
 package com.android.sgzcommon.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +25,7 @@ public abstract class BaseLoginActivity extends BaseActivity {
     protected ImageView mIvPasswordVisiable;
 
     protected abstract void onLogoClick(View v);
+
     protected abstract void onLoginClick(View v);
 
     @Override
@@ -60,5 +63,19 @@ public abstract class BaseLoginActivity extends BaseActivity {
                 mEtPassword.setSelection(pas.length());
             }
         });
+    }
+
+    /**
+     * 跳转MainActivity
+     * @param exit 是否退出MainActivity
+     * @param c MainActivity
+     */
+    protected void toMainActivity(boolean exit, Class<?> c) {
+        Log.d("LoginActivity", "toMainActivity: ");
+        Intent intent = new Intent(this, c);
+        intent.putExtra("login", true);
+        intent.putExtra("exit", exit);
+        startActivity(intent);
+        finish();
     }
 }

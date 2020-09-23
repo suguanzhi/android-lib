@@ -27,7 +27,7 @@ public class PictureGridAdapter extends BaseRecyclerviewAdapter<String,PictureGr
 
     @Override
     protected int getItemViewId(int viewType) {
-        return R.layout.adapter_picture_grid;
+        return R.layout.adapter_sgz_picture_grid;
     }
 
     @Override

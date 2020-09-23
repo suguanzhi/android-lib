@@ -34,7 +34,7 @@ public class StringListDialog extends BaseDialog {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.dialog_string_list;
+        return R.layout.dialog_sgz_string_list;
     }
 
     @Override

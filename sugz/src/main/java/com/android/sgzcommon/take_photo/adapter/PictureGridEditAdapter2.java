@@ -29,7 +29,7 @@ public class PictureGridEditAdapter2 extends MyBaseAdapter {
         String path = (String) mObjects.get(position);
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_picture_grid_edit, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_sgz_picture_grid_edit, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.mIvImage = (ImageView) convertView.findViewById(R.id.iv_image);
             viewHolder.mIvDelete = (ImageView) convertView.findViewById(R.id.iv_delete);

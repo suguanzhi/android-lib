@@ -35,7 +35,7 @@ public abstract class BaseRefreshRecycleviewAdapter<E,V extends BaseViewHolder> 
     @Override
     protected int getItemViewId(int viewType) {
         if (TYPE_FOOTER == viewType) {
-            return R.layout.adapter_foot;
+            return R.layout.adapter_sgz_foot;
         }
         return getNormalViewId(viewType);
     }

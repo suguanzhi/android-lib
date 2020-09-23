@@ -39,7 +39,7 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
 
     @Override
     protected int getContentViewId() {
-        return R.layout.dialog_one_button;
+        return R.layout.dialog_sgz_one_button;
     }
 
     @Override

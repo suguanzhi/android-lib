@@ -44,7 +44,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
 
     @Override
     protected int getContentViewId() {
-        return R.layout.dialog_load_list;
+        return R.layout.dialog_sgz_load_list;
     }
 
     @Override

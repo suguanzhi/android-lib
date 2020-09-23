@@ -26,7 +26,7 @@ public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<LoadListItem,Ba
 
     @Override
     protected int getItemViewId(int viewType) {
-        return R.layout.adapter_base_load_list;
+        return R.layout.adapter_sgz_base_load_list;
     }
 
     @Override

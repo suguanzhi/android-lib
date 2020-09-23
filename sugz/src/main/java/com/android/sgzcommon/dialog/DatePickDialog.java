@@ -37,7 +37,7 @@ public class DatePickDialog extends BaseDialog implements View.OnClickListener {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.dialog_date_pick;
+        return R.layout.dialog_sgz_date_pick;
     }
 
     @Override

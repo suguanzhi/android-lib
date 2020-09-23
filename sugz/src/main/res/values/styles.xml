@@ -23,7 +23,7 @@
 
     <style name="progressbar_horizontal" parent="android:Widget.ProgressBar.Horizontal">
         <item name="android:indeterminateOnly">false</item>
-        <item name="android:progressDrawable">@drawable/progressbar_horizontal</item>
+        <item name="android:progressDrawable">@drawable/sgz_progressbar_horizontal_r20</item>
         <item name="android:minHeight">6dp</item>
     </style>
 

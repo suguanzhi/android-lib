@@ -142,9 +142,9 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
     @Override
     protected int getItemViewId(int viewType) {
         if (0 == viewType) {
-            return R.layout.adapter_picture_grid_edit;
+            return R.layout.adapter_sgz_picture_grid_edit;
         }
-        return R.layout.adapter_add_icon;
+        return R.layout.adapter_sgz_add_icon;
     }
 
     @Override

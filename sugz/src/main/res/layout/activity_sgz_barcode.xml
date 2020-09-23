@@ -19,7 +19,7 @@
             android:id="@+id/iv_scan_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/scan_line"
+            android:src="@drawable/sgz_scan_line"
             android:visibility="gone" />
     </RelativeLayout>
 

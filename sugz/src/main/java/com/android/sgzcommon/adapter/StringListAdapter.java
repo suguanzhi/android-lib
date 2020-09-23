@@ -21,7 +21,7 @@ public class StringListAdapter extends BaseRecyclerviewAdapter<String,StringList
 
     @Override
     protected int getItemViewId(int viewType) {
-        return R.layout.adapter_string_list;
+        return R.layout.adapter_sgz_string_list;
     }
 
     @Override

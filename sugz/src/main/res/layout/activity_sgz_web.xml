@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:layout_alignParentTop="true"
-            android:progressDrawable="@drawable/progressbar_horizontal_load" />
+            android:progressDrawable="@drawable/sgz_progressbar_horizontal_r0" />
     </RelativeLayout>
 
 </LinearLayout>
