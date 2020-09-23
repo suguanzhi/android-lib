@@ -41,6 +41,7 @@
 -dontwarn com.sun.**
 -dontwarn com.scwang.**
 -dontwarn com.alibaba.**
+-dontwarn uk.co.senab.**
 -dontwarn com.android.volley.**
 -dontwarn com.zhpan.bannerview.**
 -dontwarn com.github.githubwing.**
@@ -53,6 +54,7 @@
 -keep class com.android.volley.** {*;}
 -keep class de.greenrobot.**{  *;}
 -keep class com.alibaba.**{  *;}
+-keep class uk.co.senab.**{  *;}
 -keep class com.android.sgzcommon.**{  *;}
 -keep class com.android.volley.**{  *;}
 -keep class com.jiongbull.jlog.** { *; }

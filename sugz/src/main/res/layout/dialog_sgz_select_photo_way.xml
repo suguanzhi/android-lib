@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_r10_sd_white"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_take_photo"
+        android:layout_width="@dimen/btn_width"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_btn_confirm"
+        android:text="拍照"
+        android:textColor="@color/white"
+        android:textSize="@dimen/btn_text_size" />
+
+    <Button
+        android:id="@+id/btn_select_photo"
+        android:layout_width="@dimen/btn_width"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shape_btn_sk_confirm_sd_white"
+        android:text="相册"
+        android:textColor="@color/btn_confirm"
+        android:textSize="@dimen/btn_text_size" />
+
+    <Button
+        android:id="@+id/btn_cancle"
+        android:layout_width="@dimen/btn_width"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_btn_sk_disable_sd_white"
+        android:text="取消"
+        android:textColor="@color/btn_disable"
+        android:textSize="@dimen/btn_text_size" />
+
+</LinearLayout>
