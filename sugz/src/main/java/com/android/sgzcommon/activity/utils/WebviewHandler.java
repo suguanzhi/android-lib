@@ -18,7 +18,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.android.sgzcommon.utils.SystemUtil;
+import com.android.sgzcommon.utils.SystemUtils;
 
 import org.greenrobot.greendao.annotation.NotNull;
 
@@ -79,7 +79,7 @@ public final class WebviewHandler {
                         if (!TextUtils.isEmpty(host) && !TextUtils.isEmpty(scheme)) {
                             Log.d("WebviewHandler", "shouldOverrideUrlLoading: -----------2");
                             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                            if (SystemUtil.isInstall(mContext, intent)) {
+                            if (SystemUtils.isInstall(mContext, intent)) {
                                 Log.d("WebviewHandler", "shouldOverrideUrlLoading: ------3");
                                 if (canOpenApp) {
                                     Log.d("WebviewHandler", "shouldOverrideUrlLoading: ----------4");

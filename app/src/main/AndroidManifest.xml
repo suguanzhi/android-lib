@@ -34,13 +34,14 @@
         <activity android:name=".view.sample.TestScrollerLayoutActivity" />
         <activity android:name=".view.sample.TestWebLayoutActivity" />
         <activity android:name=".activity.sample.TestWebActivity" />
-        <activity android:name=".dialog.TestDatePickActivity" />
         <activity android:name=".view.TestViewActivity" />
         <activity android:name=".activity.TestActivityActivity" />
         <activity android:name=".dialog.TestDialogActivity" />
         <activity android:name=".fragment.TestFragmentActivity" />
         <activity android:name=".view.sample.TestSmartRefreshLayoutActivity" />
-        <activity android:name=".activity.sample.TestUpdateVersionActivity" />
+        <activity android:name=".others.sample.TestUpdateVersionActivity" />
+        <activity android:name=".others.TestOthersActivity" />
+        <activity android:name=".others.sample.TestCreateCodeActivity" />
         <activity android:name="com.android.sgzcommon.activity.QRCodeActivity" />
         <activity android:name="com.android.sgzcommon.activity.BarCodeActivity" />
 

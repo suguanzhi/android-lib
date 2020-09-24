@@ -30,7 +30,7 @@ import androidx.core.content.FileProvider;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
-public class SystemUtil {
+public class SystemUtils {
 
     private static final String TAG = "SystemUtil";
 

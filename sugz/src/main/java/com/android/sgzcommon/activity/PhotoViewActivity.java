@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.android.sgzcommon.utils.BitmapUtil;
+import com.android.sgzcommon.utils.BitmapUtils;
 import com.android.sgzcommon.view.DragPhotoView;
 import com.android.sugz.R;
 import com.android.volley.toolbox.ImageLoader;
@@ -30,7 +30,7 @@ public class PhotoViewActivity extends BaseActivity {
             } else {
                 File file = new File(path);
                 if (file.exists()) {
-                    mDpvImage.setImageBitmap(BitmapUtil.getFitBitmap(this, path));
+                    mDpvImage.setImageBitmap(BitmapUtils.getFitBitmap(this, path));
                 }
             }
         }

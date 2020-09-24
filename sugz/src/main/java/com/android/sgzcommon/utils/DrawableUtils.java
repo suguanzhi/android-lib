@@ -8,7 +8,7 @@ import android.widget.ImageView;
  * Created by sgz on 2017/4/25.
  */
 
-public class DrawableUtil {
+public class DrawableUtils {
 
     /**
      * 设置底部tab图标

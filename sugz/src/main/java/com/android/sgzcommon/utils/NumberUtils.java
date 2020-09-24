@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
  * Created by sgz on 2016/a12/20.
  */
 
-public class NumberUtil {
+public class NumberUtils {
     /**
      * 把double类型的小数转换成只保留两位小数的字符数串返回
      *

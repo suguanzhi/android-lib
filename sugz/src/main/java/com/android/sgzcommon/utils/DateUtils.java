@@ -11,7 +11,7 @@ import java.util.TimeZone;
  * Created by sgz on 2016/a12/20.
  */
 
-public class DateUtil {
+public class DateUtils {
     /**
      * 获取当前时间戳的字符串
      *

@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
-import com.android.sgzcommon.utils.BitmapUtil;
+import com.android.sgzcommon.utils.BitmapUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,7 +140,7 @@ public class VideoAndImageView extends RelativeLayout {
             showImageview(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    mImageView.setImageBitmap(BitmapUtil.getFitBitmap(getContext(), mCurrentItemInfo.getPath()));
+                    mImageView.setImageBitmap(BitmapUtils.getFitBitmap(getContext(), mCurrentItemInfo.getPath()));
                 }
 
                 @Override

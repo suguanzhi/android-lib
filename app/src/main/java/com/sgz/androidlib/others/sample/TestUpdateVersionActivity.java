@@ -1,4 +1,4 @@
-package com.sgz.androidlib.activity.sample;
+package com.sgz.androidlib.others.sample;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -6,8 +6,8 @@ import android.util.Log;
 import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.downloadtask.DownloadTask;
 import com.android.sgzcommon.downloadtask.OnDownloadListener;
-import com.android.sgzcommon.utils.FilePathUtil;
-import com.android.sgzcommon.utils.SystemUtil;
+import com.android.sgzcommon.utils.FilePathUtils;
+import com.android.sgzcommon.utils.SystemUtils;
 import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
 
@@ -35,7 +35,7 @@ public class TestUpdateVersionActivity extends BaseActivity {
         String d = mContext.getExternalFilesDir(null).getAbsolutePath();
         Log.d("UpdateVersionActivity", "onEventMainThread: d == " + d);
         final String url ="http://192.168.0.129:80/upload/files/20200921/盛马桂v1_1_0_1600656839357.apk";
-        final String savePath = FilePathUtil.getAppDownloadDir(mContext).getAbsolutePath() + File.separator + apkName + ".apk";
+        final String savePath = FilePathUtils.getAppDownloadDir(mContext).getAbsolutePath() + File.separator + apkName + ".apk";
         Log.d("UpdateVersionActivity", "onEventMainThread: savePath == " + savePath);
         DownloadTask.getInstance(mContext).download(url, savePath, new OnDownloadListener() {
             @Override
@@ -76,7 +76,7 @@ public class TestUpdateVersionActivity extends BaseActivity {
         }
         try {
             Log.d("TestUpdateVersionActivity", "installApk: ");
-            SystemUtil.installAPK(mContext, getPackageName(), apkPath);
+            SystemUtils.installAPK(mContext, getPackageName(), apkPath);
         } catch (Throwable t) {
             t.printStackTrace();
         }

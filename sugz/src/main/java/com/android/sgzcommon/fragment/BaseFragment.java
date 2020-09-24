@@ -21,7 +21,7 @@ import com.android.sgzcommon.dialog.LoadingDialog;
 import com.android.sgzcommon.dialog.OneButtonDialog;
 import com.android.sgzcommon.dialog.TwoButtonDialog;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
-import com.android.sgzcommon.utils.SystemUtil;
+import com.android.sgzcommon.utils.SystemUtils;
 import com.android.sgzcommon.volley.VolleyManager;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -71,7 +71,7 @@ public abstract class BaseFragment extends Fragment {
         super.onAttach(context);
         mContext = context;
         mActivity = getActivity();
-        mWindowSize = SystemUtil.getWindowSize(mContext);
+        mWindowSize = SystemUtils.getWindowSize(mContext);
         mCache = VolleyManager.getInstance(mContext).getBitmapCacheInstance();
         mQueue = VolleyManager.getInstance(mContext).getRequestQueueInstance();
         mImageLoader = VolleyManager.getInstance(mContext).getImageLoaderInstance();

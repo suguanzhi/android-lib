@@ -10,7 +10,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.android.sgzcommon.utils.DateUtil;
+import com.android.sgzcommon.utils.DateUtils;
 import com.android.sugz.R;
 
 import java.util.Calendar;
@@ -64,11 +64,11 @@ public class DatePickDialog extends BaseDialog implements View.OnClickListener {
      * @param dateStr 格式为：yyyy-MM-dd 的日期字符串
      */
     public void setDate(String dateStr) {
-        Date date = DateUtil.getDate(dateStr, "yyyy-MM-dd");
+        Date date = DateUtils.getDate(dateStr, "yyyy-MM-dd");
         if (date != null) {
-            String yearStr = DateUtil.getDateStr(date.getTime(), "yyyy");
-            String monthStr = DateUtil.getDateStr(date.getTime(), "MM");
-            String dayOfMonthStr = DateUtil.getDateStr(date.getTime(), "dd");
+            String yearStr = DateUtils.getDateStr(date.getTime(), "yyyy");
+            String monthStr = DateUtils.getDateStr(date.getTime(), "MM");
+            String dayOfMonthStr = DateUtils.getDateStr(date.getTime(), "dd");
             mDatePicker.init(Integer.parseInt(yearStr), Integer.parseInt(monthStr) - 1, Integer.parseInt(dayOfMonthStr), null);
         }
     }

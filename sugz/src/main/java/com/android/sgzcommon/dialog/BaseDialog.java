@@ -10,7 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.android.sgzcommon.http.okhttp.OKHttpDialog;
-import com.android.sgzcommon.utils.SystemUtil;
+import com.android.sgzcommon.utils.SystemUtils;
 import com.android.sugz.R;
 
 import androidx.annotation.StyleRes;
@@ -45,7 +45,7 @@ public abstract class BaseDialog extends OKHttpDialog {
 
     private void init(Context context) {
         mContext = context;
-        mWindowSize = SystemUtil.getWindowSize(context);
+        mWindowSize = SystemUtils.getWindowSize(context);
     }
 
     @Override

@@ -11,7 +11,7 @@ import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
 import com.sgz.androidlib.activity.sample.TestTakePhotoActivity;
 import com.sgz.androidlib.activity.sample.TestTakePhotosActivity;
-import com.sgz.androidlib.activity.sample.TestUpdateVersionActivity;
+import com.sgz.androidlib.others.sample.TestUpdateVersionActivity;
 import com.sgz.androidlib.activity.sample.TestWebActivity;
 
 import butterknife.BindView;

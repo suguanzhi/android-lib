@@ -3,7 +3,7 @@ package com.android.sgzcommon.recycleview;
 import android.graphics.Rect;
 import android.view.View;
 
-import com.android.sgzcommon.utils.UnitUtil;
+import com.android.sgzcommon.utils.UnitUtils;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,8 +14,8 @@ public class MarginDecoration extends RecyclerView.ItemDecoration {
     private int column;
 
     public MarginDecoration(int column, int hmargin,int vmargin) {
-        this.hmargin = UnitUtil.dp2px(hmargin);
-        this.vmargin = UnitUtil.dp2px(vmargin);
+        this.hmargin = UnitUtils.dp2px(hmargin);
+        this.vmargin = UnitUtils.dp2px(vmargin);
         this.column = column;
     }
 

@@ -3,7 +3,7 @@ package com.android.sgzcommon.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MD5Util {
+public class MD5Utils {
 
     /**
      * 获取md5加密后的字符串

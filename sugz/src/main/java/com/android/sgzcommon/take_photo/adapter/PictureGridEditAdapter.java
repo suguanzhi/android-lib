@@ -15,9 +15,9 @@ import com.android.sgzcommon.recycleview.BaseViewHolder;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
-import com.android.sgzcommon.utils.BitmapUtil;
-import com.android.sgzcommon.utils.FileUtil;
-import com.android.sgzcommon.utils.UnitUtil;
+import com.android.sgzcommon.utils.BitmapUtils;
+import com.android.sgzcommon.utils.FileUtils;
+import com.android.sgzcommon.utils.UnitUtils;
 import com.android.sgzcommon.view.imageview.CornerImageView;
 import com.android.sugz.R;
 
@@ -69,7 +69,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
                     try {
                         mItems.remove(position);
                         String path = upload.getPath();
-                        FileUtil.deleteFile(path);
+                        FileUtils.deleteFile(path);
                         if (mDeletePhotoListener != null) {
                             mDeletePhotoListener.onDelete(position, upload);
                         }
@@ -84,9 +84,9 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
             UploadEntity.STATE state = upload.getState();
             updateState(viewHolder, state);
             String path = upload.getPath();
-            Bitmap bitmap = BitmapUtil.getShowBitmap(path, 100, 200);
+            Bitmap bitmap = BitmapUtils.getShowBitmap(path, 100, 200);
             viewHolder.mIvImage.setImageBitmap(bitmap);
-            viewHolder.mIvImage.setRoundCorner(UnitUtil.dp2px(5));
+            viewHolder.mIvImage.setRoundCorner(UnitUtils.dp2px(5));
         } else {
             AddViewHolder viewHolder = (AddViewHolder) holder;
             viewHolder.mLlAdd.setOnClickListener(new View.OnClickListener() {

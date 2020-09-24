@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.sgzcommon.adapter.MPagerAdapter;
-import com.android.sgzcommon.utils.UnitUtil;
+import com.android.sgzcommon.utils.UnitUtils;
 import com.android.sugz.R;
 
 import java.util.List;
@@ -70,8 +70,8 @@ public class NavigatorViewPager extends LinearLayout implements ViewPager.OnPage
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.pager_nav);
         String items = a.getString(R.styleable.pager_nav_items);
-        int textSize = a.getDimensionPixelSize(R.styleable.pager_nav_text_size, UnitUtil.sp2px(14f));
-        int lineHeight = a.getDimensionPixelSize(R.styleable.pager_nav_line_height, UnitUtil.dp2px(4f));
+        int textSize = a.getDimensionPixelSize(R.styleable.pager_nav_text_size, UnitUtils.sp2px(14f));
+        int lineHeight = a.getDimensionPixelSize(R.styleable.pager_nav_line_height, UnitUtils.dp2px(4f));
         int lineMargin = a.getDimensionPixelSize(R.styleable.pager_nav_line_margin, 0);
         mTextColor = a.getColor(R.styleable.pager_nav_text_color, Color.parseColor("#212121"));
         mTextColorSelected = a.getColor(R.styleable.pager_nav_text_color_selected, Color.BLACK);
@@ -80,7 +80,7 @@ public class NavigatorViewPager extends LinearLayout implements ViewPager.OnPage
             navParentLayout.setBackground(navBackground);
         }
         int navLayoutWidth = a.getDimensionPixelSize(R.styleable.pager_nav_nav_width, LayoutParams.MATCH_PARENT);
-        mPadding = a.getDimensionPixelSize(R.styleable.pager_nav_padding, UnitUtil.dp2px(10f));
+        mPadding = a.getDimensionPixelSize(R.styleable.pager_nav_padding, UnitUtils.dp2px(10f));
         mLineBackground = a.getDrawable(R.styleable.pager_nav_line);
         a.recycle();
 

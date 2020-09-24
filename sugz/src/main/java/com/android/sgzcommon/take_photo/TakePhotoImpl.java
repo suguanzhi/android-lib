@@ -14,7 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
-import com.android.sgzcommon.utils.BitmapUtil;
+import com.android.sgzcommon.utils.BitmapUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -118,7 +118,7 @@ public class TakePhotoImpl implements TakePhoto {
                         Bitmap srcBitmap = BitmapFactory.decodeStream(is);
                         if (srcBitmap != null) {
                             mPath = getPhotoPath();
-                            boolean save = BitmapUtil.saveBimapToLocal(mPath, srcBitmap);
+                            boolean save = BitmapUtils.saveBimapToLocal(mPath, srcBitmap);
                             if (save) {
                                 photo = new File(mPath);
                             } else {

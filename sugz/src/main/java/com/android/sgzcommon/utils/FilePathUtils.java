@@ -8,7 +8,7 @@ import java.io.File;
 /**
  * Created by sgz on 2019/5/23 0023.
  */
-public class FilePathUtil {
+public class FilePathUtils {
 
     public static File getSDRootDir(Context context) {
         String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + context.getPackageName();

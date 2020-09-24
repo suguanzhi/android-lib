@@ -3,7 +3,7 @@ package com.android.sgzcommon.utils;
 /**
  * Created by sgz on 2019/10/29 0029.
  */
-public class HtmlUtil {
+public class HtmlUtils {
 
     /**
      * 富文本适配

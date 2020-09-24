@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.android.sgzcommon.utils.UnitUtil;
+import com.android.sgzcommon.utils.UnitUtils;
 import com.android.sugz.R;
 
 import androidx.annotation.Nullable;
@@ -129,7 +129,7 @@ public class InputEditView extends LinearLayout {
         }
         int inputTextColor = array.getColor(R.styleable.InputEditView_text_color, Color.BLACK);
         mEtInput.setTextColor(inputTextColor);
-        float inputTextSize = array.getDimension(R.styleable.InputEditView_text_size, UnitUtil.sp2px(14));
+        float inputTextSize = array.getDimension(R.styleable.InputEditView_text_size, UnitUtils.sp2px(14));
         mEtInput.setTextSize(TypedValue.COMPLEX_UNIT_PX, inputTextSize);
         Drawable addDrawable = array.getDrawable(R.styleable.InputEditView_add);
         if (addDrawable != null) {

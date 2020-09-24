@@ -12,7 +12,7 @@ import java.nio.channels.FileChannel;
  * Created by sgz on 2016/a12/20.
  */
 
-public class FileUtil {
+public class FileUtils {
 
     /**
      * 按文件最后修改时间从小到大排序

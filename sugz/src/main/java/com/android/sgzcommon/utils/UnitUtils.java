@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
  * Created by sgz on 2016/a12/20.
  */
 
-public class UnitUtil {
+public class UnitUtils {
     /**
      * dp转px
      *
@@ -71,6 +71,6 @@ public class UnitUtil {
      * @return
      */
     public static BigDecimal fen2Yuan(long moneyFen) {
-        return MathUtil.aDividerB2(moneyFen, 100d);
+        return MathUtils.aDividerB2(moneyFen, 100d);
     }
 }

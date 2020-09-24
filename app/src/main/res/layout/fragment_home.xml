@@ -16,7 +16,7 @@
             android:id="@+id/btn_views"
             style="@style/Button.Strock.Normal"
             android:layout_marginTop="10dp"
-            android:text="自定义View"
+            android:text="View"
             android:textAllCaps="false"
             android:textSize="14sp" />
 
@@ -24,7 +24,7 @@
             android:id="@+id/btn_dialogs"
             style="@style/Button.Strock.Normal"
             android:layout_marginTop="10dp"
-            android:text="自定义Dialog"
+            android:text="Dialog"
             android:textAllCaps="false"
             android:textSize="14sp" />
 
@@ -34,11 +34,19 @@
             android:layout_marginTop="10dp"
             android:text="Activity"
             android:textAllCaps="false" />
+
         <Button
             android:id="@+id/btn_fragment"
             style="@style/Button.Strock.Normal"
             android:layout_marginTop="10dp"
             android:text="Fragment"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_others"
+            style="@style/Button.Strock.Normal"
+            android:layout_marginTop="10dp"
+            android:text="其他"
             android:textAllCaps="false" />
 
     </LinearLayout>

@@ -24,7 +24,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.android.sgzcommon.utils.BitmapUtil;
+import com.android.sgzcommon.utils.BitmapUtils;
 import com.android.sugz.R;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -151,7 +151,7 @@ public class AdPlayer extends RelativeLayout {
                                     if (AdResource.TYPE.IMAGE == type) {
                                         Log.d(TAG, "播放图片资源！");
                                         mImageAdIV.setVisibility(View.VISIBLE);
-                                        Bitmap bitmap = BitmapUtil.getShowBitmap(file.getAbsolutePath(), 600, 500);
+                                        Bitmap bitmap = BitmapUtils.getShowBitmap(file.getAbsolutePath(), 600, 500);
                                         mImageAdIV.setImageBitmap(bitmap);
                                     } else if (AdResource.TYPE.AUDIO == type) {
                                         startAudioIconAnimation();

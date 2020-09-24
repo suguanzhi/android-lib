@@ -17,8 +17,8 @@ import com.android.sgzcommon.activity.utils.EmptyEntity;
 import com.android.sgzcommon.downloadtask.DownloadTask;
 import com.android.sgzcommon.downloadtask.OnDownloadListener;
 import com.android.sgzcommon.service.entity.VersionDownload;
-import com.android.sgzcommon.utils.FilePathUtil;
-import com.android.sgzcommon.utils.SystemUtil;
+import com.android.sgzcommon.utils.FilePathUtils;
+import com.android.sgzcommon.utils.SystemUtils;
 import com.android.sugz.R;
 
 import org.greenrobot.eventbus.EventBus;
@@ -83,7 +83,7 @@ public class BaseService extends Service {
         String url = versionDownload.getUrl();
         int verCode = versionDownload.getVerCode();
         String apkName = mContext.getPackageName().replace(".", "_") + "_" + verCode;
-        final String savePath = FilePathUtil.getAppDownloadDir(mContext).getAbsolutePath() + File.separator + apkName + ".apk";
+        final String savePath = FilePathUtils.getAppDownloadDir(mContext).getAbsolutePath() + File.separator + apkName + ".apk";
         Log.d("BaseService", "downloadApk: url == " + url);
         DownloadTask.getInstance(mContext).download(url, savePath, new OnDownloadListener() {
             @Override
@@ -129,7 +129,7 @@ public class BaseService extends Service {
             return;
         }
         try {
-            SystemUtil.installAPK(mContext, getPackageName(), apkPath);
+            SystemUtils.installAPK(mContext, getPackageName(), apkPath);
         } catch (Throwable t) {
             t.printStackTrace();
         }

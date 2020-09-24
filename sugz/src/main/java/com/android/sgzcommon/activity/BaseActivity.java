@@ -24,7 +24,7 @@ import com.android.sgzcommon.dialog.LoadingDialog;
 import com.android.sgzcommon.dialog.OneButtonDialog;
 import com.android.sgzcommon.dialog.TwoButtonDialog;
 import com.android.sgzcommon.toast.SToast;
-import com.android.sgzcommon.utils.SystemUtil;
+import com.android.sgzcommon.utils.SystemUtils;
 import com.android.sgzcommon.volley.VolleyManager;
 import com.android.volley.toolbox.ImageLoader;
 
@@ -66,7 +66,7 @@ public class BaseActivity extends AppCompatActivity {
         EventBus.getDefault().register(this);
         mActivity = this;
         mContext = getApplicationContext();
-        mWindowSize = SystemUtil.getWindowSize(this);
+        mWindowSize = SystemUtils.getWindowSize(this);
         mLoadingDialog = new LoadingDialog(this);
         mOneButtonDialog = new OneButtonDialog(this);
         mOneButtonDialog.setButtonText("知道了");

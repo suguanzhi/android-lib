@@ -74,6 +74,8 @@ dependencies {
     api 'com.alibaba:fastjson:1.1.71.android'
     api 'org.greenrobot:eventbus:3.2.0'
 
+    api "com.google.zxing:core:3.3.1"
+
     //SmartRefreshLayout
     api 'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
     api 'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头

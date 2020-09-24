@@ -40,6 +40,7 @@
 -dontwarn com.smarttop.**
 -dontwarn com.sun.**
 -dontwarn com.scwang.**
+-dontwarn com.google.**
 -dontwarn com.alibaba.**
 -dontwarn uk.co.senab.**
 -dontwarn com.android.volley.**
@@ -49,6 +50,7 @@
 -keep class rx.**{  *;}
 -keep class okhttp3.**{  *;}
 -keep class com.sun.**{  *;}
+-keep class com.google.** {*;}
 -keep class com.scwang.**{  *;}
 -keep class com.zhpan.bannerview.** {*;}
 -keep class com.android.volley.** {*;}
@@ -60,7 +62,6 @@
 -keep class com.jiongbull.jlog.** { *; }
 -keep class com.smarttop.library.** { *; }
 -keep class com.github.githubwing.** {*;}
--keep class com.google.android.material.** {*;}
 
 -keep public class * extends android.app.Fragment
 -keep public class * extends android.app.Activity

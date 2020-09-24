@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.sgzcommon.utils.UnitUtil;
+import com.android.sgzcommon.utils.UnitUtils;
 
 public class EmptyView extends RelativeLayout implements OnClickListener {
 
@@ -31,7 +31,7 @@ public class EmptyView extends RelativeLayout implements OnClickListener {
     }
 
     private void init(Context context) {
-        int padding = UnitUtil.dp2px(10);
+        int padding = UnitUtils.dp2px(10);
         setPadding(padding, padding, padding, padding);
         mTipsTV = new TextView(context);
         mTipsTV.setBackgroundResource(0);

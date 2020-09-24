@@ -19,7 +19,7 @@ import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
-import com.android.sgzcommon.utils.FileUtil;
+import com.android.sgzcommon.utils.FileUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -204,7 +204,7 @@ final public class TakePhotosImpl implements TakePhotos {
     public void clearPhotos() {
         mPhotoUploads.clear();
         if (getPhotoDir().exists()) {
-            FileUtil.deleteFile(getPhotoDir());
+            FileUtils.deleteFile(getPhotoDir());
         }
         notifyTakePhotoChanged();
     }

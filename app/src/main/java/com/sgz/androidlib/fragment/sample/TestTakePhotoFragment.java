@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
-import com.android.sgzcommon.utils.BitmapUtil;
+import com.android.sgzcommon.utils.BitmapUtils;
 import com.sgz.androidlib.R;
 
 import java.io.File;
@@ -51,7 +51,7 @@ public class TestTakePhotoFragment extends com.android.sgzcommon.fragment.TakePh
                 Log.d("TakePhotoFragment", "onPhoto: 1");
                 if (photo != null) {
                     Log.d("TakePhotoFragment", "onPhoto: 2");
-                    Bitmap bitmap = BitmapUtil.getFitBitmap(mContext, photo.getAbsolutePath());
+                    Bitmap bitmap = BitmapUtils.getFitBitmap(mContext, photo.getAbsolutePath());
                     mIvPhoto.setImageBitmap(bitmap);
                 }
             }

@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
-import com.android.sgzcommon.utils.BitmapUtil;
+import com.android.sgzcommon.utils.BitmapUtils;
 import com.android.sgzcommon.view.imageview.CornerImageView;
 import com.android.sugz.R;
 import com.android.volley.VolleyError;
@@ -42,7 +42,7 @@ public class PictureGridAdapter extends BaseRecyclerviewAdapter<String,PictureGr
             if (url.startsWith("http")) {
                 mImageLoader.get(url, holder, 200, 300);
             } else {
-                holder.mIvImage.setImageBitmap(BitmapUtil.getShowBitmap(url, 200, 300));
+                holder.mIvImage.setImageBitmap(BitmapUtils.getShowBitmap(url, 200, 300));
             }
         } else {
             holder.mIvImage.setImageResource(R.drawable.ic_sgz_img_load_failure);

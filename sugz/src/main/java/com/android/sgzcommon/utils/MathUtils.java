@@ -6,7 +6,7 @@ import java.math.RoundingMode;
 /**
  * Created by sgz on 2019/11/5 0005.
  */
-public class MathUtil {
+public class MathUtils {
 
     /**
      * @param a     除数

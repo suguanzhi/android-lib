@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by sgz on 2019/5/24 0024.
  */
-public class NetworkUtil {
+public class NetworkUtils {
 
     public static boolean isWiFiActive(Context context) {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);

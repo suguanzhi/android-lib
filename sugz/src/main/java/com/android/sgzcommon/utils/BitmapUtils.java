@@ -20,7 +20,7 @@ import static android.content.ContentValues.TAG;
  * Created by sgz on 2016/a12/20.
  */
 
-public class BitmapUtil {
+public class BitmapUtils {
 
     /**
      * 从图片的网络地址获取图片bitmap
@@ -93,8 +93,8 @@ public class BitmapUtil {
      * @return
      */
     public static boolean saveSmallImage(Context context, String sourcePath, String targetPath) {
-        int reqWidth = SystemUtil.getWindowSize(context).x;
-        int reqHeight = SystemUtil.getWindowSize(context).y;
+        int reqWidth = SystemUtils.getWindowSize(context).x;
+        int reqHeight = SystemUtils.getWindowSize(context).y;
         if (reqWidth > 1000) {
             reqWidth = 864;
             reqHeight = reqWidth / 2;
@@ -114,7 +114,7 @@ public class BitmapUtil {
     public static Bitmap getFitBitmap(Context context, String path) {
         Bitmap bitmap = null;
         try {
-            BitmapFactory.Options opts = getOptions(path, SystemUtil.getWindowSize(context).x, SystemUtil.getWindowSize(context).y);
+            BitmapFactory.Options opts = getOptions(path, SystemUtils.getWindowSize(context).x, SystemUtils.getWindowSize(context).y);
             bitmap = BitmapFactory.decodeFile(path, opts);
         } catch (Exception e) {
             e.printStackTrace();

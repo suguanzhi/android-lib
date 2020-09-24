@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 
 import com.android.sgzcommon.cache.BitmapCache;
-import com.android.sgzcommon.utils.SystemUtil;
+import com.android.sgzcommon.utils.SystemUtils;
 import com.android.sgzcommon.volley.VolleyManager;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -29,7 +29,7 @@ public abstract class MyBaseAdapter extends BaseAdapter {
 		mCache = VolleyManager.getInstance(mContext).getBitmapCacheInstance();
 		mQueue = VolleyManager.getInstance(mContext).getRequestQueueInstance();
 		mImageLoader = VolleyManager.getInstance(mContext).getImageLoaderInstance();
-		mWindowSize = SystemUtil.getWindowSize(context);
+		mWindowSize = SystemUtils.getWindowSize(context);
 		mObjects = (List<Object>) objects;
 	}
 	

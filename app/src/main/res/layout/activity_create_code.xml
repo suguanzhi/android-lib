@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <com.android.sgzcommon.view.TitleBar
+        android:id="@+id/tb_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="条码生成" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <Button
+                android:id="@+id/btn_barcode"
+                style="@style/Button.Strock.Confirm"
+                android:text="生成条形码" />
+
+            <Button
+                android:id="@+id/btn_qrcode"
+                style="@style/Button.Strock.Confirm"
+                android:layout_marginTop="10dp"
+                android:text="生成二维码" />
+
+            <ImageView
+                android:id="@+id/iv_barcode"
+                android:layout_width="100dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/red_500"
+                android:layout_height="40dp" />
+
+            <ImageView
+                android:id="@+id/iv_qrcode"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

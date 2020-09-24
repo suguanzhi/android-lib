@@ -5,7 +5,7 @@ package com.android.sgzcommon.logutil.applog; /**
 import android.content.Context;
 import android.os.Environment;
 
-import com.android.sgzcommon.utils.FileUtil;
+import com.android.sgzcommon.utils.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -158,11 +158,11 @@ public class LogcatHelper {
             if (logDir.exists()) {
                 File[] files = logDir.listFiles();
                 if (files != null) {
-                    FileUtil.fileSort(files);
+                    FileUtils.fileSort(files);
                     int len = files.length;
                     if (len > mFileLimit) {
                         for (int i = 0; i < len - mFileLimit; i++) {
-                            FileUtil.deleteFile(files[i]);
+                            FileUtils.deleteFile(files[i]);
                         }
                     }
                 }
