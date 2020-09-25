@@ -5,6 +5,7 @@ import androidx.annotation.IdRes;
 /**
  * @author sgz
  * @date 2020/9/21
+ * 注意：版本更新需要添加权限 <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
  */
 public class VersionDownload {
     private int verCode;

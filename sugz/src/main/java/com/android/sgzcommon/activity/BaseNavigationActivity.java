@@ -95,9 +95,12 @@ public abstract class BaseNavigationActivity extends BaseActivity {
     }
 
     public void selecteNavItem(int position) {
+        Log.d("BaseNavigationActivity", "selecteNavItem: position == " + position);
         Menu menu = mNavigation.getMenu();
+        Log.d("BaseNavigationActivity", "selecteNavItem: menu.size == " + menu.size());
         if (position < menu.size()) {
             MenuItem menuItem = menu.getItem(position);
+            Log.d("BaseNavigationActivity", "selecteNavItem: menuId == " + menuItem.getItemId());
             mNavigation.setSelectedItemId(menuItem.getItemId());
             menuItem.setChecked(true);
         }

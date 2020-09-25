@@ -10,14 +10,15 @@ import android.view.View;
 
 import com.android.sgzcommon.activity.BaseNavigationActivity;
 import com.sgz.androidlib.activity.sample.TestTakePhotoActivity;
+import com.sgz.androidlib.fragment.SecondFragment;
 import com.sgz.androidlib.fragment.sample.TestTakePhotoFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-public class NavigationActivity extends BaseNavigationActivity {
+public class MainActivity extends BaseNavigationActivity {
 
-    private static String[] PERMISSIONS = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private static String[] PERMISSIONS = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
 
     @Override
     protected int getNavigationMenuId() {
@@ -41,16 +42,18 @@ public class NavigationActivity extends BaseNavigationActivity {
 
     @Override
     protected Fragment getNewFragment(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 return new HomeFragment();
+            case 1:
+                return new SecondFragment();
         }
         return null;
     }
 
     @Override
     protected Intent clickStartActivity(int position) {
-        if (1 == position){
+        if (2 == position) {
             Intent intent = new Intent(this, TestTakePhotoActivity.class);
             return intent;
         }
@@ -59,7 +62,7 @@ public class NavigationActivity extends BaseNavigationActivity {
 
     @Override
     protected boolean newFragment4ItemSelect(int position) {
-        if (0 == position){
+        if (0 == position) {
             return true;
         }
         return super.newFragment4ItemSelect(position);
@@ -68,7 +71,7 @@ public class NavigationActivity extends BaseNavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(this,MyService.class);
+        Intent intent = new Intent(this, MyService.class);
         startService(intent);
     }
 
