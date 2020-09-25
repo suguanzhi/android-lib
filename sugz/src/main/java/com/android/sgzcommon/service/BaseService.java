@@ -83,6 +83,7 @@ public class BaseService extends Service {
         String url = versionDownload.getUrl();
         int verCode = versionDownload.getVerCode();
         String apkName = mContext.getPackageName().replace(".", "_") + "_" + verCode;
+        Log.d("BaseService", "downloadApk: apkName == " + apkName);
         final String savePath = FilePathUtils.getAppDownloadDir(mContext).getAbsolutePath() + File.separator + apkName + ".apk";
         Log.d("BaseService", "downloadApk: url == " + url);
         DownloadTask.getInstance(mContext).download(url, savePath, new OnDownloadListener() {
@@ -129,6 +130,7 @@ public class BaseService extends Service {
             return;
         }
         try {
+            Log.d("BaseService", "installApk: packageName == " + getPackageName());
             SystemUtils.installAPK(mContext, getPackageName(), apkPath);
         } catch (Throwable t) {
             t.printStackTrace();

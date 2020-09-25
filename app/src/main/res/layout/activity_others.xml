@@ -31,10 +31,10 @@
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/btn_others"
+                android:id="@+id/btn_version_update"
                 style="@style/Button.Strock.Normal"
                 android:layout_marginTop="10dp"
-                android:text="未定义"
+                android:text="版本更新"
                 android:textAllCaps="false" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

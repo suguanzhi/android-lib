@@ -68,6 +68,8 @@ public class NavigationActivity extends BaseNavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = new Intent(this,MyService.class);
+        startService(intent);
     }
 
     @Override

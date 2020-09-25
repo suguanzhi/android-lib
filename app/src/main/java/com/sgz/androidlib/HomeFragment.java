@@ -30,7 +30,7 @@ public class HomeFragment extends BaseFragment {
     Button mBtnActivity;
     @BindView(R.id.btn_fragment)
     Button mBtnFragment;
-    @BindView(R.id.btn_others)
+    @BindView(R.id.btn_version_update)
     Button mBtnOthers;
 
     @Override
@@ -77,7 +77,7 @@ public class HomeFragment extends BaseFragment {
     //        }
     //    }
 
-    @OnClick({R.id.btn_views, R.id.btn_dialogs, R.id.btn_activity, R.id.btn_fragment, R.id.btn_others})
+    @OnClick({R.id.btn_views, R.id.btn_dialogs, R.id.btn_activity, R.id.btn_fragment, R.id.btn_version_update})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -93,7 +93,7 @@ public class HomeFragment extends BaseFragment {
             case R.id.btn_fragment:
                 intent = new Intent(mContext, TestFragmentActivity.class);
                 break;
-            case R.id.btn_others:
+            case R.id.btn_version_update:
                 intent = new Intent(mContext, TestOthersActivity.class);
                 break;
         }
