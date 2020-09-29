@@ -3,8 +3,8 @@ package com.android.sgzcommon.logutil.applog; /**
  */
 
 import android.content.Context;
-import android.os.Environment;
 
+import com.android.sgzcommon.utils.FilePathUtils;
 import com.android.sgzcommon.utils.FileUtils;
 
 import java.io.BufferedReader;
@@ -41,11 +41,7 @@ public class LogcatHelper {
      */
     public void init(Context context, String dirName, int limit) {
         mFileLimit = limit;
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
-            mLogDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + dirName;
-        } else {
-            mLogDir = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getAbsolutePath() + File.separator + dirName;
-        }
+        mLogDir = FilePathUtils.getAppDocumentDir(context).getAbsolutePath() + File.separator + dirName;
         try {
             File file = new File(mLogDir);
             if (!file.exists()) {

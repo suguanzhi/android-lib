@@ -17,7 +17,7 @@ public abstract class BaseApplication extends Application {
     private Thread.UncaughtExceptionHandler restartHandler = new Thread.UncaughtExceptionHandler() {
         public void uncaughtException(Thread thread, Throwable ex) {
             String errorInfo = Log.getStackTraceString(ex);
-            SLogUtil.i(getPackageName() + "/errorlog", errorInfo);
+            SLogUtil.i("/log/error", errorInfo);
         }
     };
 
@@ -27,11 +27,11 @@ public abstract class BaseApplication extends Application {
         Thread.setDefaultUncaughtExceptionHandler(restartHandler);
         SLogUtil.initLog(this, getPackageName());
         if (isRunningLog()) {
-            LogcatHelper.getInstance(this, getPackageName() + "/normal").start();
+            LogcatHelper.getInstance(this, "/log/normal").start();
         }
     }
 
     public static void e(String e) {
-        SLogUtil.i("qfy/slog", e);
+        SLogUtil.i("/log/slog", e);
     }
 }

@@ -16,6 +16,8 @@
 
 package com.android.sgzcommon.logutil.jlog.printer;
 
+import android.content.Context;
+
 import com.android.sgzcommon.logutil.jlog.constant.LogLevel;
 import com.android.sgzcommon.logutil.jlog.util.PrinterUtils;
 

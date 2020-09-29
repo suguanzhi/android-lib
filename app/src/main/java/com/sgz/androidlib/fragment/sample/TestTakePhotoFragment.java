@@ -9,10 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
-import com.android.sgzcommon.utils.BitmapUtils;
 import com.sgz.androidlib.R;
-
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,7 +26,7 @@ public class TestTakePhotoFragment extends com.android.sgzcommon.fragment.TakePh
     @BindView(R.id.tv_msg)
     TextView mTvMsg;
 
-    public void setMsg(String msg){
+    public void setMsg(String msg) {
         mTvMsg.setText(msg);
     }
 
@@ -47,13 +44,10 @@ public class TestTakePhotoFragment extends com.android.sgzcommon.fragment.TakePh
     public void onViewClicked() {
         takePhoto(null, new OnTakePhotoListener() {
             @Override
-            public void onPhoto(File photo) {
+            public void onPhoto(Bitmap bitmap) {
                 Log.d("TakePhotoFragment", "onPhoto: 1");
-                if (photo != null) {
-                    Log.d("TakePhotoFragment", "onPhoto: 2");
-                    Bitmap bitmap = BitmapUtils.getFitBitmap(mContext, photo.getAbsolutePath());
-                    mIvPhoto.setImageBitmap(bitmap);
-                }
+                Log.d("TakePhotoFragment", "onPhoto: 2");
+                mIvPhoto.setImageBitmap(bitmap);
             }
         });
         Log.d("TakePhotoFragment", "onViewClicked: ");

@@ -32,7 +32,9 @@ import java.util.concurrent.Executors;
  */
 public class FileUtils {
 
-    /** 读写文件的线程池，单线程模型. */
+    /**
+     * 读写文件的线程池，单线程模型.
+     */
     private static ExecutorService sExecutorService;
 
     static {
@@ -60,9 +62,17 @@ public class FileUtils {
      * @return true - 目录存在（创建成功或已存在），false - 目录不存在
      */
     public static boolean createDir(String dirPath) {
+        Log.d("FileUtils", "createDir: dirPath == " + dirPath);
         File file = new File(dirPath);
         if (!file.exists()) {
-            file.mkdirs();
+            Log.d("FileUtils", "createDir: 1");
+            try {
+                boolean a = file.mkdirs();
+                Log.d("FileUtils", "createDir: a == " + a);
+            }catch (Exception e){
+               e.printStackTrace();
+                Log.d("FileUtils", "createDir: e == " + Log.getStackTraceString(e));
+            }
         }
         return file.exists();
     }
@@ -79,23 +89,29 @@ public class FileUtils {
         sExecutorService.execute(new Runnable() {
             @Override
             public void run() {
+                Log.d("FileUtils", "run: 1");
                 String filePath = dirPath + File.separator + fileName;
                 FileOutputStream fos = null;
                 try {
+                    Log.d("FileUtils", "run: 2");
                     if (createDir(dirPath)) {
+                        Log.d("FileUtils", "run: 3");
                         File file = new File(filePath);
                         boolean isExist = file.exists();
+                        Log.d("FileUtils", "run: 4");
                         fos = new FileOutputStream(file, !(!isExist || isOverride));
+                        Log.d("FileUtils", "run: 5");
                         fos.write(content.getBytes(JLog.getSettings().getCharset()));
+                        Log.d("FileUtils", "run: 6");
                     }
                 } catch (IOException e) {
-                    Log.e("FileUtils", e.getMessage());
+                    Log.e("FileUtils", "run：7 -- " + e.getMessage());
                 } finally {
                     if (fos != null) {
                         try {
                             fos.close();
                         } catch (IOException e) {
-                            Log.e("FileUtils", e.getMessage());
+                            Log.e("FileUtils", "run：7 --" + e.getMessage());
                         }
                     }
                 }

@@ -16,13 +16,14 @@
 
 package com.android.sgzcommon.logutil.jlog.util;
 
-import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.sgzcommon.logutil.jlog.JLog;
+import com.android.sgzcommon.logutil.jlog.Settings;
 import com.android.sgzcommon.logutil.jlog.constant.LogLevel;
 import com.android.sgzcommon.logutil.jlog.constant.LogSegment;
+import com.android.sgzcommon.utils.FilePathUtils;
 
 import java.io.File;
 
@@ -79,12 +80,12 @@ public final class LogUtils {
 
     /**
      * 生成日志目录路径.
-     *
      * @return 日志目录路径
      */
     public static String genDirPath() {
-        String dir = JLog.getSettings().getLogDir();
-        return Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + dir;
+        Settings settings = JLog.getSettings();
+        String dir = settings.getLogDir();
+        return FilePathUtils.getAppDocumentDir(settings.getContext()).getAbsolutePath() + File.separator + dir;
     }
 
     /**

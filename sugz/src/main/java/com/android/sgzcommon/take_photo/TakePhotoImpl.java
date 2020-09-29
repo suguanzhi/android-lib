@@ -2,19 +2,23 @@ package com.android.sgzcommon.take_photo;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
-import com.android.sgzcommon.utils.BitmapUtils;
+import com.android.sgzcommon.utils.FilePathUtils;
 
 import java.io.File;
 import java.io.InputStream;
@@ -22,7 +26,6 @@ import java.io.InputStream;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 import androidx.core.content.PermissionChecker;
 
 /**
@@ -30,18 +33,19 @@ import androidx.core.content.PermissionChecker;
  * @date 2020/6/24
  */
 public class TakePhotoImpl implements TakePhoto {
-
-    String mPath;
+    Uri uri;
     Activity mActivity;
+    ContentResolver mContentResolver;
     OnTakePhotoListener mListener;
 
     public TakePhotoImpl(Activity activity) {
         mActivity = activity;
+        mContentResolver = activity.getContentResolver();
         getPhotoDir();
     }
 
     public File getPhotoDir() {
-        File dir = new File(mActivity.getExternalCacheDir().getAbsolutePath() + File.separator + "takephoto");
+        File dir = new File(FilePathUtils.getAppPictureDir(mActivity).getAbsolutePath());
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -54,23 +58,54 @@ public class TakePhotoImpl implements TakePhoto {
 
     @Override
     public void takePhoto(@Nullable String path) {
-        mPath = path;
-        if (TextUtils.isEmpty(mPath)) {
-            mPath = getPhotoPath();
+        if (TextUtils.isEmpty(path)) {
+            path = getPhotoPath();
         }
         int result = PermissionChecker.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
         if (result == PackageManager.PERMISSION_GRANTED) {
             Log.d("TakePhotoGridImpl", "takePhoto: PERMISSION_GRANTED");
             try {
-                Uri uri;
-                Log.d("TakePhotoGridImpl", "takePhoto: path = " + mPath);
-                File file = new File(mPath);
-                if (Build.VERSION.SDK_INT >= 24) {
-                    //Android 7.0及以上获取文件 Uri
-                    uri = FileProvider.getUriForFile(mActivity, mActivity.getPackageName(), file);
+
+                Log.d("TakePhotoGridImpl", "takePhoto: path = " + path);
+                File file = new File(path);
+                //                if (Build.VERSION.SDK_INT < 24) {
+                //                    uri = Uri.fromFile(file);
+                //                } else if (Build.VERSION.SDK_INT >= 24 && Build.VERSION.SDK_INT < 29) {
+                //                    //Android 7.0及以上获取文件 Uri
+                //                    uri = FileProvider.getUriForFile(mActivity, mActivity.getPackageName(), file);
+                //                } else {
+                //                    String fileName = file.getName();
+                //                    //设置保存参数到ContentValues中
+                //                    ContentValues contentValues = new ContentValues();
+                //                    //设置文件名
+                //                    contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
+                //                    //android Q中不再使用DATA字段，而用RELATIVE_PATH代替，RELATIVE_PATH是相对路径不是绝对路径，DCIM是系统文件夹，关于系统文件夹可以到系统自带的文件管理器中查看，不可以写没存在的名字
+                //                    contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
+                //                    //设置文件类型
+                //                    contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/JPEG");
+                //                    //执行insert操作，向系统文件夹中添加文件,EXTERNAL_CONTENT_URI代表外部存储器，该值不变
+                //                    uri = mActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                //                    Log.d("TakePhotoGridImpl", "takePhoto: uri.path == " + uri.getPath());
+                //                }
+                //		设置保存参数到ContentValues中
+                ContentValues contentValues = new ContentValues();
+                //设置文件名
+                contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, file.getName());
+                //兼容Android Q和以下版本
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    //android Q中不再使用DATA字段，而用RELATIVE_PATH代替
+                    //RELATIVE_PATH是相对路径不是绝对路径
+                    //DCIM是系统文件夹，关于系统文件夹可以到系统自带的文件管理器中查看，不可以写没存在的名字
+                    contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES);
                 } else {
-                    uri = Uri.fromFile(file);
+                    //Android Q以下版本
+                    contentValues.put(MediaStore.Images.Media.DATA, path);
                 }
+                //设置文件类型
+                contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/JPEG");
+                //执行insert操作，向系统文件夹中添加文件
+                //EXTERNAL_CONTENT_URI代表外部存储器，该值不变
+                uri = mContentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
                 //调取系统拍照
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
@@ -100,36 +135,47 @@ public class TakePhotoImpl implements TakePhoto {
         Log.d("TakePhotoGridImpl", "onActivityResult: requestCode = " + requestCode);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_TAKE_PHOTO_CODE) {
-                Log.d("TakePhotoGridImpl", "onActivityResult: path = " + mPath);
-                File photo = new File(mPath);
-                if (photo.exists()) {
-                    Log.d("TakePhotoGridImpl", "onActivityResult: 1");
-                } else {
-                    Log.d("TakePhotoGridImpl", "onActivityResult: 5");
-                    mPath = "";
+                Bitmap bitmap = null;
+                //Android Q 获取拍照Bitmap
+                try {
+                    ParcelFileDescriptor parcelFd = mActivity.getContentResolver().openFileDescriptor(uri, "r");
+                    if (parcelFd != null) {
+                        bitmap = BitmapFactory.decodeFileDescriptor(parcelFd.getFileDescriptor());
+                        if (bitmap != null) {
+                            Log.d("TakePhotoGridImpl", "onActivityResult: bitmap != null   size == " + bitmap.getWidth() + ";" + bitmap.getHeight());
+                        } else {
+                            Log.d("TakePhotoGridImpl", "onActivityResult: bitmap == null");
+                        }
+                        parcelFd.close();
+                    } else {
+                        Log.d("TakePhotoGridImpl", "onActivityResult:parcelFd == null ");
+                    }
+                } catch (Exception e) {
+                    Log.d("TakePhotoGridImpl", "onActivityResult: e == " + Log.getStackTraceString(e));
+                    e.printStackTrace();
                 }
-                mListener.onPhoto(photo);
+                mListener.onPhoto(bitmap);
             } else if (REQUEST_CHOOSE_PHOTO_CODE == requestCode) {
-                File photo = null;
+                Bitmap bitmap = null;
                 Uri uri = data.getData();
                 if (uri != null) {
                     try {
                         InputStream is = mActivity.getContentResolver().openInputStream(uri);
-                        Bitmap srcBitmap = BitmapFactory.decodeStream(is);
-                        if (srcBitmap != null) {
-                            mPath = getPhotoPath();
-                            boolean save = BitmapUtils.saveBimapToLocal(mPath, srcBitmap);
-                            if (save) {
-                                photo = new File(mPath);
-                            } else {
-                                mPath = "";
-                            }
-                        }
+                        bitmap = BitmapFactory.decodeStream(is);
+                        //                        if (srcBitmap != null) {
+                        //                            mPath = getPhotoPath();
+                        //                            boolean save = BitmapUtils.saveBimapToLocal(mPath, srcBitmap);
+                        //                            if (save) {
+                        //                                photo = new File(mPath);
+                        //                            } else {
+                        //                                mPath = "";
+                        //                            }
+                        //                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                mListener.onPhoto(photo);
+                mListener.onPhoto(bitmap);
             }
         }
     }

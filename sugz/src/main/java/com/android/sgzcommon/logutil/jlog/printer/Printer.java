@@ -38,7 +38,6 @@ public interface Printer {
 
     /**
      * 日志打印输出到文件.
-     *
      * @param level   级别
      * @param tag     标签
      * @param message 信息

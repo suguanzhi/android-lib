@@ -2,6 +2,7 @@ package com.android.sgzcommon.take_photo;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 
@@ -59,10 +60,10 @@ final public class TakePhotosImpl implements TakePhotos {
         mTakePhoto = new TakePhotoImpl(activity);
         mTakePhoto.setOnTakePhotoListener(new OnTakePhotoListener() {
             @Override
-            public void onPhoto(File photo) {
-                if (photo != null) {
-                    String path = photo.getAbsolutePath();
-                    mPhotoUploads.add(new PhotoUpload(path));
+            public void onPhoto(Bitmap bitmap) {
+                if (bitmap != null) {
+//                    String path = photo.getAbsolutePath();
+//                    mPhotoUploads.add(new PhotoUpload(path));
                 }
                 mListener.onPhotos(mPhotoUploads);
                 mAdapter.notifyDataSetChanged();

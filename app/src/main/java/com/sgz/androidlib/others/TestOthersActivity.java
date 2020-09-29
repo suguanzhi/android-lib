@@ -45,7 +45,7 @@ public class TestOthersActivity extends BaseActivity {
                 intent = new Intent(mContext, TestCreateCodeActivity.class);
                 break;
             case R.id.btn_version_update:
-                final String url ="http://192.168.0.129:80/upload/files/20200921/盛马桂v1_1_0_1600656839357.apk";
+                final String url ="http://139.9.86.110:80/upload/files/20200929/盛马桂v1_0_9_1601367084098.apk";
                 EventBus.getDefault().post(new VersionDownload(url, 101));
                 break;
         }
