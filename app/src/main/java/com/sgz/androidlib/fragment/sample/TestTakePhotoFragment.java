@@ -8,7 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
+import com.android.sgzcommon.utils.BitmapUtils;
 import com.sgz.androidlib.R;
 
 import butterknife.BindView;
@@ -42,12 +43,18 @@ public class TestTakePhotoFragment extends com.android.sgzcommon.fragment.TakePh
 
     @OnClick(R.id.btn_take_photo)
     public void onViewClicked() {
-        takePhoto(null, new OnTakePhotoListener() {
+        takePhoto(null, new OnPhotoListener() {
             @Override
-            public void onPhoto(Bitmap bitmap) {
+            public void onTakePhoto(Bitmap bitmap, String path) {
                 Log.d("TakePhotoFragment", "onPhoto: 1");
                 Log.d("TakePhotoFragment", "onPhoto: 2");
-                mIvPhoto.setImageBitmap(bitmap);
+                Bitmap bp = BitmapUtils.getFitBitmap(mContext, path);
+                mIvPhoto.setImageBitmap(bp);
+            }
+
+            @Override
+            public void onChoosePhoto(Bitmap bitmap) {
+
             }
         });
         Log.d("TakePhotoFragment", "onViewClicked: ");

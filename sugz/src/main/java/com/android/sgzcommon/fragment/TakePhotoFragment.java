@@ -3,8 +3,8 @@ package com.android.sgzcommon.fragment;
 import android.content.Context;
 import android.content.Intent;
 
-import com.android.sgzcommon.take_photo.TakePhotoImpl;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
+import com.android.sgzcommon.take_photo.GetPhotoImpl;
+import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 
 import java.io.File;
 
@@ -16,12 +16,12 @@ import androidx.annotation.NonNull;
  */
 public abstract class TakePhotoFragment extends BaseFragment {
 
-    private TakePhotoImpl mTakePhoto;
+    private GetPhotoImpl mTakePhoto;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mTakePhoto = new TakePhotoImpl(mActivity);
+        mTakePhoto = new GetPhotoImpl(mActivity);
     }
 
     /**
@@ -37,7 +37,7 @@ public abstract class TakePhotoFragment extends BaseFragment {
     /**
      * 调用系统照相机拍照
      */
-    protected void takePhoto(String path, OnTakePhotoListener listener) {
+    protected void takePhoto(String path, OnPhotoListener listener) {
         if (mTakePhoto != null) {
             mTakePhoto.setOnTakePhotoListener(listener);
             mTakePhoto.takePhoto(path);
@@ -47,7 +47,7 @@ public abstract class TakePhotoFragment extends BaseFragment {
     /**
      * 调用选取照片
      */
-    protected void choosePhoto(OnTakePhotoListener listener) {
+    protected void choosePhoto(OnPhotoListener listener) {
         if (mTakePhoto != null) {
             mTakePhoto.setOnTakePhotoListener(listener);
             mTakePhoto.choosePhoto();

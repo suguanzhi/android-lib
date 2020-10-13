@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
  * @author sgz
  * @date 2020/6/24
  */
-public interface TakePhoto {
+public interface GetPhoto {
 
     int CAMERA_REQUEST_CODE = 207;
     int REQUEST_TAKE_PHOTO_CODE = 371;

@@ -8,7 +8,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.android.sgzcommon.activity.TakePhotoActivity;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
+import com.android.sgzcommon.utils.BitmapUtils;
 import com.sgz.androidlib.R;
 
 import butterknife.BindView;
@@ -33,14 +34,19 @@ public class TestTakePhotoActivity extends TakePhotoActivity {
     }
 
     public void take(View v) {
-        takePhoto(null, new OnTakePhotoListener() {
+        takePhoto(null, new OnPhotoListener() {
             @Override
-            public void onPhoto(Bitmap bitmap) {
+            public void onTakePhoto(Bitmap bitmap, String path) {
                 Log.d("SecondActivity", "onPhoto: ");
-                //                if (bitmap != null) {
-                //                    Bitmap bitmap = BitmapFactory.decodeFile(photo.getAbsolutePath());
-                mIvPhoto.setImageBitmap(bitmap);
-                //                }
+                if (bitmap != null) {
+                    Bitmap bp = BitmapUtils.getFitBitmap(mContext, path);
+                    mIvPhoto.setImageBitmap(bp);
+                }
+            }
+
+            @Override
+            public void onChoosePhoto(Bitmap bitmap) {
+
             }
         });
     }

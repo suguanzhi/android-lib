@@ -9,8 +9,8 @@ import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.activity.QRCodeActivity;
 import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
+import com.sgz.androidlib.activity.sample.TestGetPhotosActivity;
 import com.sgz.androidlib.activity.sample.TestTakePhotoActivity;
-import com.sgz.androidlib.activity.sample.TestTakePhotosActivity;
 import com.sgz.androidlib.others.sample.TestUpdateVersionActivity;
 import com.sgz.androidlib.activity.sample.TestWebActivity;
 
@@ -55,7 +55,7 @@ public class TestActivityActivity extends BaseActivity {
                 intent = new Intent(mContext, TestTakePhotoActivity.class);
                 break;
             case R.id.btn_take_photos:
-                intent = new Intent(mContext, TestTakePhotosActivity.class);
+                intent = new Intent(mContext, TestGetPhotosActivity.class);
                 break;
             case R.id.btn_web:
                 intent = new Intent(mContext, TestWebActivity.class);

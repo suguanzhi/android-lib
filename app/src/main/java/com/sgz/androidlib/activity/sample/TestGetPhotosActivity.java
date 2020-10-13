@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.android.sgzcommon.activity.TakePhotosActivity;
+import com.android.sgzcommon.activity.GetPhotosActivity;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
-import com.android.sgzcommon.take_photo.TakePhotosImpl;
+import com.android.sgzcommon.take_photo.GetPhotosImpl;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
 import com.sgz.androidlib.R;
 
@@ -23,12 +23,12 @@ import butterknife.BindView;
  * @author sgz
  * @date 2020/6/10
  */
-public class TestTakePhotosActivity extends TakePhotosActivity {
+public class TestGetPhotosActivity extends GetPhotosActivity {
 
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
 
-    private TakePhotosImpl mTakePhotoGrid;
+    private GetPhotosImpl mTakePhotoGrid;
 
     @Override
     protected int getContentViewId() {

@@ -8,8 +8,8 @@ import android.view.View;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 import com.android.sgzcommon.take_photo.ShowImages;
 import com.android.sgzcommon.take_photo.ShowImagesImpl;
-import com.android.sgzcommon.take_photo.TakePhotos;
-import com.android.sgzcommon.take_photo.TakePhotosImpl;
+import com.android.sgzcommon.take_photo.GetPhotos;
+import com.android.sgzcommon.take_photo.GetPhotosImpl;
 import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
@@ -24,11 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by sgz on 2019/12/27.
  */
-public abstract class TakePhotosFragment extends BaseFragment implements TakePhotos, ShowImages {
+public abstract class GetPhotosFragment extends BaseFragment implements GetPhotos, ShowImages {
 
     private RecyclerView mRvShowImages;
     private RecyclerView mRvTakePhotos;
-    private TakePhotosImpl mTakePhotos;
+    private GetPhotosImpl mTakePhotos;
     private ShowImages mShowImages;
 
     protected abstract int getShowImageGridViewId();
@@ -42,11 +42,11 @@ public abstract class TakePhotosFragment extends BaseFragment implements TakePho
         mRvShowImages = parent.findViewById(getShowImageGridViewId());
         mRvTakePhotos = parent.findViewById(getTakePhotoGridViewId());
         mShowImages = new ShowImagesImpl(mContext, mRvShowImages);
-        mTakePhotos = new TakePhotosImpl(getActivity(), mRvTakePhotos);
+        mTakePhotos = new GetPhotosImpl(getActivity(), mRvTakePhotos);
         mTakePhotos.setOnPhotoGridListener(new OnTakePhotoGridListener() {
             @Override
             public void onPhotos(List<PhotoUpload> uploads) {
-                TakePhotosFragment.this.onPhotos(uploads);
+                GetPhotosFragment.this.onPhotos(uploads);
             }
         });
     }

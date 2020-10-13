@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by sgz on 2020/1/10.
  */
-public interface TakePhotos extends TakePhoto {
+public interface GetPhotos extends GetPhoto {
 
     /**
      * @param photoUploads

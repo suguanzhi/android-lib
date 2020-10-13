@@ -98,18 +98,18 @@
     </style>
 
     <style name="Input.R5" parent="Input">
-        <item name="android:background">@drawable/shape_r10_input</item>
+        <item name="android:background">@drawable/shape_r5_input</item>
     </style>
 
-    <style name="Input.R5.White" parent="Input">
-        <item name="android:background">@drawable/shape_r10_input_with_background</item>
+    <style name="Input.R5.Background" parent="Input">
+        <item name="android:background">@drawable/shape_r5_input_with_background</item>
     </style>
 
     <style name="Input.R10" parent="Input">
         <item name="android:background">@drawable/shape_r10_input</item>
     </style>
 
-    <style name="Input.R10.White" parent="Input">
+    <style name="Input.R10.Background" parent="Input">
         <item name="android:background">@drawable/shape_r10_input_with_background</item>
     </style>
 

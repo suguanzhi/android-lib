@@ -20,7 +20,7 @@ import com.android.sgzcommon.dialog.DatePickDialog;
 import com.android.sgzcommon.dialog.LoadingDialog;
 import com.android.sgzcommon.dialog.OneButtonDialog;
 import com.android.sgzcommon.dialog.TwoButtonDialog;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 import com.android.sgzcommon.utils.SystemUtils;
 import com.android.sgzcommon.volley.VolleyManager;
 import com.android.volley.RequestQueue;
@@ -46,7 +46,7 @@ public abstract class BaseFragment extends Fragment {
     protected RequestQueue mQueue;
     protected ImageLoader mImageLoader;
     protected PopupWindow mPopupWindow;
-    private OnTakePhotoListener mPhotoListener;
+    private OnPhotoListener mPhotoListener;
     private DatePickDialog mDatePickDialog;
     private LoadingDialog mLoadingDialog;
     private OneButtonDialog mOneButtonDialog;

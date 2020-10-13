@@ -3,8 +3,8 @@ package com.android.sgzcommon.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.sgzcommon.take_photo.TakePhotoImpl;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
+import com.android.sgzcommon.take_photo.GetPhotoImpl;
+import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 
 import java.io.File;
 
@@ -16,12 +16,12 @@ import androidx.annotation.NonNull;
  */
 public class TakePhotoActivity extends BaseActivity {
 
-    private TakePhotoImpl mTakePhoto;
+    private GetPhotoImpl mTakePhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTakePhoto = new TakePhotoImpl(this);
+        mTakePhoto = new GetPhotoImpl(this);
     }
 
     /**
@@ -37,7 +37,7 @@ public class TakePhotoActivity extends BaseActivity {
     /**
      * 调用系统照相机拍照
      */
-    protected void takePhoto(String path, OnTakePhotoListener listener) {
+    protected void takePhoto(String path, OnPhotoListener listener) {
         if (mTakePhoto != null) {
             mTakePhoto.setOnTakePhotoListener(listener);
             mTakePhoto.takePhoto(path);
@@ -47,7 +47,7 @@ public class TakePhotoActivity extends BaseActivity {
     /**
      * 调用选取照片
      */
-    protected void choosePhoto(OnTakePhotoListener listener) {
+    protected void choosePhoto(OnPhotoListener listener) {
         if (mTakePhoto != null) {
             mTakePhoto.setOnTakePhotoListener(listener);
             mTakePhoto.choosePhoto();

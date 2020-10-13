@@ -19,7 +19,7 @@ import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 import com.android.sgzcommon.utils.FileUtils;
 
 import java.io.File;
@@ -34,39 +34,45 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by sgz on 2020/1/10.
  */
-final public class TakePhotosImpl implements TakePhotos {
+final public class GetPhotosImpl implements GetPhotos {
 
     Activity mActivity;
     RecyclerView mRecyclerView;
     PictureGridEditAdapter mAdapter;
     OnTakePhotoGridListener mListener;
-    TakePhotoImpl mTakePhoto;
+    GetPhotoImpl mTakePhoto;
 
     int mColumn;
     int mHorizontalMargin;
     int mVerticalMargin;
     List<PhotoUpload> mPhotoUploads;
 
-    public TakePhotosImpl(Activity activity, RecyclerView recyclerView) {
+    public GetPhotosImpl(Activity activity, RecyclerView recyclerView) {
         this(activity, recyclerView, 4, 5, 5);
     }
 
-    public TakePhotosImpl(Activity activity, RecyclerView recyclerView, int column, int horizontalMargin, int verticalmargin) {
+    public GetPhotosImpl(Activity activity, RecyclerView recyclerView, int column, int horizontalMargin, int verticalmargin) {
         mActivity = activity;
         mRecyclerView = recyclerView;
         mColumn = column;
         mHorizontalMargin = horizontalMargin;
         mVerticalMargin = verticalmargin;
-        mTakePhoto = new TakePhotoImpl(activity);
-        mTakePhoto.setOnTakePhotoListener(new OnTakePhotoListener() {
+        mTakePhoto = new GetPhotoImpl(activity);
+        mTakePhoto.setOnTakePhotoListener(new OnPhotoListener() {
             @Override
-            public void onPhoto(Bitmap bitmap) {
+            public void onTakePhoto(Bitmap bitmap, String path) {
                 if (bitmap != null) {
-//                    String path = photo.getAbsolutePath();
-//                    mPhotoUploads.add(new PhotoUpload(path));
+                    mPhotoUploads.add(new PhotoUpload(path));
                 }
-                mListener.onPhotos(mPhotoUploads);
                 mAdapter.notifyDataSetChanged();
+                if (mListener != null) {
+                    mListener.onPhotos(mPhotoUploads);
+                }
+            }
+
+            @Override
+            public void onChoosePhoto(Bitmap bitmap) {
+
             }
         });
         init();
