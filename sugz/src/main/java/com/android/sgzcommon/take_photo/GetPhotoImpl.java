@@ -18,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
+import com.android.sgzcommon.utils.BitmapUtils;
 import com.android.sgzcommon.utils.FilePathUtils;
 
 import java.io.File;
@@ -103,6 +104,7 @@ public class GetPhotoImpl implements GetPhoto {
 
     @Override
     public void choosePhoto() {
+        mPhotoPath = null;
         Intent intent = new Intent(Intent.ACTION_PICK, null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         mActivity.startActivityForResult(intent, REQUEST_CHOOSE_PHOTO_CODE);
@@ -118,7 +120,6 @@ public class GetPhotoImpl implements GetPhoto {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_TAKE_PHOTO_CODE) {
                 Bitmap bitmap = null;
-                //Android Q 获取拍照Bitmap
                 try {
                     ParcelFileDescriptor parcelFd = mContentResolver.openFileDescriptor(uri, "r");
                     if (parcelFd != null) {
@@ -136,7 +137,7 @@ public class GetPhotoImpl implements GetPhoto {
                     Log.d("TakePhotoGridImpl", "onActivityResult: e == " + Log.getStackTraceString(e));
                     e.printStackTrace();
                 }
-                mListener.onTakePhoto(bitmap, mPhotoPath);
+                mListener.onPhoto(bitmap, mPhotoPath);
             } else if (REQUEST_CHOOSE_PHOTO_CODE == requestCode) {
                 Bitmap bitmap = null;
                 Uri uri = data.getData();
@@ -144,20 +145,18 @@ public class GetPhotoImpl implements GetPhoto {
                     try {
                         InputStream is = mContentResolver.openInputStream(uri);
                         bitmap = BitmapFactory.decodeStream(is);
-                        //                        if (srcBitmap != null) {
-                        //                            mPath = getPhotoPath();
-                        //                            boolean save = BitmapUtils.saveBimapToLocal(mPath, srcBitmap);
-                        //                            if (save) {
-                        //                                photo = new File(mPath);
-                        //                            } else {
-                        //                                mPath = "";
-                        //                            }
-                        //                        }
+                        if (bitmap != null) {
+                            mPhotoPath = getPhotoPath();
+                            boolean save = BitmapUtils.saveBimapToLocal(mPhotoPath, bitmap);
+                            if (!save) {
+                                mPhotoPath = null;
+                            }
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                mListener.onChoosePhoto(bitmap);
+                mListener.onPhoto(bitmap, mPhotoPath);
             }
         }
     }

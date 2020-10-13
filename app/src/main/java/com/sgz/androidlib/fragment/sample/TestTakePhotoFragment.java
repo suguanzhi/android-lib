@@ -45,16 +45,11 @@ public class TestTakePhotoFragment extends com.android.sgzcommon.fragment.TakePh
     public void onViewClicked() {
         takePhoto(null, new OnPhotoListener() {
             @Override
-            public void onTakePhoto(Bitmap bitmap, String path) {
+            public void onPhoto(Bitmap bitmap, String path) {
                 Log.d("TakePhotoFragment", "onPhoto: 1");
                 Log.d("TakePhotoFragment", "onPhoto: 2");
                 Bitmap bp = BitmapUtils.getFitBitmap(mContext, path);
                 mIvPhoto.setImageBitmap(bp);
-            }
-
-            @Override
-            public void onChoosePhoto(Bitmap bitmap) {
-
             }
         });
         Log.d("TakePhotoFragment", "onViewClicked: ");

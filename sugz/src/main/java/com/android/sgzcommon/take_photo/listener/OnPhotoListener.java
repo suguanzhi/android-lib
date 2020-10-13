@@ -8,7 +8,6 @@ public interface OnPhotoListener {
      *
      * @param bitmap photo or null
      */
-    void onTakePhoto(Bitmap bitmap, String path);
+    void onPhoto(Bitmap bitmap, String path);
 
-    void onChoosePhoto(Bitmap bitmap);
 }

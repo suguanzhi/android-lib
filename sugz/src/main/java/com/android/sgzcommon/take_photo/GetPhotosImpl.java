@@ -60,7 +60,7 @@ final public class GetPhotosImpl implements GetPhotos {
         mTakePhoto = new GetPhotoImpl(activity);
         mTakePhoto.setOnTakePhotoListener(new OnPhotoListener() {
             @Override
-            public void onTakePhoto(Bitmap bitmap, String path) {
+            public void onPhoto(Bitmap bitmap, String path) {
                 if (bitmap != null) {
                     mPhotoUploads.add(new PhotoUpload(path));
                 }
@@ -68,11 +68,6 @@ final public class GetPhotosImpl implements GetPhotos {
                 if (mListener != null) {
                     mListener.onPhotos(mPhotoUploads);
                 }
-            }
-
-            @Override
-            public void onChoosePhoto(Bitmap bitmap) {
-
             }
         });
         init();

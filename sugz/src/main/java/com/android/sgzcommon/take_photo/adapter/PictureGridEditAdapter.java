@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Created by sgz on 2019/5/6 0006.
  */
-public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,BaseViewHolder> {
+public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload, BaseViewHolder> {
 
     private OnDeletePhotoListener mDeletePhotoListener;
     private OnTakePhotoClickListener mTakePhotoClickListener;
@@ -66,16 +66,23 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
                     //                    holder.itemView.setFocusable(true);
                     //                    holder.itemView.setFocusableInTouchMode(true);
                     //                    holder.itemView.requestFocus();
+                    final String path = upload.getPath();
                     try {
                         mItems.remove(position);
-                        String path = upload.getPath();
-                        FileUtils.deleteFile(path);
+
                         if (mDeletePhotoListener != null) {
                             mDeletePhotoListener.onDelete(position, upload);
                         }
                         notifyDataSetChanged();
                     } catch (Exception e) {
                         e.printStackTrace();
+                    } finally {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                FileUtils.deleteFile(path);
+                            }
+                        }).start();
                     }
                 }
             });
