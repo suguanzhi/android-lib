@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/shape_r10_sd_white"
-              android:minHeight="150dp"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_r10_sd_white"
+    android:maxHeight="500dp"
+    android:minHeight="150dp"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,13 +31,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="center"
             android:layout_marginTop="10dp"
-            android:visibility="gone"
+            android:gravity="center"
             android:text=""
             android:textColor="@color/text_second"
             android:textSize="@dimen/text_second"
-            />
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,7 +57,7 @@
             android:gravity="center"
             android:text="@string/dialog_two_button_confirm"
             android:textColor="@color/white"
-            android:textSize="@dimen/btn_text_size2"/>
+            android:textSize="@dimen/btn_text_size2" />
     </LinearLayout>
 
 </LinearLayout>
