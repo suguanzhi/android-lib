@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginEnd="5dp"
-        android:layout_weight="1"
+        android:layout_weight="0.8"
         android:padding="5dp"
         android:src="@drawable/ic_sgz_subtract" />
 
@@ -20,16 +20,16 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="2"
+        android:background="@color/blue_50"
         android:gravity="center"
-        android:inputType="number"
-        android:background="@color/blue_50" />
+        android:inputType="number" />
 
     <ImageView
         android:id="@+id/iv_add"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="5dp"
+        android:layout_weight="0.8"
         android:padding="5dp"
-        android:layout_weight="1"
         android:src="@drawable/ic_sgz_add_grey400" />
 </LinearLayout>

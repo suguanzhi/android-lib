@@ -125,7 +125,7 @@ public class InputEditView extends LinearLayout {
         }
         Drawable inputDrawable = array.getDrawable(R.styleable.InputEditView_input_background);
         if (inputDrawable != null) {
-            mEtInput.setBackground(inputDrawable);
+            setInputBackground(inputDrawable);
         }
         int inputTextColor = array.getColor(R.styleable.InputEditView_text_color, Color.BLACK);
         mEtInput.setTextColor(inputTextColor);
@@ -143,6 +143,10 @@ public class InputEditView extends LinearLayout {
         mIvAdd.setPadding(addSubPadding, addSubPadding, addSubPadding, addSubPadding);
         mIvSub.setPadding(addSubPadding, addSubPadding, addSubPadding, addSubPadding);
         array.recycle();
+    }
+
+    public void setInputBackground(Drawable background) {
+        mEtInput.setBackground(background);
     }
 
     public void setValue(String value) {
