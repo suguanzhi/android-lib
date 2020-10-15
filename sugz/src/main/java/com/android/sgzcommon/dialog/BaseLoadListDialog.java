@@ -16,6 +16,7 @@ import com.android.sugz.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,9 +36,10 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
     private OnLoadListClickListener listener;
 
     private CharSequence mTitle;
+    private Map<String, String> data;
     private List<V> mItems;
 
-    protected abstract void loadList(OnLoadListListener listener);
+    protected abstract void loadList(Map<String, String> data, OnLoadListListener listener);
 
     public BaseLoadListDialog(Context context) {
         super(context);
@@ -98,7 +100,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
             public void onItemClick(View view, int position) {
                 if (position < mItems.size()) {
                     if (listener != null) {
-                        listener.onClick(BaseLoadListDialog.this,position, mItems.get(position));
+                        listener.onClick(BaseLoadListDialog.this, position, mItems.get(position));
                     }
                 }
             }
@@ -115,7 +117,12 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
     protected void onStart() {
         super.onStart();
         mLrv.gone();
-        loadList(mLoadListListener);
+        loadList(data, mLoadListListener);
+    }
+
+    public void show(Map<String, String> data) {
+        this.data = data;
+        show();
     }
 
     public void setTitle(CharSequence title) {
@@ -143,6 +150,6 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
     }
 
     public interface OnLoadListClickListener<T extends LoadListItem> {
-        void onClick(Dialog dialog,int position, T t);
+        void onClick(Dialog dialog, int position, T t);
     }
 }
