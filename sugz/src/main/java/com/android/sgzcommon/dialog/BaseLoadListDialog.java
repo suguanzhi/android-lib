@@ -1,5 +1,6 @@
 package com.android.sgzcommon.dialog;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -97,7 +98,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
             public void onItemClick(View view, int position) {
                 if (position < mItems.size()) {
                     if (listener != null) {
-                        listener.onClick(position, mItems.get(position));
+                        listener.onClick(BaseLoadListDialog.this,position, mItems.get(position));
                     }
                 }
             }
@@ -142,6 +143,6 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
     }
 
     public interface OnLoadListClickListener<T extends LoadListItem> {
-        void onClick(int position, T t);
+        void onClick(Dialog dialog,int position, T t);
     }
 }
