@@ -113,6 +113,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
     @Override
     protected void onStart() {
         super.onStart();
+        mLrv.gone();
         loadList(mLoadListListener);
     }
 
