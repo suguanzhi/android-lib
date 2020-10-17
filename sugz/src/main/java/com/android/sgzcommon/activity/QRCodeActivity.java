@@ -93,11 +93,13 @@ public class QRCodeActivity extends BaseActivity implements SurfaceHolder.Callba
                     intent.putExtra(RESULT_NAME, result);
                     setResult(RESULT_OK, intent);
                     onCodeResult(result);
+                    finish();
                 }
 
                 @Override
                 public void onError(String error) {
                     showToast("扫码异常：" + error);
+                    finish();
                 }
             });
             startScan();
