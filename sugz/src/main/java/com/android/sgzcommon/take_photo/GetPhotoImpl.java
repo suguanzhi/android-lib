@@ -68,8 +68,9 @@ public class GetPhotoImpl implements GetPhoto {
         if (result == PackageManager.PERMISSION_GRANTED) {
             Log.d("TakePhotoGridImpl", "takePhoto: PERMISSION_GRANTED");
             try {
-
+                File f = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
                 Log.d("TakePhotoGridImpl", "takePhoto: path = " + mPhotoPath);
+                Log.d("TakePhotoGridImpl", "takePhoto: f.path = " + f.getAbsolutePath());
                 File file = new File(mPhotoPath);
                 ContentValues contentValues = new ContentValues();
                 //设置文件名

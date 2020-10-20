@@ -62,18 +62,16 @@ public final class CameraManager {
 
     public void openDriver(SurfaceHolder holder, int index) throws IOException {
         if (camera == null) {
-            camera = Camera.open(index);
-            if (camera == null) {
-                throw new IOException();
+            try {
+                camera = Camera.open(index);
+                camera.setPreviewDisplay(holder);
+                configManager.initFromCameraParameters(camera);
+                configManager.setDesiredCameraParameters(camera);
+                FlashlightManager.enableFlashlight();
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw e;
             }
-            camera.setPreviewDisplay(holder);
-
-            //			if (!initialized) {
-            //				initialized = true;
-            configManager.initFromCameraParameters(camera);
-            //			}
-            configManager.setDesiredCameraParameters(camera);
-            //			FlashlightManager.enableFlashlight();
         }
     }
 

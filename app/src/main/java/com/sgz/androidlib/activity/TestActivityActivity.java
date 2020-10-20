@@ -6,13 +6,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.android.sgzcommon.activity.BaseActivity;
-import com.android.sgzcommon.activity.QRCodeActivity;
+import com.android.sgzcommon.activity.BaseQRCodeActivity;
 import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
 import com.sgz.androidlib.activity.sample.TestGetPhotosActivity;
+import com.sgz.androidlib.activity.sample.TestMyQRCodeActivity;
 import com.sgz.androidlib.activity.sample.TestTakePhotoActivity;
-import com.sgz.androidlib.others.sample.TestUpdateVersionActivity;
 import com.sgz.androidlib.activity.sample.TestWebActivity;
+import com.sgz.androidlib.others.sample.TestUpdateVersionActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +37,8 @@ public class TestActivityActivity extends BaseActivity {
     Button mBtnWeb;
     @BindView(R.id.btn_version)
     Button mBtnVersion;
+    @BindView(R.id.btn_my_qrcode)
+    Button mBtnMyQrcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +47,12 @@ public class TestActivityActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_qrcodet, R.id.btn_take_photo, R.id.btn_take_photos, R.id.btn_web,R.id.btn_version})
+    @OnClick({R.id.btn_qrcodet, R.id.btn_take_photo, R.id.btn_take_photos, R.id.btn_web, R.id.btn_version, R.id.btn_my_qrcode})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
             case R.id.btn_qrcodet:
-                intent = new Intent(mContext, QRCodeActivity.class);
+                intent = new Intent(mContext, BaseQRCodeActivity.class);
                 break;
             case R.id.btn_take_photo:
                 intent = new Intent(mContext, TestTakePhotoActivity.class);
@@ -65,13 +68,12 @@ public class TestActivityActivity extends BaseActivity {
             case R.id.btn_version:
                 intent = new Intent(mContext, TestUpdateVersionActivity.class);
                 break;
+            case R.id.btn_my_qrcode:
+                intent = new Intent(mContext, TestMyQRCodeActivity.class);
+                break;
         }
         if (intent != null) {
             startActivity(intent);
         }
-    }
-
-    @OnClick()
-    public void onViewClicked() {
     }
 }

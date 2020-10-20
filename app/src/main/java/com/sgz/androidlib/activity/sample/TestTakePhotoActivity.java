@@ -37,10 +37,13 @@ public class TestTakePhotoActivity extends TakePhotoActivity {
         takePhoto(null, new OnPhotoListener() {
             @Override
             public void onPhoto(Bitmap bitmap, String path) {
-                Log.d("SecondActivity", "onPhoto: ");
+                Log.d("TestTakePhotoActivity", "onPhoto: path == " + path);
+                if (bitmap == null){
+                    Log.d("TestTakePhotoActivity", "onPhoto: bitmap == null !");
+                }
                 if (bitmap != null) {
                     Bitmap bp = BitmapUtils.getFitBitmap(mContext, path);
-                    mIvPhoto.setImageBitmap(bp);
+                    mIvPhoto.setImageBitmap(bitmap);
                 }
             }
         });

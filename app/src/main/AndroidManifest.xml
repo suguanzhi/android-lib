@@ -32,6 +32,7 @@
         <activity android:name=".activity.sample.TestLoginActivity" />
         <activity android:name=".activity.sample.TestTakePhotoActivity" />
         <activity android:name=".activity.sample.TestGetPhotosActivity" />
+        <activity android:name=".activity.sample.TestMyQRCodeActivity" />
         <activity android:name=".view.sample.TestScrollerLayoutActivity" />
         <activity android:name=".view.sample.TestWebLayoutActivity" />
         <activity android:name=".activity.sample.TestWebActivity" />

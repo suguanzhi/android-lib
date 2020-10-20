@@ -1,5 +1,6 @@
 package com.zbar.lib.decode;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
@@ -18,9 +19,10 @@ import com.zbar.lib.camera.CameraManager;
  */
 public final class CaptureActivityHandler extends Handler {
 
-    DecodeThread decodeThread = null;
-    DecodeCaptureManager captureManager = null;
-    private State state;
+    private State mState;
+    private Context mContext;
+    DecodeThread mDecodeThread;
+    DecodeCaptureManager mCaptureManager;
     public static final int MSG_PREVIEW = 181;
     public static final int MSG_AUTO_FOCUS = 727;
     public static final int MSG_DECODE = 5;
@@ -33,11 +35,12 @@ public final class CaptureActivityHandler extends Handler {
         PREVIEW, SUCCESS, DONE
     }
 
-    public CaptureActivityHandler(DecodeCaptureManager captureManager) {
-        this.captureManager = captureManager;
-        decodeThread = new DecodeThread(this.captureManager);
-        decodeThread.start();
-        state = State.SUCCESS;
+    public CaptureActivityHandler(Context context,DecodeCaptureManager captureManager) {
+        mContext = context;
+        mCaptureManager = captureManager;
+        mDecodeThread = new DecodeThread(mContext,captureManager);
+        mDecodeThread.start();
+        mState = State.SUCCESS;
         CameraManager.get().startPreview();
         restartPreviewAndDecode();
     }
@@ -45,22 +48,22 @@ public final class CaptureActivityHandler extends Handler {
     @Override
     public void handleMessage(Message message) {
         if (message.what == MSG_AUTO_FOCUS) {
-            if (state == State.PREVIEW) {
+            if (mState == State.PREVIEW) {
                 CameraManager.get().requestAutoFocus(this, MSG_AUTO_FOCUS);
             }
         } else if (message.what == MSG_PREVIEW) {
             restartPreviewAndDecode();
         } else if (message.what == MSG_DECODE_SUCCESS) {
-            state = State.SUCCESS;
-            captureManager.onDecodeResult((String) message.obj);// 解析成功，回调
+            mState = State.SUCCESS;
+            mCaptureManager.onDecodeResult((String) message.obj);// 解析成功，回调
         } else if (message.what == MSG_DECODE_FAIL) {
-            state = State.PREVIEW;
-            CameraManager.get().requestPreviewFrame(decodeThread.getHandler(), MSG_DECODE);
+            mState = State.PREVIEW;
+            CameraManager.get().requestPreviewFrame(mDecodeThread.getHandler(), MSG_DECODE);
         }
     }
 
     public void quitSynchronously() {
-        state = State.DONE;
+        mState = State.DONE;
         CameraManager.get().stopPreview();
         removeMessages(MSG_DECODE_SUCCESS);
         removeMessages(MSG_DECODE_FAIL);
@@ -69,9 +72,9 @@ public final class CaptureActivityHandler extends Handler {
     }
 
     public void restartPreviewAndDecode() {
-        if (state == State.SUCCESS) {
-            state = State.PREVIEW;
-            CameraManager.get().requestPreviewFrame(decodeThread.getHandler(), MSG_DECODE);
+        if (mState == State.SUCCESS) {
+            mState = State.PREVIEW;
+            CameraManager.get().requestPreviewFrame(mDecodeThread.getHandler(), MSG_DECODE);
             CameraManager.get().requestAutoFocus(this, MSG_AUTO_FOCUS);
         }
     }

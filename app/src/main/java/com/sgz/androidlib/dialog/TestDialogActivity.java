@@ -1,5 +1,6 @@
 package com.sgz.androidlib.dialog;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -57,7 +58,7 @@ public class TestDialogActivity extends BaseActivity {
                 TestBaseLoadListDialog dialog = new TestBaseLoadListDialog(mActivity);
                 dialog.setOnLoadListClickListener(new BaseLoadListDialog.OnLoadListClickListener<LoadListEntity>() {
                     @Override
-                    public void onClick(int position, LoadListEntity loadListEntity) {
+                    public void onClick(Dialog dialog, int position, LoadListEntity loadListEntity) {
 
                     }
                 });

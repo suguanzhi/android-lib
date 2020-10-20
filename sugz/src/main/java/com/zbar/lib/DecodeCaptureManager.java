@@ -13,15 +13,27 @@ import com.zbar.lib.decode.CaptureActivityHandler;
 
 public class DecodeCaptureManager {
 
+    private boolean flag = true;
     private boolean isCycle;
     private boolean isNeedCapture;
     private int x = 0;
     private int y = 0;
     private int cropWidth = 0;
     private int cropHeight = 0;
-    private OnDecodeListener mListener;
+    private Context mContext;
+    private OnDecodeListener mDecodeListener;
     private CaptureActivityHandler mHandler;
     private static final String TAG = "DecodeCaptureManager";
+
+    public DecodeCaptureManager(Context context) {
+        this(context, false);
+    }
+
+    public DecodeCaptureManager(Context context, boolean isCycle) {
+        this.isCycle = isCycle;
+        mContext = context.getApplicationContext();
+        CameraManager.init(context);
+    }
 
     public boolean isNeedCapture() {
         return isNeedCapture;
@@ -47,16 +59,6 @@ public class DecodeCaptureManager {
         this.cropHeight = cropHeight;
     }
 
-    public DecodeCaptureManager(Context context) {
-        this(context, false);
-    }
-
-    public DecodeCaptureManager(Context context, boolean isCycle) {
-        this.isCycle = isCycle;
-        CameraManager.init(context);
-    }
-
-    boolean flag = true;
 
     protected void light() {
         if (flag == true) {
@@ -86,14 +88,14 @@ public class DecodeCaptureManager {
     public void onDecodeResult(String result) {
         Log.d("DecodeCaptureManager", "onDecodeResult: " + result);
         if (!TextUtils.isEmpty(result)) {
-            if (mListener != null) {
-                mListener.onResult(result);
+            if (mDecodeListener != null) {
+                mDecodeListener.onResult(result);
             }
             if (isCycle) {
-                mHandler.restartPreviewAndDecode();
+                decode();
             }
         } else {
-            mHandler.restartPreviewAndDecode();
+            decode();
         }
     }
 
@@ -111,9 +113,7 @@ public class DecodeCaptureManager {
             y = cropLayout.getTop() * height / surfaceView.getHeight();
             cropWidth = cropLayout.getWidth() * width / surfaceView.getWidth();
             cropHeight = cropLayout.getHeight() * height / surfaceView.getHeight();
-            // 设置是否需要截图
-            setNeedCapture(true);
-            mHandler = new CaptureActivityHandler(DecodeCaptureManager.this);
+            mHandler = new CaptureActivityHandler(mContext, DecodeCaptureManager.this);
         }
     }
 
@@ -147,13 +147,13 @@ public class DecodeCaptureManager {
     }
 
     public void setOnDecodeListener(OnDecodeListener listener) {
-        mListener = listener;
+        mDecodeListener = listener;
     }
 
     public interface OnDecodeListener {
 
         void onResult(String result);
 
-        void onError(String error);
+        void onError(Exception e);
     }
 }

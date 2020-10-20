@@ -1,5 +1,6 @@
 package com.zbar.lib.decode;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -18,12 +19,14 @@ import java.util.concurrent.CountDownLatch;
  */
 final class DecodeThread extends Thread {
 
-	DecodeCaptureManager activity;
-	private Handler handler;
+	private Context mContext;
+	private Handler mHandler;
+	private DecodeCaptureManager mCaptureManager;
 	private final CountDownLatch handlerInitLatch;
 
-	DecodeThread(DecodeCaptureManager activity) {
-		this.activity = activity;
+	DecodeThread(Context context,DecodeCaptureManager captureManager) {
+		mContext =context;
+		mCaptureManager = captureManager;
 		handlerInitLatch = new CountDownLatch(1);
 	}
 
@@ -31,15 +34,14 @@ final class DecodeThread extends Thread {
 		try {
 			handlerInitLatch.await();
 		} catch (InterruptedException ie) {
-			// continue?
 		}
-		return handler;
+		return mHandler;
 	}
 
 	@Override
 	public void run() {
 		Looper.prepare();
-		handler = new DecodeHandler(activity);
+		mHandler = new DecodeHandler(mContext,mCaptureManager);
 		handlerInitLatch.countDown();
 		Looper.loop();
 	}

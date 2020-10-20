@@ -1,11 +1,12 @@
 package com.zbar.lib.decode;
 
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import com.android.sgzcommon.utils.FilePathUtils;
 import com.zbar.lib.DecodeCaptureManager;
 import com.zbar.lib.ZbarManager;
 import com.zbar.lib.bitmap.PlanarYUVLuminanceSource;
@@ -25,10 +26,11 @@ import java.io.FileOutputStream;
  */
 final class DecodeHandler extends Handler {
 
-    DecodeCaptureManager captureManager = null;
+    Context mContext;
+    DecodeCaptureManager mCaptureManager;
 
-    DecodeHandler(DecodeCaptureManager manager) {
-        this.captureManager = manager;
+    DecodeHandler(Context context, DecodeCaptureManager manager) {
+        this.mCaptureManager = manager;
     }
 
     @Override
@@ -51,18 +53,18 @@ final class DecodeHandler extends Handler {
         height = tmp;
 
         ZbarManager manager = new ZbarManager();
-        String result = manager.decode(rotatedData, width, height, true, captureManager.getX(), captureManager.getY(), captureManager.getCropWidth(), captureManager.getCropHeight());
+        String result = manager.decode(rotatedData, width, height, true, mCaptureManager.getX(), mCaptureManager.getY(), mCaptureManager.getCropWidth(), mCaptureManager.getCropHeight());
 
         if (result != null) {
-            if (captureManager.isNeedCapture()) {
+            if (mCaptureManager.isNeedCapture()) {
                 // 生成bitmap
-                PlanarYUVLuminanceSource source = new PlanarYUVLuminanceSource(rotatedData, width, height, 0, 0, captureManager.getCropWidth(), captureManager.getCropHeight(), false);
+                PlanarYUVLuminanceSource source = new PlanarYUVLuminanceSource(rotatedData, width, height, 0, 0, mCaptureManager.getCropWidth(), mCaptureManager.getCropHeight(), false);
                 int[] pixels = source.renderThumbnail();
                 int w = source.getThumbnailWidth();
                 int h = source.getThumbnailHeight();
                 Bitmap bitmap = Bitmap.createBitmap(pixels, 0, w, w, h, Bitmap.Config.ARGB_8888);
                 try {
-                    String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Qrcode/";
+                    String rootPath = FilePathUtils.getAppPictureDir(mContext) + "/Qrcode/";
                     File root = new File(rootPath);
                     if (!root.exists()) {
                         root.mkdirs();
@@ -81,16 +83,15 @@ final class DecodeHandler extends Handler {
                     e.printStackTrace();
                 }
             }
-
-            if (null != captureManager.getHandler()) {
+            if (null != mCaptureManager.getHandler()) {
                 Message msg = new Message();
                 msg.obj = result;
                 msg.what = CaptureActivityHandler.MSG_DECODE_SUCCESS;
-                captureManager.getHandler().sendMessage(msg);
+                mCaptureManager.getHandler().sendMessage(msg);
             }
         } else {
-            if (null != captureManager.getHandler()) {
-                captureManager.getHandler().sendEmptyMessage(CaptureActivityHandler.MSG_DECODE_FAIL);
+            if (null != mCaptureManager.getHandler()) {
+                mCaptureManager.getHandler().sendEmptyMessage(CaptureActivityHandler.MSG_DECODE_FAIL);
             }
         }
     }
