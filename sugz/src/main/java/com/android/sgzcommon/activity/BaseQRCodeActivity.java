@@ -70,8 +70,7 @@ public abstract class BaseQRCodeActivity extends BaseActivity implements Surface
         mRlContnent = findViewById(R.id.rl_content);
         int contentId = getContentLayoutId();
         if (contentId > 0) {
-            View v = LayoutInflater.from(this).inflate(contentId, null);
-            mRlContnent.addView(v);
+            LayoutInflater.from(this).inflate(contentId, mRlContnent);
         }
         SurfaceHolder holder = mSfvCamera.getHolder();
         holder.addCallback(BaseQRCodeActivity.this);
