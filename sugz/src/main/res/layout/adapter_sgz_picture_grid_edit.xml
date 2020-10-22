@@ -8,11 +8,11 @@
     <com.android.sgzcommon.view.imageview.CornerImageView
         android:id="@+id/civ_image"
         android:layout_width="match_parent"
-        android:background="@color/grey_300"
-        android:adjustViewBounds="true"
-        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_height="wrap_content" />
+        android:layout_margin="5dp"
+        android:adjustViewBounds="true"
+        android:background="@color/grey_300" />
 
     <ImageView
         android:id="@+id/iv_delete"
