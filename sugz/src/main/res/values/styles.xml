@@ -38,9 +38,19 @@
         <item name="android:background">@drawable/shape_btn_danger</item>
     </style>
 
+    <style name="Button.R.Danger" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_r_danger</item>
+    </style>
+
     <style name="Button.Confirm" parent="Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/shape_btn_confirm</item>
+    </style>
+
+    <style name="Button.R.Confirm" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_r_confirm</item>
     </style>
 
     <style name="Button.Disable" parent="Button">
@@ -48,9 +58,19 @@
         <item name="android:background">@drawable/shape_btn_disable</item>
     </style>
 
+    <style name="Button.R.Disable" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_r_disable</item>
+    </style>
+
     <style name="Button.Warm" parent="Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/shape_btn_warn</item>
+    </style>
+
+    <style name="Button.R.Warm" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_r_warn</item>
     </style>
 
     <style name="Button.Primary" parent="Button">
@@ -58,9 +78,19 @@
         <item name="android:background">@drawable/shape_btn_primary</item>
     </style>
 
+    <style name="Button.R.Primary" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_r_primary</item>
+    </style>
+
     <style name="Button.Normal" parent="Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/shape_btn_sk_normal</item>
+    </style>
+
+    <style name="Button.R.Normal" parent="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/shape_btn_r_sk_normal</item>
     </style>
 
     <style name="Button.Strock.Confirm" parent="Button">
@@ -68,9 +98,19 @@
         <item name="android:background">@drawable/shape_btn_sk_confirm_sd_white</item>
     </style>
 
+    <style name="Button.R.Strock.Confirm" parent="Button">
+        <item name="android:textColor">@color/btn_confirm</item>
+        <item name="android:background">@drawable/shape_btn_r_sk_confirm_sd_white</item>
+    </style>
+
     <style name="Button.Strock.Danger" parent="Button">
         <item name="android:textColor">@color/btn_danger</item>
         <item name="android:background">@drawable/shape_btn_sk_danger_sd_white</item>
+    </style>
+
+    <style name="Button.R.Strock.Danger" parent="Button">
+        <item name="android:textColor">@color/btn_danger</item>
+        <item name="android:background">@drawable/shape_btn_r_sk_danger_sd_white</item>
     </style>
 
     <style name="Button.Strock.Disable" parent="Button">
@@ -78,9 +118,19 @@
         <item name="android:background">@drawable/shape_btn_sk_disable_sd_white</item>
     </style>
 
+    <style name="Button.R.Strock.Disable" parent="Button">
+        <item name="android:textColor">@color/btn_disable</item>
+        <item name="android:background">@drawable/shape_btn_r_sk_disable_sd_white</item>
+    </style>
+
     <style name="Button.Strock.Normal" parent="Button">
         <item name="android:textColor">@color/btn_normal</item>
         <item name="android:background">@drawable/shape_btn_sk_normal_sd_white</item>
+    </style>
+
+    <style name="Button.R.Strock.Normal" parent="Button">
+        <item name="android:textColor">@color/btn_normal</item>
+        <item name="android:background">@drawable/shape_btn_r_sk_normal_sd_white</item>
     </style>
 
     <style name="Card">
@@ -97,28 +147,20 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
-    <style name="Input.R5" parent="Input">
-        <item name="android:background">@drawable/shape_r5_input</item>
+    <style name="Input.R" parent="Input">
+        <item name="android:background">@drawable/shape_input_r</item>
     </style>
 
-    <style name="Input.R5.Background" parent="Input">
-        <item name="android:background">@drawable/shape_r5_input_with_background</item>
+    <style name="Input.R.Background" parent="Input">
+        <item name="android:background">@drawable/shape_input_r_with_background</item>
     </style>
 
-    <style name="Input.R10" parent="Input">
-        <item name="android:background">@drawable/shape_r10_input</item>
+    <style name="Input.Circle" parent="Input">
+        <item name="android:background">@drawable/shape_input_circle</item>
     </style>
 
-    <style name="Input.R10.Background" parent="Input">
-        <item name="android:background">@drawable/shape_r10_input_with_background</item>
-    </style>
-
-    <style name="Input.R50" parent="Input">
-        <item name="android:background">@drawable/shape_r50_input</item>
-    </style>
-
-    <style name="Input.R50.White" parent="Input">
-        <item name="android:background">@drawable/shape_r50_input_with_background</item>
+    <style name="Input.Circle.White" parent="Input">
+        <item name="android:background">@drawable/shape_input_circle_with_background</item>
     </style>
 
     <style name="Divider">

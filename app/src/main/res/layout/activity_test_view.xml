@@ -24,7 +24,7 @@
             android:padding="10dp">
 
             <EditText
-                style="@style/Input.R50.White"
+                style="@style/Input.Circle.White"
                 android:hint="输入框" />
 
             <Button

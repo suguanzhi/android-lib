@@ -16,6 +16,7 @@
     <dimen name="text_second">12sp</dimen>
 
     <!--Button-->
+    <dimen name="btn_radius">5dp</dimen>
     <dimen name="btn_width">240dp</dimen>
     <dimen name="btn_width2">100dp</dimen>
     <dimen name="btn_height">36dp</dimen>
@@ -24,6 +25,7 @@
     <dimen name="btn_text_size2">12sp</dimen>
     <dimen name="btn_border_width">0.5dp</dimen>
 
+    <dimen name="input_radius">5dp</dimen>
     <dimen name="input_width">240dp</dimen>
     <dimen name="input_height">44dp</dimen>
 
