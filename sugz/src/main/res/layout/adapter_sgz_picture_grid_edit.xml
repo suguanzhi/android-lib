@@ -31,7 +31,8 @@
         android:layout_centerInParent="true"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:max="100" />
+        android:max="100"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_progress_tip"
@@ -49,5 +50,12 @@
         android:layout_height="20dp"
         android:layout_centerInParent="true"
         android:background="@drawable/shape_r10_sd_white"
-        android:src="@drawable/ic_sgz_success" />
+        android:src="@drawable/ic_sgz_success"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

@@ -62,8 +62,8 @@ public abstract class GetPhotosFragment extends BaseFragment implements GetPhoto
     }
 
     @Override
-    public void takePhoto(String path) {
-        mTakePhotos.takePhoto(path);
+    public void takePhoto() {
+        mTakePhotos.takePhoto();
     }
 
     @Override

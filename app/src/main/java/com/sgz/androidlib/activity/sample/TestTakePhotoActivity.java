@@ -2,14 +2,12 @@ package com.sgz.androidlib.activity.sample;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.android.sgzcommon.activity.TakePhotoActivity;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
-import com.android.sgzcommon.utils.BitmapUtils;
 import com.sgz.androidlib.R;
 
 import butterknife.BindView;
@@ -34,18 +32,20 @@ public class TestTakePhotoActivity extends TakePhotoActivity {
     }
 
     public void take(View v) {
-        takePhoto(null, new OnPhotoListener() {
+        takePhoto(new OnPhotoListener() {
             @Override
-            public void onPhoto(Bitmap bitmap, String path) {
-                Log.d("TestTakePhotoActivity", "onPhoto: path == " + path);
-                if (bitmap == null){
-                    Log.d("TestTakePhotoActivity", "onPhoto: bitmap == null !");
-                }
-                if (bitmap != null) {
-                    Bitmap bp = BitmapUtils.getFitBitmap(mContext, path);
-                    mIvPhoto.setImageBitmap(bitmap);
-                }
+            public void onPhoto(Bitmap bitmap) {
+                Bitmap b = Bitmap.createScaledBitmap(bitmap,480,640,true);
+                mIvPhoto.setImageBitmap(b);
             }
         });
+        //        choosePhoto(new OnPhotoListener() {
+        //            @Override
+        //            public void onPhoto(Bitmap src, Bitmap small, String path) {
+        //                if (src != null) {
+        //                    mIvPhoto.setImageBitmap(small);
+        //                }
+        //            }
+        //        });
     }
 }

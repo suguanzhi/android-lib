@@ -64,8 +64,8 @@ public abstract class GetPhotosActivity extends BaseActivity implements GetPhoto
     }
 
     @Override
-    public void takePhoto(String path) {
-        mTakePhotoGrid.takePhoto(path);
+    public void takePhoto() {
+        mTakePhotoGrid.takePhoto();
     }
 
     @Override

@@ -123,7 +123,7 @@ public class BitmapUtils {
     }
 
     /**
-     * 将bitmap保存到本地
+     * 将bitmap保存到本地（耗时操作）
      *
      * @param targetPath
      * @param bitmap
@@ -173,6 +173,11 @@ public class BitmapUtils {
         MediaMetadataRetriever media = new MediaMetadataRetriever();
         media.setDataSource(path);
         return media.getFrameAtTime();
+    }
+
+    public interface OnSaveBitmapListener{
+        void onFinish();
+        void onFailure(Exception e);
     }
 
 }

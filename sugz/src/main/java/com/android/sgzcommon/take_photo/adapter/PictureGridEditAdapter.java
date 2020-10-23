@@ -21,6 +21,7 @@ import com.android.sgzcommon.utils.UnitUtils;
 import com.android.sgzcommon.view.imageview.CornerImageView;
 import com.android.sugz.R;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -45,8 +46,8 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
         Log.d("PictureGridEditAdapter", "getView: position = " + position);
         if (0 == getItemViewType(position)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
-            final PhotoUpload upload = mItems.get(position);
-            upload.setOnProgressListener(new PhotoUpload.OnProgressListener() {
+            final PhotoUpload photoUpload = mItems.get(position);
+            photoUpload.setOnProgressListener(new PhotoUpload.OnProgressListener() {
                 @Override
                 public void onProgress(int progress) {
                     Log.d("PictureGridEditAdapter", "onProgress: id = " + Thread.currentThread().getId());
@@ -62,36 +63,40 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
             viewHolder.mIvDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //聚焦，防止自动滚动
-                    //                    holder.itemView.setFocusable(true);
-                    //                    holder.itemView.setFocusableInTouchMode(true);
-                    //                    holder.itemView.requestFocus();
-                    final String path = upload.getPath();
-                    try {
-                        mItems.remove(position);
-
-                        if (mDeletePhotoListener != null) {
-                            mDeletePhotoListener.onDelete(position, upload);
+                    Log.d("PictureGridEditAdapter", "onClick: ");
+                    final String path = photoUpload.getPath();
+                    int p = -1;
+                    for (int i = 0; i < mItems.size(); i++) {
+                        if (path.equals(mItems.get(i).getPath())) {
+                            p = i;
+                            break;
                         }
-                        notifyDataSetChanged();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                FileUtils.deleteFile(path);
-                            }
-                        }).start();
                     }
+                    if (p >= 0 && p < mItems.size()) {
+                        mItems.remove(p);
+                        notifyItemRemoved(p);
+                    }
+                    if (mDeletePhotoListener != null) {
+                        mDeletePhotoListener.onDelete(position, photoUpload);
+                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            FileUtils.deleteFile(path);
+                        }
+                    }).start();
                 }
             });
-            int progress = upload.getProgress();
+            int progress = photoUpload.getProgress();
             updatePgrogress(viewHolder, progress);
-            UploadEntity.STATE state = upload.getState();
+            UploadEntity.STATE state = photoUpload.getState();
             updateState(viewHolder, state);
-            String path = upload.getPath();
-            Bitmap bitmap = BitmapUtils.getShowBitmap(path, 100, 200);
+            String path = photoUpload.getPath();
+            Bitmap bitmap = null;
+            File file = new File(path);
+            if (file.exists()) {
+                bitmap = BitmapUtils.getShowBitmap(path, 100, 200);
+            }
             viewHolder.mIvImage.setImageBitmap(bitmap);
             viewHolder.mIvImage.setRoundCorner(UnitUtils.dp2px(5));
         } else {
@@ -108,21 +113,30 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
     }
 
     private void updateState(ViewHolder holder, UploadEntity.STATE state) {
-        if (PhotoUpload.STATE.STATE_SUCCESS == state) {
+        if (PhotoUpload.STATE.STATE_LOADING == state) {
+            holder.mPbLoading.setVisibility(View.VISIBLE);
             holder.mIvDelete.setVisibility(View.GONE);
             holder.mTvProgress.setVisibility(View.GONE);
             holder.mPbProgress.setVisibility(View.GONE);
+            holder.mIvUploadState.setVisibility(View.GONE);
+        } else if (PhotoUpload.STATE.STATE_SUCCESS == state) {
+            holder.mIvDelete.setVisibility(View.GONE);
+            holder.mTvProgress.setVisibility(View.GONE);
+            holder.mPbProgress.setVisibility(View.GONE);
+            holder.mPbLoading.setVisibility(View.GONE);
             holder.mIvUploadState.setVisibility(View.VISIBLE);
             holder.mIvUploadState.setImageResource(R.drawable.ic_sgz_success);
         } else if (PhotoUpload.STATE.STATE_UPLOADING == state) {
             holder.mTvProgress.setVisibility(View.VISIBLE);
             holder.mPbProgress.setVisibility(View.VISIBLE);
             holder.mIvDelete.setVisibility(View.GONE);
+            holder.mPbLoading.setVisibility(View.GONE);
             holder.mIvUploadState.setVisibility(View.GONE);
         } else if (PhotoUpload.STATE.STATE_FAIL == state) {
             holder.mIvDelete.setVisibility(View.VISIBLE);
             holder.mTvProgress.setVisibility(View.GONE);
             holder.mPbProgress.setVisibility(View.GONE);
+            holder.mPbLoading.setVisibility(View.GONE);
             holder.mIvUploadState.setVisibility(View.VISIBLE);
             holder.mIvUploadState.setImageResource(R.drawable.ic_sgz_warm_red);
         } else {
@@ -130,6 +144,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
             holder.mPbProgress.setVisibility(View.GONE);
             holder.mTvProgress.setVisibility(View.GONE);
             holder.mIvUploadState.setVisibility(View.GONE);
+            holder.mPbLoading.setVisibility(View.GONE);
         }
     }
 
@@ -166,6 +181,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
         CornerImageView mIvImage;
         ImageView mIvDelete;
         ProgressBar mPbProgress;
+        ProgressBar mPbLoading;
         TextView mTvProgress;
         ImageView mIvUploadState;
 
@@ -174,6 +190,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
             mIvImage = itemView.findViewById(R.id.civ_image);
             mIvDelete = itemView.findViewById(R.id.iv_delete);
             mPbProgress = itemView.findViewById(R.id.pb_progress);
+            mPbLoading = itemView.findViewById(R.id.pb_loading);
             mTvProgress = itemView.findViewById(R.id.tv_progress_tip);
             mIvUploadState = itemView.findViewById(R.id.iv_upload_state);
         }

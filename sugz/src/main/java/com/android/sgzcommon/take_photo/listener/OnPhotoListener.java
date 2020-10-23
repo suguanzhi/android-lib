@@ -6,8 +6,8 @@ public interface OnPhotoListener {
     /**
      * photo可能过大，使用ImageView展示时，需要压缩
      *
-     * @param bitmap photo or null
+     * @param bitmap
      */
-    void onPhoto(Bitmap bitmap, String path);
+    void onPhoto(Bitmap bitmap);
 
 }

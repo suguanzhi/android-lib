@@ -14,15 +14,15 @@ public class UploadEntity {
     private OnProgressListener listener;
 
     public enum STATE {
-        STATE_START, STATE_UPLOADING, STATE_SUCCESS, STATE_FAIL,
+        STATE_LOADING,STATE_START, STATE_UPLOADING, STATE_SUCCESS, STATE_FAIL,
     }
 
     public UploadEntity(String path) {
         this.path = path;
-        state = STATE.STATE_START;
+        state = STATE.STATE_LOADING;
     }
 
-    void setState(STATE state) {
+    public void setState(STATE state) {
         this.state = state;
         if (listener != null) {
             listener.onState(state);

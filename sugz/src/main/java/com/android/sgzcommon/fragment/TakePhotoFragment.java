@@ -29,7 +29,7 @@ public abstract class TakePhotoFragment extends BaseFragment {
      */
     protected File getTakePhotoDir() {
         if (mTakePhoto != null) {
-            return mTakePhoto.getPhotoDir();
+            return null;
         }
         return null;
     }
@@ -37,10 +37,10 @@ public abstract class TakePhotoFragment extends BaseFragment {
     /**
      * 调用系统照相机拍照
      */
-    protected void takePhoto(String path, OnPhotoListener listener) {
+    protected void takePhoto(OnPhotoListener listener) {
         if (mTakePhoto != null) {
-            mTakePhoto.setOnTakePhotoListener(listener);
-            mTakePhoto.takePhoto(path);
+            mTakePhoto.setPhotoListener(listener);
+            mTakePhoto.takePhoto();
         }
     }
 
@@ -49,7 +49,7 @@ public abstract class TakePhotoFragment extends BaseFragment {
      */
     protected void choosePhoto(OnPhotoListener listener) {
         if (mTakePhoto != null) {
-            mTakePhoto.setOnTakePhotoListener(listener);
+            mTakePhoto.setPhotoListener(listener);
             mTakePhoto.choosePhoto();
         }
     }

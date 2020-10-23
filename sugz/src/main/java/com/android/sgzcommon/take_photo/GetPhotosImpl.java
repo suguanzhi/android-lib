@@ -10,16 +10,19 @@ import com.android.sgzcommon.activity.PhotoViewActivity;
 import com.android.sgzcommon.activity.utils.MUploadResultSet;
 import com.android.sgzcommon.http.okhttp.upload.OKUploadTask;
 import com.android.sgzcommon.http.okhttp.upload.OnUploadFileListener;
+import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
 import com.android.sgzcommon.http.okhttp.upload.UploadResultSet;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.MarginDecoration;
 import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
-import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
+import com.android.sgzcommon.utils.BitmapUtils;
+import com.android.sgzcommon.utils.FilePathUtils;
 import com.android.sgzcommon.utils.FileUtils;
 
 import java.io.File;
@@ -52,29 +55,52 @@ final public class GetPhotosImpl implements GetPhotos {
     }
 
     public GetPhotosImpl(Activity activity, RecyclerView recyclerView, int column, int horizontalMargin, int verticalmargin) {
+        mColumn = column;
         mActivity = activity;
         mRecyclerView = recyclerView;
-        mColumn = column;
         mHorizontalMargin = horizontalMargin;
         mVerticalMargin = verticalmargin;
         mTakePhoto = new GetPhotoImpl(activity);
-        mTakePhoto.setOnTakePhotoListener(new OnPhotoListener() {
+        mTakePhoto.setPhotoListener(new OnPhotoListener() {
             @Override
-            public void onPhoto(Bitmap bitmap, String path) {
-                if (bitmap != null) {
-                    mPhotoUploads.add(new PhotoUpload(path));
-                }
-                mAdapter.notifyDataSetChanged();
-                if (mListener != null) {
-                    mListener.onPhotos(mPhotoUploads);
-                }
+            public void onPhoto(Bitmap bitmap) {
+                Log.d("GetPhotosImpl", "onPhoto: ");
+                final String path = FilePathUtils.getAppPictureDir(mActivity).getAbsolutePath() + File.separator + "IMG" + System.currentTimeMillis() + ".jpg";
+                final PhotoUpload photoUpload = new PhotoUpload(path);
+                mAdapter.addItemData(photoUpload, mPhotoUploads.size());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final boolean save = BitmapUtils.saveBimapToLocal(path, bitmap);
+                        bitmap.recycle();
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                UploadEntity.STATE state = UploadEntity.STATE.STATE_START;
+                                if (!save) {
+                                    state = UploadEntity.STATE.STATE_FAIL;
+                                }
+                                photoUpload.setState(state);
+                                int position = -1;
+                                for (int i = 0; i < mPhotoUploads.size(); i++) {
+                                    if (path.equals(mPhotoUploads.get(i).getPath())) {
+                                        position = i;
+                                        break;
+                                    }
+                                }
+                                if (position >= 0 && position < mPhotoUploads.size()) {
+                                    mAdapter.notifyItemChanged(position);
+                                }
+                                if (mListener != null) {
+                                    mListener.onPhotos(mPhotoUploads);
+                                }
+                            }
+                        });
+                    }
+                }).start();
             }
         });
         init();
-    }
-
-    public File getPhotoDir() {
-        return mTakePhoto.getPhotoDir();
     }
 
     private void init() {
@@ -99,7 +125,7 @@ final public class GetPhotosImpl implements GetPhotos {
         mAdapter.setOnTakePhotoClickListener(new OnTakePhotoClickListener() {
             @Override
             public void onClick(View view) {
-                takePhoto(null);
+                takePhoto();
             }
         });
 
@@ -193,8 +219,8 @@ final public class GetPhotosImpl implements GetPhotos {
      * 调用系统照相机拍照
      */
     @Override
-    public void takePhoto(String path) {
-        mTakePhoto.takePhoto(path);
+    public void takePhoto() {
+        mTakePhoto.takePhoto();
     }
 
     @Override
@@ -204,10 +230,19 @@ final public class GetPhotosImpl implements GetPhotos {
 
     @Override
     public void clearPhotos() {
-        mPhotoUploads.clear();
-        if (getPhotoDir().exists()) {
-            FileUtils.deleteFile(getPhotoDir());
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (PhotoUpload upload : mPhotoUploads) {
+                        FileUtils.deleteFile(upload.getPath());
+                    }
+                }
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        mPhotoUploads.clear();
         notifyTakePhotoChanged();
     }
 

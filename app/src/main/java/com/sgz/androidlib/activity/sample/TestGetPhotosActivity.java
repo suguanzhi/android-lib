@@ -88,9 +88,9 @@ public class TestGetPhotosActivity extends GetPhotosActivity {
             public void onClick(View view) {
                 Log.d("SampleTakePhotoListActivity", "onClick: ---------------------");
                 //选择照片
-                //                choosePhoto();
+                choosePhoto();
                 //拍照
-                takePhoto(null);
+                //takePhoto(true);
             }
         });
     }
