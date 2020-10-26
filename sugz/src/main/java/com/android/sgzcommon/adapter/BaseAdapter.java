@@ -14,7 +14,7 @@ import com.android.volley.toolbox.ImageLoader;
 
 import java.util.List;
 
-public abstract class BaseAdapter<V, H extends BaseAdapter.BaseViewHolder> extends android.widget.BaseAdapter {
+public abstract class BaseAdapter<V, H extends BaseViewHolder> extends android.widget.BaseAdapter {
 
     protected Point mWindowSize;
     protected Context mContext;
@@ -74,13 +74,4 @@ public abstract class BaseAdapter<V, H extends BaseAdapter.BaseViewHolder> exten
     public long getItemId(int position) {
         return position;
     }
-
-    public class BaseViewHolder {
-
-		private View convertView;
-
-		public BaseViewHolder(View convertView) {
-			this.convertView = convertView;
-		}
-	}
 }
