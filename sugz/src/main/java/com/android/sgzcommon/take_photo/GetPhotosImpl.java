@@ -16,10 +16,9 @@ import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.MarginDecoration;
 import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
-import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
 import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
 import com.android.sgzcommon.utils.BitmapUtils;
 import com.android.sgzcommon.utils.FilePathUtils;
@@ -76,9 +75,9 @@ final public class GetPhotosImpl implements GetPhotos {
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                UploadEntity.STATE state = UploadEntity.STATE.STATE_START;
+                                UploadEntity.STATE state = UploadEntity.STATE.STATE_UPLOAD_READY;
                                 if (!save) {
-                                    state = UploadEntity.STATE.STATE_FAIL;
+                                    state = UploadEntity.STATE.STATE_LOADING_FAIL;
                                 }
                                 photoUpload.setState(state);
                                 int position = -1;
@@ -103,6 +102,9 @@ final public class GetPhotosImpl implements GetPhotos {
         init();
     }
 
+    /**
+     *
+     */
     private void init() {
         mPhotoUploads = new ArrayList<>();
         mAdapter = new PictureGridEditAdapter(mActivity, mPhotoUploads, new BaseRecyclerviewAdapter.OnItemtClickListener() {
@@ -122,10 +124,15 @@ final public class GetPhotosImpl implements GetPhotos {
             }
         }, null);
 
-        mAdapter.setOnTakePhotoClickListener(new OnTakePhotoClickListener() {
+        mAdapter.setOnTakePhotoClickListener(new OnPhotoClickListener() {
             @Override
             public void onClick(View view) {
                 takePhoto();
+            }
+
+            @Override
+            public void onDelete(int position, PhotoUpload photoUpload) {
+
             }
         });
 
@@ -139,26 +146,13 @@ final public class GetPhotosImpl implements GetPhotos {
     }
 
     @Override
-    public void addPhotoUploads(List<? extends PhotoUpload> photoUploads) {
-        if (photoUploads != null) {
-            mPhotoUploads.addAll(photoUploads);
-        }
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
     public List<PhotoUpload> getPhotoUploads() {
         return mPhotoUploads;
     }
 
     @Override
-    public void setOnTakePhotoClickListener(OnTakePhotoClickListener listener) {
+    public void setOnPhotoClickListener(OnPhotoClickListener listener) {
         mAdapter.setOnTakePhotoClickListener(listener);
-    }
-
-    @Override
-    public void setOnDeletePhotoListener(OnDeletePhotoListener listener) {
-        mAdapter.setOnDeletePhotoListener(listener);
     }
 
     @Override
@@ -169,7 +163,7 @@ final public class GetPhotosImpl implements GetPhotos {
             Log.d("TakePhotoGridImpl", "uploadImages: ");
             for (int i = 0; i < mPhotoUploads.size(); i++) {
                 final PhotoUpload image = mPhotoUploads.get(i);
-                if (PhotoUpload.STATE.STATE_START == image.getState() || PhotoUpload.STATE.STATE_FAIL == image.getState()) {
+                if (PhotoUpload.STATE.STATE_UPLOAD_READY == image.getState() || PhotoUpload.STATE.STATE_UPLOAD_FAIL == image.getState()) {
                     final PhotoUpload photoUpload = mPhotoUploads.get(i);
                     OKUploadTask.getInstance().upLoadFile(url, photoUpload, data, headers, new MUploadResultSet(), new OnUploadFileListener<PhotoUpload>() {
                         @Override
@@ -184,7 +178,7 @@ final public class GetPhotosImpl implements GetPhotos {
                             if (listener != null) {
                                 listener.onSuccess(upload, result);
                                 for (int j = 0; j < mPhotoUploads.size(); j++) {
-                                    if (PhotoUpload.STATE.STATE_SUCCESS != mPhotoUploads.get(j).getState()) {
+                                    if (PhotoUpload.STATE.STATE_UPLOAD_SUCCESS != mPhotoUploads.get(j).getState()) {
                                         break;
                                     }
                                     if (j == mPhotoUploads.size() - 1) {
@@ -243,27 +237,28 @@ final public class GetPhotosImpl implements GetPhotos {
             e.printStackTrace();
         }
         mPhotoUploads.clear();
-        notifyTakePhotoChanged();
+        notifyPhotoChanged();
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         mTakePhoto.onActivityResult(requestCode, resultCode, data);
         Log.d("TakePhotoGridImpl", "onActivityResult: requestCode = " + requestCode);
     }
 
-
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         mTakePhoto.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 
     @Override
-    public void notifyTakePhotoChanged() {
+    public void notifyPhotoChanged() {
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void notifyTakePhotoChanged(int position) {
+    public void notifyPhotoChanged(int position) {
         mAdapter.notifyItemChanged(position);
     }
 }

@@ -13,8 +13,7 @@ import com.android.sgzcommon.http.okhttp.upload.UploadEntity;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
-import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
 import com.android.sgzcommon.utils.BitmapUtils;
 import com.android.sgzcommon.utils.FileUtils;
 import com.android.sgzcommon.utils.UnitUtils;
@@ -29,8 +28,7 @@ import java.util.List;
  */
 public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload, BaseViewHolder> {
 
-    private OnDeletePhotoListener mDeletePhotoListener;
-    private OnTakePhotoClickListener mTakePhotoClickListener;
+    private OnPhotoClickListener mPhotoClickListener;
 
     public PictureGridEditAdapter(Context context, List photoUploads, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         super(context, photoUploads, clickListener, longClickListener);
@@ -76,8 +74,8 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
                         mItems.remove(p);
                         notifyItemRemoved(p);
                     }
-                    if (mDeletePhotoListener != null) {
-                        mDeletePhotoListener.onDelete(position, photoUpload);
+                    if (mPhotoClickListener != null) {
+                        mPhotoClickListener.onDelete(position, photoUpload);
                     }
                     new Thread(new Runnable() {
                         @Override
@@ -104,8 +102,8 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
             viewHolder.mLlAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mTakePhotoClickListener != null) {
-                        mTakePhotoClickListener.onClick(v);
+                    if (mPhotoClickListener != null) {
+                        mPhotoClickListener.onClick(v);
                     }
                 }
             });
@@ -119,7 +117,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
             holder.mTvProgress.setVisibility(View.GONE);
             holder.mPbProgress.setVisibility(View.GONE);
             holder.mIvUploadState.setVisibility(View.GONE);
-        } else if (PhotoUpload.STATE.STATE_SUCCESS == state) {
+        } else if (PhotoUpload.STATE.STATE_UPLOAD_SUCCESS == state) {
             holder.mIvDelete.setVisibility(View.GONE);
             holder.mTvProgress.setVisibility(View.GONE);
             holder.mPbProgress.setVisibility(View.GONE);
@@ -132,7 +130,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
             holder.mIvDelete.setVisibility(View.GONE);
             holder.mPbLoading.setVisibility(View.GONE);
             holder.mIvUploadState.setVisibility(View.GONE);
-        } else if (PhotoUpload.STATE.STATE_FAIL == state) {
+        } else if (PhotoUpload.STATE.STATE_UPLOAD_FAIL == state) {
             holder.mIvDelete.setVisibility(View.VISIBLE);
             holder.mTvProgress.setVisibility(View.GONE);
             holder.mPbProgress.setVisibility(View.GONE);
@@ -205,11 +203,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
         }
     }
 
-    public void setOnDeletePhotoListener(OnDeletePhotoListener listener) {
-        this.mDeletePhotoListener = listener;
-    }
-
-    public void setOnTakePhotoClickListener(OnTakePhotoClickListener listener) {
-        this.mTakePhotoClickListener = listener;
+    public void setOnTakePhotoClickListener(OnPhotoClickListener listener) {
+        this.mPhotoClickListener = listener;
     }
 }

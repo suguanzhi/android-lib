@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.android.sgzcommon.adapter.MyBaseAdapter;
+import com.android.sgzcommon.adapter.BaseAdapter;
 import com.android.sgzcommon.take_photo.utils.CircleTransform;
 import com.android.sgzcommon.utils.UnitUtils;
 import com.android.sugz.R;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by sgz on 2019/5/6 0006.
  */
-public class PictureGridEditAdapter2 extends MyBaseAdapter {
+public class PictureGridEditAdapter2 extends BaseAdapter {
 
     public PictureGridEditAdapter2(Context context, List<?> objects) {
         super(context, objects);

@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.sgzcommon.adapter.MPagerAdapter;
+import com.android.sgzcommon.adapter.BasePagerAdapter;
 import com.android.sgzcommon.utils.UnitUtils;
 import com.android.sugz.R;
 
@@ -138,7 +138,7 @@ public class NavigatorViewPager extends LinearLayout implements ViewPager.OnPage
     }
 
     public void setFragments(FragmentManager fm, List<Fragment> fragments) {
-        MPagerAdapter adapter = new MPagerAdapter(fm, fragments);
+        BasePagerAdapter adapter = new BasePagerAdapter(fm, fragments);
         mViewPager.setAdapter(adapter);
     }
 

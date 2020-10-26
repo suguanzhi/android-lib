@@ -9,11 +9,11 @@ import androidx.fragment.app.FragmentPagerAdapter;
 /**
  * Created by sgz on 2019/10/9 0009.
  */
-public class MPagerAdapter extends FragmentPagerAdapter {
+public class BasePagerAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> mFragments;
 
-    public MPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public BasePagerAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         mFragments = fragments;
     }

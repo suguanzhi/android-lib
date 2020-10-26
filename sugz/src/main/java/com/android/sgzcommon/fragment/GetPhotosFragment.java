@@ -5,15 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.android.sgzcommon.take_photo.entity.PhotoUpload;
-import com.android.sgzcommon.take_photo.ShowImages;
-import com.android.sgzcommon.take_photo.ShowImagesImpl;
 import com.android.sgzcommon.take_photo.GetPhotos;
 import com.android.sgzcommon.take_photo.GetPhotosImpl;
-import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
+import com.android.sgzcommon.take_photo.ShowImages;
+import com.android.sgzcommon.take_photo.ShowImagesImpl;
+import com.android.sgzcommon.take_photo.entity.PhotoUpload;
+import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
 
 import java.util.List;
 import java.util.Map;
@@ -52,11 +51,6 @@ public abstract class GetPhotosFragment extends BaseFragment implements GetPhoto
     }
 
     @Override
-    public void addPhotoUploads(List<? extends PhotoUpload> photoUploads) {
-        mTakePhotos.addPhotoUploads(photoUploads);
-    }
-
-    @Override
     public void setImageUrls(List<String> urls) {
         mShowImages.setImageUrls(urls);
     }
@@ -72,13 +66,8 @@ public abstract class GetPhotosFragment extends BaseFragment implements GetPhoto
     }
 
     @Override
-    public void setOnTakePhotoClickListener(OnTakePhotoClickListener listener) {
-        mTakePhotos.setOnTakePhotoClickListener(listener);
-    }
-
-    @Override
-    public void setOnDeletePhotoListener(OnDeletePhotoListener listener) {
-        mTakePhotos.setOnDeletePhotoListener(listener);
+    public void setOnPhotoClickListener(OnPhotoClickListener listener) {
+        mTakePhotos.setOnPhotoClickListener(listener);
     }
 
     @Override
@@ -100,13 +89,8 @@ public abstract class GetPhotosFragment extends BaseFragment implements GetPhoto
     }
 
     @Override
-    public void notifyTakePhotoChanged() {
-        mTakePhotos.notifyTakePhotoChanged();
-    }
-
-    @Override
-    public void notifyTakePhotoChanged(int position) {
-        mTakePhotos.notifyTakePhotoChanged(position);
+    public void notifyPhotoChanged(int position) {
+        mTakePhotos.notifyPhotoChanged(position);
     }
 
     @Override

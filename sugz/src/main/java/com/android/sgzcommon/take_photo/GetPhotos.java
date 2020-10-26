@@ -1,22 +1,20 @@
 package com.android.sgzcommon.take_photo;
 
+import android.content.Intent;
+
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
-import com.android.sgzcommon.take_photo.listener.OnDeletePhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
 
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by sgz on 2020/1/10.
  */
 public interface GetPhotos extends GetPhoto {
-
-    /**
-     * @param photoUploads
-     */
-    void addPhotoUploads(List<? extends PhotoUpload> photoUploads);
 
     /**
      * @return
@@ -26,12 +24,7 @@ public interface GetPhotos extends GetPhoto {
     /**
      * @param listener
      */
-    void setOnTakePhotoClickListener(OnTakePhotoClickListener listener);
-
-    /**
-     * @param listener
-     */
-    void setOnDeletePhotoListener(OnDeletePhotoListener listener);
+    void setOnPhotoClickListener(OnPhotoClickListener listener);
 
     /**
      * @param url
@@ -49,11 +42,27 @@ public interface GetPhotos extends GetPhoto {
     /**
      *
      */
-    void notifyTakePhotoChanged();
+    void notifyPhotoChanged();
 
     /**
      * @param position
      */
-    void notifyTakePhotoChanged(int position);
+    void notifyPhotoChanged(int position);
+
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    void onActivityResult(int requestCode, int resultCode, Intent data);
+
+    /**
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults);
 
 }

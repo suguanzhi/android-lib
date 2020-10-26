@@ -8,7 +8,7 @@ import android.view.View;
 import com.android.sgzcommon.activity.GetPhotosActivity;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 import com.android.sgzcommon.take_photo.GetPhotosImpl;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoClickListener;
+import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
 import com.sgz.androidlib.R;
 
 import java.util.List;
@@ -83,7 +83,7 @@ public class TestGetPhotosActivity extends GetPhotosActivity {
         Log.d("MainActivity", "onCreate: size == " + queue.size());
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(3);
 
-        setOnTakePhotoClickListener(new OnTakePhotoClickListener() {
+        setOnPhotoClickListener(new OnPhotoClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("SampleTakePhotoListActivity", "onClick: ---------------------");
@@ -91,6 +91,11 @@ public class TestGetPhotosActivity extends GetPhotosActivity {
                 choosePhoto();
                 //拍照
                 //takePhoto(true);
+            }
+
+            @Override
+            public void onDelete(int position, PhotoUpload photoUpload) {
+
             }
         });
     }

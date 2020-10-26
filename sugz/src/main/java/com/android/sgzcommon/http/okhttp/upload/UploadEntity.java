@@ -14,7 +14,7 @@ public class UploadEntity {
     private OnProgressListener listener;
 
     public enum STATE {
-        STATE_LOADING,STATE_START, STATE_UPLOADING, STATE_SUCCESS, STATE_FAIL,
+        STATE_LOADING,STATE_LOADING_FAIL, STATE_UPLOAD_READY, STATE_UPLOADING, STATE_UPLOAD_SUCCESS, STATE_UPLOAD_FAIL,
     }
 
     public UploadEntity(String path) {

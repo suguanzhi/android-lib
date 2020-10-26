@@ -58,12 +58,12 @@ public class OKUploadTask<T extends UploadEntity> {
                 switch (msg.what) {
                     case ON_START:
                         entity.setProgress(0);
-                        entity.setState(UploadEntity.STATE.STATE_START);
+                        entity.setState(UploadEntity.STATE.STATE_UPLOAD_READY);
                         listener.onUploadStart(entity);
                         break;
                     case ON_SUCCESS:
                         entity.setProgress(100);
-                        entity.setState(UploadEntity.STATE.STATE_SUCCESS);
+                        entity.setState(UploadEntity.STATE.STATE_UPLOAD_SUCCESS);
                         listener.onUploadSuccess(entity, result);
                         break;
                     case ON_VALUE:
@@ -73,7 +73,7 @@ public class OKUploadTask<T extends UploadEntity> {
                         listener.onValue(entity, value);
                         break;
                     case ON_FAIL:
-                        entity.setState(UploadEntity.STATE.STATE_FAIL);
+                        entity.setState(UploadEntity.STATE.STATE_UPLOAD_FAIL);
                         Exception e = result.getError();
                         listener.onUploadFail(entity, e);
                         break;
