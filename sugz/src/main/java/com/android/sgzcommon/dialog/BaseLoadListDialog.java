@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.sgzcommon.adapter.BaseLoadListAdapter;
+import com.android.sgzcommon.recycleview.adapter.BaseLoadListAdapter;
 import com.android.sgzcommon.dialog.entity.LoadListItem;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.view.LoadResultView;

@@ -1,4 +1,4 @@
-package com.android.sgzcommon.adapter;
+package com.android.sgzcommon.recycleview.adapter;
 
 import android.content.Context;
 import android.view.View;

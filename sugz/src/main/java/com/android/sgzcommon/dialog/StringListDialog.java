@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import com.android.sgzcommon.adapter.StringListAdapter;
+import com.android.sgzcommon.recycleview.adapter.StringListAdapter;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sugz.R;
 
