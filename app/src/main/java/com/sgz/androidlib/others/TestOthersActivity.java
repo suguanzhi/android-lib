@@ -9,6 +9,7 @@ import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.service.entity.VersionDownload;
 import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
+import com.sgz.androidlib.others.sample.TestBaseAdapterActivity;
 import com.sgz.androidlib.others.sample.TestCreateCodeActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,6 +30,8 @@ public class TestOthersActivity extends BaseActivity {
     Button mBtnCode;
     @BindView(R.id.btn_version_update)
     Button mBtnOthers;
+    @BindView(R.id.btn_base_adapter)
+    Button mBtnBaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +40,18 @@ public class TestOthersActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_code, R.id.btn_version_update})
+    @OnClick({R.id.btn_base_adapter,R.id.btn_code, R.id.btn_version_update})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
+            case R.id.btn_base_adapter:
+                intent = new Intent(mContext, TestBaseAdapterActivity.class);
+                break;
             case R.id.btn_code:
                 intent = new Intent(mContext, TestCreateCodeActivity.class);
                 break;
             case R.id.btn_version_update:
-                final String url ="http://139.9.86.110:80/upload/files/20200929/盛马桂v1_0_9_1601367084098.apk";
+                final String url = "http://139.9.86.110:80/upload/files/20200929/盛马桂v1_0_9_1601367084098.apk";
                 EventBus.getDefault().post(new VersionDownload(url, 101));
                 break;
         }

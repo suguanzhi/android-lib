@@ -1,27 +1,15 @@
 package com.android.sgzcommon.adapter;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.android.sgzcommon.cache.BitmapCache;
-import com.android.sgzcommon.utils.SystemUtils;
-import com.android.sgzcommon.volley.VolleyManager;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
 
 import java.util.List;
 
 public abstract class BaseAdapter<V, H extends BaseViewHolder> extends android.widget.BaseAdapter {
 
-    protected Point mWindowSize;
     protected Context mContext;
-    protected BitmapCache mCache;
-    protected RequestQueue mQueue;
-    protected ImageLoader mImageLoader;
-    protected LayoutInflater mInflater;
     protected List<V> mItems;
 
     protected abstract int getConverViewId();
@@ -30,13 +18,8 @@ public abstract class BaseAdapter<V, H extends BaseViewHolder> extends android.w
 
     protected abstract void initData(H h, int position, V v);
 
-    public BaseAdapter(Context context, List items) {
+    public BaseAdapter(Context context, List<V> items) {
         mContext = context;
-        mInflater = LayoutInflater.from(mContext);
-        mCache = VolleyManager.getInstance(mContext).getBitmapCacheInstance();
-        mQueue = VolleyManager.getInstance(mContext).getRequestQueueInstance();
-        mImageLoader = VolleyManager.getInstance(mContext).getImageLoaderInstance();
-        mWindowSize = SystemUtils.getWindowSize(context);
         mItems = items;
     }
 
