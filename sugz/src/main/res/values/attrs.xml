@@ -57,7 +57,9 @@
         <attr name="text_color" />
         <attr name="add" format="reference" />
         <attr name="sub" format="reference" />
-        <attr name="value" format="string" />
+        <attr name="value" format="integer" />
+        <attr name="min" format="integer" />
+        <attr name="max" format="integer" />
         <attr name="input_background" format="reference" />
         <attr name="add_sub_padding" format="dimension" />
     </declare-styleable>

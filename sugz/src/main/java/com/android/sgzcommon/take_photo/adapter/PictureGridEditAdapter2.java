@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class PictureGridEditAdapter2 extends BaseAdapter<String, PictureGridEditAdapter2.ViewHolder> {
 
-    public PictureGridEditAdapter2(Context context, List<?> objects) {
+    public PictureGridEditAdapter2(Context context, List objects) {
         super(context, objects);
     }
 

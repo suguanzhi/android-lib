@@ -45,6 +45,8 @@
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                app:max="10"
+                app:min="3"
                 app:text_size="25sp"
                 app:value="2" />
 

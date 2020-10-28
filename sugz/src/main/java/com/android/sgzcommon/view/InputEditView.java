@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -31,7 +30,9 @@ public class InputEditView extends LinearLayout {
     private ImageView mIvSub;
     private EditText mEtInput;
 
-    private String defaultValue;
+    private int minValue;
+    private int maxValue;
+    private int value;
     private OnAddOrSubClickListener clickistener;
     private OnValueChangeListener changeListener;
 
@@ -55,13 +56,13 @@ public class InputEditView extends LinearLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int value = 0;
-                String v = s.toString();
+                value = 0;
+                String vs = s.toString();
                 try {
-                    value = Integer.parseInt(v);
+                    value = Integer.parseInt(vs);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    mEtInput.setText(defaultValue);
+                    mEtInput.setText(value + "");
                 }
                 if (changeListener != null) {
                     changeListener.onValueChange(value);
@@ -78,7 +79,9 @@ public class InputEditView extends LinearLayout {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                ++value;
+                if (value < maxValue) {
+                    ++value;
+                }
                 mEtInput.setText(value + "");
                 if (clickistener != null) {
                     clickistener.onAddClick();
@@ -95,7 +98,7 @@ public class InputEditView extends LinearLayout {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (value > 0) {
+                if (value > minValue) {
                     --value;
                 }
                 mEtInput.setText(value + "");
@@ -114,9 +117,13 @@ public class InputEditView extends LinearLayout {
             params.height = height;
             container.setLayoutParams(params);
         }
-        defaultValue = array.getString(R.styleable.InputEditView_value);
-        if (TextUtils.isEmpty(defaultValue)) {
-            defaultValue = "0";
+        int min = array.getInt(R.styleable.InputEditView_min, 0);
+        setMinValue(min);
+        int max = array.getInt(R.styleable.InputEditView_max, Integer.MAX_VALUE);
+        setMaxValue(max);
+        int defaultValue = array.getInt(R.styleable.InputEditView_value, 0);
+        if (defaultValue < minValue) {
+            defaultValue = minValue;
         }
         setValue(defaultValue);
         Drawable backgroundDrawable = array.getDrawable(R.styleable.InputEditView_background);
@@ -149,8 +156,23 @@ public class InputEditView extends LinearLayout {
         mEtInput.setBackground(background);
     }
 
-    public void setValue(String value) {
-        mEtInput.setText(value);
+    public void setValue(int v) {
+        value = v;
+        mEtInput.setText(value + "");
+    }
+
+    public void setMinValue(int min) {
+        minValue = min;
+        if (minValue < 0) {
+            minValue = 0;
+        }
+    }
+
+    public void setMaxValue(int max) {
+        maxValue = max;
+        if (maxValue < minValue) {
+            maxValue = minValue;
+        }
     }
 
     public int getValue() {
