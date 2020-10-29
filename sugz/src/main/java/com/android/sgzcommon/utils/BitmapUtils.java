@@ -165,6 +165,26 @@ public class BitmapUtils {
     }
 
     /**
+     * 将bitmap保存到本地缓存目录（耗时操作）
+     *
+     * @param bitmap
+     * @return
+     */
+    public static File saveBimapCache(Context context, Bitmap bitmap) {
+        String dirPath = FilePathUtils.getAppCacheDir(context).getAbsolutePath() + File.separator + "pcitures";
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        String filePath = dirPath + "IMG_" + System.currentTimeMillis() + ".jpg";
+        boolean save = saveBimapToLocal(filePath, bitmap);
+        if (save) {
+            return new File(filePath);
+        }
+        return null;
+    }
+
+    /**
      * drawable转bitmap
      *
      * @param drawable

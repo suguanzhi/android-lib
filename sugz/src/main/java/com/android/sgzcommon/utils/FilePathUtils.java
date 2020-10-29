@@ -27,6 +27,14 @@ public class FilePathUtils {
         return rootDir;
     }
 
+    public static File getAppCacheDir(Context context) {
+        File rootDir = context.getCacheDir();
+        if (!rootDir.exists()) {
+            rootDir.mkdirs();
+        }
+        return rootDir;
+    }
+
     public static File getAppPictureDir(Context context) {
         File rootDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         if (!rootDir.exists()) {
