@@ -165,7 +165,7 @@ public class BitmapUtils {
     }
 
     /**
-     * 将bitmap保存到本地缓存目录（耗时操作）
+     * 将bitmap保存到本地缓存临时目录（耗时操作）
      *
      * @param bitmap
      * @return
