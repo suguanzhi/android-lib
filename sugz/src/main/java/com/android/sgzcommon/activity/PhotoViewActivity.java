@@ -30,7 +30,7 @@ public class PhotoViewActivity extends BaseActivity {
             } else {
                 File file = new File(path);
                 if (file.exists()) {
-                    mDpvImage.setImageBitmap(BitmapUtils.getFitBitmap(this, path));
+                    mDpvImage.setImageBitmap(BitmapUtils.getWindowFitBitmap(this, path));
                 }
             }
         }

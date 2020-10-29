@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
@@ -13,6 +14,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
+
+import androidx.annotation.NonNull;
 
 import static android.content.ContentValues.TAG;
 
@@ -111,7 +114,7 @@ public class BitmapUtils {
      * @param path
      * @return
      */
-    public static Bitmap getFitBitmap(Context context, String path) {
+    public static Bitmap getWindowFitBitmap(Context context, String path) {
         Bitmap bitmap = null;
         try {
             BitmapFactory.Options opts = getOptions(path, SystemUtils.getWindowSize(context).x, SystemUtils.getWindowSize(context).y);
@@ -120,6 +123,26 @@ public class BitmapUtils {
             e.printStackTrace();
         }
         return bitmap;
+    }
+
+    /**
+     * @param src
+     * @param dstWidth
+     * @param dstHeight
+     * @param filter
+     * @return
+     */
+    public static Bitmap getScaledBitmap(@NonNull Bitmap src, int dstWidth, int dstHeight, boolean filter) {
+        Matrix m = new Matrix();
+        final int width = src.getWidth();
+        final int height = src.getHeight();
+        if (width != dstWidth || height != dstHeight) {
+            final float sx = dstWidth / (float) width;
+            final float sy = dstHeight / (float) height;
+            final float ratio = Math.min(sx, sy);
+            m.setScale(ratio, ratio);
+        }
+        return Bitmap.createBitmap(src, 0, 0, width, height, m, filter);
     }
 
     /**
@@ -175,8 +198,9 @@ public class BitmapUtils {
         return media.getFrameAtTime();
     }
 
-    public interface OnSaveBitmapListener{
+    public interface OnSaveBitmapListener {
         void onFinish();
+
         void onFailure(Exception e);
     }
 

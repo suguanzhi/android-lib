@@ -140,7 +140,7 @@ public class VideoAndImageView extends RelativeLayout {
             showImageview(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    mImageView.setImageBitmap(BitmapUtils.getFitBitmap(getContext(), mCurrentItemInfo.getPath()));
+                    mImageView.setImageBitmap(BitmapUtils.getWindowFitBitmap(getContext(), mCurrentItemInfo.getPath()));
                 }
 
                 @Override
