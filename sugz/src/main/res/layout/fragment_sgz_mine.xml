@@ -55,7 +55,7 @@
         <LinearLayout
             android:id="@+id/ll_setting"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
+            android:layout_height="@dimen/row_height_max"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -87,7 +87,7 @@
         <LinearLayout
             android:id="@+id/ll_version"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/row_height"
+            android:layout_height="@dimen/row_height_max"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
