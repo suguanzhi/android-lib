@@ -176,7 +176,7 @@ public class BitmapUtils {
         if (!dir.exists()) {
             dir.mkdirs();
         }
-        String filePath = dirPath + "IMG_" + System.currentTimeMillis() + ".jpg";
+        String filePath = dirPath + File.separator + "IMG_" + System.currentTimeMillis() + ".jpg";
         boolean save = saveBimapToLocal(filePath, bitmap);
         if (save) {
             return new File(filePath);
