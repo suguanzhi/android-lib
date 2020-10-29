@@ -28,7 +28,7 @@ public class FilePathUtils {
     }
 
     public static File getAppCacheDir(Context context) {
-        File rootDir = context.getCacheDir();
+        File rootDir = context.getExternalCacheDir();
         if (!rootDir.exists()) {
             rootDir.mkdirs();
         }
