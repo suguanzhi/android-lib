@@ -1,7 +1,11 @@
 package com.sgz.androidlib.others;
 
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 
@@ -32,6 +36,8 @@ public class TestOthersActivity extends BaseActivity {
     Button mBtnOthers;
     @BindView(R.id.btn_base_adapter)
     Button mBtnBaseAdapter;
+    @BindView(R.id.btn_vibrate)
+    Button mBtnVibrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +46,7 @@ public class TestOthersActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_base_adapter,R.id.btn_code, R.id.btn_version_update})
+    @OnClick({R.id.btn_base_adapter, R.id.btn_code, R.id.btn_version_update, R.id.btn_vibrate})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -53,6 +59,14 @@ public class TestOthersActivity extends BaseActivity {
             case R.id.btn_version_update:
                 final String url = "http://139.9.86.110:80/upload/files/20200929/盛马桂v1_0_9_1601367084098.apk";
                 EventBus.getDefault().post(new VersionDownload(url, 101));
+                break;
+            case R.id.btn_vibrate:
+                Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT < 26) {
+                    vibrator.vibrate(1000);
+                } else if (Build.VERSION.SDK_INT >= 26) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(1000, AudioAttributes.USAGE_NOTIFICATION_RINGTONE));
+                }
                 break;
         }
         if (intent != null) {

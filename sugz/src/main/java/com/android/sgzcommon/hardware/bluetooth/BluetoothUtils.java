@@ -1,4 +1,4 @@
-package com.android.sgzcommon.bluetooth;
+package com.android.sgzcommon.hardware.bluetooth;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;

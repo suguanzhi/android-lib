@@ -1,7 +1,6 @@
 package com.android.sgzcommon.activity;
 
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -45,7 +44,6 @@ public abstract class BaseQRCodeActivity extends BaseActivity implements Surface
     RelativeLayout mRlScrop;
     RelativeLayout mRlTopContnent;
     RelativeLayout mRlBottomContnent;
-    private Vibrator mVibrator;
     private DecodeCaptureManager mDecodeCaptureManager;
 
     public static final String RESULT_NAME = "result";
@@ -82,18 +80,8 @@ public abstract class BaseQRCodeActivity extends BaseActivity implements Surface
         if (contentBottomId > 0) {
             LayoutInflater.from(this).inflate(contentBottomId, mRlBottomContnent);
         }
-        mVibrator = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
         SurfaceHolder holder = mSfvCamera.getHolder();
         holder.addCallback(BaseQRCodeActivity.this);
-    }
-
-    /**
-     *震动
-     */
-    protected void vibrate() {
-        if (mVibrator != null && mVibrator.hasVibrator()) {
-            mVibrator.vibrate(500);
-        }
     }
 
     /**
