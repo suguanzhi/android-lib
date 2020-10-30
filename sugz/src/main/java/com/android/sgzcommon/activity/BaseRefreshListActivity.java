@@ -26,10 +26,6 @@ public abstract class BaseRefreshListActivity<A extends BaseRecyclerviewAdapter>
     protected LoadResultView mLrv;
     protected SmartRefreshLayout mSrlRefresh;
 
-    protected abstract String getTitleText();
-
-    protected abstract A getAdapter();
-
     protected abstract void onRefresh(RefreshLayout refreshLayout);
 
     protected abstract void onLoadMore(RefreshLayout refreshLayout);
@@ -42,9 +38,7 @@ public abstract class BaseRefreshListActivity<A extends BaseRecyclerviewAdapter>
         mLrv = findViewById(R.id.lrv);
         mRvList = findViewById(R.id.rv_list);
         mSrlRefresh = findViewById(R.id.srl_refresh);
-        mTitleBar.setTitle(getTitleText());
         mRvList.setLayoutManager(createLinearLayoutManager(RecyclerView.VERTICAL));
-        mRvList.setAdapter(getAdapter());
         mSrlRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -57,6 +51,14 @@ public abstract class BaseRefreshListActivity<A extends BaseRecyclerviewAdapter>
                 onLoadMore(refreshLayout);
             }
         });
+    }
+
+    public void setTitle(String title) {
+        mTitleBar.setTitle(title);
+    }
+
+    public void setAdapter(A adapter) {
+        mRvList.setAdapter(adapter);
     }
 
     public void setEnableLoadMore(boolean enable) {

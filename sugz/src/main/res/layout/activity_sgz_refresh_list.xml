@@ -10,7 +10,7 @@
         android:id="@+id/tb_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="入库通知单" />
+        app:title="" />
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/srl_refresh"
