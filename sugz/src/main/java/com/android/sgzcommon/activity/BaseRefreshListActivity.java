@@ -53,7 +53,7 @@ public abstract class BaseRefreshListActivity<A extends BaseRecyclerviewAdapter>
         });
     }
 
-    public void setTitle(String title) {
+    public void setTitleText(String title) {
         mTitleBar.setTitle(title);
     }
 
