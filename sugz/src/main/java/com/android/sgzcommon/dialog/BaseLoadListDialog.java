@@ -121,7 +121,8 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
     }
 
     /**
-     *  如果请求参数是变量，显示dialog需要调用该方法，否则调用show()即可。
+     * 如果请求参数是变量，显示dialog需要调用该方法，否则调用show()即可。
+     *
      * @param data 网络请求参数
      */
     public void show(Map<String, String> data) {
