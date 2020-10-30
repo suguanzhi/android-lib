@@ -8,23 +8,15 @@
 
     <Button
         android:id="@+id/btn_take_photo"
-        android:layout_width="@dimen/btn_width"
-        android:layout_height="@dimen/btn_height"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/shape_btn_confirm"
+        style="@style/Button.Confirm"
         android:text="拍照"
-        android:textColor="@color/white"
-        android:textSize="@dimen/btn_text_size" />
+         />
 
     <Button
         android:id="@+id/btn_select_photo"
-        android:layout_width="@dimen/btn_width"
-        android:layout_height="@dimen/btn_height"
         android:layout_marginTop="20dp"
-        android:background="@drawable/shape_btn_sk_confirm_sd_white"
         android:text="相册"
-        android:textColor="@color/btn_confirm"
-        android:textSize="@dimen/btn_text_size" />
+        style="@style/Button.Confirm"/>
 
     <Button
         android:id="@+id/btn_cancle"
