@@ -32,7 +32,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
     private RecyclerView mRvList;
     private LoadResultView mLrv;
     private BaseLoadListAdapter mAdapter;
-    private OnLoadListListener mLoadListListener;
+    private OnLoadListListener mResponseListener;
     private OnLoadListClickListener listener;
 
     private CharSequence mTitle;
@@ -68,7 +68,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
         mPbLoading = findViewById(R.id.pb_loading);
         mRvList = findViewById(R.id.rv_list);
         mLrv = findViewById(R.id.lrv);
-        mLoadListListener = new OnLoadListListener<V>() {
+        mResponseListener = new OnLoadListListener<V>() {
             @Override
             public void onStart() {
                 mPbLoading.setVisibility(View.VISIBLE);
@@ -117,9 +117,13 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
     protected void onStart() {
         super.onStart();
         mLrv.gone();
-        loadList(data, mLoadListListener);
+        loadList(data, mResponseListener);
     }
 
+    /**
+     *  如果请求参数是变量，显示dialog需要调用该方法，否则调用show()即可。
+     * @param data 网络请求参数
+     */
     public void show(Map<String, String> data) {
         this.data = data;
         show();
