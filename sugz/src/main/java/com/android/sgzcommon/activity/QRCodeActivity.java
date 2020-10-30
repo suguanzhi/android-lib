@@ -23,7 +23,12 @@ public class QRCodeActivity extends BaseQRCodeActivity {
     }
 
     @Override
-    protected int getContentLayoutId() {
+    protected int getContentTopLayoutId() {
+        return 0;
+    }
+
+    @Override
+    protected int getContentBottomLayoutId() {
         return 0;
     }
 }

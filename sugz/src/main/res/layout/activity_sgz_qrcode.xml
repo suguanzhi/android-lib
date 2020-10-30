@@ -24,6 +24,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/tv_tip_top"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_above="@id/rl_scrop"
@@ -50,9 +51,16 @@
         android:textColor="@color/text"
         android:textSize="12sp" />
 
+    <RelativeLayout
+        android:id="@+id/rl_content_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tv_tip_top"
+        android:layout_below="@id/iv_close"
+        android:background="@color/transparent" />
 
     <RelativeLayout
-        android:id="@+id/rl_content"
+        android:id="@+id/rl_content_bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tv_tip_bottom"

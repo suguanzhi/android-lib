@@ -1,6 +1,7 @@
 package com.android.sgzcommon.activity;
 
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -42,7 +43,9 @@ public abstract class BaseQRCodeActivity extends BaseActivity implements Surface
     ImageView mIvScanLine;
     SurfaceView mSfvCamera;
     RelativeLayout mRlScrop;
-    RelativeLayout mRlContnent;
+    RelativeLayout mRlTopContnent;
+    RelativeLayout mRlBottomContnent;
+    private Vibrator mVibrator;
     private DecodeCaptureManager mDecodeCaptureManager;
 
     public static final String RESULT_NAME = "result";
@@ -51,7 +54,9 @@ public abstract class BaseQRCodeActivity extends BaseActivity implements Surface
 
     protected abstract void onResultError(Exception e);
 
-    protected abstract int getContentLayoutId();
+    protected abstract int getContentTopLayoutId();
+
+    protected abstract int getContentBottomLayoutId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +72,28 @@ public abstract class BaseQRCodeActivity extends BaseActivity implements Surface
                 finish();
             }
         });
-        mRlContnent = findViewById(R.id.rl_content);
-        int contentId = getContentLayoutId();
-        if (contentId > 0) {
-            LayoutInflater.from(this).inflate(contentId, mRlContnent);
+        mRlTopContnent = findViewById(R.id.rl_content_top);
+        mRlBottomContnent = findViewById(R.id.rl_content_bottom);
+        int contentTopId = getContentTopLayoutId();
+        if (contentTopId > 0) {
+            LayoutInflater.from(this).inflate(contentTopId, mRlTopContnent);
         }
+        int contentBottomId = getContentBottomLayoutId();
+        if (contentBottomId > 0) {
+            LayoutInflater.from(this).inflate(contentBottomId, mRlBottomContnent);
+        }
+        mVibrator = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
         SurfaceHolder holder = mSfvCamera.getHolder();
         holder.addCallback(BaseQRCodeActivity.this);
+    }
+
+    /**
+     *震动
+     */
+    protected void vibrate() {
+        if (mVibrator != null && mVibrator.hasVibrator()) {
+            mVibrator.vibrate(500);
+        }
     }
 
     /**
