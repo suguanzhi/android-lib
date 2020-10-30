@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.view.LoadResultView;
+import com.android.sgzcommon.view.TitleBar;
 import com.android.sugz.R;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
@@ -20,9 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public abstract class BaseRefreshListActivity<A extends BaseRecyclerviewAdapter> extends BaseActivity {
 
-    RecyclerView mRvList;
+    protected TitleBar mTitleBar;
+    protected RecyclerView mRvList;
     protected LoadResultView mLrv;
     protected SmartRefreshLayout mSrlRefresh;
+
+    protected abstract String getTitleText();
 
     protected abstract A getAdapter();
 
@@ -34,9 +38,11 @@ public abstract class BaseRefreshListActivity<A extends BaseRecyclerviewAdapter>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sgz_refresh_list);
+        mTitleBar = findViewById(R.id.tb_title);
         mLrv = findViewById(R.id.lrv);
         mRvList = findViewById(R.id.rv_list);
         mSrlRefresh = findViewById(R.id.srl_refresh);
+        mTitleBar.setTitle(getTitleText());
         mRvList.setLayoutManager(createLinearLayoutManager(RecyclerView.VERTICAL));
         mRvList.setAdapter(getAdapter());
         mSrlRefresh.setOnRefreshListener(new OnRefreshListener() {

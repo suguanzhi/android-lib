@@ -76,6 +76,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
 
             @Override
             public void onSuccess(List<V> items) {
+                mRvList.setVisibility(View.VISIBLE);
                 mPbLoading.setVisibility(View.GONE);
                 mItems.clear();
                 if (items != null) {
@@ -92,6 +93,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
             @Override
             public void onFailed() {
                 mPbLoading.setVisibility(View.GONE);
+                mRvList.setVisibility(View.GONE);
                 mLrv.error("加载失败！");
             }
         };

@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <com.android.sgzcommon.view.TitleBar
+        android:id="@+id/tb_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="入库通知单" />
