@@ -1,11 +1,15 @@
 package com.android.sgzcommon.recycleview;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.sgzcommon.volley.VolleyManager;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 
 import java.util.List;
@@ -75,6 +79,48 @@ public abstract class BaseRecyclerviewAdapter<E, VH extends RecyclerView.ViewHol
             }
         });
         return holder;
+    }
+
+    /**
+     * @param url
+     * @param imageView
+     * @param defaultResId
+     * @param failureResId
+     */
+    protected void loadImage(String url, ImageView imageView, int defaultResId, int failureResId) {
+        if (!TextUtils.isEmpty(url)) {
+            imageView.setTag(url);
+            mImageLoader.get(url, new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+                    String tag = (String) imageView.getTag();
+                    String rUrl = response.getRequestUrl();
+                    Bitmap bitmap = response.getBitmap();
+                    if (bitmap != null) {
+                        if (tag.equals(rUrl)) {
+                            imageView.setImageBitmap(bitmap);
+                        }
+                    } else {
+                        if (defaultResId > 0) {
+                            imageView.setImageResource(defaultResId);
+                        } else {
+                            imageView.setImageBitmap(null);
+                        }
+                    }
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    if (defaultResId > 0) {
+                        imageView.setImageResource(failureResId);
+                    } else {
+                        imageView.setImageBitmap(null);
+                    }
+                }
+            });
+        } else {
+            imageView.setImageBitmap(null);
+        }
     }
 
 

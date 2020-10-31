@@ -21,6 +21,7 @@ public class MyBaseAdapter extends BaseAdapter<String, MyBaseAdapter.ViewHolder>
 
     public MyBaseAdapter(Context context, List items) {
         super(context, items);
+
     }
 
     @Override

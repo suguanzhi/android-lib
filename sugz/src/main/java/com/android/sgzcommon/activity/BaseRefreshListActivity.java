@@ -83,6 +83,12 @@ public abstract class BaseRefreshListActivity<A extends BaseRecyclerviewAdapter>
         mLrv.empty(msg);
     }
 
+    public void error(String msg) {
+        mLrv.setVisibility(View.VISIBLE);
+        mRvList.setVisibility(View.GONE);
+        mLrv.error(msg);
+    }
+
     public void notEmpty() {
         mRvList.setVisibility(View.VISIBLE);
         mLrv.gone();
