@@ -42,13 +42,13 @@ public abstract class BaseRefreshListActivity<A extends BaseRecyclerviewAdapter>
         mSrlRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                onRefresh(refreshLayout);
+                BaseRefreshListActivity.this.onRefresh(refreshLayout);
             }
         });
         mSrlRefresh.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                onLoadMore(refreshLayout);
+                BaseRefreshListActivity.this.onLoadMore(refreshLayout);
             }
         });
     }
