@@ -3,7 +3,6 @@ package com.android.sgzcommon.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.view.LoadResultView;
 import com.android.sgzcommon.view.TitleBar;
 import com.android.sugz.R;
@@ -19,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @author sgz
  * @date 2020/9/10
  */
-public abstract class BaseRefreshListActivity<A extends BaseRecyclerviewAdapter> extends BaseActivity {
+public abstract class BaseRefreshListActivity extends BaseActivity {
 
     protected TitleBar mTitleBar;
     protected RecyclerView mRvList;
@@ -57,7 +56,7 @@ public abstract class BaseRefreshListActivity<A extends BaseRecyclerviewAdapter>
         mTitleBar.setTitle(title);
     }
 
-    public void setAdapter(A adapter) {
+    public void setAdapter(RecyclerView.Adapter adapter) {
         mRvList.setAdapter(adapter);
     }
 
