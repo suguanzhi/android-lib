@@ -71,6 +71,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
         mResponseListener = new OnLoadListListener<V>() {
             @Override
             public void onStart() {
+                mRvList.setVisibility(View.GONE);
                 mPbLoading.setVisibility(View.VISIBLE);
             }
 
