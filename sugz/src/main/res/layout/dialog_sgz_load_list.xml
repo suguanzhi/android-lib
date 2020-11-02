@@ -14,6 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/row_height"
         android:background="@drawable/shape_r10_sd_tl_tr_primary"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
         android:textColor="@color/white"
         android:visibility="gone" />
 
