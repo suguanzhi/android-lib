@@ -2,24 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/shape_r10_sd_white"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/text"
-        android:textSize="@dimen/text"
-        android:textStyle="bold"
+        style="@style/TextMain"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row_height"
+        android:background="@drawable/shape_r10_sd_tl_tr_primary"
+        android:textColor="@color/white"
         android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:minHeight="200dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_list"
