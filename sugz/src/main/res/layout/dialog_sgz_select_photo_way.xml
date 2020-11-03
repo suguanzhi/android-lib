@@ -8,15 +8,15 @@
 
     <Button
         android:id="@+id/btn_take_photo"
-        style="@style/Button.Confirm"
-        android:text="拍照"
-         />
+        style="@style/Button.Primary"
+        android:layout_marginTop="20dp"
+        android:text="拍照" />
 
     <Button
         android:id="@+id/btn_select_photo"
+        style="@style/Button.Confirm"
         android:layout_marginTop="20dp"
-        android:text="相册"
-        style="@style/Button.Confirm"/>
+        android:text="相册" />
 
     <Button
         android:id="@+id/btn_cancle"

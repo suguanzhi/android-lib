@@ -290,7 +290,7 @@
     <color name="blueGrey_900">#263238</color>
 
 
-    <color name="btn_confirm">@color/colorPrimary</color>
+    <color name="btn_confirm">@color/lightBlue_500</color>
     <color name="btn_danger">@color/red_500</color>
     <color name="btn_warn">@color/amber_500</color>
     <color name="btn_disable">@color/grey_500</color>
