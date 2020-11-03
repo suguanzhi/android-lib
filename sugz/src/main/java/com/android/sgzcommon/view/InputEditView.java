@@ -56,7 +56,7 @@ public class InputEditView extends LinearLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
-                value = 0;
+                value = minValue;
                 String vs = s.toString();
                 try {
                     value = Integer.parseInt(vs);
