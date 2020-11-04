@@ -56,13 +56,20 @@ public class InputEditView extends LinearLayout {
 
             @Override
             public void afterTextChanged(Editable s) {
-                value = minValue;
                 String vs = s.toString();
                 try {
                     value = Integer.parseInt(vs);
+                    if (vs.startsWith("0")) {
+                        mEtInput.setText(value + "");
+                    }
+                    if (value < minValue) {
+                        mEtInput.setText(minValue + "");
+                    } else if (value > maxValue) {
+                        mEtInput.setText(maxValue + "");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    mEtInput.setText(value + "");
+                    mEtInput.setText(minValue + "");
                 }
                 if (changeListener != null) {
                     changeListener.onValueChange(value);
