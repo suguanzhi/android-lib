@@ -5,12 +5,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.sgzcommon.recycleview.adapter.BaseLoadListAdapter;
 import com.android.sgzcommon.dialog.entity.LoadListItem;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
+import com.android.sgzcommon.recycleview.adapter.BaseLoadListAdapter;
+import com.android.sgzcommon.utils.UnitUtils;
 import com.android.sgzcommon.view.LoadResultView;
 import com.android.sugz.R;
 
@@ -51,16 +53,6 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
     }
 
     @Override
-    protected int getWidth() {
-        return 0;
-    }
-
-    @Override
-    protected int getHeight() {
-        return 0;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mItems = new ArrayList<>();
@@ -93,6 +85,7 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
 
             @Override
             public void onFailed() {
+                setLayoutParams(WindowManager.LayoutParams.MATCH_PARENT, UnitUtils.dp2px(300));
                 mPbLoading.setVisibility(View.GONE);
                 mRvList.setVisibility(View.GONE);
                 mLrv.error("加载失败！");

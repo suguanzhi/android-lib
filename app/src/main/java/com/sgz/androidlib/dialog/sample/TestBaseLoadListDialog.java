@@ -20,7 +20,7 @@ public class TestBaseLoadListDialog extends BaseLoadListDialog<LoadListEntity> {
     @Override
     protected void loadList(Map<String, String> data, OnLoadListListener listener) {
         listener.onStart();
-        listener.onSuccess(mEntityList);
+        listener.onFailed();
     }
 
     public TestBaseLoadListDialog(Context context) {

@@ -43,16 +43,6 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
     }
 
     @Override
-    protected int getWidth() {
-        return 0;
-    }
-
-    @Override
-    protected int getHeight() {
-        return 0;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTvMsg = findViewById(R.id.tv_msg);

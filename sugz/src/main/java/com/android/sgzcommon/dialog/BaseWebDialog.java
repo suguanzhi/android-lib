@@ -30,16 +30,6 @@ public abstract class BaseWebDialog extends BaseDialog implements WebviewHandler
 
     protected abstract JavascriptInterface getJavascriptInterface();
 
-    @Override
-    protected int getWidth() {
-        return mMinSize * 4 / 5;
-    }
-
-    @Override
-    protected int getHeight() {
-        return mWindowSize.y * 4 / 5;
-    }
-
     public BaseWebDialog(Context context) {
         super(context);
     }

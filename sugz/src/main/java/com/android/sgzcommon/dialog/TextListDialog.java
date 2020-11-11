@@ -20,31 +20,21 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by sgz on 2019/12/14.
  */
-public class StringListDialog extends BaseDialog {
+public class TextListDialog extends BaseDialog {
 
     private List<String> mStrings;
     private RecyclerView mRvList;
     private StringListAdapter mAdapter;
     private OnClickListener listener;
 
-    public StringListDialog(Context context) {
+    public TextListDialog(Context context) {
         super(context);
         mStrings = new ArrayList<>();
     }
 
     @Override
     protected int getContentViewId() {
-        return R.layout.dialog_sgz_string_list;
-    }
-
-    @Override
-    protected int getWidth() {
-        return 0;
-    }
-
-    @Override
-    protected int getHeight() {
-        return 0;
+        return R.layout.dialog_sgz_text_list;
     }
 
     @Override
@@ -62,7 +52,7 @@ public class StringListDialog extends BaseDialog {
             @Override
             public void onItemClick(View view, int position) {
                 if (listener != null) {
-                    listener.onClick(StringListDialog.this, position);
+                    listener.onClick(TextListDialog.this, position);
                 }
             }
         }, null);

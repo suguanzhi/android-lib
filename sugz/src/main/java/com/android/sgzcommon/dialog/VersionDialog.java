@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -34,16 +33,6 @@ public class VersionDialog extends BaseDialog {
     @Override
     protected int getContentViewId() {
         return R.layout.dialog_sgz_version;
-    }
-
-    @Override
-    protected int getWidth() {
-        return mWindowSize.x * 4 / 5;
-    }
-
-    @Override
-    protected int getHeight() {
-        return WindowManager.LayoutParams.WRAP_CONTENT;
     }
 
     public VersionDialog(Context context, String url, String version, String remark) {

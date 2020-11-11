@@ -19,22 +19,13 @@ public abstract class BaseBottomDialog extends BaseDialog {
     }
 
     @Override
-    protected int getWidth() {
-        return mWindowSize.x;
-    }
-
-    @Override
-    protected int getHeight() {
-        return WindowManager.LayoutParams.WRAP_CONTENT;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLayoutParamsAnim(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
     protected void setLayoutParamsAnim(int width, int height) {
-        initLayout(width,height, Gravity.BOTTOM, R.style.anim_y_stranslate);
+        setLayoutParamsAnim(width,height, Gravity.BOTTOM, R.style.anim_y_stranslate);
     }
 }

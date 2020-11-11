@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_r10_sd_white"
-    android:maxHeight="500dp"
-    android:minHeight="150dp"
+    android:layout_margin="20dp"
+    android:minHeight="@dimen/dialog_min_height"
     android:orientation="vertical">
 
     <LinearLayout

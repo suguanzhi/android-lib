@@ -55,16 +55,6 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
     }
 
     @Override
-    protected int getWidth() {
-        return mMinSize * 4 / 5;
-    }
-
-    @Override
-    protected int getHeight() {
-        return 0;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTvMsg = findViewById(R.id.tv_msg);

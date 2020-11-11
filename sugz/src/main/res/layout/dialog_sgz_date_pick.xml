@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="#FFFFFF"
-              android:gravity="center"
-              android:orientation="vertical"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <DatePicker
         android:id="@+id/dp_dialog_date_pick"
@@ -13,16 +14,14 @@
         android:layout_height="wrap_content"
         android:calendarViewShown="false"
         android:datePickerMode="calendar"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
     <TimePicker
         android:id="@+id/dp_dialog_time_pick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="clock"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,17 +39,17 @@
             android:gravity="center"
             android:text="确定"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/btn_text_size2"/>
+            android:textSize="@dimen/btn_text_size2" />
 
         <TextView
             android:id="@+id/tv_dialog_date_pick_cancle"
             android:layout_width="@dimen/btn_width2"
             android:layout_height="@dimen/btn_height2"
+            android:layout_margin="10dp"
             android:background="@drawable/shape_btn_disable"
             android:gravity="center"
-            android:layout_margin="10dp"
             android:text="取消"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/btn_text_size2"/>
+            android:textSize="@dimen/btn_text_size2" />
     </LinearLayout>
 </LinearLayout>

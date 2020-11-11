@@ -20,13 +20,4 @@ public class TestAutoDismissDialog extends BaseAutoDismissDialog {
         return R.layout.dialog_test_auto_dismiss;
     }
 
-    @Override
-    protected int getWidth() {
-        return 0;
-    }
-
-    @Override
-    protected int getHeight() {
-        return 0;
-    }
 }

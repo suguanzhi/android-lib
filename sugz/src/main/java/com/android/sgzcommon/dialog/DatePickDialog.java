@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -38,16 +37,6 @@ public class DatePickDialog extends BaseDialog implements View.OnClickListener {
     @Override
     protected int getContentViewId() {
         return R.layout.dialog_sgz_date_pick;
-    }
-
-    @Override
-    protected int getWidth() {
-        return mWindowSize.x * 9 / 10;
-    }
-
-    @Override
-    protected int getHeight() {
-        return WindowManager.LayoutParams.WRAP_CONTENT;
     }
 
     public DatePickDialog(Context context, int type) {
