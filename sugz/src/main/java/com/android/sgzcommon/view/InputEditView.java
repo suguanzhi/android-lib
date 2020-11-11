@@ -59,9 +59,6 @@ public class InputEditView extends LinearLayout {
                 String vs = s.toString();
                 try {
                     value = Integer.parseInt(vs);
-                    if (vs.startsWith("0")) {
-                        mEtInput.setText(value + "");
-                    }
                     if (value < minValue) {
                         mEtInput.setText(minValue + "");
                     } else if (value > maxValue) {
