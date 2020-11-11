@@ -64,4 +64,8 @@
         <attr name="add_sub_padding" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="CornerImageView">
+        <attr name="radius" format="dimension" />
+    </declare-styleable>
+
 </resources>

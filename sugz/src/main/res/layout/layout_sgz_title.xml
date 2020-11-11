@@ -60,7 +60,7 @@
         android:paddingEnd="5dp"
         android:singleLine="true"
         android:text="标题"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 
     <LinearLayout

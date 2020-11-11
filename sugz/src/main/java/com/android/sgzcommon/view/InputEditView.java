@@ -30,9 +30,9 @@ public class InputEditView extends LinearLayout {
     private ImageView mIvSub;
     private EditText mEtInput;
 
+    private int value;
     private int minValue;
     private int maxValue;
-    private int value;
     private OnAddOrSubClickListener clickistener;
     private OnValueChangeListener changeListener;
 

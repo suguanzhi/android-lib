@@ -1,17 +1,22 @@
 package com.android.sgzcommon.view.imageview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ViewTreeObserver;
 
-import com.android.sgzcommon.view.provider.CircleViewOutlineProvider;
+import com.android.sgzcommon.utils.UnitUtils;
 import com.android.sgzcommon.view.provider.RoundViewOutlineProvider;
+import com.android.sugz.R;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageView;
 
 public class CornerImageView extends AppCompatImageView {
+    private float mRadius;
+
     public CornerImageView(Context context) {
         this(context, null);
     }
@@ -22,13 +27,20 @@ public class CornerImageView extends AppCompatImageView {
 
     public CornerImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        Log.d("CornerImageView", "CornerImageView: ");
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CornerImageView);
+        mRadius = array.getDimensionPixelSize(R.styleable.CornerImageView_radius, UnitUtils.dp2px(5));
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                setRoundCorner(mRadius);
+            }
+        });
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.d("CornerImageView", "onMeasure: width == " + MeasureSpec.getSize(widthMeasureSpec));
-        Log.d("CornerImageView", "onMeasure: height == " + MeasureSpec.getSize(heightMeasureSpec));
     }
 
     /**
@@ -38,17 +50,9 @@ public class CornerImageView extends AppCompatImageView {
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void setRoundCorner(float radius) {
-        setClipToOutline(true);// 用outline裁剪内容区域
-        setOutlineProvider(new RoundViewOutlineProvider(radius));
-    }
-
-    /**
-     * 设置View为圆形
-     */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void setCircle() {
+        mRadius = radius;
         setClipToOutline(true);
-        setOutlineProvider(new CircleViewOutlineProvider());
+        setOutlineProvider(new RoundViewOutlineProvider(mRadius));
     }
 
     /**
