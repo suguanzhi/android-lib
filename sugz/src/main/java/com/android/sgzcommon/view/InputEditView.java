@@ -111,8 +111,24 @@ public class InputEditView extends LinearLayout {
                 }
             }
         });
+        mEtInput.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String s = mEtInput.getText().toString();
+                    if (s.length() > 1 && s.startsWith("0")) {
+                        int value = minValue;
+                        try {
+                            value = Integer.parseInt(s);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        mEtInput.setText(value + "");
+                    }
+                }
+            }
+        });
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.InputEditView);
-
         int width = array.getDimensionPixelSize(R.styleable.InputEditView_width, 0);
         int height = array.getDimensionPixelSize(R.styleable.InputEditView_height, 0);
         if (height != 0) {
