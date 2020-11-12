@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_margin="20dp"
     android:background="@drawable/shape_r10_sd_white"
-    android:minHeight="@dimen/dialog_min_height"
+    android:minHeight="300dp"
     android:orientation="vertical">
 
     <TextView

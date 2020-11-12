@@ -29,6 +29,6 @@
     <dimen name="input_radius">5dp</dimen>
     <dimen name="input_width">240dp</dimen>
     <dimen name="input_height">44dp</dimen>
-    <dimen name="dialog_min_height">200dp</dimen>
+    <dimen name="dialog_min_height">150dp</dimen>
 
 </resources>
