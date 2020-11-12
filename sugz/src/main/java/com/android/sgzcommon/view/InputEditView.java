@@ -35,6 +35,7 @@ public class InputEditView extends LinearLayout {
     private int maxValue;
     private OnAddOrSubClickListener clickistener;
     private OnValueChangeListener changeListener;
+    private OnFocusChangeListener focusListener;
 
     public InputEditView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -126,6 +127,9 @@ public class InputEditView extends LinearLayout {
                         mEtInput.setText(value + "");
                     }
                 }
+                if (focusListener != null) {
+                    focusListener.onFocusChange(v, hasFocus);
+                }
             }
         });
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.InputEditView);
@@ -213,6 +217,10 @@ public class InputEditView extends LinearLayout {
 
     public void setOnValueChangeListener(OnValueChangeListener listener) {
         changeListener = listener;
+    }
+
+    public void setOnFocusChangeListener(OnFocusChangeListener l) {
+        this.focusListener = l;
     }
 
     public interface OnAddOrSubClickListener {
