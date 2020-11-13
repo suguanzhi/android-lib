@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -211,6 +212,14 @@ public class InputEditView extends LinearLayout {
         return value;
     }
 
+    public void requestEditFocus() {
+        mEtInput.requestFocus();
+        String s = mEtInput.getText().toString();
+        if (!TextUtils.isEmpty(s)) {
+            mEtInput.setSelection(s.length());
+        }
+    }
+
     public void setOnAddOrSubClickListener(OnAddOrSubClickListener listener) {
         clickistener = listener;
     }
@@ -219,8 +228,8 @@ public class InputEditView extends LinearLayout {
         changeListener = listener;
     }
 
-    public void setOnFocusChangeListener(OnFocusChangeListener l) {
-        this.focusListener = l;
+    public void setOnEditFocusChangeListener(OnFocusChangeListener listener) {
+        this.focusListener = listener;
     }
 
     public interface OnAddOrSubClickListener {

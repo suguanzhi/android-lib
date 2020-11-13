@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.android.sgzcommon.activity.BaseActivity;
+import com.android.sgzcommon.view.InputEditView;
 import com.android.sgzcommon.view.LoadResultView;
 import com.android.sgzcommon.view.TitleBar;
 import com.android.sgzcommon.view.imageview.CornerImageView;
@@ -37,6 +39,10 @@ public class TestViewActivity extends BaseActivity {
     Button mBtnRefresh;
     @BindView(R.id.civ_picture)
     CornerImageView mCivPicture;
+    @BindView(R.id.btn_focus)
+    Button mBtnFocus;
+    @BindView(R.id.iev)
+    InputEditView mIev;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +76,16 @@ public class TestViewActivity extends BaseActivity {
         } else {
             mCivPicture.setImageBitmap(null);
         }
+        mIev.setOnEditFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.d("TestViewActivity", "onFocusChange: " + hasFocus);
+            }
+        });
 
     }
 
-    @OnClick({R.id.btn_web_layout, R.id.btn_refresh})
+    @OnClick({R.id.btn_web_layout, R.id.btn_refresh, R.id.btn_focus})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -82,6 +94,9 @@ public class TestViewActivity extends BaseActivity {
                 break;
             case R.id.btn_refresh:
                 intent = new Intent(mContext, TestSmartRefreshLayoutActivity.class);
+                break;
+            case R.id.btn_focus:
+                mIev.requestEditFocus();
                 break;
         }
         if (intent != null) {
