@@ -5,13 +5,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.sgzcommon.dialog.entity.LoadListItem;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
-import com.android.sgzcommon.recycleview.adapter.BaseLoadListAdapter;
 import com.android.sgzcommon.utils.UnitUtils;
 import com.android.sgzcommon.view.LoadResultView;
 import com.android.sugz.R;
@@ -25,31 +23,26 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author sgz
- * @date 2020/6/30
+ * @date 2020/9/25
  */
-public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDialog {
+public abstract class BaseListDialog<V> extends BaseDialog {
 
-    private TextView mTvTitle;
-    private ProgressBar mPbLoading;
-    private RecyclerView mRvList;
-    private LoadResultView mLrv;
-    private BaseLoadListAdapter mAdapter;
-    private OnLoadListListener mResponseListener;
-    private OnLoadListClickListener listener;
-
+    RecyclerView mRvList;
+    ImageView mIvDelete;
+    TextView mTvTitle;
+    ProgressBar mPbLoading;
+    LoadResultView mLrv;
     private CharSequence mTitle;
-    private Map<String, String> data;
-    private List<V> mItems;
+    private BaseRecyclerviewAdapter mAdapter;
+    protected OnLoadListListener<V> mLoadListener;
+    protected OnListClickListener<V> mClickListener;
+    protected List<V> mItems;
+    private Map<String, String> mData;
 
     protected abstract void loadList(Map<String, String> data, OnLoadListListener listener);
 
-    public BaseLoadListDialog(Context context) {
+    public BaseListDialog(Context context) {
         super(context);
-    }
-
-    @Override
-    protected int getContentViewId() {
-        return R.layout.dialog_sgz_load_list;
     }
 
     @Override
@@ -60,7 +53,20 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
         mPbLoading = findViewById(R.id.pb_loading);
         mRvList = findViewById(R.id.rv_list);
         mLrv = findViewById(R.id.lrv);
-        mResponseListener = new OnLoadListListener<V>() {
+        mIvDelete = findViewById(R.id.iv_delete);
+        mIvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        mIvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        mLoadListener = new OnLoadListListener<V>() {
             @Override
             public void onStart() {
                 mRvList.setVisibility(View.GONE);
@@ -80,52 +86,36 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
                 } else {
                     mLrv.gone();
                 }
-                mAdapter.notifyDataSetChanged();
+                if (mAdapter != null) {
+                    mAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
             public void onFailed() {
-                setLayoutParams(WindowManager.LayoutParams.MATCH_PARENT, UnitUtils.dp2px(300));
+                setLayoutParams(getWidth(), UnitUtils.dp2px(300));
                 mPbLoading.setVisibility(View.GONE);
                 mRvList.setVisibility(View.GONE);
                 mLrv.error("加载失败！");
             }
         };
-        mAdapter = new BaseLoadListAdapter(mContext, mItems, new BaseRecyclerviewAdapter.OnItemtClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (position < mItems.size()) {
-                    if (listener != null) {
-                        listener.onClick(BaseLoadListDialog.this, position, mItems.get(position));
-                    }
-                }
-            }
-        }, null);
-
+        setTitle(mTitle);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         mRvList.setLayoutManager(layoutManager);
-        mRvList.setAdapter(mAdapter);
-        setTitle(mTitle);
+        setAdapter(mAdapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mLrv.gone();
-        loadList(data, mResponseListener);
+        loadList(mData, mLoadListener);
     }
 
     /**
-     * 如果请求参数是变量，显示dialog需要调用该方法，否则调用show()即可。
-     *
-     * @param data 网络请求参数
+     * @param title
      */
-    public void show(Map<String, String> data) {
-        this.data = data;
-        show();
-    }
-
     public void setTitle(CharSequence title) {
         mTitle = title;
         if (mTvTitle != null) {
@@ -138,19 +128,59 @@ public abstract class BaseLoadListDialog<V extends LoadListItem> extends BaseDia
         }
     }
 
-    public void setOnLoadListClickListener(OnLoadListClickListener<V> listener) {
-        this.listener = listener;
+    /**
+     *
+     * @return
+     */
+    public CharSequence getTitle() {
+        return mTitle;
     }
 
-    public interface OnLoadListListener<T extends LoadListItem> {
+    /**
+     * @param adapter
+     */
+    public void setAdapter(BaseRecyclerviewAdapter adapter) {
+        mAdapter = adapter;
+        if (mRvList != null) {
+            mRvList.setAdapter(mAdapter);
+        }
+    }
+
+    /**
+     * @return
+     */
+    public List<V> getItems() {
+        return mItems;
+    }
+
+    /**
+     * 如果请求参数是变量，显示dialog需要调用该方法，否则调用show()即可。
+     *
+     * @param data 网络请求参数
+     */
+    public void show(Map<String, String> data) {
+        this.mData = data;
+        show();
+    }
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.dialog_sgz_select_list;
+    }
+
+    public void setOnListClickListener(OnListClickListener<V> listener) {
+        this.mClickListener = listener;
+    }
+
+    public interface OnLoadListListener<V> {
         void onStart();
 
-        void onSuccess(List<T> items);
+        void onSuccess(List<V> items);
 
         void onFailed();
     }
 
-    public interface OnLoadListClickListener<T extends LoadListItem> {
-        void onClick(Dialog dialog, int position, T t);
+    public interface OnListClickListener<V> {
+        void onClick(Dialog dialog, int position, V v);
     }
 }

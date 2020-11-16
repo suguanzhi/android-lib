@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
@@ -19,19 +20,39 @@
             style="@style/TextMain"
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_height"
-            android:background="@drawable/shape_r10_sd_tl_tr_primary"
+            android:background="@drawable/shape_r10_tl_tr_sd_primary"
             android:gravity="center"
             android:text=""
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_list"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingBottom="10dp"
-            android:scrollbars="vertical" />
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingBottom="10dp"
+                android:scrollbars="vertical" />
+
+            <com.android.sgzcommon.view.LoadResultView
+                android:id="@+id/lrv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:background="@drawable/shape_r10_bl_br_sd_backgroud" />
+
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
     </LinearLayout>
 
     <ImageView

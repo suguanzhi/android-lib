@@ -8,13 +8,13 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 import com.android.sgzcommon.activity.BaseActivity;
-import com.android.sgzcommon.dialog.BaseLoadListDialog;
+import com.android.sgzcommon.dialog.BaseListDialog;
 import com.android.sgzcommon.dialog.DatePickDialog;
 import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
 import com.sgz.androidlib.dialog.sample.TestAutoDismissDialog;
-import com.sgz.androidlib.dialog.sample.TestBaseLoadListDialog;
-import com.sgz.androidlib.entity.LoadListEntity;
+import com.sgz.androidlib.dialog.sample.TestBaseTextListDialog;
+import com.sgz.androidlib.entity.TextListEntity;
 
 import java.util.Calendar;
 
@@ -55,10 +55,10 @@ public class TestDialogActivity extends BaseActivity {
                 dismissDialog.show();
                 break;
             case R.id.btn_string_list_dialog:
-                TestBaseLoadListDialog dialog = new TestBaseLoadListDialog(mActivity);
-                dialog.setOnLoadListClickListener(new BaseLoadListDialog.OnLoadListClickListener<LoadListEntity>() {
+                TestBaseTextListDialog dialog = new TestBaseTextListDialog(mActivity);
+                dialog.setOnListClickListener(new BaseListDialog.OnListClickListener<TextListEntity>() {
                     @Override
-                    public void onClick(Dialog dialog, int position, LoadListEntity loadListEntity) {
+                    public void onClick(Dialog dialog, int position, TextListEntity loadListEntity) {
 
                     }
                 });

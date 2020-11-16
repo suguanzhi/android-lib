@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.sgzcommon.dialog.entity.LoadListItem;
+import com.android.sgzcommon.dialog.entity.TextListItem;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
 import com.android.sgzcommon.recycleview.BaseViewHolder;
 import com.android.sugz.R;
@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
  * @author sgz
  * @date 2020/6/30
  */
-public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<LoadListItem,BaseLoadListAdapter.ViewHolder> {
+public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<TextListItem,BaseLoadListAdapter.ViewHolder> {
 
 
     public BaseLoadListAdapter(Context context, List list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {

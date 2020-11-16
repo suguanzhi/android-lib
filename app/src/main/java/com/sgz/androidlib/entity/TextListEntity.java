@@ -1,16 +1,16 @@
 package com.sgz.androidlib.entity;
 
-import com.android.sgzcommon.dialog.entity.LoadListItem;
+import com.android.sgzcommon.dialog.entity.TextListItem;
 
 /**
  * @author sgz
  * @date 2020/6/30
  */
-public class LoadListEntity extends LoadListItem {
+public class TextListEntity extends TextListItem {
 
     private String name;
 
-    public LoadListEntity(String name) {
+    public TextListEntity(String name) {
         this.name = name;
     }
 

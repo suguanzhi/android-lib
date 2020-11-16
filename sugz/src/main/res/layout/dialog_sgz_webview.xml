@@ -11,7 +11,7 @@
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_r10_sd_tl_tr_primary"
+        android:background="@drawable/shape_r10_tl_tr_sd_primary"
         android:gravity="center"
         android:lines="1"
         android:padding="10dp"
