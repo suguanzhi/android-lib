@@ -33,7 +33,7 @@
         <activity android:name=".activity.sample.TestLoginActivity" />
         <activity android:name=".activity.sample.TestTakePhotoActivity" />
         <activity android:name=".activity.sample.TestGetPhotosActivity" />
-        <activity android:name=".activity.sample.TestMyQRCodeActivity" />
+        <activity android:name=".activity.sample.TestMyQRCodeActivity" android:launchMode="singleTask"/>
         <activity android:name=".view.sample.TestScrollerLayoutActivity" />
         <activity android:name=".view.sample.TestWebLayoutActivity" />
         <activity android:name=".activity.sample.TestWebActivity" />
@@ -46,7 +46,7 @@
         <activity android:name=".others.TestOthersActivity" />
         <activity android:name=".others.sample.TestCreateCodeActivity" />
         <activity android:name=".others.sample.TestBaseAdapterActivity" />
-        <activity android:name="com.android.sgzcommon.activity.QRCodeActivity" />
+        <activity android:name="com.android.sgzcommon.activity.QRCodeActivity" android:launchMode="singleTask"/>
         <activity android:name="com.android.sgzcommon.activity.BarCodeActivity" />
 
         <provider

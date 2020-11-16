@@ -20,6 +20,16 @@ public class RoundViewOutlineProvider extends ViewOutlineProvider {
 
     @Override
     public void getOutline(View view, Outline outline) {
+        Rect selfRect = new Rect(0, 0, view.getWidth(), view.getHeight());
+        outline.setRoundRect(selfRect, mRadius);
+    }
+
+    /**
+     *
+     * @param view
+     * @return
+     */
+    private Rect getRect(View view) {
         int vWidth = view.getWidth();
         int vHeight = view.getHeight();
         int left = 0;
@@ -63,7 +73,6 @@ public class RoundViewOutlineProvider extends ViewOutlineProvider {
                 }
             }
         }
-        Rect selfRect = new Rect(left, top, left + width, top + height);// 绘制区域
-        outline.setRoundRect(selfRect, mRadius);
+        return new Rect(left, top, left + width, top + height);// 绘制区域
     }
 }
