@@ -33,13 +33,21 @@ public abstract class BaseListDialog<V> extends BaseDialog {
     ProgressBar mPbLoading;
     LoadResultView mLrv;
     private CharSequence mTitle;
-    private BaseRecyclerviewAdapter mAdapter;
-    protected OnLoadListListener<V> mLoadListener;
-    protected OnListClickListener<V> mClickListener;
-    protected List<V> mItems;
+    private OnLoadListResponse<V> mLoadResponse;
+    private OnListClickListener<V> mClickListener;
+    private List<V> mItems;
     private Map<String, String> mData;
 
-    protected abstract void loadList(Map<String, String> data, OnLoadListListener listener);
+    /**
+     * @param items
+     */
+    protected abstract BaseRecyclerviewAdapter getAdapter(List<V> items);
+
+    /**
+     * @param data
+     * @param response
+     */
+    protected abstract void loadList(Map<String, String> data, OnLoadListResponse response);
 
     public BaseListDialog(Context context) {
         super(context);
@@ -54,6 +62,7 @@ public abstract class BaseListDialog<V> extends BaseDialog {
         mRvList = findViewById(R.id.rv_list);
         mLrv = findViewById(R.id.lrv);
         mIvDelete = findViewById(R.id.iv_delete);
+        setTitleText(mTitle);
         mIvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +75,27 @@ public abstract class BaseListDialog<V> extends BaseDialog {
                 dismiss();
             }
         });
-        mLoadListener = new OnLoadListListener<V>() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        mRvList.setLayoutManager(layoutManager);
+        final BaseRecyclerviewAdapter adapter = getAdapter(mItems);
+        if (adapter != null) {
+            adapter.setOnItemtClickListener(new BaseRecyclerviewAdapter.OnItemtClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    if (position < getItems().size()) {
+                        if (mClickListener != null) {
+                            mClickListener.onClick(BaseListDialog.this, position, mItems.get(position));
+                        }
+                    }
+                }
+            });
+
+        }
+        if (mRvList != null) {
+            mRvList.setAdapter(adapter);
+        }
+        mLoadResponse = new OnLoadListResponse<V>() {
             @Override
             public void onStart() {
                 mRvList.setVisibility(View.GONE);
@@ -86,8 +115,8 @@ public abstract class BaseListDialog<V> extends BaseDialog {
                 } else {
                     mLrv.gone();
                 }
-                if (mAdapter != null) {
-                    mAdapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -99,24 +128,19 @@ public abstract class BaseListDialog<V> extends BaseDialog {
                 mLrv.error("加载失败！");
             }
         };
-        setTitle(mTitle);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        mRvList.setLayoutManager(layoutManager);
-        setAdapter(mAdapter);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mLrv.gone();
-        loadList(mData, mLoadListener);
+        loadList(mData, mLoadResponse);
     }
 
     /**
      * @param title
      */
-    public void setTitle(CharSequence title) {
+    public void setTitleText(CharSequence title) {
         mTitle = title;
         if (mTvTitle != null) {
             mTvTitle.setText(title);
@@ -129,21 +153,10 @@ public abstract class BaseListDialog<V> extends BaseDialog {
     }
 
     /**
-     *
      * @return
      */
-    public CharSequence getTitle() {
+    public CharSequence getTitleText() {
         return mTitle;
-    }
-
-    /**
-     * @param adapter
-     */
-    public void setAdapter(BaseRecyclerviewAdapter adapter) {
-        mAdapter = adapter;
-        if (mRvList != null) {
-            mRvList.setAdapter(mAdapter);
-        }
     }
 
     /**
@@ -172,7 +185,7 @@ public abstract class BaseListDialog<V> extends BaseDialog {
         this.mClickListener = listener;
     }
 
-    public interface OnLoadListListener<V> {
+    public interface OnLoadListResponse<V> {
         void onStart();
 
         void onSuccess(List<V> items);

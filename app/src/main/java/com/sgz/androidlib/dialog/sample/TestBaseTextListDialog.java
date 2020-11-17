@@ -18,9 +18,9 @@ public class TestBaseTextListDialog extends BaseTextListDialog<TextListEntity> {
     private List<TextListEntity> mEntityList;
 
     @Override
-    protected void loadList(Map<String, String> data, OnLoadListListener listener) {
-        listener.onStart();
-        listener.onSuccess(mEntityList);
+    protected void loadList(Map<String, String> data, OnLoadListResponse response) {
+        response.onStart();
+        response.onSuccess(mEntityList);
     }
 
     public TestBaseTextListDialog(Context context) {

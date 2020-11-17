@@ -17,11 +17,11 @@ import androidx.annotation.NonNull;
  * @author sgz
  * @date 2020/6/30
  */
-public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<TextListItem,BaseLoadListAdapter.ViewHolder> {
+public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<TextListItem, BaseLoadListAdapter.ViewHolder> {
 
 
-    public BaseLoadListAdapter(Context context, List list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
-        super(context, list, clickListener, longClickListener);
+    public BaseLoadListAdapter(Context context, List list) {
+        super(context, list);
     }
 
     @Override
