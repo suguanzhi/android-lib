@@ -9,6 +9,7 @@ import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.activity.BaseQRCodeActivity;
 import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
+import com.sgz.androidlib.activity.sample.TestBaseRefreshListActivity;
 import com.sgz.androidlib.activity.sample.TestGetPhotosActivity;
 import com.sgz.androidlib.activity.sample.TestMyQRCodeActivity;
 import com.sgz.androidlib.activity.sample.TestTakePhotoActivity;
@@ -39,6 +40,8 @@ public class TestActivityActivity extends BaseActivity {
     Button mBtnVersion;
     @BindView(R.id.btn_my_qrcode)
     Button mBtnMyQrcode;
+    @BindView(R.id.btn_refresh)
+    Button mBtnRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class TestActivityActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_qrcodet, R.id.btn_take_photo, R.id.btn_take_photos, R.id.btn_web, R.id.btn_version, R.id.btn_my_qrcode})
+    @OnClick({R.id.btn_qrcodet, R.id.btn_take_photo, R.id.btn_take_photos, R.id.btn_web, R.id.btn_version, R.id.btn_my_qrcode,R.id.btn_refresh})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -70,6 +73,9 @@ public class TestActivityActivity extends BaseActivity {
                 break;
             case R.id.btn_my_qrcode:
                 intent = new Intent(mContext, TestMyQRCodeActivity.class);
+                break;
+            case R.id.btn_refresh:
+                intent = new Intent(mContext, TestBaseRefreshListActivity.class);
                 break;
         }
         if (intent != null) {

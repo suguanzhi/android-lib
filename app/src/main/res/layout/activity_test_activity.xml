@@ -67,6 +67,14 @@
                 android:text="自定义扫码"
                 android:textAllCaps="false"
                 android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_refresh"
+                style="@style/Button.Strock.Normal"
+                android:layout_marginTop="10dp"
+                android:text="下拉刷新"
+                android:textAllCaps="false"
+                android:textSize="14sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

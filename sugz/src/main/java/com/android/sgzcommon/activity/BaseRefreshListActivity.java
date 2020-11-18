@@ -1,6 +1,7 @@
 package com.android.sgzcommon.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -46,9 +47,10 @@ public abstract class BaseRefreshListActivity extends BaseActivity {
         mSrlRefresh = findViewById(R.id.srl_refresh);
         mLlTopContainer = findViewById(R.id.ll_top_container);
         try {
-            LayoutInflater.from(mContext).inflate(getTopContainerViewId(), mLlTopContainer, false);
+            LayoutInflater.from(mContext).inflate(getTopContainerViewId(), mLlTopContainer);
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d("BaseRefreshListActivity", "onCreate: " + Log.getStackTraceString(e));
 
         }
         mRvList.setLayoutManager(createLinearLayoutManager(RecyclerView.VERTICAL));
