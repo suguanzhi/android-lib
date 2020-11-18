@@ -24,15 +24,9 @@ public class PictureGridEditAdapter2 extends BaseAdapter<String, PictureGridEdit
         super(context, objects);
     }
 
-
     @Override
-    protected int getConverViewId() {
-        return R.layout.adapter_sgz_picture_grid_edit;
-    }
-
-    @Override
-    protected ViewHolder initViews(View convertView) {
-        return new ViewHolder(convertView);
+    protected ViewHolder getViewHolder() {
+        return new ViewHolder();
     }
 
     @Override
@@ -52,8 +46,15 @@ public class PictureGridEditAdapter2 extends BaseAdapter<String, PictureGridEdit
         ImageView mIvImage;
         ImageView mIvDelete;
 
-        public ViewHolder(View convertView) {
-            super(convertView);
+        @Override
+        protected int getConverViewId() {
+            return R.layout.adapter_sgz_picture_grid_edit;
+        }
+
+        @Override
+        protected void initView(View convertView) {
+            mIvImage = convertView.findViewById(R.id.civ_image);
+            mIvDelete = convertView.findViewById(R.id.iv_delete);
         }
     }
 }

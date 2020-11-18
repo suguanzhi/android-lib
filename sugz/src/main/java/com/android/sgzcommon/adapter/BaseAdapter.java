@@ -20,11 +20,9 @@ public abstract class BaseAdapter<V, H extends BaseViewHolder> extends android.w
     protected List<V> mItems;
     protected ImageLoader mImageLoader;
 
-    protected abstract int getConverViewId();
+    protected abstract H getViewHolder();
 
-    protected abstract H initViews(View convertView);
-
-    protected abstract void initData(H h, int position, V v);
+    protected abstract void initData(H holder, int position, V v);
 
     public BaseAdapter(Context context, List<V> items) {
         mContext = context;
@@ -36,9 +34,10 @@ public abstract class BaseAdapter<V, H extends BaseViewHolder> extends android.w
     public View getView(int position, View convertView, ViewGroup parent) {
         H holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(getConverViewId(), parent, false);
-            holder = initViews(convertView);
+            holder = getViewHolder();
+            convertView = LayoutInflater.from(mContext).inflate(holder.getConverViewId(), parent, false);
             convertView.setTag(holder);
+            holder.setConvertView(convertView);
         } else {
             holder = (H) convertView.getTag();
         }

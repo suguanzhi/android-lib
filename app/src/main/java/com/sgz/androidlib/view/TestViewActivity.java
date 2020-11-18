@@ -11,13 +11,18 @@ import android.widget.Button;
 import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.view.InputEditView;
 import com.android.sgzcommon.view.LoadResultView;
+import com.android.sgzcommon.view.MyGridView;
 import com.android.sgzcommon.view.TitleBar;
 import com.android.sgzcommon.view.imageview.CornerImageView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.sgz.androidlib.R;
+import com.sgz.androidlib.view.adapter.MyGridAdapter;
 import com.sgz.androidlib.view.sample.TestSmartRefreshLayoutActivity;
 import com.sgz.androidlib.view.sample.TestWebLayoutActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +48,8 @@ public class TestViewActivity extends BaseActivity {
     Button mBtnFocus;
     @BindView(R.id.iev)
     InputEditView mIev;
+    @BindView(R.id.mgv)
+    MyGridView mMgv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +89,12 @@ public class TestViewActivity extends BaseActivity {
                 Log.d("TestViewActivity", "onFocusChange: " + hasFocus);
             }
         });
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            list.add(i+"");
+        }
+        MyGridAdapter adapter = new MyGridAdapter(this,list);
+        mMgv.setAdapter(adapter);
 
     }
 

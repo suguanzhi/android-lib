@@ -65,6 +65,12 @@
                 android:background="@color/green_500"
                 app:radius="10dp" />
 
+            <com.android.sgzcommon.view.MyGridView
+                android:id="@+id/mgv"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:numColumns="3" />
+
             <com.android.sgzcommon.view.LoadResultView
                 android:id="@+id/lrv"
                 android:layout_width="match_parent"

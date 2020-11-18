@@ -1,4 +1,4 @@
-package com.sgz.androidlib.others.sample.adapter;
+package com.sgz.androidlib.view.adapter;
 
 import android.content.Context;
 import android.view.View;
@@ -15,13 +15,13 @@ import butterknife.ButterKnife;
 
 /**
  * @author sgz
- * @date 2020/10/27
+ * @date 2020/11/18
  */
-public class MyBaseAdapter extends BaseAdapter<String, MyBaseAdapter.ViewHolder> {
+public class MyGridAdapter extends BaseAdapter<String, MyGridAdapter.ViewHolder> {
 
-    public MyBaseAdapter(Context context, List items) {
+
+    public MyGridAdapter(Context context, List<String> items) {
         super(context, items);
-
     }
 
     @Override
@@ -31,26 +31,21 @@ public class MyBaseAdapter extends BaseAdapter<String, MyBaseAdapter.ViewHolder>
 
     @Override
     protected void initData(ViewHolder holder, int position, String s) {
-        holder.mTvText.setText(s);
+        holder.mTvName.setText(s);
     }
 
     class ViewHolder extends BaseViewHolder {
-
-        @BindView(R.id.tv_text)
-        TextView mTvText;
+        @BindView(R.id.tv_name)
+        TextView mTvName;
 
         @Override
         protected int getConverViewId() {
-            return R.layout.adapter_test_base_adapter;
+            return R.layout.adapter_my_gridview;
         }
 
         @Override
         protected void initView(View convertView) {
             ButterKnife.bind(this,convertView);
-        }
-
-        public ViewHolder() {
-            super();
         }
     }
 }
