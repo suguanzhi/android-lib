@@ -14,6 +14,7 @@ import com.android.volley.toolbox.ImageLoader;
 
 import java.util.List;
 
+import androidx.annotation.LayoutRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -32,6 +33,7 @@ public abstract class BaseRecyclerviewAdapter<E, VH extends RecyclerView.ViewHol
     protected OnItemtClickListener mClickListener;
     protected OnItemtLongClickListener mClickLongListener;
 
+    @LayoutRes
     protected abstract int getItemViewId(int viewType);
 
     protected abstract VH getViewHolder(int viewType, View itemView);

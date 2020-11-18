@@ -12,6 +12,9 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 
 import java.util.List;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,6 +29,7 @@ public abstract class BaseNavigationActivity extends BaseActivity {
     private BottomNavigationView mNavigation;
     private FragmentManager mManager;
 
+    @MenuRes
     protected abstract int getNavigationMenuId();
 
     /**
@@ -36,14 +40,17 @@ public abstract class BaseNavigationActivity extends BaseActivity {
      */
     protected abstract Fragment getNewFragment(int position);
 
+    @LayoutRes
     protected int getContentViewId() {
         return R.layout.activity_sgz_navigation;
     }
 
+    @IdRes
     protected int getBottomNavigationViewId() {
         return R.id.navigation;
     }
 
+    @IdRes
     protected int getFrameLayoutId() {
         return R.id.fl_nav_fragments;
     }
@@ -129,9 +136,9 @@ public abstract class BaseNavigationActivity extends BaseActivity {
         if (fragment == null) {
             Log.d("BaseMainActivity", "showFragment: 4");
             fragment = getNewFragment(position);
-        }else {
+        } else {
             Log.d("BaseMainActivity", "showFragment: 5");
-            if (remove){
+            if (remove) {
                 Log.d("BaseMainActivity", "showFragment: 6");
                 ft.remove(fragment);
                 fragment = getNewFragment(position);

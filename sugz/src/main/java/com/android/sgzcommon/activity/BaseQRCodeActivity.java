@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 import com.android.sugz.R;
 import com.zbar.lib.DecodeCaptureManager;
 
+import androidx.annotation.LayoutRes;
+
 /**
  * 1.app的build.gradle中添加：
  * defaultConfig {
@@ -52,8 +54,10 @@ public abstract class BaseQRCodeActivity extends BaseActivity implements Surface
 
     protected abstract void onResultError(Exception e);
 
+    @LayoutRes
     protected abstract int getContentTopLayoutId();
 
+    @LayoutRes
     protected abstract int getContentBottomLayoutId();
 
     @Override
@@ -72,13 +76,15 @@ public abstract class BaseQRCodeActivity extends BaseActivity implements Surface
         });
         mRlTopContnent = findViewById(R.id.rl_content_top);
         mRlBottomContnent = findViewById(R.id.rl_content_bottom);
-        int contentTopId = getContentTopLayoutId();
-        if (contentTopId > 0) {
-            LayoutInflater.from(this).inflate(contentTopId, mRlTopContnent);
+        try {
+            LayoutInflater.from(this).inflate(getContentTopLayoutId(), mRlTopContnent);
+        }catch (Exception e){
+           e.printStackTrace();
         }
-        int contentBottomId = getContentBottomLayoutId();
-        if (contentBottomId > 0) {
-            LayoutInflater.from(this).inflate(contentBottomId, mRlBottomContnent);
+        try {
+            LayoutInflater.from(this).inflate(getContentBottomLayoutId(), mRlBottomContnent);
+        }catch (Exception e){
+           e.printStackTrace();
         }
         SurfaceHolder holder = mSfvCamera.getHolder();
         holder.addCallback(BaseQRCodeActivity.this);

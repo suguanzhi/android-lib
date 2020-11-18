@@ -15,6 +15,8 @@ import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,10 +30,13 @@ public abstract class GetPhotosActivity extends BaseActivity implements GetPhoto
     private GetPhotosImpl mTakePhotoGrid;
     private ShowImages mShowImages;
 
+    @LayoutRes
     protected abstract int getContentViewId();
 
+    @IdRes
     protected abstract int getShowImageGridViewId();
 
+    @IdRes
     protected abstract int getTakePhotoGridViewId();
 
     protected abstract void onPhotos(List<PhotoUpload> uploads);

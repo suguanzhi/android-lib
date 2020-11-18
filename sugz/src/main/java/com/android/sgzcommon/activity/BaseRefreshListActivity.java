@@ -1,7 +1,9 @@
 package com.android.sgzcommon.activity;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.android.sgzcommon.view.LoadResultView;
 import com.android.sgzcommon.view.TitleBar;
@@ -11,6 +13,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +26,11 @@ public abstract class BaseRefreshListActivity extends BaseActivity {
     protected TitleBar mTitleBar;
     protected RecyclerView mRvList;
     protected LoadResultView mLrv;
+    protected LinearLayout mLlTopContainer;
     protected SmartRefreshLayout mSrlRefresh;
+
+    @LayoutRes
+    protected abstract int getTopContainerViewId();
 
     protected abstract void onRefresh(RefreshLayout refreshLayout);
 
@@ -37,6 +44,13 @@ public abstract class BaseRefreshListActivity extends BaseActivity {
         mLrv = findViewById(R.id.lrv);
         mRvList = findViewById(R.id.rv_list);
         mSrlRefresh = findViewById(R.id.srl_refresh);
+        mLlTopContainer = findViewById(R.id.ll_top_container);
+        try {
+            LayoutInflater.from(mContext).inflate(getTopContainerViewId(), mLlTopContainer, false);
+        }catch (Exception e){
+           e.printStackTrace();
+
+        }
         mRvList.setLayoutManager(createLinearLayoutManager(RecyclerView.VERTICAL));
         mSrlRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
