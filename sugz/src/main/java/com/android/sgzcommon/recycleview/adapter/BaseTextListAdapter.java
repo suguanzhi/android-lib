@@ -17,16 +17,16 @@ import androidx.annotation.NonNull;
  * @author sgz
  * @date 2020/6/30
  */
-public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<TextListItem, BaseLoadListAdapter.ViewHolder> {
+public class BaseTextListAdapter extends BaseRecyclerviewAdapter<TextListItem, BaseTextListAdapter.ViewHolder> {
 
 
-    public BaseLoadListAdapter(Context context, List list) {
+    public BaseTextListAdapter(Context context, List list) {
         super(context, list);
     }
 
     @Override
     protected int getItemViewId(int viewType) {
-        return R.layout.adapter_sgz_base_load_list;
+        return R.layout.adapter_sgz_text_list;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<TextListItem, B
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mTvName.setText(getItem(position).getItemName());
+        holder.mTvText.setText(getItem(position).getItemName());
         if (position == mItems.size() - 1) {
             holder.mVLine.setVisibility(View.GONE);
         } else {
@@ -46,13 +46,13 @@ public class BaseLoadListAdapter extends BaseRecyclerviewAdapter<TextListItem, B
 
     class ViewHolder extends BaseViewHolder {
 
-        TextView mTvName;
+        TextView mTvText;
         View mVLine;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTvName = itemView.findViewById(R.id.tv_name);
-            mVLine = itemView.findViewById(R.id.v_line);
+            mTvText = itemView.findViewById(R.id.tv_text);
+            mVLine = itemView.findViewById(R.id.v_divider);
         }
     }
 }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.android.sgzcommon.dialog.entity.TextListItem;
 import com.android.sgzcommon.recycleview.BaseRecyclerviewAdapter;
-import com.android.sgzcommon.recycleview.adapter.BaseLoadListAdapter;
+import com.android.sgzcommon.recycleview.adapter.BaseTextListAdapter;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,7 @@ public abstract class BaseTextListDialog<V extends TextListItem> extends BaseLis
 
     @Override
     protected BaseRecyclerviewAdapter getAdapter(List<V> items) {
-        return new BaseLoadListAdapter(mContext, items);
+        return new BaseTextListAdapter(mContext, items);
     }
 
     public BaseTextListDialog(Context context) {

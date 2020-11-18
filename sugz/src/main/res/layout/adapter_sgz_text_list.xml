@@ -2,23 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:minHeight="@dimen/row_height_max"
+        android:minHeight="50dp"
         android:text=""
         android:textColor="@color/text"
         android:textSize="@dimen/text" />
 
     <View
-        android:id="@+id/v_line"
+        android:id="@+id/v_divider"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="0.4dp"
         android:background="@color/divider" />
 </LinearLayout>

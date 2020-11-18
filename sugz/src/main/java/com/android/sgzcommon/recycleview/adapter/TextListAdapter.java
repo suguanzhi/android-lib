@@ -13,15 +13,15 @@ import java.util.List;
 /**
  * Created by sgz on 2019/12/14.
  */
-public class StringListAdapter extends BaseRecyclerviewAdapter<String,StringListAdapter.ViewHolder> {
+public class TextListAdapter extends BaseRecyclerviewAdapter<String, TextListAdapter.ViewHolder> {
 
-    public StringListAdapter(Context context, List list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
+    public TextListAdapter(Context context, List list, OnItemtClickListener clickListener, OnItemtLongClickListener longClickListener) {
         super(context, list, clickListener, longClickListener);
     }
 
     @Override
     protected int getItemViewId(int viewType) {
-        return R.layout.adapter_sgz_string_list;
+        return R.layout.adapter_sgz_text_list;
     }
 
     @Override
@@ -46,8 +46,8 @@ public class StringListAdapter extends BaseRecyclerviewAdapter<String,StringList
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTvString = itemView.findViewById(R.id.tv_string);
-            mVLine = itemView.findViewById(R.id.v_line);
+            mTvString = itemView.findViewById(R.id.tv_text);
+            mVLine = itemView.findViewById(R.id.v_divider);
         }
     }
 }

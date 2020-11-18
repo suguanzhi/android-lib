@@ -47,8 +47,8 @@ public abstract class BaseRefreshListActivity extends BaseActivity {
         mLlTopContainer = findViewById(R.id.ll_top_container);
         try {
             LayoutInflater.from(mContext).inflate(getTopContainerViewId(), mLlTopContainer, false);
-        }catch (Exception e){
-           e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
 
         }
         mRvList.setLayoutManager(createLinearLayoutManager(RecyclerView.VERTICAL));
