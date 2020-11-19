@@ -34,6 +34,7 @@ public class InputEditView extends LinearLayout {
     private int value;
     private int minValue;
     private int maxValue;
+    private boolean isSetValue;
     private OnAddOrSubClickListener clickistener;
     private OnValueChangeListener changeListener;
     private OnFocusChangeListener focusListener;
@@ -71,8 +72,9 @@ public class InputEditView extends LinearLayout {
                     mEtInput.setText(minValue + "");
                 }
                 if (changeListener != null) {
-                    changeListener.onValueChange(value);
+                    changeListener.onValueChange(value, isSetValue);
                 }
+                isSetValue = false;
             }
         });
         mIvAdd.setOnClickListener(new OnClickListener() {
@@ -183,6 +185,7 @@ public class InputEditView extends LinearLayout {
 
     public void setValue(int v) {
         value = v;
+        isSetValue = true;
         mEtInput.setText(value + "");
     }
 
@@ -239,6 +242,6 @@ public class InputEditView extends LinearLayout {
     }
 
     public interface OnValueChangeListener {
-        void onValueChange(int value);
+        void onValueChange(int value, boolean isSetValue);
     }
 }

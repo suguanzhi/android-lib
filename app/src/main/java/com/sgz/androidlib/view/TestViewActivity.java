@@ -83,10 +83,10 @@ public class TestViewActivity extends BaseActivity {
         } else {
             mCivPicture.setImageBitmap(null);
         }
-        mIev.setOnEditFocusChangeListener(new View.OnFocusChangeListener() {
+        mIev.setOnValueChangeListener(new InputEditView.OnValueChangeListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                Log.d("TestViewActivity", "onFocusChange: " + hasFocus);
+            public void onValueChange(int value, boolean isSetValue) {
+                Log.d("TestViewActivity", "onValueChange: value == " + value + "; isSetValue == " + isSetValue);
             }
         });
         List<String> list = new ArrayList<>();
@@ -109,7 +109,7 @@ public class TestViewActivity extends BaseActivity {
                 intent = new Intent(mContext, TestSmartRefreshLayoutActivity.class);
                 break;
             case R.id.btn_focus:
-                mIev.requestEditFocus();
+                mIev.setValue(1234);
                 break;
         }
         if (intent != null) {
