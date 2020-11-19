@@ -34,8 +34,6 @@ public class InputEditView extends LinearLayout {
     private int value;
     private int minValue;
     private int maxValue;
-    private boolean isEditing;
-    private boolean isClicked;
     private OnAddOrSubClickListener clickistener;
     private OnValueChangeListener changeListener;
     private OnFocusChangeListener focusListener;
@@ -73,15 +71,14 @@ public class InputEditView extends LinearLayout {
                     mEtInput.setText(minValue + "");
                 }
                 if (changeListener != null) {
-                    changeListener.onValueChange(value, mEtInput.isFocused() || isClicked);
+                    changeListener.onValueChange(value, mEtInput.isFocused());
                 }
-                isClicked = false;
             }
         });
         mIvAdd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                isClicked = true;
+                requestEditFocus();
                 String s = mEtInput.getText().toString();
                 int value = 0;
                 try {
@@ -101,7 +98,7 @@ public class InputEditView extends LinearLayout {
         mIvSub.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                isClicked = true;
+                requestEditFocus();
                 String s = mEtInput.getText().toString();
                 int value = 0;
                 try {

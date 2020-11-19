@@ -46,10 +46,12 @@ public class TestViewActivity extends BaseActivity {
     CornerImageView mCivPicture;
     @BindView(R.id.btn_focus)
     Button mBtnFocus;
-    @BindView(R.id.iev)
-    InputEditView mIev;
+    @BindView(R.id.iev1)
+    InputEditView mIev1;
     @BindView(R.id.mgv)
     MyGridView mMgv;
+    @BindView(R.id.iev2)
+    InputEditView mIev2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,17 +85,23 @@ public class TestViewActivity extends BaseActivity {
         } else {
             mCivPicture.setImageBitmap(null);
         }
-        mIev.setOnValueChangeListener(new InputEditView.OnValueChangeListener() {
+        mIev1.setOnValueChangeListener(new InputEditView.OnValueChangeListener() {
             @Override
             public void onValueChange(int value, boolean isEditing) {
-                Log.d("TestViewActivity", "onValueChange: value == " + value + "; isSetValue == " + isEditing);
+                Log.d("TestViewActivity", "onValueChange: 1 value == " + value + "; isEditing == " + isEditing);
+            }
+        });
+        mIev2.setOnValueChangeListener(new InputEditView.OnValueChangeListener() {
+            @Override
+            public void onValueChange(int value, boolean isEditing) {
+                Log.d("TestViewActivity", "onValueChange: 2 value == " + value + "; isEditing == " + isEditing);
             }
         });
         List<String> list = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
-            list.add(i+"");
+            list.add(i + "");
         }
-        MyGridAdapter adapter = new MyGridAdapter(this,list);
+        MyGridAdapter adapter = new MyGridAdapter(this, list);
         mMgv.setAdapter(adapter);
 
     }
@@ -109,7 +117,7 @@ public class TestViewActivity extends BaseActivity {
                 intent = new Intent(mContext, TestSmartRefreshLayoutActivity.class);
                 break;
             case R.id.btn_focus:
-                mIev.setValue(1234);
+                mIev1.requestEditFocus();
                 break;
         }
         if (intent != null) {
