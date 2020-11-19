@@ -85,8 +85,8 @@ public class TestViewActivity extends BaseActivity {
         }
         mIev.setOnValueChangeListener(new InputEditView.OnValueChangeListener() {
             @Override
-            public void onValueChange(int value, boolean isSetValue) {
-                Log.d("TestViewActivity", "onValueChange: value == " + value + "; isSetValue == " + isSetValue);
+            public void onValueChange(int value, boolean isEditing) {
+                Log.d("TestViewActivity", "onValueChange: value == " + value + "; isSetValue == " + isEditing);
             }
         });
         List<String> list = new ArrayList<>();
