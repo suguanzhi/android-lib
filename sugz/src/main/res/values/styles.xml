@@ -143,26 +143,37 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text</item>
         <item name="android:textSize">@dimen/text</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingStart">10dp</item>
-        <item name="android:paddingEnd">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:gravity">center_vertical</item>
     </style>
 
-    <style name="Input.R" parent="Input">
+    <style name="Input.Wrap" parent="Input">
+        <item name="android:padding">@dimen/input_padding</item>
+    </style>
+
+    <style name="Input.Single" parent="Input">
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_height">@dimen/input_height</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/input_padding</item>
+        <item name="android:paddingEnd">@dimen/input_padding</item>
+    </style>
+
+    <style name="Input.R" parent="Input.Wrap">
         <item name="android:background">@drawable/shape_input_r</item>
     </style>
 
-    <style name="Input.R.Background" parent="Input">
+    <style name="Input.R.Background" parent="Input.Wrap">
         <item name="android:background">@drawable/shape_input_r_with_background</item>
     </style>
 
-    <style name="Input.Circle" parent="Input">
+    <style name="Input.R.Single.Background" parent="Input.Single">
+        <item name="android:background">@drawable/shape_input_r_with_background</item>
+    </style>
+
+    <style name="Input.Circle" parent="Input.Single">
         <item name="android:background">@drawable/shape_input_circle</item>
     </style>
 
-    <style name="Input.Circle.White" parent="Input">
+    <style name="Input.Circle.White" parent="Input.Single">
         <item name="android:background">@drawable/shape_input_circle_with_background</item>
     </style>
 
