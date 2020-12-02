@@ -26,15 +26,15 @@ public class TestBaseTextListDialog extends BaseTextListDialog<TextListEntity> {
     public TestBaseTextListDialog(Context context) {
         super(context);
         mEntityList = new ArrayList<>();
-        mEntityList.add(new TextListEntity("深刻的反思了的"));
-        mEntityList.add(new TextListEntity("深刻的反思了的"));
-        mEntityList.add(new TextListEntity("深刻的反思了的"));
-        mEntityList.add(new TextListEntity("深刻的反思了的"));
-        mEntityList.add(new TextListEntity("深刻的反思了的"));
-        mEntityList.add(new TextListEntity("深刻的反思了的"));
-        mEntityList.add(new TextListEntity("深刻的反思了的"));
-        mEntityList.add(new TextListEntity("深刻的反思了的"));
-        mEntityList.add(new TextListEntity("深刻的反思了的"));
-        mEntityList.add(new TextListEntity("深刻的反思了的"));
+//        mEntityList.add(new TextListEntity("深刻的反思了的"));
+//        mEntityList.add(new TextListEntity("深刻的反思了的"));
+//        mEntityList.add(new TextListEntity("深刻的反思了的"));
+//        mEntityList.add(new TextListEntity("深刻的反思了的"));
+//        mEntityList.add(new TextListEntity("深刻的反思了的"));
+//        mEntityList.add(new TextListEntity("深刻的反思了的"));
+//        mEntityList.add(new TextListEntity("深刻的反思了的"));
+//        mEntityList.add(new TextListEntity("深刻的反思了的"));
+//        mEntityList.add(new TextListEntity("深刻的反思了的"));
+//        mEntityList.add(new TextListEntity("深刻的反思了的"));
     }
 }

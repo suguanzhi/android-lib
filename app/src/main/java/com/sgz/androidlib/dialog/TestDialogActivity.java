@@ -62,7 +62,7 @@ public class TestDialogActivity extends BaseActivity {
 
                     }
                 });
-                dialog.setTitle("请选择");
+                //dialog.setTitleText("标题");
                 dialog.show();
                 break;
             case R.id.btn_date_pick:

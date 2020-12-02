@@ -20,6 +20,7 @@
         android:layout_height="@dimen/icon_big"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:padding="2dp"
         android:background="@drawable/shape_r20_sd_white"
         android:src="@drawable/ic_sgz_delete2" />
 

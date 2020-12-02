@@ -185,9 +185,9 @@ public class OKUploadTask<T extends UploadEntity> {
         final File f = entity.getFile();
         MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
         RequestBody fileBody = createProgressRequestBody(MediaType.parse("multipart/form-data"), resultSet, entity, listener);
-        Headers.Builder hb = new Headers.Builder();
-        hb.add("Content-Disposition", "form-data; name=\"" + name + "\";" + "filename=\"" + f.getName() + "\"");
-        builder.addPart(hb.build(), fileBody);
+        Headers.Builder dataBuilder = new Headers.Builder();
+        dataBuilder.add("Content-Disposition", "form-data; name=\"" + name + "\";" + "filename=\"" + f.getName() + "\"");
+        builder.addPart(dataBuilder.build(), fileBody);
         if (data != null) {
             for (String key : data.keySet()) {
                 String value = data.get(key);
@@ -196,18 +196,18 @@ public class OKUploadTask<T extends UploadEntity> {
         }
         RequestBody requestBody = builder.build();
         //创建Request
-        Request.Builder requestBuilder = new Request.Builder();
-        requestBuilder.url(url);
+        Request.Builder headerBuilder = new Request.Builder();
+        headerBuilder.url(url);
         if (headers != null) {
             for (String key : headers.keySet()) {
                 String value = headers.get(key);
                 if (!TextUtils.isEmpty(value)) {
-                    requestBuilder.addHeader(key, value);
+                    headerBuilder.addHeader(key, value);
                 }
             }
         }
-        requestBuilder.post(requestBody);
-        return requestBuilder.build();
+        headerBuilder.post(requestBody);
+        return headerBuilder.build();
     }
 
     private Message createMessage(int what, T entity, OnUploadFileListener listener, UploadResultSet result) {

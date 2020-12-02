@@ -112,6 +112,7 @@ public abstract class BaseListDialog<V> extends BaseDialog {
                 }
                 if (mItems.size() == 0) {
                     mLrv.empty();
+                    setLayoutParams(getWidth(), UnitUtils.dp2px(300));
                 } else {
                     mLrv.gone();
                 }
@@ -146,8 +147,10 @@ public abstract class BaseListDialog<V> extends BaseDialog {
             mTvTitle.setText(title);
             if (TextUtils.isEmpty(title)) {
                 mTvTitle.setVisibility(View.GONE);
+                mLrv.setBackgroundResource(R.drawable.shape_r10_sd_backgroud);
             } else {
                 mTvTitle.setVisibility(View.VISIBLE);
+                mLrv.setBackgroundResource(R.drawable.shape_r10_bl_br_sd_backgroud);
             }
         }
     }
