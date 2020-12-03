@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -18,6 +17,9 @@ import com.squareup.okhttp.Response;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.FileNameMap;
+import java.net.URLConnection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,8 +43,11 @@ public class OKUploadTask<T extends UploadEntity> {
 
     public static final int ON_START = 1;
     public static final int ON_SUCCESS = 2;
-    public static final int ON_VALUE = 3;
-    public static final int ON_FAIL = 4;
+    public static final int ON_FAIL = 3;
+    public static final int ON_ENTITY_START = 4;
+    public static final int ON_ENTITY_SUCCESS = 5;
+    public static final int ON_ENTITY_VALUE = 6;
+    public static final int ON_ENTITY_FAIL = 7;
     private static final String TAG = "OKUploadTask";
 
     private static OKUploadTask mOKUploadTask;
@@ -50,34 +55,82 @@ public class OKUploadTask<T extends UploadEntity> {
     private ExecutorService mExecutorService;
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
-            UploadResponse uploadResponse = (UploadResponse) msg.obj;
-            OnUploadFileListener listener = uploadResponse.getListener();
-            UploadResultSet result = uploadResponse.getResult();
-            T entity = uploadResponse.getEntity();
-            if (listener != null) {
-                switch (msg.what) {
-                    case ON_START:
-                        entity.setProgress(0);
-                        entity.setState(UploadEntity.STATE.STATE_UPLOAD_READY);
-                        listener.onUploadStart(entity);
-                        break;
-                    case ON_SUCCESS:
-                        entity.setProgress(100);
-                        entity.setState(UploadEntity.STATE.STATE_UPLOAD_SUCCESS);
-                        listener.onUploadSuccess(entity, result);
-                        break;
-                    case ON_VALUE:
-                        int value = msg.arg1;
-                        entity.setProgress(value);
-                        entity.setState(UploadEntity.STATE.STATE_UPLOADING);
-                        listener.onValue(entity, value);
-                        break;
-                    case ON_FAIL:
-                        entity.setState(UploadEntity.STATE.STATE_UPLOAD_FAIL);
-                        Exception e = result.getError();
-                        listener.onUploadFail(entity, e);
-                        break;
-                }
+            UploadResponse uploadResponse;
+            UploadProgress uploadProgress;
+            OnUploadFileListener listener;
+            UploadResultSet resultSet;
+            String url;
+            List<T> entities;
+            T entity;
+            switch (msg.what) {
+                case ON_START:
+                    uploadResponse = (UploadResponse) msg.obj;
+                    listener = uploadResponse.getListener();
+                    if (listener != null) {
+                        listener.onUploadStart(uploadResponse.getUrl());
+                    }
+                    break;
+                case ON_SUCCESS:
+                    uploadResponse = (UploadResponse) msg.obj;
+                    listener = uploadResponse.getListener();
+                    resultSet = uploadResponse.getResultSet();
+                    url = uploadResponse.getUrl();
+                    entities = uploadResponse.getEntities();
+                    if (listener != null) {
+                        listener.onUploadSuccess(url, entities, resultSet);
+                    }
+                    break;
+                case ON_FAIL:
+                    uploadResponse = (UploadResponse) msg.obj;
+                    listener = uploadResponse.getListener();
+                    resultSet = uploadResponse.getResultSet();
+                    url = uploadResponse.getUrl();
+                    entities = uploadResponse.getEntities();
+                    if (listener != null) {
+                        listener.onUploadFail(url, entities, resultSet.getError());
+                    }
+                    break;
+                case ON_ENTITY_START:
+                    uploadProgress = (UploadProgress) msg.obj;
+                    listener = uploadProgress.getListener();
+                    entity = uploadProgress.getEntity();
+                    entity.setProgress(0);
+                    entity.setState(UploadEntity.STATE.STATE_UPLOADING);
+                    if (listener != null) {
+                        listener.onEntityStart(entity);
+                    }
+                    break;
+                case ON_ENTITY_SUCCESS:
+                    uploadProgress = (UploadProgress) msg.obj;
+                    listener = uploadProgress.getListener();
+                    entity = uploadProgress.getEntity();
+                    entity.setProgress(100);
+                    entity.setState(UploadEntity.STATE.STATE_UPLOAD_SUCCESS);
+                    if (listener != null) {
+                        listener.onEntitySuccess(entity);
+                    }
+                    break;
+                case ON_ENTITY_VALUE:
+                    int value = msg.arg1;
+                    uploadProgress = (UploadProgress) msg.obj;
+                    listener = uploadProgress.getListener();
+                    entity = uploadProgress.getEntity();
+                    entity.setProgress(value);
+                    entity.setState(UploadEntity.STATE.STATE_UPLOADING);
+                    if (listener != null) {
+                        listener.onEntityValue(entity, value);
+                    }
+                    break;
+                case ON_ENTITY_FAIL:
+                    uploadProgress = (UploadProgress) msg.obj;
+                    listener = uploadProgress.getListener();
+                    resultSet = uploadProgress.getResultSet();
+                    entity = uploadProgress.getEntity();
+                    entity.setState(UploadEntity.STATE.STATE_UPLOAD_FAIL);
+                    if (listener != null) {
+                        listener.onEntityFail(entity, resultSet.getError());
+                    }
+                    break;
             }
         }
     };
@@ -105,9 +158,8 @@ public class OKUploadTask<T extends UploadEntity> {
     /**
      * 上传文件，按队列顺序上传
      */
-    public void upLoadFileEnqueue(final String url, final T entity, final Map<String, String> data, Map<String, String> headers, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
+    public void upLoadFileEnqueue(final String url, final List<T> entity, final Map<String, String> data, Map<String, String> headers, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
         try {
-            mHandler.sendMessage(createMessage(ON_START, entity, listener, resultSet));
             final Request request = getRequest(url, entity, data, headers, resultSet, listener);
             Call call = mOkHttpClient.newCall(request);
             call.enqueue(new Callback() {
@@ -115,32 +167,34 @@ public class OKUploadTask<T extends UploadEntity> {
                 public void onFailure(Request request, IOException e) {
                     log("IOException=" + e.toString());
                     resultSet.setError(e);
-                    mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                    mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
                 }
 
                 @Override
                 public void onResponse(com.squareup.okhttp.Response response) throws IOException {
+                    resultSet.setNetCode(response.code());
                     if (response.isSuccessful()) {
                         String result = response.body().string();
                         Log.d(TAG, "onResponse: result = " + result);
                         resultSet.setResponse(result);
                         resultSet.parseResult(result);
                         if (resultSet.isSuccess()) {
-                            mHandler.sendMessage(createMessage(ON_SUCCESS, entity, listener, resultSet));
+                            mHandler.sendMessage(createResponseMessage(ON_SUCCESS, url, entity, listener, resultSet));
                         } else {
-                            mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                            resultSet.setError(new RuntimeException("success is false !"));
+                            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
                         }
                     } else {
                         int code = response.code();
-                        resultSet.setError(new RuntimeException("code == " + code));
-                        mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                        resultSet.setError(new RuntimeException("netCode == " + code));
+                        mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
                     }
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
             resultSet.setError(e);
-            mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
         }
 
     }
@@ -148,46 +202,53 @@ public class OKUploadTask<T extends UploadEntity> {
     /**
      * 上传文件
      */
-    public void upLoadFile(final String url, final T entity, final Map<String, String> data, Map<String, String> headers, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
+    public void upLoadFile(final String url, final List<T> entity, final Map<String, String> data, Map<String, String> headers, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
         mExecutorService.execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    mHandler.sendMessage(createMessage(ON_START, entity, listener, resultSet));
                     Request request = getRequest(url, entity, data, headers, resultSet, listener);
                     Call call = mOkHttpClient.newCall(request);
                     Response response = call.execute();
+                    resultSet.setNetCode(response.code());
                     if (response.isSuccessful()) {
                         String result = response.body().string();
                         Log.d(TAG, "onResponse: result = " + result);
                         resultSet.setResponse(result);
                         resultSet.parseResult(result);
                         if (resultSet.isSuccess()) {
-                            mHandler.sendMessage(createMessage(ON_SUCCESS, entity, listener, resultSet));
+                            mHandler.sendMessage(createResponseMessage(ON_SUCCESS, url, entity, listener, resultSet));
                         } else {
-                            mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
                         }
                     } else {
                         int code = response.code();
-                        resultSet.setError(new RuntimeException("code == " + code));
-                        mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                        resultSet.setError(new RuntimeException("netCode == " + code));
+                        mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                     resultSet.setError(e);
-                    mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                    mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
                 }
             }
         });
     }
 
-    private Request getRequest(String url, T entity, Map<String, String> data, Map<String, String> headers, UploadResultSet resultSet, OnUploadFileListener<T> listener) {
-        final File f = entity.getFile();
+    private Request getRequest(String url, List<T> entities, Map<String, String> data, Map<String, String> headers, UploadResultSet resultSet, OnUploadFileListener<T> listener) {
         MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
-        RequestBody fileBody = createProgressRequestBody(MediaType.parse("multipart/form-data"), resultSet, entity, listener);
-        Headers.Builder dataBuilder = new Headers.Builder();
-        dataBuilder.add("Content-Disposition", "form-data; name=\"" + name + "\";" + "filename=\"" + f.getName() + "\"");
-        builder.addPart(dataBuilder.build(), fileBody);
+        if (entities != null) {
+            for (T entity : entities) {
+                final File f = entity.getFile();
+                String fileType = getMimeType(f.getName());
+                //RequestBody fileBody = createProgressRequestBody(MediaType.parse("multipart/form-data"), resultSet, entity, listener);
+                //Headers.Builder fileBuilder = new Headers.Builder();
+                //fileBuilder.add("Content-Disposition", "form-data; name=\"" + name + "\";" + "filename=\"" + f.getName() + "\"");
+                //builder.addPart(fileBuilder.build(), fileBody);
+                RequestBody fileBody = createProgressRequestBody(url, MediaType.parse(fileType), resultSet, entity, listener);
+                builder.addFormDataPart(name, f.getName(), fileBody);
+            }
+        }
         if (data != null) {
             for (String key : data.keySet()) {
                 String value = data.get(key);
@@ -210,22 +271,76 @@ public class OKUploadTask<T extends UploadEntity> {
         return headerBuilder.build();
     }
 
-    private Message createMessage(int what, T entity, OnUploadFileListener listener, UploadResultSet result) {
+    /**
+     * 获取文件MimeType
+     *
+     * @param filename
+     * @return
+     */
+    private static String getMimeType(String filename) {
+        FileNameMap filenameMap = URLConnection.getFileNameMap();
+        String contentType = filenameMap.getContentTypeFor(filename);
+        if (contentType == null) {
+            contentType = "application/octet-stream"; //* exe,所有的可执行程序
+        }
+        return contentType;
+    }
+
+    private Message createResponseMessage(int what, String url, List<T> ts, OnUploadFileListener listener, UploadResultSet result) {
         Message msg = new Message();
         msg.what = what;
-        msg.obj = new UploadResponse(entity, listener, result);
+        msg.obj = new UploadResponse(url, ts, listener, result);
+        return msg;
+    }
+
+    private Message createProgressMessage(int what, String url, T t, OnUploadFileListener listener, UploadResultSet result) {
+        Message msg = new Message();
+        msg.what = what;
+        msg.obj = new UploadProgress(url, t, listener, result);
         return msg;
     }
 
     private class UploadResponse {
+        private String url;
+        private List<T> entities;
+        private OnUploadFileListener listener;
+        private UploadResultSet resultSet;
+
+        public UploadResponse(String url, List<T> ts, OnUploadFileListener listener, UploadResultSet resultSet) {
+            this.url = url;
+            this.entities = ts;
+            this.listener = listener;
+            this.resultSet = resultSet;
+        }
+
+        public List<T> getEntities() {
+            return entities;
+        }
+
+        public OnUploadFileListener getListener() {
+            return listener;
+        }
+
+        public UploadResultSet getResultSet() {
+            return resultSet;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+    }
+
+    private class UploadProgress {
+        private String url;
         private T entity;
         private OnUploadFileListener listener;
-        private UploadResultSet result;
+        private UploadResultSet resultSet;
 
-        public UploadResponse(T entity, OnUploadFileListener listener, UploadResultSet result) {
-            this.entity = entity;
+        public UploadProgress(String url, T t, OnUploadFileListener listener, UploadResultSet resultSet) {
+            this.url = url;
+            this.entity = t;
             this.listener = listener;
-            this.result = result;
+            this.resultSet = resultSet;
         }
 
         public T getEntity() {
@@ -236,19 +351,24 @@ public class OKUploadTask<T extends UploadEntity> {
             return listener;
         }
 
-        public UploadResultSet getResult() {
-            return result;
+        public UploadResultSet getResultSet() {
+            return resultSet;
+        }
+
+        public String getUrl() {
+            return url;
         }
     }
 
     /**
      * 创建带进度的RequestBody
      *
+     * @param url
      * @param contentType MediaType
      * @param entity      准备上传的entity
      * @return
      */
-    private RequestBody createProgressRequestBody(final MediaType contentType, final UploadResultSet resultSet, T entity, OnUploadFileListener listener) {
+    private RequestBody createProgressRequestBody(String url, final MediaType contentType, final UploadResultSet resultSet, T entity, OnUploadFileListener listener) {
         return new RequestBody() {
             @Override
             public MediaType contentType() {
@@ -264,6 +384,7 @@ public class OKUploadTask<T extends UploadEntity> {
             @Override
             public void writeTo(BufferedSink sink) throws IOException {
                 try {
+                    mHandler.sendMessage(createProgressMessage(ON_ENTITY_START, url, entity, listener, resultSet));
                     File file = entity.getFile();
                     Source source = Okio.source(file);
                     Buffer buf = new Buffer();
@@ -275,17 +396,16 @@ public class OKUploadTask<T extends UploadEntity> {
                         sink.write(buf, readCount);
                         current += readCount;
                         ratioPercent = (int) ((current * 1f / remaining) * 100);
-                        if (ratioPercent <= 99) {
-                            Message msg = createMessage(ON_VALUE, entity, listener, resultSet);
-                            msg.arg1 = ratioPercent;
-                            mHandler.sendMessage(msg);
-                            log("createProgressRequestBody : " + entity.getFile().getName() + "；ratio == " + ratioPercent + "%");
-                        }
+                        Message msg = createProgressMessage(ON_ENTITY_VALUE, url, entity, listener, resultSet);
+                        msg.arg1 = ratioPercent;
+                        mHandler.sendMessage(msg);
+                        log("createProgressRequestBody : " + entity.getFile().getName() + "；ratio == " + ratioPercent + "%");
                     }
+                    mHandler.sendMessage(createProgressMessage(ON_ENTITY_SUCCESS, url, entity, listener, resultSet));
                 } catch (Exception e) {
                     e.printStackTrace();
                     resultSet.setError(e);
-                    mHandler.sendMessage(createMessage(ON_FAIL, entity, listener, resultSet));
+                    mHandler.sendMessage(createProgressMessage(ON_ENTITY_FAIL, url, entity, listener, resultSet));
                 }
             }
         };

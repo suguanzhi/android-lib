@@ -161,46 +161,53 @@ final public class GetPhotosImpl implements GetPhotos {
             listener.onAllSuccess();
         } else {
             Log.d("TakePhotoGridImpl", "uploadImages: ");
+            List<PhotoUpload> needUploadList = new ArrayList<>();
             for (int i = 0; i < mPhotoUploads.size(); i++) {
                 final PhotoUpload image = mPhotoUploads.get(i);
                 if (PhotoUpload.STATE.STATE_UPLOAD_READY == image.getState() || PhotoUpload.STATE.STATE_UPLOAD_FAIL == image.getState()) {
-                    final PhotoUpload photoUpload = mPhotoUploads.get(i);
-                    OKUploadTask.getInstance().upLoadFile(url, photoUpload, data, headers, new MUploadResultSet(), new OnUploadFileListener<PhotoUpload>() {
-                        @Override
-                        public void onUploadStart(PhotoUpload upload) {
-                            Log.d("TakePhotoGridImpl", "onUploadStart: ");
-                        }
-
-                        @Override
-                        public void onUploadSuccess(PhotoUpload upload, UploadResultSet result) {
-                            Log.d("TakePhotoGridImpl", "onUploadSuccess: ");
-                            int position = upload.getPosition();
-                            if (listener != null) {
-                                listener.onSuccess(upload, result);
-                                for (int j = 0; j < mPhotoUploads.size(); j++) {
-                                    if (PhotoUpload.STATE.STATE_UPLOAD_SUCCESS != mPhotoUploads.get(j).getState()) {
-                                        break;
-                                    }
-                                    if (j == mPhotoUploads.size() - 1) {
-                                        if (listener != null) {
-                                            listener.onAllSuccess();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onValue(PhotoUpload upload, int value) {
-                            Log.d("TakePhotoGridImpl", "onValue: " + value + "%");
-                        }
-
-                        @Override
-                        public void onUploadFail(PhotoUpload upload, Exception e) {
-                            Log.d("TakePhotoGridImpl", "onUploadFail: " + Log.getStackTraceString(e));
-                        }
-                    });
+                    PhotoUpload photoUpload = mPhotoUploads.get(i);
+                    needUploadList.add(photoUpload);
                 }
+            }
+            if (needUploadList.size() > 0) {
+                OKUploadTask.getInstance().upLoadFile(url, needUploadList, data, headers, new MUploadResultSet(), new OnUploadFileListener<PhotoUpload>() {
+                    @Override
+                    public void onUploadStart(String url) {
+
+                    }
+
+                    @Override
+                    public void onUploadSuccess(String url, List<PhotoUpload> photoUploads, UploadResultSet result) {
+                        if (listener != null) {
+                            listener.onAllSuccess();
+                        }
+                    }
+
+                    @Override
+                    public void onUploadFail(String url, List<PhotoUpload> photoUploads, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onEntityStart(PhotoUpload photoUpload) {
+
+                    }
+
+                    @Override
+                    public void onEntityValue(PhotoUpload photoUpload, int value) {
+
+                    }
+
+                    @Override
+                    public void onEntitySuccess(PhotoUpload photoUpload) {
+
+                    }
+
+                    @Override
+                    public void onEntityFail(PhotoUpload photoUpload, Exception e) {
+
+                    }
+                });
             }
         }
     }

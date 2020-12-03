@@ -1,11 +1,19 @@
 package com.android.sgzcommon.http.okhttp.upload;
 
-public interface OnUploadFileListener<V> {
-	void onUploadStart(V v);
+import java.util.List;
 
-	void onUploadSuccess(V v, UploadResultSet result);
+public interface OnUploadFileListener<T> {
+    void onUploadStart(String url);
 
-	void onValue(V v,int value);
+    void onUploadSuccess(String url,List<T> ts, UploadResultSet result);
 
-	void onUploadFail(V v,Exception e);
+    void onUploadFail(String url, List<T> ts, Exception e);
+
+    void onEntityStart(T t);
+
+    void onEntityValue(T t, int value);
+
+    void onEntitySuccess(T t);
+
+    void onEntityFail(T t, Exception e);
 }
