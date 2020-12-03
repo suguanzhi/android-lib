@@ -158,16 +158,18 @@ public class OKUploadTask<T extends UploadEntity> {
     /**
      * 上传文件，按队列顺序上传
      */
-    public void upLoadFileEnqueue(final String url, final List<T> entity, final Map<String, String> data, Map<String, String> headers, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
+    public void upLoadFileEnqueue(final String url, final List<T> ts, final Map<String, String> data, Map<String, String> headers, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
         try {
-            final Request request = getRequest(url, entity, data, headers, resultSet, listener);
+            mHandler.sendMessage(createResponseMessage(ON_START, url, ts, listener, resultSet));
+            final Request request = getRequest(url, ts, data, headers, resultSet, listener);
             Call call = mOkHttpClient.newCall(request);
             call.enqueue(new Callback() {
+
                 @Override
                 public void onFailure(Request request, IOException e) {
                     log("IOException=" + e.toString());
                     resultSet.setError(e);
-                    mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
+                    mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
                 }
 
                 @Override
@@ -179,22 +181,22 @@ public class OKUploadTask<T extends UploadEntity> {
                         resultSet.setResponse(result);
                         resultSet.parseResult(result);
                         if (resultSet.isSuccess()) {
-                            mHandler.sendMessage(createResponseMessage(ON_SUCCESS, url, entity, listener, resultSet));
+                            mHandler.sendMessage(createResponseMessage(ON_SUCCESS, url, ts, listener, resultSet));
                         } else {
                             resultSet.setError(new RuntimeException("success is false !"));
-                            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
+                            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
                         }
                     } else {
                         int code = response.code();
                         resultSet.setError(new RuntimeException("netCode == " + code));
-                        mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
+                        mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
                     }
                 }
             });
         } catch (Exception e) {
             e.printStackTrace();
             resultSet.setError(e);
-            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
+            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
         }
 
     }
@@ -202,12 +204,13 @@ public class OKUploadTask<T extends UploadEntity> {
     /**
      * 上传文件
      */
-    public void upLoadFile(final String url, final List<T> entity, final Map<String, String> data, Map<String, String> headers, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
+    public void upLoadFile(final String url, final List<T> ts, final Map<String, String> data, Map<String, String> headers, final UploadResultSet resultSet, final OnUploadFileListener<T> listener) {
         mExecutorService.execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Request request = getRequest(url, entity, data, headers, resultSet, listener);
+                    mHandler.sendMessage(createResponseMessage(ON_START, url, ts, listener, resultSet));
+                    Request request = getRequest(url, ts, data, headers, resultSet, listener);
                     Call call = mOkHttpClient.newCall(request);
                     Response response = call.execute();
                     resultSet.setNetCode(response.code());
@@ -217,24 +220,33 @@ public class OKUploadTask<T extends UploadEntity> {
                         resultSet.setResponse(result);
                         resultSet.parseResult(result);
                         if (resultSet.isSuccess()) {
-                            mHandler.sendMessage(createResponseMessage(ON_SUCCESS, url, entity, listener, resultSet));
+                            mHandler.sendMessage(createResponseMessage(ON_SUCCESS, url, ts, listener, resultSet));
                         } else {
-                            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
+                            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
                         }
                     } else {
                         int code = response.code();
                         resultSet.setError(new RuntimeException("netCode == " + code));
-                        mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
+                        mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                     resultSet.setError(e);
-                    mHandler.sendMessage(createResponseMessage(ON_FAIL, url, entity, listener, resultSet));
+                    mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
                 }
             }
         });
     }
 
+    /**
+     * @param url
+     * @param entities
+     * @param data
+     * @param headers
+     * @param resultSet
+     * @param listener
+     * @return
+     */
     private Request getRequest(String url, List<T> entities, Map<String, String> data, Map<String, String> headers, UploadResultSet resultSet, OnUploadFileListener<T> listener) {
         MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
         if (entities != null) {
@@ -406,6 +418,7 @@ public class OKUploadTask<T extends UploadEntity> {
                     e.printStackTrace();
                     resultSet.setError(e);
                     mHandler.sendMessage(createProgressMessage(ON_ENTITY_FAIL, url, entity, listener, resultSet));
+                    throw e;
                 }
             }
         };
