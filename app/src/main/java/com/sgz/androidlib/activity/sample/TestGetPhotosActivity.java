@@ -12,6 +12,7 @@ import com.android.sgzcommon.take_photo.GetPhotosImpl;
 import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
 import com.sgz.androidlib.R;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.Executors;
@@ -38,12 +39,12 @@ public class TestGetPhotosActivity extends GetPhotosActivity {
 
     @Override
     protected int getShowImageGridViewId() {
-        return 0;
+        return R.id.rv_list;
     }
 
     @Override
     protected int getTakePhotoGridViewId() {
-        return R.id.rv_list;
+        return 0;
     }
 
     @Override
@@ -61,30 +62,16 @@ public class TestGetPhotosActivity extends GetPhotosActivity {
 
             }
         });
-        PriorityQueue<TestResource> queue = new PriorityQueue<>();
-        TestResource resource1 = new TestResource(98);
-        TestResource resource2 = new TestResource(21);
-        TestResource resource3 = new TestResource(101);
-        TestResource resource4 = new TestResource(52);
-        TestResource resource5 = new TestResource(121);
-        queue.add(resource1);
-        queue.add(resource2);
-        queue.add(resource3);
-        queue.add(resource4);
-        queue.add(resource5);
-        Log.d("MainActivity", "onCreate: " + queue.peek().score);
-        Log.d("MainActivity", "onCreate: size == " + queue.size());
-        Log.d("MainActivity", "onCreate: " + queue.element().score);
-        Log.d("MainActivity", "onCreate: size == " + queue.size());
-        Log.d("MainActivity", "onCreate: " + queue.element().score);
-        Log.d("MainActivity", "onCreate: size == " + queue.size());
-        Log.d("MainActivity", "onCreate: " + queue.element().score);
-        Log.d("MainActivity", "onCreate: size == " + queue.size());
-        Log.d("MainActivity", "onCreate: " + queue.element().score);
-        Log.d("MainActivity", "onCreate: size == " + queue.size());
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(3);
-
-        setOnPhotoClickListener(new OnPhotoClickListener() {
+       List<String> urls = new ArrayList<>();
+       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649E5UR5naT.jpg");
+       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649nLkA0h0K.jpg");
+       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649WFtKpW10.jpg");
+       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174314PYsT80qi.jpg");
+       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415fZyHnni9.jpg");
+       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415S6tzuWFU.jpg");
+       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415J5bZsSq5.jpg");
+       setImageUrls(urls);
+       setOnPhotoClickListener(new OnPhotoClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("SampleTakePhotoListActivity", "onClick: ---------------------");
