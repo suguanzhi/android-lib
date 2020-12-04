@@ -1,7 +1,6 @@
 package com.android.sgzcommon.view.photos;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
@@ -16,7 +15,6 @@ import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -80,16 +78,6 @@ public class GridPhotoView extends RelativeLayout implements GetPhotos {
 
     @Override
     public void notifyPhotoChanged(int position) {
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
     }
 

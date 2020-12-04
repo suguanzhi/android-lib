@@ -253,14 +253,12 @@ final public class GetPhotosImpl implements GetPhotos {
         notifyPhotoChanged();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onPhotoActivityResult(int requestCode, int resultCode, Intent data) {
         mTakePhoto.onActivityResult(requestCode, resultCode, data);
         Log.d("TakePhotoGridImpl", "onActivityResult: requestCode = " + requestCode);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onPhotoRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         mTakePhoto.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 

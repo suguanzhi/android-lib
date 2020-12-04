@@ -74,13 +74,13 @@ public abstract class GetPhotosFragment extends BaseFragment implements GetPhoto
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("TakePhotoActivity", "onActivityResult: requestCode = " + requestCode);
         super.onActivityResult(requestCode, resultCode, data);
-        mTakePhotos.onActivityResult(requestCode, resultCode, data);
+        mTakePhotos.onPhotoActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        mTakePhotos.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mTakePhotos.onPhotoRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

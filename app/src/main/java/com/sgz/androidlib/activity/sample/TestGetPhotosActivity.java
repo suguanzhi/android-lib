@@ -1,6 +1,7 @@
 package com.sgz.androidlib.activity.sample;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;

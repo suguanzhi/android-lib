@@ -78,15 +78,15 @@ public abstract class GetPhotosActivity extends BaseActivity implements GetPhoto
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mTakePhotoGrid.onActivityResult(requestCode, resultCode, data);
+        mTakePhotoGrid.onPhotoActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        mTakePhotoGrid.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mTakePhotoGrid.onPhotoRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
