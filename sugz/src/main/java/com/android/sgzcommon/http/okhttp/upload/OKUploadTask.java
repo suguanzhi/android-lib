@@ -55,45 +55,38 @@ public class OKUploadTask<T extends UploadEntity> {
     private ExecutorService mExecutorService;
     private Handler mHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
-            UploadResponse uploadResponse;
+            UploadResponse uploadResponse = (UploadResponse) msg.obj;
+            OnUploadFileListener listener = uploadResponse.getListener();
+            UploadResultSet resultSet = uploadResponse.getResultSet();
+            String url = uploadResponse.getUrl();
             UploadProgress uploadProgress;
-            OnUploadFileListener listener;
-            UploadResultSet resultSet;
-            String url;
-            List<T> entities;
+            UploadEntityProgress uploadEntityProgress;
             T entity;
+            List<T> entities;
             switch (msg.what) {
                 case ON_START:
-                    uploadResponse = (UploadResponse) msg.obj;
-                    listener = uploadResponse.getListener();
+                    uploadProgress = (UploadProgress) uploadResponse;
                     if (listener != null) {
-                        listener.onUploadStart(uploadResponse.getUrl());
+                        listener.onUploadStart(uploadProgress.getUrl());
                     }
                     break;
                 case ON_SUCCESS:
-                    uploadResponse = (UploadResponse) msg.obj;
-                    listener = uploadResponse.getListener();
-                    resultSet = uploadResponse.getResultSet();
-                    url = uploadResponse.getUrl();
-                    entities = uploadResponse.getEntities();
+                    uploadProgress = (UploadProgress) uploadResponse;
+                    entities = uploadProgress.getEntities();
                     if (listener != null) {
                         listener.onUploadSuccess(url, entities, resultSet);
                     }
                     break;
                 case ON_FAIL:
-                    uploadResponse = (UploadResponse) msg.obj;
-                    listener = uploadResponse.getListener();
-                    resultSet = uploadResponse.getResultSet();
-                    url = uploadResponse.getUrl();
-                    entities = uploadResponse.getEntities();
+                    uploadProgress = (UploadProgress) uploadResponse;
+                    entities = uploadProgress.getEntities();
                     if (listener != null) {
                         listener.onUploadFail(url, entities, resultSet.getError());
                     }
                     break;
                 case ON_ENTITY_START:
-                    uploadProgress = (UploadProgress) msg.obj;
-                    listener = uploadProgress.getListener();
-                    entity = uploadProgress.getEntity();
+                    uploadEntityProgress = (UploadEntityProgress) uploadResponse;
+                    entity = uploadEntityProgress.getEntity();
                     entity.setProgress(0);
                     entity.setState(UploadEntity.STATE.STATE_UPLOADING);
                     if (listener != null) {
@@ -101,9 +94,8 @@ public class OKUploadTask<T extends UploadEntity> {
                     }
                     break;
                 case ON_ENTITY_SUCCESS:
-                    uploadProgress = (UploadProgress) msg.obj;
-                    listener = uploadProgress.getListener();
-                    entity = uploadProgress.getEntity();
+                    uploadEntityProgress = (UploadEntityProgress) uploadResponse;
+                    entity = uploadEntityProgress.getEntity();
                     entity.setProgress(100);
                     entity.setState(UploadEntity.STATE.STATE_UPLOAD_SUCCESS);
                     if (listener != null) {
@@ -112,9 +104,8 @@ public class OKUploadTask<T extends UploadEntity> {
                     break;
                 case ON_ENTITY_VALUE:
                     int value = msg.arg1;
-                    uploadProgress = (UploadProgress) msg.obj;
-                    listener = uploadProgress.getListener();
-                    entity = uploadProgress.getEntity();
+                    uploadEntityProgress = (UploadEntityProgress) uploadResponse;
+                    entity = uploadEntityProgress.getEntity();
                     entity.setProgress(value);
                     entity.setState(UploadEntity.STATE.STATE_UPLOADING);
                     if (listener != null) {
@@ -122,10 +113,8 @@ public class OKUploadTask<T extends UploadEntity> {
                     }
                     break;
                 case ON_ENTITY_FAIL:
-                    uploadProgress = (UploadProgress) msg.obj;
-                    listener = uploadProgress.getListener();
-                    resultSet = uploadProgress.getResultSet();
-                    entity = uploadProgress.getEntity();
+                    uploadEntityProgress = (UploadEntityProgress) uploadResponse;
+                    entity = uploadEntityProgress.getEntity();
                     entity.setState(UploadEntity.STATE.STATE_UPLOAD_FAIL);
                     if (listener != null) {
                         listener.onEntityFail(entity, resultSet.getError());
@@ -174,7 +163,8 @@ public class OKUploadTask<T extends UploadEntity> {
 
                 @Override
                 public void onResponse(com.squareup.okhttp.Response response) throws IOException {
-                    resultSet.setNetCode(response.code());
+                    int netCode = response.code();
+                    resultSet.setNetCode(netCode);
                     if (response.isSuccessful()) {
                         String result = response.body().string();
                         Log.d(TAG, "onResponse: result = " + result);
@@ -183,13 +173,10 @@ public class OKUploadTask<T extends UploadEntity> {
                         if (resultSet.isSuccess()) {
                             mHandler.sendMessage(createResponseMessage(ON_SUCCESS, url, ts, listener, resultSet));
                         } else {
-                            resultSet.setError(new RuntimeException("success is false !"));
-                            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
+                            throw new IOException("json parse failure !");
                         }
                     } else {
-                        int code = response.code();
-                        resultSet.setError(new RuntimeException("netCode == " + code));
-                        mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
+                        throw new IOException("netCode == " + netCode);
                     }
                 }
             });
@@ -213,6 +200,7 @@ public class OKUploadTask<T extends UploadEntity> {
                     Request request = getRequest(url, ts, data, headers, resultSet, listener);
                     Call call = mOkHttpClient.newCall(request);
                     Response response = call.execute();
+                    int netCode = response.code();
                     resultSet.setNetCode(response.code());
                     if (response.isSuccessful()) {
                         String result = response.body().string();
@@ -222,12 +210,10 @@ public class OKUploadTask<T extends UploadEntity> {
                         if (resultSet.isSuccess()) {
                             mHandler.sendMessage(createResponseMessage(ON_SUCCESS, url, ts, listener, resultSet));
                         } else {
-                            mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
+                            throw new IOException("json parse failure !");
                         }
                     } else {
-                        int code = response.code();
-                        resultSet.setError(new RuntimeException("netCode == " + code));
-                        mHandler.sendMessage(createResponseMessage(ON_FAIL, url, ts, listener, resultSet));
+                        throw new IOException("netCode == " + netCode);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -252,12 +238,13 @@ public class OKUploadTask<T extends UploadEntity> {
         if (entities != null) {
             for (T entity : entities) {
                 final File f = entity.getFile();
-                String fileType = getMimeType(f.getName());
+                String mimeType = getMimeType(f.getName());
+                Log.d("OKUploadTask", "getRequest: mimeType == " + mimeType);
                 //RequestBody fileBody = createProgressRequestBody(MediaType.parse("multipart/form-data"), resultSet, entity, listener);
                 //Headers.Builder fileBuilder = new Headers.Builder();
                 //fileBuilder.add("Content-Disposition", "form-data; name=\"" + name + "\";" + "filename=\"" + f.getName() + "\"");
                 //builder.addPart(fileBuilder.build(), fileBody);
-                RequestBody fileBody = createProgressRequestBody(url, MediaType.parse(fileType), resultSet, entity, listener);
+                RequestBody fileBody = createProgressRequestBody(url, MediaType.parse(mimeType), resultSet, entity, listener);
                 builder.addFormDataPart(name, f.getName(), fileBody);
             }
         }
@@ -301,32 +288,26 @@ public class OKUploadTask<T extends UploadEntity> {
     private Message createResponseMessage(int what, String url, List<T> ts, OnUploadFileListener listener, UploadResultSet result) {
         Message msg = new Message();
         msg.what = what;
-        msg.obj = new UploadResponse(url, ts, listener, result);
+        msg.obj = new UploadProgress(url, ts, listener, result);
         return msg;
     }
 
     private Message createProgressMessage(int what, String url, T t, OnUploadFileListener listener, UploadResultSet result) {
         Message msg = new Message();
         msg.what = what;
-        msg.obj = new UploadProgress(url, t, listener, result);
+        msg.obj = new UploadEntityProgress(url, t, listener, result);
         return msg;
     }
 
     private class UploadResponse {
         private String url;
-        private List<T> entities;
         private OnUploadFileListener listener;
         private UploadResultSet resultSet;
 
-        public UploadResponse(String url, List<T> ts, OnUploadFileListener listener, UploadResultSet resultSet) {
+        public UploadResponse(String url, OnUploadFileListener listener, UploadResultSet resultSet) {
             this.url = url;
-            this.entities = ts;
             this.listener = listener;
             this.resultSet = resultSet;
-        }
-
-        public List<T> getEntities() {
-            return entities;
         }
 
         public OnUploadFileListener getListener() {
@@ -342,34 +323,31 @@ public class OKUploadTask<T extends UploadEntity> {
         }
     }
 
-    private class UploadProgress {
-        private String url;
-        private T entity;
-        private OnUploadFileListener listener;
-        private UploadResultSet resultSet;
+    private class UploadProgress extends UploadResponse {
+        private List<T> entities;
 
-        public UploadProgress(String url, T t, OnUploadFileListener listener, UploadResultSet resultSet) {
-            this.url = url;
+        public UploadProgress(String url, List<T> ts, OnUploadFileListener listener, UploadResultSet resultSet) {
+            super(url, listener, resultSet);
+            this.entities = ts;
+        }
+
+        public List<T> getEntities() {
+            return entities;
+        }
+    }
+
+    private class UploadEntityProgress extends UploadResponse {
+        private T entity;
+
+        public UploadEntityProgress(String url, T t, OnUploadFileListener listener, UploadResultSet resultSet) {
+            super(url, listener, resultSet);
             this.entity = t;
-            this.listener = listener;
-            this.resultSet = resultSet;
         }
 
         public T getEntity() {
             return entity;
         }
 
-        public OnUploadFileListener getListener() {
-            return listener;
-        }
-
-        public UploadResultSet getResultSet() {
-            return resultSet;
-        }
-
-        public String getUrl() {
-            return url;
-        }
     }
 
     /**
