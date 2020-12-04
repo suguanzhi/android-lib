@@ -28,6 +28,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -43,6 +45,7 @@ final public class GetPhotosImpl implements GetPhotos {
     PictureGridEditAdapter mAdapter;
     OnTakePhotoGridListener mListener;
     GetPhotoImpl mTakePhoto;
+    ScheduledExecutorService mExecutorService;
 
     int mColumn;
     int mHorizontalMargin;
@@ -59,6 +62,7 @@ final public class GetPhotosImpl implements GetPhotos {
         mRecyclerView = recyclerView;
         mHorizontalMargin = horizontalMargin;
         mVerticalMargin = verticalmargin;
+        mExecutorService = Executors.newSingleThreadScheduledExecutor();
         mTakePhoto = new GetPhotoImpl(activity);
         mTakePhoto.setPhotoListener(new OnPhotoListener() {
             @Override
@@ -67,36 +71,38 @@ final public class GetPhotosImpl implements GetPhotos {
                 final String path = FilePathUtils.getAppPictureDir(mActivity).getAbsolutePath() + File.separator + "IMG" + System.currentTimeMillis() + ".jpg";
                 final PhotoUpload photoUpload = new PhotoUpload(path);
                 mAdapter.addItemData(photoUpload, mPhotoUploads.size());
-                new Thread(new Runnable() {
+                mExecutorService.execute(new Runnable() {
                     @Override
                     public void run() {
                         final boolean save = BitmapUtils.saveBimapToLocal(path, bitmap);
                         bitmap.recycle();
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                UploadEntity.STATE state = UploadEntity.STATE.STATE_UPLOAD_READY;
-                                if (!save) {
-                                    state = UploadEntity.STATE.STATE_LOADING_FAIL;
-                                }
-                                photoUpload.setState(state);
-                                int position = -1;
-                                for (int i = 0; i < mPhotoUploads.size(); i++) {
-                                    if (path.equals(mPhotoUploads.get(i).getPath())) {
-                                        position = i;
-                                        break;
+                        if (mActivity != null) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    UploadEntity.STATE state = UploadEntity.STATE.STATE_UPLOAD_READY;
+                                    if (!save) {
+                                        state = UploadEntity.STATE.STATE_LOADING_FAIL;
+                                    }
+                                    photoUpload.setState(state);
+                                    int position = -1;
+                                    for (int i = 0; i < mPhotoUploads.size(); i++) {
+                                        if (path.equals(mPhotoUploads.get(i).getPath())) {
+                                            position = i;
+                                            break;
+                                        }
+                                    }
+                                    if (position >= 0 && position < mPhotoUploads.size()) {
+                                        mAdapter.notifyItemChanged(position);
+                                    }
+                                    if (mListener != null) {
+                                        mListener.onPhotos(mPhotoUploads);
                                     }
                                 }
-                                if (position >= 0 && position < mPhotoUploads.size()) {
-                                    mAdapter.notifyItemChanged(position);
-                                }
-                                if (mListener != null) {
-                                    mListener.onPhotos(mPhotoUploads);
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
-                }).start();
+                });
             }
         });
         init();

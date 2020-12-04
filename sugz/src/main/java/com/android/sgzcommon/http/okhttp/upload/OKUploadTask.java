@@ -236,8 +236,10 @@ public class OKUploadTask<T extends UploadEntity> {
     private Request getRequest(String url, List<T> entities, Map<String, String> data, Map<String, String> headers, UploadResultSet resultSet, OnUploadFileListener<T> listener) {
         MultipartBuilder builder = new MultipartBuilder().type(MultipartBuilder.FORM);
         if (entities != null) {
+            Log.d("OKUploadTask", "getRequest: entities.size == " + entities.size());
             for (T entity : entities) {
                 final File f = entity.getFile();
+                Log.d("OKUploadTask", "getRequest: f.name == " + f.getName());
                 String mimeType = getMimeType(f.getName());
                 Log.d("OKUploadTask", "getRequest: mimeType == " + mimeType);
                 //RequestBody fileBody = createProgressRequestBody(MediaType.parse("multipart/form-data"), resultSet, entity, listener);
