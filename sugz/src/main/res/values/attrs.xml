@@ -6,6 +6,7 @@
     <attr name="background" format="reference"></attr>
     <attr name="padding" format="dimension"></attr>
     <attr name="text_color" format="reference" />
+    <attr name="radius" format="dimension" />
 
     <declare-styleable name="titlebar">
         <attr name="height"></attr>
@@ -65,7 +66,11 @@
     </declare-styleable>
 
     <declare-styleable name="CornerImageView">
-        <attr name="radius" format="dimension" />
+        <attr name="radius" />
     </declare-styleable>
 
+    <declare-styleable name="SuButton">
+        <attr name="radius" />
+        <attr name="borderless" format="boolean" />
+    </declare-styleable>
 </resources>

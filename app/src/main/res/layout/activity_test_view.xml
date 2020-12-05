@@ -25,8 +25,8 @@
 
             <EditText
                 style="@style/Input.R.Background"
-                android:text="输入框"
-                android:hint="输入框" />
+                android:hint="输入框"
+                android:text="输入框" />
 
             <Button
                 android:id="@+id/btn_web_layout"
@@ -49,6 +49,14 @@
                 android:text="聚焦"
                 android:textAllCaps="false" />
 
+            <com.android.sgzcommon.view.SuButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/btn_warn"
+                app:radius="5dp"
+                android:text="自定义Button"
+                android:textAllCaps="false" />
+
             <com.android.sgzcommon.view.InputEditView
                 android:id="@+id/iev1"
                 android:layout_width="200dp"
@@ -58,6 +66,7 @@
                 app:min="3"
                 app:text_size="25sp"
                 app:value="2" />
+
             <com.android.sgzcommon.view.InputEditView
                 android:id="@+id/iev2"
                 android:layout_width="200dp"
