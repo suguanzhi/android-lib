@@ -63,6 +63,7 @@ final public class GetPhotosImpl implements GetPhotos {
         mHorizontalMargin = horizontalMargin;
         mVerticalMargin = verticalmargin;
         mExecutorService = Executors.newSingleThreadScheduledExecutor();
+        mPhotoUploads = new ArrayList<>();
         mTakePhoto = new GetPhotoImpl(activity);
         mTakePhoto.setPhotoListener(new OnPhotoListener() {
             @Override
@@ -80,11 +81,10 @@ final public class GetPhotosImpl implements GetPhotos {
                             mActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    UploadEntity.STATE state = UploadEntity.STATE.STATE_UPLOAD_READY;
+                                    photoUpload.setState(UploadEntity.STATE.STATE_UPLOAD_READY);
                                     if (!save) {
-                                        state = UploadEntity.STATE.STATE_LOADING_FAIL;
+                                        photoUpload.setState(UploadEntity.STATE.STATE_LOADING_FAIL);
                                     }
-                                    photoUpload.setState(state);
                                     int position = -1;
                                     for (int i = 0; i < mPhotoUploads.size(); i++) {
                                         if (path.equals(mPhotoUploads.get(i).getPath())) {
@@ -105,14 +105,6 @@ final public class GetPhotosImpl implements GetPhotos {
                 });
             }
         });
-        init();
-    }
-
-    /**
-     *
-     */
-    private void init() {
-        mPhotoUploads = new ArrayList<>();
         mAdapter = new PictureGridEditAdapter(mActivity, mPhotoUploads, new BaseRecyclerviewAdapter.OnItemtClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -141,10 +133,9 @@ final public class GetPhotosImpl implements GetPhotos {
 
             }
         });
-
+        GridLayoutManager gridEdit = new GridLayoutManager(mActivity, mColumn);
+        MarginDecoration decoration1 = new MarginDecoration(mColumn, mHorizontalMargin, mVerticalMargin);
         if (mRecyclerView != null) {
-            GridLayoutManager gridEdit = new GridLayoutManager(mActivity, mColumn);
-            MarginDecoration decoration1 = new MarginDecoration(mColumn, mHorizontalMargin, mVerticalMargin);
             mRecyclerView.addItemDecoration(decoration1);
             mRecyclerView.setLayoutManager(gridEdit);
             mRecyclerView.setAdapter(mAdapter);

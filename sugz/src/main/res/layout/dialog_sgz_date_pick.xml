@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="20dp"
@@ -30,26 +31,20 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_dialog_date_pick_confirm"
-            android:layout_width="@dimen/btn_width2"
-            android:layout_height="@dimen/btn_height2"
-            android:layout_margin="10dp"
-            android:background="@drawable/shape_btn_confirm"
-            android:gravity="center"
-            android:text="确定"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/btn_text_size2" />
-
-        <TextView
+        <com.android.sgzcommon.view.SuButton
             android:id="@+id/tv_dialog_date_pick_cancle"
-            android:layout_width="@dimen/btn_width2"
-            android:layout_height="@dimen/btn_height2"
+            style="@style/Button_min"
             android:layout_margin="10dp"
-            android:background="@drawable/shape_btn_disable"
-            android:gravity="center"
             android:text="取消"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/btn_text_size2" />
+            app:state_animator="false"
+            app:style="primary_stroke" />
+
+        <com.android.sgzcommon.view.SuButton
+            android:id="@+id/tv_dialog_date_pick_confirm"
+            style="@style/Button_min"
+            android:layout_margin="10dp"
+            android:text="确定"
+            app:state_animator="false"
+            app:style="primary" />
     </LinearLayout>
 </LinearLayout>

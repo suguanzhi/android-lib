@@ -6,9 +6,9 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <Button
+    <com.android.sgzcommon.view.SuButton
         android:id="@+id/btn_version_update"
-        style="@style/Button.Strock.Confirm"
+        style="@style/Button"
         android:layout_marginTop="20dp"
         android:text="版本更新" />
 </LinearLayout>

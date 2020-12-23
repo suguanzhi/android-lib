@@ -293,8 +293,8 @@
     <color name="btn_confirm">@color/lightBlue_500</color>
     <color name="btn_danger">@color/red_500</color>
     <color name="btn_warn">@color/amber_500</color>
-    <color name="btn_disable">@color/grey_500</color>
-    <color name="btn_normal">#212121</color>
+    <color name="btn_disable">@color/grey_300</color>
+    <color name="btn_normal_stroke">#212121</color>
 
     <color name="divider">@color/grey_300</color>
     <color name="background">#F6F6F6</color>

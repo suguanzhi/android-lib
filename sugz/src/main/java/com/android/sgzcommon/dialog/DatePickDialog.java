@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.android.sgzcommon.utils.DateUtils;
+import com.android.sgzcommon.view.SuButton;
 import com.android.sugz.R;
 
 import java.util.Calendar;
@@ -24,8 +24,8 @@ public class DatePickDialog extends BaseDialog implements View.OnClickListener {
     private int type;
     private int mHour;
     private int mMinute;
-    private TextView mConfirmTV;
-    private TextView mCancleTV;
+    private SuButton mConfirmBtn;
+    private SuButton mCancleBtn;
     private DatePicker mDatePicker;
     private TimePicker mTimePicker;
     private OnDatePickListener mDateListener;
@@ -101,10 +101,10 @@ public class DatePickDialog extends BaseDialog implements View.OnClickListener {
                 mMinute = minute;
             }
         });
-        mConfirmTV = findViewById(R.id.tv_dialog_date_pick_confirm);
-        mConfirmTV.setOnClickListener(this);
-        mCancleTV = findViewById(R.id.tv_dialog_date_pick_cancle);
-        mCancleTV.setOnClickListener(this);
+        mConfirmBtn = findViewById(R.id.tv_dialog_date_pick_confirm);
+        mConfirmBtn.setOnClickListener(this);
+        mCancleBtn = findViewById(R.id.tv_dialog_date_pick_cancle);
+        mCancleBtn.setOnClickListener(this);
         Calendar c = Calendar.getInstance();
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);

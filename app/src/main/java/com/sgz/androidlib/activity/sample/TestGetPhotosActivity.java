@@ -30,8 +30,6 @@ public class TestGetPhotosActivity extends GetPhotosActivity {
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
 
-    private GetPhotosImpl mTakePhotoGrid;
-
     @Override
     protected int getContentViewId() {
         return R.layout.activity_sample_take_photo_list;
@@ -39,12 +37,12 @@ public class TestGetPhotosActivity extends GetPhotosActivity {
 
     @Override
     protected int getShowImageGridViewId() {
-        return R.id.rv_list;
+        return 0;
     }
 
     @Override
     protected int getTakePhotoGridViewId() {
-        return 0;
+        return R.id.rv_list;
     }
 
     @Override
@@ -62,15 +60,15 @@ public class TestGetPhotosActivity extends GetPhotosActivity {
 
             }
         });
-       List<String> urls = new ArrayList<>();
-       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649E5UR5naT.jpg");
-       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649nLkA0h0K.jpg");
-       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649WFtKpW10.jpg");
-       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174314PYsT80qi.jpg");
-       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415fZyHnni9.jpg");
-       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415S6tzuWFU.jpg");
-       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415J5bZsSq5.jpg");
-       setImageUrls(urls);
+//       List<String> urls = new ArrayList<>();
+//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649E5UR5naT.jpg");
+//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649nLkA0h0K.jpg");
+//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649WFtKpW10.jpg");
+//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174314PYsT80qi.jpg");
+//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415fZyHnni9.jpg");
+//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415S6tzuWFU.jpg");
+//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415J5bZsSq5.jpg");
+//       setImageUrls(urls);
        setOnPhotoClickListener(new OnPhotoClickListener() {
             @Override
             public void onClick(View view) {

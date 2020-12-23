@@ -23,14 +23,16 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <Button
+            <com.android.sgzcommon.view.SuButton
+                style="@style/Button"
                 android:id="@+id/btn_barcode"
-                style="@style/Button.Strock.Confirm"
+                app:style="confirm_stroke"
                 android:text="生成条形码" />
 
-            <Button
+            <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_qrcode"
-                style="@style/Button.Strock.Confirm"
+                style="@style/Button"
+                app:style="primary_stroke"
                 android:layout_marginTop="10dp"
                 android:text="生成二维码" />
 

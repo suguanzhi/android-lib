@@ -71,6 +71,21 @@
 
     <declare-styleable name="SuButton">
         <attr name="radius" />
-        <attr name="borderless" format="boolean" />
+        <attr name="style">
+            <enum name="normal" value="1" />
+            <enum name="warn" value="2" />
+            <enum name="danger" value="3" />
+            <enum name="confirm" value="4" />
+            <enum name="disable" value="5" />
+            <enum name="primary" value="6" />
+            <enum name="warn_stroke" value="12" />
+            <enum name="danger_stroke" value="13" />
+            <enum name="confirm_stroke" value="14" />
+            <enum name="primary_stroke" value="16" />
+        </attr>
+        <attr name="android:layout_height"/>
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="reference" />
+        <attr name="state_animator" format="boolean" />
     </declare-styleable>
 </resources>

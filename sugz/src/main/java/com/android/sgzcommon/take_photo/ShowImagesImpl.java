@@ -47,9 +47,13 @@ final public class ShowImagesImpl implements ShowImages {
             @Override
             public void onItemClick(View view, int position) {
                 if (position < mUrls.size()) {
-                    Intent intent = new Intent(mContext, PhotoViewActivity.class);
-                    intent.putExtra("path", mUrls.get(position));
-                    mContext.startActivity(intent);
+                    try {
+                        Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                        intent.putExtra("path", mUrls.get(position));
+                        mContext.startActivity(intent);
+                    }catch (Exception e){
+                       e.printStackTrace();
+                    }
                 }
             }
         }, null);

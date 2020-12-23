@@ -28,7 +28,7 @@ public abstract class GetPhotosActivity extends BaseActivity implements GetPhoto
     private RecyclerView mShowPhotoView;
     private RecyclerView mTakePhotoView;
     private GetPhotosImpl mTakePhotoGrid;
-    private ShowImages mShowImages;
+    private ShowImages mShowImageGrid;
 
     @LayoutRes
     protected abstract int getContentViewId();
@@ -47,7 +47,7 @@ public abstract class GetPhotosActivity extends BaseActivity implements GetPhoto
         setContentView(getContentViewId());
         mShowPhotoView = findViewById(getShowImageGridViewId());
         mTakePhotoView = findViewById(getTakePhotoGridViewId());
-        mShowImages = new ShowImagesImpl(this, mShowPhotoView);
+        mShowImageGrid = new ShowImagesImpl(this, mShowPhotoView);
         mTakePhotoGrid = new GetPhotosImpl(this, mTakePhotoView);
         mTakePhotoGrid.setOnPhotoGridListener(new OnTakePhotoGridListener() {
             @Override
@@ -59,7 +59,7 @@ public abstract class GetPhotosActivity extends BaseActivity implements GetPhoto
 
     @Override
     public void setImageUrls(List<String> urls) {
-        mShowImages.setImageUrls(urls);
+        mShowImageGrid.setImageUrls(urls);
     }
 
     @Override
@@ -91,7 +91,7 @@ public abstract class GetPhotosActivity extends BaseActivity implements GetPhoto
 
     @Override
     public void notifyPhotoChanged() {
-        mShowImages.notifyPhotoChanged();
+        mShowImageGrid.notifyPhotoChanged();
     }
 
     @Override

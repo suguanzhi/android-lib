@@ -12,39 +12,40 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Button
+        <com.android.sgzcommon.view.SuButton
             android:id="@+id/btn_views"
-            style="@style/Button.Strock.Normal"
+            style="@style/Button"
             android:layout_marginTop="10dp"
             android:text="View"
             android:textAllCaps="false"
             android:textSize="14sp" />
 
-        <Button
+        <com.android.sgzcommon.view.SuButton
             android:id="@+id/btn_dialogs"
-            style="@style/Button.Strock.Normal"
+            style="@style/Button"
             android:layout_marginTop="10dp"
             android:text="Dialog"
             android:textAllCaps="false"
             android:textSize="14sp" />
 
-        <Button
+        <com.android.sgzcommon.view.SuButton
             android:id="@+id/btn_activity"
-            style="@style/Button.Strock.Normal"
+            style="@style/Button"
             android:layout_marginTop="10dp"
             android:text="Activity"
             android:textAllCaps="false" />
 
-        <Button
+        <com.android.sgzcommon.view.SuButton
             android:id="@+id/btn_fragment"
-            style="@style/Button.Strock.Normal"
+            style="@style/Button"
             android:layout_marginTop="10dp"
             android:text="Fragment"
             android:textAllCaps="false" />
 
-        <Button
+        <com.android.sgzcommon.view.SuButton
+            app:style="confirm"
             android:id="@+id/btn_version_update"
-            style="@style/Button.Strock.Normal"
+            style="@style/Button"
             android:layout_marginTop="10dp"
             android:text="其他"
             android:textAllCaps="false" />

@@ -115,6 +115,7 @@ public abstract class BaseListDialog<V> extends BaseDialog {
                     setLayoutParams(getWidth(), UnitUtils.dp2px(300));
                 } else {
                     mLrv.gone();
+                    setLayoutParams(getWidth(), getHeight());
                 }
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();

@@ -29,118 +29,18 @@
 
     <style name="Button">
         <item name="android:textSize">@dimen/btn_text_size</item>
-        <item name="android:layout_width">@dimen/btn_width</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minWidth">@dimen/btn_width</item>
         <item name="android:layout_height">@dimen/btn_height</item>
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="Button.Danger" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_danger</item>
-    </style>
-
-    <style name="Button.R.Danger" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_r_danger</item>
-    </style>
-
-    <style name="Button.Confirm" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_confirm</item>
-    </style>
-
-    <style name="Button.R.Confirm" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_r_confirm</item>
-    </style>
-
-    <style name="Button.Disable" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_disable</item>
-    </style>
-
-    <style name="Button.R.Disable" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_r_disable</item>
-    </style>
-
-    <style name="Button.Warm" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_warn</item>
-    </style>
-
-    <style name="Button.R.Warm" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_r_warn</item>
-    </style>
-
-    <style name="Button.Primary" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_primary</item>
-    </style>
-
-    <style name="Button.R.Primary" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_r_primary</item>
-    </style>
-
-    <style name="Button.Normal" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_sk_normal</item>
-    </style>
-
-    <style name="Button.R.Normal" parent="Button">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/shape_btn_r_sk_normal</item>
-    </style>
-
-    <style name="Button.Strock.Confirm" parent="Button">
-        <item name="android:textColor">@color/btn_confirm</item>
-        <item name="android:background">@drawable/shape_btn_sk_confirm_sd_white</item>
-    </style>
-
-    <style name="Button.R.Strock.Confirm" parent="Button">
-        <item name="android:textColor">@color/btn_confirm</item>
-        <item name="android:background">@drawable/shape_btn_r_sk_confirm_sd_white</item>
-    </style>
-
-    <style name="Button.Strock.Danger" parent="Button">
-        <item name="android:textColor">@color/btn_danger</item>
-        <item name="android:background">@drawable/shape_btn_sk_danger_sd_white</item>
-    </style>
-
-    <style name="Button.R.Strock.Danger" parent="Button">
-        <item name="android:textColor">@color/btn_danger</item>
-        <item name="android:background">@drawable/shape_btn_r_sk_danger_sd_white</item>
-    </style>
-    <style name="Button.Strock.Warn" parent="Button">
-        <item name="android:textColor">@color/btn_warn</item>
-        <item name="android:background">@drawable/shape_btn_sk_warn_sd_white</item>
-    </style>
-
-    <style name="Button.R.Strock.Warn" parent="Button">
-        <item name="android:textColor">@color/btn_warn</item>
-        <item name="android:background">@drawable/shape_btn_r_sk_warn_sd_white</item>
-    </style>
-
-    <style name="Button.Strock.Disable" parent="Button">
-        <item name="android:textColor">@color/btn_disable</item>
-        <item name="android:background">@drawable/shape_btn_sk_disable_sd_white</item>
-    </style>
-
-    <style name="Button.R.Strock.Disable" parent="Button">
-        <item name="android:textColor">@color/btn_disable</item>
-        <item name="android:background">@drawable/shape_btn_r_sk_disable_sd_white</item>
-    </style>
-
-    <style name="Button.Strock.Normal" parent="Button">
-        <item name="android:textColor">@color/btn_normal</item>
-        <item name="android:background">@drawable/shape_btn_sk_normal_sd_white</item>
-    </style>
-
-    <style name="Button.R.Strock.Normal" parent="Button">
-        <item name="android:textColor">@color/btn_normal</item>
-        <item name="android:background">@drawable/shape_btn_r_sk_normal_sd_white</item>
+    <style name="Button_min">
+        <item name="android:textSize">@dimen/btn_text_size_min</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minWidth">@dimen/btn_width_min</item>
+        <item name="android:layout_height">@dimen/btn_height_min</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="Card">

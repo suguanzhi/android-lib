@@ -22,6 +22,10 @@ public class UploadEntity {
         state = STATE.STATE_LOADING;
     }
 
+    /**
+     * 必须在主线程中调用
+     * @param state
+     */
     public void setState(STATE state) {
         this.state = state;
         if (listener != null) {
