@@ -92,6 +92,6 @@
         android:text="登录"
         android:textColor="@color/white"
         android:textSize="@dimen/btn_text_size"
-        app:style="primary" />
+        />
 
 </LinearLayout>

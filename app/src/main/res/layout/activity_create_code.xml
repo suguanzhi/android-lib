@@ -26,13 +26,14 @@
             <com.android.sgzcommon.view.SuButton
                 style="@style/Button"
                 android:id="@+id/btn_barcode"
-                app:style="confirm_stroke"
+                app:style="confirm"
+                app:stroke="true"
                 android:text="生成条形码" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_qrcode"
                 style="@style/Button"
-                app:style="primary_stroke"
+                app:stroke="true"
                 android:layout_marginTop="10dp"
                 android:text="生成二维码" />
 

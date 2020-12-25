@@ -17,6 +17,7 @@
             style="@style/Button"
             android:layout_marginTop="10dp"
             android:text="View"
+            app:stroke="true"
             android:textAllCaps="false"
             android:textSize="14sp" />
 
@@ -25,12 +26,14 @@
             style="@style/Button"
             android:layout_marginTop="10dp"
             android:text="Dialog"
+            app:stroke="true"
             android:textAllCaps="false"
             android:textSize="14sp" />
 
         <com.android.sgzcommon.view.SuButton
             android:id="@+id/btn_activity"
             style="@style/Button"
+            app:stroke="true"
             android:layout_marginTop="10dp"
             android:text="Activity"
             android:textAllCaps="false" />
@@ -40,6 +43,7 @@
             style="@style/Button"
             android:layout_marginTop="10dp"
             android:text="Fragment"
+            app:stroke="true"
             android:textAllCaps="false" />
 
         <com.android.sgzcommon.view.SuButton
@@ -48,6 +52,7 @@
             style="@style/Button"
             android:layout_marginTop="10dp"
             android:text="其他"
+            app:stroke="true"
             android:textAllCaps="false" />
 
     </LinearLayout>

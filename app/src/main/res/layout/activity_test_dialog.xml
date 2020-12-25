@@ -26,33 +26,33 @@
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_auto_dismiss_dialog"
                 style="@style/Button"
-                app:style="normal"
                 android:text="定时隐藏Dialog"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_string_list_dialog"
                 style="@style/Button"
-                app:style="normal"
                 android:layout_marginTop="10dp"
                 android:text="文本列表Dialog"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_date_pick"
                 style="@style/Button"
-                app:style="normal"
                 android:layout_marginTop="10dp"
                 android:text="日期选择"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_time_pick"
                 style="@style/Button"
-                app:style="normal"
                 android:layout_marginTop="10dp"
                 android:text="时间选择"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:stroke="true" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

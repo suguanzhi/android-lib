@@ -29,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:text="BaseAdapter"
                 android:textAllCaps="false"
-                app:style="normal" />
+                app:stroke="true"/>
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_code"
@@ -37,7 +37,7 @@
                 android:layout_marginTop="10dp"
                 android:text="生成条码"
                 android:textAllCaps="false"
-                app:style="normal" />
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_version_update"
@@ -45,7 +45,7 @@
                 android:layout_marginTop="10dp"
                 android:text="版本更新"
                 android:textAllCaps="false"
-                app:style="normal" />
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_vibrate"
@@ -53,7 +53,7 @@
                 android:layout_marginTop="10dp"
                 android:text="震动"
                 android:textAllCaps="false"
-                app:style="normal" />
+                app:stroke="true" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

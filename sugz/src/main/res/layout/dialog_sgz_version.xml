@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="20dp"
@@ -51,15 +52,18 @@
 
         <com.android.sgzcommon.view.SuButton
             android:id="@+id/btn_cancle"
-            style="@style/Button_min"
+            style="@style/Button_Min"
             android:layout_width="wrap_content"
-            android:text="稍后再说" />
+            android:text="稍后再说"
+            app:stroke="true"
+            app:style="confirm" />
 
         <com.android.sgzcommon.view.SuButton
             android:id="@+id/btn_confirm"
-            style="@style/Button_min"
+            style="@style/Button_Min"
             android:layout_width="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="立即更新" />
+            android:text="立即更新"
+            app:style="confirm" />
     </LinearLayout>
 </LinearLayout>

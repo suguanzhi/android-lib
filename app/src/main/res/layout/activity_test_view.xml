@@ -31,26 +31,26 @@
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_web_layout"
                 style="@style/Button"
-                app:style="normal"
                 android:layout_marginTop="10dp"
                 android:text="Weblayout"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_refresh"
                 style="@style/Button"
-                app:style="normal"
                 android:layout_marginTop="10dp"
                 android:text="SmartRefreshLayout"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_focus"
                 style="@style/Button"
-                app:style="normal"
                 android:layout_marginTop="10dp"
                 android:text="聚焦"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
                 android:background="@color/btn_warn"
                 android:text="自定义Button"
                 android:textAllCaps="false"
-                app:style="primary_stroke" />
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.InputEditView
                 android:id="@+id/iev1"

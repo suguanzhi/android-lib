@@ -12,18 +12,20 @@
         style="@style/Button"
         android:layout_marginTop="20dp"
         android:text="拍照"
-        app:style="confirm_stroke" />
+        app:stroke="true"
+        app:style="confirm" />
 
     <com.android.sgzcommon.view.SuButton
         android:id="@+id/btn_select_photo"
         style="@style/Button"
         android:layout_marginTop="20dp"
         android:text="相册"
-        app:style="primary_stroke" />
+        app:stroke="true" />
 
     <com.android.sgzcommon.view.SuButton
         android:id="@+id/btn_cancle"
         style="@style/Button"
+        app:style="normal"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="取消" />

@@ -19,6 +19,16 @@ import androidx.appcompat.widget.AppCompatButton;
  * @date 2020/12/5
  */
 public class SuButton extends AppCompatButton {
+
+    private static final int STYLE_NORMAL = 1;
+    private static final int STYLE_WARN = 2;
+    private static final int STYLE_DANGER = 3;
+    private static final int STYLE_CONFIRM = 4;
+    private static final int STYLE_DISABLE = 5;
+
+    private static final int RADIUS_STYLE_WRAP = 0;
+    private static final int RADIUS_STYLE_CIRCLE = 1;
+
     public SuButton(Context context) {
         this(context, null);
     }
@@ -35,9 +45,11 @@ public class SuButton extends AppCompatButton {
     private void init(Context context, AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.SuButton);
         int raduis = array.getDimensionPixelSize(R.styleable.SuButton_radius, 0);
-        int borderWidth = array.getDimensionPixelSize(R.styleable.SuButton_border_width, 0);
-        int borderColor = array.getColor(R.styleable.SuButton_border_color, Color.TRANSPARENT);
+        int borderWidth = array.getDimensionPixelSize(R.styleable.SuButton_border_width, getResources().getDimensionPixelSize(R.dimen.btn_border_width));
+        int color = array.getColor(R.styleable.SuButton_style_color, getResources().getColor(R.color.colorPrimary));
+        boolean stroke = array.getBoolean(R.styleable.SuButton_stroke, false);
         boolean stateAnimator = array.getBoolean(R.styleable.SuButton_state_animator, true);
+        int style = array.getInt(R.styleable.SuButton_style, 0);
 
         GradientDrawable gradientDrawable = new GradientDrawable();
         Drawable oldBackground = getBackground();
@@ -48,42 +60,37 @@ public class SuButton extends AppCompatButton {
         if (0 == raduis) {
             raduis = getResources().getDimensionPixelSize(R.dimen.btn_radius);
         }
-        int style = array.getInt(R.styleable.SuButton_style, 1);
+        int textColor;
         int backColor;
-        int textColor = Color.WHITE;
-        if (2 == style) {
-            backColor = getResources().getColor(R.color.btn_warn);
-        } else if (3 == style) {
-            backColor = getResources().getColor(R.color.btn_danger);
-        } else if (4 == style) {
-            backColor = getResources().getColor(R.color.btn_confirm);
-        } else if (5 == style) {
-            backColor = getResources().getColor(R.color.btn_disable);
-            textColor = getResources().getColor(R.color.grey_500);
+        int borderColor;
+        if (STYLE_NORMAL == style) {
+            stroke = true;
+            color = getResources().getColor(R.color.btn_normal);
+        } else if (STYLE_WARN == style) {
+            color = getResources().getColor(R.color.btn_warn);
+        } else if (STYLE_DANGER == style) {
+            color = getResources().getColor(R.color.btn_danger);
+        } else if (STYLE_CONFIRM == style) {
+            color = getResources().getColor(R.color.btn_confirm);
+        } else if (STYLE_DISABLE == style) {
+            color = getResources().getColor(R.color.btn_disable);
             stateAnimator = false;
-        } else if (6 == style) {
-            backColor = getResources().getColor(R.color.colorPrimary);
-        } else {
+        }
+        if (stroke) {
+            textColor = color;
             backColor = Color.WHITE;
-            if (0 == borderWidth) {
-                borderWidth = getResources().getDimensionPixelSize(R.dimen.btn_border_width);
-            }
-            if (1 == style) {
-                borderColor = getResources().getColor(R.color.btn_normal_stroke);
-                textColor = getResources().getColor(R.color.btn_normal_stroke);
-            } else if (12 == style) {
-                borderColor = getResources().getColor(R.color.btn_warn);
-                textColor = getResources().getColor(R.color.btn_warn);
-            } else if (13 == style) {
-                borderColor = getResources().getColor(R.color.btn_danger);
-                textColor = getResources().getColor(R.color.btn_danger);
-            } else if (14 == style) {
-                borderColor = getResources().getColor(R.color.btn_confirm);
-                textColor = getResources().getColor(R.color.btn_confirm);
-            } else if (16 == style) {
-                borderColor = getResources().getColor(R.color.colorPrimary);
-                textColor = getResources().getColor(R.color.colorPrimary);
-            }
+        } else {
+            textColor = Color.WHITE;
+            backColor = color;
+        }
+        borderColor = color;
+        if (STYLE_DISABLE == style) {
+            textColor = getResources().getColor(R.color.grey_500);
+        }
+
+        int radiusStyle = array.getInt(R.styleable.SuButton_radius_style, RADIUS_STYLE_WRAP);
+        if (RADIUS_STYLE_CIRCLE == radiusStyle) {
+            raduis = Integer.MAX_VALUE;
         }
         setTextColor(textColor);
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.btn_text_size));

@@ -29,7 +29,7 @@
                 android:layout_marginTop="10dp"
                 android:text="扫码"
                 android:textSize="14sp"
-                app:style="normal" />
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_take_photo"
@@ -37,7 +37,7 @@
                 android:layout_marginTop="10dp"
                 android:text="拍一张照片"
                 android:textSize="14sp"
-                app:style="normal" />
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_take_photos"
@@ -45,7 +45,7 @@
                 android:layout_marginTop="10dp"
                 android:text="拍多张照片"
                 android:textSize="14sp"
-                app:style="normal" />
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_web"
@@ -54,7 +54,7 @@
                 android:text="WebActivity"
                 android:textAllCaps="false"
                 android:textSize="14sp"
-                app:style="normal" />
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_version"
@@ -63,7 +63,7 @@
                 android:text="更新版本"
                 android:textAllCaps="false"
                 android:textSize="14sp"
-                app:style="normal" />
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_my_qrcode"
@@ -72,7 +72,7 @@
                 android:text="自定义扫码"
                 android:textAllCaps="false"
                 android:textSize="14sp"
-                app:style="normal" />
+                app:stroke="true" />
 
             <com.android.sgzcommon.view.SuButton
                 android:id="@+id/btn_refresh"
@@ -81,7 +81,7 @@
                 android:text="下拉刷新"
                 android:textAllCaps="false"
                 android:textSize="14sp"
-                app:style="normal" />
+                app:stroke="true" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

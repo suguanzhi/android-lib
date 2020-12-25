@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="20dp"
     android:background="@drawable/shape_r10_sd_white"
@@ -45,21 +45,24 @@
         android:orientation="horizontal">
 
         <com.android.sgzcommon.view.SuButton
-            style="@style/Button_min"
+            style="@style/Button_Min"
             android:id="@+id/tv_left"
             android:layout_marginStart="16sp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="10dp"
+            app:stroke="true"
+            app:style="confirm"
             android:text="@string/dialog_two_button_cancle"
             />
 
         <com.android.sgzcommon.view.SuButton
-            style="@style/Button_min"
+            style="@style/Button_Min"
             android:id="@+id/tv_right"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            app:style="confirm"
             android:text="@string/dialog_two_button_confirm"
             />
     </LinearLayout>

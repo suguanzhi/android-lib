@@ -33,18 +33,19 @@
 
         <com.android.sgzcommon.view.SuButton
             android:id="@+id/tv_dialog_date_pick_cancle"
-            style="@style/Button_min"
+            style="@style/Button_Min"
             android:layout_margin="10dp"
             android:text="取消"
             app:state_animator="false"
-            app:style="primary_stroke" />
+            app:stroke="true"
+            app:style="confirm" />
 
         <com.android.sgzcommon.view.SuButton
             android:id="@+id/tv_dialog_date_pick_confirm"
-            style="@style/Button_min"
+            style="@style/Button_Min"
             android:layout_margin="10dp"
             android:text="确定"
             app:state_animator="false"
-            app:style="primary" />
+            app:style="confirm" />
     </LinearLayout>
 </LinearLayout>

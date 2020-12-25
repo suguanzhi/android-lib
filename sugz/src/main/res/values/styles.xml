@@ -35,7 +35,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="Button_min">
+    <style name="Button_Min">
         <item name="android:textSize">@dimen/btn_text_size_min</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:minWidth">@dimen/btn_width_min</item>
