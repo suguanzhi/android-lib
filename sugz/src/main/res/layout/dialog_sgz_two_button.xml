@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="20dp"
     android:background="@drawable/shape_r10_sd_white"
     android:minHeight="@dimen/dialog_min_height"
@@ -45,28 +45,23 @@
         android:orientation="horizontal">
 
         <com.android.sgzcommon.view.SuButton
+            android:id="@+id/tv_left"
             style="@style/Button"
             android:layout_width="@dimen/btn_width_min"
-            android:id="@+id/tv_left"
-            android:layout_marginStart="16sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="10dp"
-            app:stroke="true"
-            app:style="confirm"
+            android:layout_margin="10sp"
             android:text="@string/dialog_two_button_cancle"
-            />
+            app:state_animator="false"
+            app:stroke="true"
+            app:style="confirm" />
 
         <com.android.sgzcommon.view.SuButton
+            android:id="@+id/tv_right"
             style="@style/Button"
             android:layout_width="@dimen/btn_width_min"
-            android:id="@+id/tv_right"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            app:style="confirm"
+            android:layout_margin="10dp"
             android:text="@string/dialog_two_button_confirm"
-            />
+            app:state_animator="false"
+            app:style="confirm" />
     </LinearLayout>
 
 </LinearLayout>
