@@ -45,7 +45,8 @@
         android:orientation="horizontal">
 
         <com.android.sgzcommon.view.SuButton
-            style="@style/Button_Min"
+            style="@style/Button"
+            android:layout_width="@dimen/btn_width_min"
             android:id="@+id/tv_left"
             android:layout_marginStart="16sp"
             android:layout_marginTop="10dp"
@@ -57,7 +58,8 @@
             />
 
         <com.android.sgzcommon.view.SuButton
-            style="@style/Button_Min"
+            style="@style/Button"
+            android:layout_width="@dimen/btn_width_min"
             android:id="@+id/tv_right"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"

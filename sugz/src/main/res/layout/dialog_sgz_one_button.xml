@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_r10_sd_white"
     android:layout_margin="20dp"
+    android:background="@drawable/shape_r10_sd_white"
     android:minHeight="@dimen/dialog_min_height"
     android:orientation="vertical">
 
@@ -46,12 +46,12 @@
         android:orientation="horizontal">
 
         <com.android.sgzcommon.view.SuButton
-            style="@style/Button_Min"
             android:id="@+id/tv_confirm"
+            style="@style/Button"
+            android:layout_width="@dimen/btn_width_min"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/dialog_two_button_confirm"
-            />
+            android:text="@string/dialog_two_button_confirm" />
     </LinearLayout>
 
 </LinearLayout>

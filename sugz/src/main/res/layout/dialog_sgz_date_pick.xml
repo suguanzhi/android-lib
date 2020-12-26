@@ -33,7 +33,8 @@
 
         <com.android.sgzcommon.view.SuButton
             android:id="@+id/tv_dialog_date_pick_cancle"
-            style="@style/Button_Min"
+            style="@style/Button"
+            android:layout_width="@dimen/btn_width_min"
             android:layout_margin="10dp"
             android:text="取消"
             app:state_animator="false"
@@ -42,7 +43,8 @@
 
         <com.android.sgzcommon.view.SuButton
             android:id="@+id/tv_dialog_date_pick_confirm"
-            style="@style/Button_Min"
+            style="@style/Button"
+            android:layout_width="@dimen/btn_width_min"
             android:layout_margin="10dp"
             android:text="确定"
             app:state_animator="false"
