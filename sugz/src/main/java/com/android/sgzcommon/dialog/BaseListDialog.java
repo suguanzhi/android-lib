@@ -30,6 +30,7 @@ public abstract class BaseListDialog<V> extends BaseDialog {
     RecyclerView mRvList;
     ImageView mIvDelete;
     TextView mTvTitle;
+    TextView mTvCancle;
     ProgressBar mPbLoading;
     LoadResultView mLrv;
     private CharSequence mTitle;
@@ -61,6 +62,15 @@ public abstract class BaseListDialog<V> extends BaseDialog {
         mPbLoading = findViewById(R.id.pb_loading);
         mRvList = findViewById(R.id.rv_list);
         mLrv = findViewById(R.id.lrv);
+        mTvCancle = findViewById(R.id.tv_cancle);
+        mTvCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mClickListener != null) {
+                    mClickListener.onClick(BaseListDialog.this, -1, null);
+                }
+            }
+        });
         mIvDelete = findViewById(R.id.iv_delete);
         setTitleText(mTitle);
         mIvDelete.setOnClickListener(new View.OnClickListener() {
