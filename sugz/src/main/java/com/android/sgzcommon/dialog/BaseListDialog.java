@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -125,7 +126,7 @@ public abstract class BaseListDialog<V> extends BaseDialog {
                     setLayoutParams(getWidth(), UnitUtils.dp2px(300));
                 } else {
                     mLrv.gone();
-                    setLayoutParams(getWidth(), getHeight());
+                    setLayoutParams(getWidth(), WindowManager.LayoutParams.WRAP_CONTENT);
                 }
                 if (adapter != null) {
                     adapter.notifyDataSetChanged();
