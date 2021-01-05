@@ -2,6 +2,7 @@ package com.android.sgzcommon.recycleview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
@@ -30,17 +31,20 @@ public class InnerRecyclerView extends RecyclerView {
         final int actionIndex = ev.getActionIndex();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
+                Log.d("InnerRecyclerView", "onInterceptTouchEvent: DOWN!");
                 mScrollPointerId = ev.getPointerId(0);
 
                 mStartX = (int) (ev.getX() + 0.5f);
                 mStartY = (int) (ev.getY() + 0.5f);
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
+                Log.d("InnerRecyclerView", "onInterceptTouchEvent: POINTER_DOWN");
                 mScrollPointerId = ev.getPointerId(actionIndex);    //新落下的手指为滑动监听手指
                 mStartX = (int) (ev.getX(actionIndex) + 0.5f);
                 mStartY = (int) (ev.getY(actionIndex) + 0.5f);
                 break;
             case MotionEvent.ACTION_MOVE:
+                Log.d("InnerRecyclerView", "onInterceptTouchEvent: MOVE");
                 final int index = ev.findPointerIndex(mScrollPointerId);
 
                 final int x = (int) (ev.getX(index) + 0.5f);
@@ -52,9 +56,11 @@ public class InnerRecyclerView extends RecyclerView {
                 }
                 break;
             case MotionEvent.ACTION_POINTER_UP:
+                Log.d("InnerRecyclerView", "onInterceptTouchEvent: POINTER_UP");
                 onPointerUp(ev);
                 break;
             case MotionEvent.ACTION_CANCEL:
+                Log.d("InnerRecyclerView", "onInterceptTouchEvent: CANCEL");
                 break;
         }
         return super.onInterceptTouchEvent(ev);
