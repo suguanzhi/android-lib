@@ -10,15 +10,15 @@ import android.widget.ListView;
  * Created by sgz on 2016/11/21.
  */
 
-public class MyListView extends ListView {
+public class SuListView extends ListView {
 
     private static final String TAG = "MyListView";
 
-    public MyListView(Context context) {
+    public SuListView(Context context) {
         super(context);
     }
 
-    public MyListView(Context context, AttributeSet attrs) {
+    public SuListView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -27,7 +27,7 @@ public class MyListView extends ListView {
         return super.onInterceptTouchEvent(ev);
     }
 
-    public MyListView(Context context, AttributeSet attrs, int defStyle) {
+    public SuListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

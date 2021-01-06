@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import com.android.sgzcommon.activity.BaseActivity;
+import com.android.sgzcommon.view.CircleProgressBar;
 import com.android.sgzcommon.view.InputEditView;
 import com.android.sgzcommon.view.LoadResultView;
-import com.android.sgzcommon.view.MyGridView;
+import com.android.sgzcommon.view.SuButton;
+import com.android.sgzcommon.view.SuGridView;
 import com.android.sgzcommon.view.TitleBar;
 import com.android.sgzcommon.view.imageview.CornerImageView;
 import com.android.volley.VolleyError;
@@ -23,6 +24,7 @@ import com.sgz.androidlib.view.sample.TestWebLayoutActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,21 +39,23 @@ public class TestViewActivity extends BaseActivity {
     @BindView(R.id.tb_title)
     TitleBar mTbTitle;
     @BindView(R.id.btn_web_layout)
-    Button mBtnWebLayout;
-    @BindView(R.id.lrv)
-    LoadResultView mLrv;
+    SuButton mBtnWebLayout;
     @BindView(R.id.btn_refresh)
-    Button mBtnRefresh;
-    @BindView(R.id.civ_picture)
-    CornerImageView mCivPicture;
+    SuButton mBtnRefresh;
     @BindView(R.id.btn_focus)
-    Button mBtnFocus;
+    SuButton mBtnFocus;
     @BindView(R.id.iev1)
     InputEditView mIev1;
-    @BindView(R.id.mgv)
-    MyGridView mMgv;
     @BindView(R.id.iev2)
     InputEditView mIev2;
+    @BindView(R.id.civ_picture)
+    CornerImageView mCivPicture;
+    @BindView(R.id.superview)
+    CircleProgressBar mSuperview;
+    @BindView(R.id.mgv)
+    SuGridView mMgv;
+    @BindView(R.id.lrv)
+    LoadResultView mLrv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +107,16 @@ public class TestViewActivity extends BaseActivity {
         }
         MyGridAdapter adapter = new MyGridAdapter(this, list);
         mMgv.setAdapter(adapter);
+
+        //mSuperview.setValue(100);
+        mSuperview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //随机设定圆环大小
+                int i = new Random().nextInt(100) + 1;
+                mSuperview.setValue(i);
+            }
+        });
 
     }
 

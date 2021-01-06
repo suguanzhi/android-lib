@@ -88,7 +88,17 @@
                 android:background="@color/green_500"
                 app:radius="10dp" />
 
-            <com.android.sgzcommon.view.MyGridView
+            <com.android.sgzcommon.view.CircleProgressBar
+                android:id="@+id/superview"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                app:ring_width="10dp"
+                app:ring_color="@color/green_500"
+                app:text_size="20sp"
+                app:value="20" />
+
+            <com.android.sgzcommon.view.SuGridView
                 android:id="@+id/mgv"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
