@@ -11,6 +11,7 @@ import android.graphics.SweepGradient;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.android.sgzcommon.utils.UnitUtils;
 import com.android.sugz.R;
 
 public class CircleProgressBar extends View {
@@ -39,7 +40,7 @@ public class CircleProgressBar extends View {
     public CircleProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleProgressBar);
-        mRingWidth = a.getDimension(R.styleable.CircleProgressBar_ring_width, 40f);
+        mRingWidth = a.getDimension(R.styleable.CircleProgressBar_ring_width, UnitUtils.dp2px(10));
         mCircleInColor = a.getColor(R.styleable.CircleProgressBar_circle_in_color, context.getResources().getColor(R.color.transparent));
         mRingColor = a.getColor(R.styleable.CircleProgressBar_ring_color, context.getResources().getColor(R.color.amber_500));
         mRingBackgroundColor = a.getColor(R.styleable.CircleProgressBar_ring_background_color, context.getResources().getColor(R.color.grey_300));
