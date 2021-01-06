@@ -51,7 +51,7 @@ public class CircleProgressBar extends View {
         a.recycle();
         //需要重写onDraw就得调用此
         this.setWillNotDraw(false);
-        setValue(value);
+        setValueOnly(value);
     }
 
     @Override
@@ -153,11 +153,20 @@ public class CircleProgressBar extends View {
      *
      * @param value
      */
-    public void setValue(int value) {
+    private void setValueOnly(int value) {
         if (value > mMaxValue) {
             value = mMaxValue;
         }
         mValue = value;
+    }
+
+    /**
+     * 设置当前值，并开启动画
+     *
+     * @param value
+     */
+    public void setValue(int value) {
+        setValueOnly(value);
         startAnimator();
     }
 
