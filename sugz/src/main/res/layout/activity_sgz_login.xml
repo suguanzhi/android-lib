@@ -25,8 +25,8 @@
         android:paddingEnd="10dp">
 
         <ImageView
-            android:layout_width="@dimen/icon"
-            android:layout_height="@dimen/icon"
+            android:layout_width="@dimen/icon_second"
+            android:layout_height="@dimen/icon_second"
             android:src="@drawable/ic_sgz_user" />
 
         <EditText
@@ -55,8 +55,8 @@
         android:paddingEnd="10dp">
 
         <ImageView
-            android:layout_width="@dimen/icon"
-            android:layout_height="@dimen/icon"
+            android:layout_width="@dimen/icon_second"
+            android:layout_height="@dimen/icon_second"
             android:src="@drawable/ic_sgz_password" />
 
         <EditText
@@ -75,8 +75,8 @@
 
         <ImageView
             android:id="@+id/iv_password_visiable"
-            android:layout_width="@dimen/icon"
-            android:layout_height="@dimen/icon"
+            android:layout_width="@dimen/icon_second"
+            android:layout_height="@dimen/icon_second"
             android:layout_marginStart="10dp"
             android:src="@drawable/selector_password_visiable" />
     </LinearLayout>

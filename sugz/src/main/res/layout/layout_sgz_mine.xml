@@ -60,8 +60,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/icon"
-                android:layout_height="@dimen/icon"
+                android:layout_width="@dimen/icon_second"
+                android:layout_height="@dimen/icon_second"
                 android:src="@drawable/ic_sgz_personal" />
 
             <TextView
@@ -74,8 +74,8 @@
                 android:textSize="@dimen/text" />
 
             <ImageView
-                android:layout_width="@dimen/icon"
-                android:layout_height="@dimen/icon"
+                android:layout_width="@dimen/icon_second"
+                android:layout_height="@dimen/icon_second"
                 android:src="@drawable/ic_sgz_go" />
         </LinearLayout>
 
@@ -92,8 +92,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/icon"
-                android:layout_height="@dimen/icon"
+                android:layout_width="@dimen/icon_second"
+                android:layout_height="@dimen/icon_second"
                 android:src="@drawable/ic_sgz_version_update" />
 
             <TextView
@@ -106,8 +106,8 @@
                 android:textSize="@dimen/text" />
 
             <ImageView
-                android:layout_width="@dimen/icon"
-                android:layout_height="@dimen/icon"
+                android:layout_width="@dimen/icon_second"
+                android:layout_height="@dimen/icon_second"
                 android:src="@drawable/ic_sgz_go" />
         </LinearLayout>
 

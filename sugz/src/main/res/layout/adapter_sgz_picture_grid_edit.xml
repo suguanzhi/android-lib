@@ -16,8 +16,8 @@
 
     <ImageView
         android:id="@+id/iv_delete"
-        android:layout_width="@dimen/icon_big"
-        android:layout_height="@dimen/icon_big"
+        android:layout_width="@dimen/icon_main"
+        android:layout_height="@dimen/icon_main"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:padding="2dp"

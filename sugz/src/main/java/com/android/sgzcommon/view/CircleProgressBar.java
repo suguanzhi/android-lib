@@ -88,13 +88,9 @@ public class CircleProgressBar extends View {
      */
     private void drawValueText(Canvas canvas) {
         double s = mMinRadius / Math.sqrt(2);
-        String valueText = mValue + "电视了客服代理反馈%";
+        String valueText = mValue + "%";
         Rect rect = new Rect((int) (mCenterX - s), (int) (mCenterY - s), (int) (mCenterX + s), (int) (mCenterY + s));
         TextPaint textPaint = new TextPaint();
-        //        StaticLayout.Builder builder = StaticLayout.Builder.obtain(valueText,0,valueText.length(),textPaint,100);
-        //        builder.setAlignment(Layout.Alignment.ALIGN_CENTER);
-        //        StaticLayout layout = builder.build();
-        //StaticLayout layout = new StaticLayout(aboutTheGame,textPaint,240,Alignment.ALIGN_NORMAL,1.0F,0.0F,true);
         textPaint.setColor(mProgressTextColor);
         textPaint.setTextSize(mProgressTextSize);
         textPaint.setStyle(Paint.Style.FILL);

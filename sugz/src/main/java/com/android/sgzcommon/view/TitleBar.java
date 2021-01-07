@@ -34,8 +34,20 @@ public class TitleBar extends LinearLayout {
     private RelativeLayout mRlRight;
     private OnLeftRightClickListener listener;
 
+    public TitleBar(Context context) {
+        this(context, null);
+    }
+
     public TitleBar(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
+    }
+
+    public TitleBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public TitleBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
         View view = LayoutInflater.from(context).inflate(R.layout.layout_sgz_title, this);
         LinearLayout barLayout = view.findViewById(R.id.ll_content);
         mIvBack = view.findViewById(R.id.iv_back);
