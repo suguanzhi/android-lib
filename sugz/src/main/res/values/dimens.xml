@@ -10,9 +10,9 @@
     <dimen name="row_height">40dp</dimen>
     <dimen name="row_height_min">35dp</dimen>
 
-    <dimen name="icon_small">14dp</dimen>
-    <dimen name="icon">20dp</dimen>
-    <dimen name="icon_big">25dp</dimen>
+    <dimen name="icon_second">20dp</dimen>
+    <dimen name="icon_main">30dp</dimen>
+
     <dimen name="text">14sp</dimen>
     <dimen name="text_second">12sp</dimen>
 
@@ -31,6 +31,6 @@
     <dimen name="input_width">240dp</dimen>
     <dimen name="input_height">40dp</dimen>
     <dimen name="input_padding">10dp</dimen>
-    <dimen name="dialog_min_height">160dp</dimen>
+    <dimen name="dialog_height">160dp</dimen>
 
 </resources>

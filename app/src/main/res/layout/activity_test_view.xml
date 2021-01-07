@@ -95,7 +95,6 @@
                 android:layout_gravity="center"
                 app:ring_width="10dp"
                 app:ring_color="@color/green_500"
-                app:text_size="20sp"
                 app:value="20" />
 
             <com.android.sgzcommon.view.SuGridView

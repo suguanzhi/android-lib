@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
     android:background="@drawable/shape_r10_sd_white"
-    android:minHeight="@dimen/dialog_min_height"
+    android:minHeight="@dimen/dialog_height"
     android:orientation="vertical">
 
     <LinearLayout

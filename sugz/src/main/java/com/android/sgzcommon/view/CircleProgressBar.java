@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.SweepGradient;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -46,7 +47,7 @@ public class CircleProgressBar extends View {
         mRingBackgroundColor = a.getColor(R.styleable.CircleProgressBar_ring_background_color, context.getResources().getColor(R.color.grey_300));
         int value = a.getInt(R.styleable.CircleProgressBar_value, 0);
         mMaxValue = a.getInt(R.styleable.CircleProgressBar_max_value, 100);
-        mProgressTextSize = a.getDimensionPixelSize(R.styleable.CircleProgressBar_text_size, mMinRadius / 2);
+        mProgressTextSize = a.getDimensionPixelSize(R.styleable.CircleProgressBar_text_size, UnitUtils.sp2px(14));
         mProgressTextColor = a.getColor(R.styleable.CircleProgressBar_text_color, mRingColor);
         a.recycle();
         //需要重写onDraw就得调用此
@@ -78,9 +79,7 @@ public class CircleProgressBar extends View {
         paint.setColor(mCircleInColor);
         drawValueText(canvas);
         canvas.drawCircle(mCenterX, mCenterY, mMinRadius, paint);
-        //画默认圆环
         drawNormalRing(canvas, paint);
-        //画彩色圆环
         drawColorRing(canvas, paint);
     }
 
@@ -89,8 +88,13 @@ public class CircleProgressBar extends View {
      */
     private void drawValueText(Canvas canvas) {
         double s = mMinRadius / Math.sqrt(2);
+        String valueText = mValue + "电视了客服代理反馈%";
         Rect rect = new Rect((int) (mCenterX - s), (int) (mCenterY - s), (int) (mCenterX + s), (int) (mCenterY + s));
-        Paint textPaint = new Paint();
+        TextPaint textPaint = new TextPaint();
+        //        StaticLayout.Builder builder = StaticLayout.Builder.obtain(valueText,0,valueText.length(),textPaint,100);
+        //        builder.setAlignment(Layout.Alignment.ALIGN_CENTER);
+        //        StaticLayout layout = builder.build();
+        //StaticLayout layout = new StaticLayout(aboutTheGame,textPaint,240,Alignment.ALIGN_NORMAL,1.0F,0.0F,true);
         textPaint.setColor(mProgressTextColor);
         textPaint.setTextSize(mProgressTextSize);
         textPaint.setStyle(Paint.Style.FILL);
@@ -99,7 +103,7 @@ public class CircleProgressBar extends View {
         float top = fontMetrics.top;//为基线到字体上边框的距离
         float bottom = fontMetrics.bottom;//为基线到字体下边框的距离
         int baseLineY = (int) (rect.centerY() - top / 2 - bottom / 2);//基线中间点的y轴计算公式
-        canvas.drawText(mValue + "%", rect.centerX(), baseLineY, textPaint);
+        canvas.drawText(valueText, rect.centerX(), baseLineY, textPaint);
     }
 
     /**
