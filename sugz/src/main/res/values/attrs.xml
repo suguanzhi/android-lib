@@ -11,11 +11,11 @@
     <attr name="max_value" format="integer" />
     <attr name="color" format="color" />
 
-    <declare-styleable name="titlebar">
+    <declare-styleable name="Titlebar">
         <attr name="height"></attr>
         <attr name="title" format="string"></attr>
         <attr name="text_size"></attr>
-        <attr name="back" format="reference"></attr>
+        <attr name="back" format="boolean"></attr>
         <attr name="left" format="reference"></attr>
         <attr name="left_text" format="string"></attr>
         <attr name="right" format="reference"></attr>
