@@ -38,7 +38,7 @@ public abstract class BaseNavigationActivity extends BaseActivity {
      * @param position
      * @return
      */
-    protected abstract Fragment getNewFragment(int position);
+    protected abstract Fragment getFragment(int position);
 
     @LayoutRes
     protected int getContentViewId() {
@@ -56,16 +56,17 @@ public abstract class BaseNavigationActivity extends BaseActivity {
     }
 
     /**
+     * 当点击BottomNavigationView的position时是否new新的fragment代替原有的
      * @return
      */
-    protected boolean newFragment4ItemSelect(int position) {
+    protected boolean getNewFragment(int position) {
         return false;
     }
 
     /**
      * @return
      */
-    protected Intent clickStartActivity(int position) {
+    protected Intent getStartActivityIntent(int position) {
         return null;
     }
 
@@ -86,10 +87,10 @@ public abstract class BaseNavigationActivity extends BaseActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int position = getNavigationPosition(item.getItemId());
                 Log.d("BaseMainActivity", "onNavigationItemSelected: position == " + position);
-                Intent intent = clickStartActivity(position);
+                Intent intent = getStartActivityIntent(position);
                 if (intent == null) {
-                    boolean newFragment = newFragment4ItemSelect(position);
-                    showFragment(newFragment, position);
+                    boolean remove = getNewFragment(position);
+                    showFragment(remove, position);
                     return true;
                 } else {
                     startActivity(intent);
@@ -135,13 +136,13 @@ public abstract class BaseNavigationActivity extends BaseActivity {
         Log.d("BaseMainActivity", "showFragment: 3");
         if (fragment == null) {
             Log.d("BaseMainActivity", "showFragment: 4");
-            fragment = getNewFragment(position);
+            fragment = getFragment(position);
         } else {
             Log.d("BaseMainActivity", "showFragment: 5");
             if (remove) {
                 Log.d("BaseMainActivity", "showFragment: 6");
                 ft.remove(fragment);
-                fragment = getNewFragment(position);
+                fragment = getFragment(position);
             }
         }
         if (fragment != null) {

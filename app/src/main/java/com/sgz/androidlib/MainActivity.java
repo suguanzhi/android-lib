@@ -41,7 +41,7 @@ public class MainActivity extends BaseNavigationActivity {
     }
 
     @Override
-    protected Fragment getNewFragment(int position) {
+    protected Fragment getFragment(int position) {
         switch (position) {
             case 0:
                 return new HomeFragment();
@@ -61,11 +61,11 @@ public class MainActivity extends BaseNavigationActivity {
     }
 
     @Override
-    protected boolean newFragment4ItemSelect(int position) {
+    protected boolean getNewFragment(int position) {
         if (0 == position) {
             return true;
         }
-        return super.newFragment4ItemSelect(position);
+        return super.getNewFragment(position);
     }
 
     @Override
