@@ -21,7 +21,7 @@ import com.android.sugz.R;
  */
 public abstract class BaseWebActivity extends BaseActivity implements WebviewHandler.OnLoadListener {
 
-    TitleBar mTbTitle;
+    protected TitleBar mTbTitle;
     WebView mWvContent;
     ProgressBar mPbLoading;
     RelativeLayout mRlWebContainer;
