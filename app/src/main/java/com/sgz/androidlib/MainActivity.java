@@ -52,12 +52,12 @@ public class MainActivity extends BaseNavigationActivity {
     }
 
     @Override
-    protected Intent clickStartActivity(int position) {
+    protected Intent getStartActivityIntent(int position) {
         if (2 == position) {
             Intent intent = new Intent(this, TestTakePhotoActivity.class);
             return intent;
         }
-        return super.clickStartActivity(position);
+        return super.getStartActivityIntent(position);
     }
 
     @Override
