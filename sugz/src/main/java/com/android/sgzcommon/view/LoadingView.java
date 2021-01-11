@@ -36,9 +36,9 @@ public class LoadingView extends View {
         super(context, attrs);
         paint1 = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint2 = new Paint(Paint.ANTI_ALIAS_FLAG);
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.loadingview);
-        color1 = array.getColor(R.styleable.loadingview_color1,Color.parseColor("#448AFF"));
-        color2 = array.getColor(R.styleable.loadingview_color2,color2= Color.parseColor("#FFFFFF"));
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LoadingView);
+        color1 = array.getColor(R.styleable.LoadingView_color1,Color.parseColor("#448AFF"));
+        color2 = array.getColor(R.styleable.LoadingView_color2,color2= Color.parseColor("#FFFFFF"));
         paint1.setColor(color1);
         paint2.setColor(color2);
     }

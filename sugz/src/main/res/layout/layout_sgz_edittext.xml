@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/input_height"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@null" />
+
+    <ImageView
+        android:id="@+id/iv_clear"
+        android:layout_width="@dimen/icon_second"
+        android:layout_height="@dimen/icon_second"
+        android:layout_marginStart="5dp"
+        android:padding="2dp"
+        android:src="@drawable/ic_sgz_delete_grey"
+        android:visibility="gone" />
+
+</LinearLayout>

@@ -48,7 +48,7 @@ public class MarqueenTextView extends TextView {
     /**
      * 文本滚动速度
      **/
-    private float sudu;
+    private float speed;
 
     public MarqueenTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -60,12 +60,12 @@ public class MarqueenTextView extends TextView {
      * @param windowManager 获取屏幕
      * @param text          显示的内容
      */
-    public void initScrollTextView(WindowManager windowManager, String text, float su) {
+    public void initScrollTextView(WindowManager windowManager, String text, float speed) {
         // 得到画笔,获取父类的textPaint
         paint = this.getPaint();
         // 得到文字
         this.text = text;
-        this.sudu = su;
+        this.speed = speed;
         textLength = paint.measureText(text);// 获得当前文本字符串长度
         viewWidth = this.getWidth();// 获取宽度return mRight - mLeft;
         if (viewWidth == 0) {
@@ -106,7 +106,7 @@ public class MarqueenTextView extends TextView {
     protected void onDraw(Canvas canvas) {
         if (isStarting) {
             canvas.drawText(text, temp_tx1 - tx, ty, paint);
-            tx += sudu;
+            tx += speed;
             // 当文字滚动到屏幕的最左边
             if (tx > temp_tx2) {
                 // 把文字设置到最右边开始

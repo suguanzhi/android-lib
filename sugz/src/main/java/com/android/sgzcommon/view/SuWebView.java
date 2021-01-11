@@ -21,21 +21,23 @@ import androidx.annotation.Nullable;
  * @author sgz
  * @date 2020/9/2
  */
-public class WebLayout extends RelativeLayout {
+public class SuWebView extends RelativeLayout {
 
     private TwoButtonDialog mWarmDialog;
     private WebviewHandler mWebviewHandler;
 
-    public WebLayout(Context context, @Nullable AttributeSet attrs) {
+    public SuWebView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_sgz_web, this);
-        ProgressBar progressBar = view.findViewById(R.id.pb_loading);
-        WebView webView = view.findViewById(R.id.wv_content);
-        mWarmDialog = new TwoButtonDialog(getContext(), "是否允许打开本地应用浏览商品？");
+        LayoutInflater.from(context).inflate(R.layout.layout_sgz_web, this);
+        ProgressBar progressBar = findViewById(R.id.pb_loading);
+        WebView webView = findViewById(R.id.wv_content);
         mWebviewHandler = new WebviewHandler(webView, progressBar, false);
         mWebviewHandler.setOnOpenAppListener(new WebviewHandler.OnOpenAppListener() {
             @Override
             public void onOpen(final Intent intent) {
+                if (mWarmDialog == null) {
+                    mWarmDialog = new TwoButtonDialog(getContext(), "是否允许打开本地应用浏览商品？");
+                }
                 mWarmDialog.setOnclickListener(new TwoButtonDialog.OnclickListener() {
                     @Override
                     public void onCancle(View view, Dialog dialog) {

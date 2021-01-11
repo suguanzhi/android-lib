@@ -12,7 +12,7 @@ import uk.co.senab.photoview.PhotoView;
 
 /**
  * 作者github地址：https://github.com/githubwing/DragPhotoView
- * 存在的背景宽高不适应的bug，已修改。
+ * 存在的背景宽高不适应的bug，su已修改。
  */
 public class DragPhotoView extends PhotoView {
     private Paint mPaint;

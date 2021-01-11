@@ -68,20 +68,20 @@ public class NavigatorViewPager extends LinearLayout implements ViewPager.OnPage
         mViewPager.addOnPageChangeListener(this);
         addView(mViewPager, params);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.pager_nav);
-        String items = a.getString(R.styleable.pager_nav_items);
-        int textSize = a.getDimensionPixelSize(R.styleable.pager_nav_text_size, UnitUtils.sp2px(14f));
-        int lineHeight = a.getDimensionPixelSize(R.styleable.pager_nav_line_height, UnitUtils.dp2px(4f));
-        int lineMargin = a.getDimensionPixelSize(R.styleable.pager_nav_line_margin, 0);
-        mTextColor = a.getColor(R.styleable.pager_nav_text_color, Color.parseColor("#212121"));
-        mTextColorSelected = a.getColor(R.styleable.pager_nav_text_color_selected, Color.BLACK);
-        Drawable navBackground = a.getDrawable(R.styleable.pager_nav_background);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PagerNavigation);
+        String items = a.getString(R.styleable.PagerNavigation_items);
+        int textSize = a.getDimensionPixelSize(R.styleable.PagerNavigation_text_size, UnitUtils.sp2px(14f));
+        int lineHeight = a.getDimensionPixelSize(R.styleable.PagerNavigation_line_height, UnitUtils.dp2px(4f));
+        int lineMargin = a.getDimensionPixelSize(R.styleable.PagerNavigation_line_margin, 0);
+        mTextColor = a.getColor(R.styleable.PagerNavigation_text_color, Color.parseColor("#212121"));
+        mTextColorSelected = a.getColor(R.styleable.PagerNavigation_text_color_selected, Color.BLACK);
+        Drawable navBackground = a.getDrawable(R.styleable.PagerNavigation_background);
         if (navBackground != null) {
             navParentLayout.setBackground(navBackground);
         }
-        int navLayoutWidth = a.getDimensionPixelSize(R.styleable.pager_nav_nav_width, LayoutParams.MATCH_PARENT);
-        mPadding = a.getDimensionPixelSize(R.styleable.pager_nav_padding, UnitUtils.dp2px(10f));
-        mLineBackground = a.getDrawable(R.styleable.pager_nav_line);
+        int navLayoutWidth = a.getDimensionPixelSize(R.styleable.PagerNavigation_nav_width, LayoutParams.MATCH_PARENT);
+        mPadding = a.getDimensionPixelSize(R.styleable.PagerNavigation_padding, UnitUtils.dp2px(10f));
+        mLineBackground = a.getDrawable(R.styleable.PagerNavigation_line);
         a.recycle();
 
         LayoutParams navLayoutParams = new LayoutParams(navLayoutWidth, LayoutParams.WRAP_CONTENT);

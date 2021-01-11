@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:title="Weblayout" />
 
-    <com.android.sgzcommon.view.WebLayout
+    <com.android.sgzcommon.view.SuWebView
         android:id="@+id/wl"
         android:layout_width="match_parent"
         android:background="@color/white"

@@ -74,5 +74,5 @@
         android:layout_height="50dp"
         android:layout_margin="10dp"
         android:padding="10dp"
-        android:src="@drawable/ic_sgz_delete" />
+        android:src="@drawable/ic_sgz_delete_circle_red" />
 </LinearLayout>

@@ -49,7 +49,7 @@ public class TitleBar extends LinearLayout {
 
     public TitleBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_sgz_title, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_sgz_titlebar, this);
         LinearLayout barLayout = view.findViewById(R.id.ll_content);
         mIvLeft = view.findViewById(R.id.iv_left);
         mIvRight = view.findViewById(R.id.iv_right);

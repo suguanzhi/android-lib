@@ -7,15 +7,14 @@
     android:layout_margin="20dp"
     android:background="@drawable/shape_r10_sd_black_alpha_bb"
     android:gravity="center"
-    android:minWidth="150dp"
-    android:minHeight="100dp"
+    android:minWidth="100dp"
     android:orientation="vertical"
     android:padding="10dp">
 
     <TextView
         android:id="@+id/tv_toast"
         style="@style/TextMain"
-        android:text=""
+        android:text="Toast"
         android:textColor="@color/white" />
 
 </LinearLayout>

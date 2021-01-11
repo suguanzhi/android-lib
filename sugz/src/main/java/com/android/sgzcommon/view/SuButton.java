@@ -3,8 +3,6 @@ package com.android.sgzcommon.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -26,7 +24,7 @@ public class SuButton extends AppCompatButton {
     private static final int STYLE_CONFIRM = 4;
     private static final int STYLE_DISABLE = 5;
 
-    private static final int RADIUS_STYLE_WRAP = 0;
+    private static final int RADIUS_STYLE_DEFAULT = 0;
     private static final int RADIUS_STYLE_CIRCLE = 1;
 
     public SuButton(Context context) {
@@ -44,37 +42,34 @@ public class SuButton extends AppCompatButton {
 
     private void init(Context context, AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.SuButton);
-        int raduis = array.getDimensionPixelSize(R.styleable.SuButton_radius, 0);
+        int radius = array.getDimensionPixelSize(R.styleable.SuButton_radius, getResources().getDimensionPixelSize(R.dimen.btn_radius));
         int borderWidth = array.getDimensionPixelSize(R.styleable.SuButton_border_width, getResources().getDimensionPixelSize(R.dimen.btn_border_width));
-        int color = array.getColor(R.styleable.SuButton_style_color, getResources().getColor(R.color.colorPrimary));
+        int borderColor = array.getColor(R.styleable.SuButton_border_width, getResources().getColor(R.color.btn_normal));
+        int backgroundColor = array.getColor(R.styleable.SuButton_background_color, getResources().getColor(R.color.colorPrimary));
         boolean stroke = array.getBoolean(R.styleable.SuButton_stroke, false);
         boolean stateAnimator = array.getBoolean(R.styleable.SuButton_state_animator, true);
+        int radiusStyle = array.getInt(R.styleable.SuButton_radius_style, RADIUS_STYLE_DEFAULT);
         int style = array.getInt(R.styleable.SuButton_style, 0);
 
-        GradientDrawable gradientDrawable = new GradientDrawable();
-        Drawable oldBackground = getBackground();
-        if (oldBackground instanceof ColorDrawable) {
-            ColorDrawable cd = (ColorDrawable) oldBackground;
-            gradientDrawable.setColor(cd.getColor());
-        }
-        if (0 == raduis) {
-            raduis = getResources().getDimensionPixelSize(R.dimen.btn_radius);
-        }
+        int color;
         int textColor;
         int backColor;
-        int borderColor;
-        if (STYLE_NORMAL == style) {
-            stroke = true;
-            color = getResources().getColor(R.color.btn_normal);
-        } else if (STYLE_WARN == style) {
+        if (STYLE_WARN == style) {
             color = getResources().getColor(R.color.btn_warn);
+            borderColor = color;
         } else if (STYLE_DANGER == style) {
             color = getResources().getColor(R.color.btn_danger);
+            borderColor = color;
         } else if (STYLE_CONFIRM == style) {
             color = getResources().getColor(R.color.btn_confirm);
+            borderColor = color;
         } else if (STYLE_DISABLE == style) {
             color = getResources().getColor(R.color.btn_disable);
+            borderColor = color;
             stateAnimator = false;
+        } else {
+            stroke = true;
+            color = backgroundColor;
         }
         if (stroke) {
             textColor = color;
@@ -83,19 +78,20 @@ public class SuButton extends AppCompatButton {
             textColor = Color.WHITE;
             backColor = color;
         }
-        borderColor = color;
+
         if (STYLE_DISABLE == style) {
             textColor = getResources().getColor(R.color.grey_500);
         }
 
-        int radiusStyle = array.getInt(R.styleable.SuButton_radius_style, RADIUS_STYLE_WRAP);
         if (RADIUS_STYLE_CIRCLE == radiusStyle) {
-            raduis = Integer.MAX_VALUE;
+            radius = Integer.MAX_VALUE;
         }
         setTextColor(textColor);
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.btn_text_size));
+
+        GradientDrawable gradientDrawable = new GradientDrawable();
         gradientDrawable.setColor(backColor);
-        gradientDrawable.setCornerRadius(raduis);
+        gradientDrawable.setCornerRadius(radius);
         gradientDrawable.setStroke(borderWidth, borderColor);
         setBackground(gradientDrawable);
         if (!stateAnimator) {

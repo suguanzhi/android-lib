@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.view.CircleProgressBar;
-import com.android.sgzcommon.view.InputEditView;
+import com.android.sgzcommon.view.NumberEditText;
 import com.android.sgzcommon.view.LoadResultView;
 import com.android.sgzcommon.view.SuButton;
 import com.android.sgzcommon.view.SuGridView;
@@ -45,9 +45,7 @@ public class TestViewActivity extends BaseActivity {
     @BindView(R.id.btn_focus)
     SuButton mBtnFocus;
     @BindView(R.id.iev1)
-    InputEditView mIev1;
-    @BindView(R.id.iev2)
-    InputEditView mIev2;
+    NumberEditText mIev1;
     @BindView(R.id.civ_picture)
     CornerImageView mCivPicture;
     @BindView(R.id.superview)
@@ -89,20 +87,14 @@ public class TestViewActivity extends BaseActivity {
         } else {
             mCivPicture.setImageBitmap(null);
         }
-        mIev1.setOnValueChangeListener(new InputEditView.OnValueChangeListener() {
+        mIev1.setOnValueChangeListener(new NumberEditText.OnValueChangeListener() {
             @Override
             public void onValueChange(int value, boolean isEditing) {
                 Log.d("TestViewActivity", "onValueChange: 1 value == " + value + "; isEditing == " + isEditing);
             }
         });
-        mIev2.setOnValueChangeListener(new InputEditView.OnValueChangeListener() {
-            @Override
-            public void onValueChange(int value, boolean isEditing) {
-                Log.d("TestViewActivity", "onValueChange: 2 value == " + value + "; isEditing == " + isEditing);
-            }
-        });
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 6; i++) {
             list.add(i + "");
         }
         MyGridAdapter adapter = new MyGridAdapter(this, list);

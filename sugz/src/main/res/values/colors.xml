@@ -315,6 +315,8 @@
     <color name="sgz_icon_head">@color/white</color>
 
     <color name="sgz_input_background">@color/grey_200</color>
+    <color name="sgz_input_border_color">@color/grey_300</color>
+
     <color name="sgz_shadow_color">@color/grey_300</color>
 
     <color name="sgz_icon_version_update">@color/grey_400</color>

@@ -4,17 +4,11 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <RelativeLayout
+    <WebView
+        android:id="@+id/wv_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <WebView
-            android:id="@+id/wv_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/background" />
-
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:background="@color/background" />
 
     <ProgressBar
         android:id="@+id/pb_loading"

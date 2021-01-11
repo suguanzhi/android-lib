@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.activity.utils.WebviewHandler;
-import com.android.sgzcommon.view.WebLayout;
+import com.android.sgzcommon.view.SuWebView;
 import com.sgz.androidlib.R;
 
 import butterknife.BindView;
@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 public class TestWebLayoutActivity extends BaseActivity {
 
     @BindView(R.id.wl)
-    WebLayout mWl;
+    SuWebView mWl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
