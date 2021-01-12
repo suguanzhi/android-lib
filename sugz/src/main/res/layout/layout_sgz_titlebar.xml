@@ -36,8 +36,7 @@
                 android:paddingEnd="10dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:visibility="gone" />
+                android:textSize="14sp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -85,8 +84,7 @@
                 android:paddingEnd="10dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:visibility="gone" />
+                android:textSize="14sp" />
         </RelativeLayout>
     </LinearLayout>
 

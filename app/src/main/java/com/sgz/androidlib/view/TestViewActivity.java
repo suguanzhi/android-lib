@@ -87,6 +87,18 @@ public class TestViewActivity extends BaseActivity {
         } else {
             mCivPicture.setImageBitmap(null);
         }
+        mTbTitle.setOnClickListener(new TitleBar.OnClickListener() {
+            @Override
+            public void onLeftClick(View v) {
+
+            }
+
+            @Override
+            public void onRightClick(View v) {
+                showToast("点击");
+            }
+        });
+        mTbTitle.setRightText("右边");
         mIev1.setOnValueChangeListener(new NumberEditText.OnValueChangeListener() {
             @Override
             public void onValueChange(int value, boolean isEditing) {
