@@ -151,6 +151,7 @@ public class TitleBar extends LinearLayout {
 
     public void setRightText(CharSequence rightText) {
         mRightText = rightText;
+        mTvRight.setText(rightText);
         updateRight();
     }
 
@@ -163,7 +164,7 @@ public class TitleBar extends LinearLayout {
     }
 
     private void updateRight() {
-        if (!TextUtils.isEmpty(mLeftText) || mLeftDrawable != null) {
+        if (!TextUtils.isEmpty(mRightText) || mRightDrawable != null) {
             mRlRight.setVisibility(VISIBLE);
         } else {
             mRlRight.setVisibility(GONE);
