@@ -1,6 +1,7 @@
 package com.android.sgzcommon.view;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -42,55 +43,58 @@ public class SuButton extends AppCompatButton {
 
     private void init(Context context, AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.SuButton);
+        ColorStateList textColor = array.getColorStateList(R.styleable.SuButton_android_textColor);
         int radius = array.getDimensionPixelSize(R.styleable.SuButton_radius, getResources().getDimensionPixelSize(R.dimen.btn_radius));
-        int borderWidth = array.getDimensionPixelSize(R.styleable.SuButton_border_width, getResources().getDimensionPixelSize(R.dimen.btn_border_width));
-        int borderColor = array.getColor(R.styleable.SuButton_border_width, getResources().getColor(R.color.btn_normal));
-        int backgroundColor = array.getColor(R.styleable.SuButton_background_color, getResources().getColor(R.color.colorPrimary));
-        boolean stroke = array.getBoolean(R.styleable.SuButton_stroke, false);
-        boolean stateAnimator = array.getBoolean(R.styleable.SuButton_state_animator, true);
         int radiusStyle = array.getInt(R.styleable.SuButton_radius_style, RADIUS_STYLE_DEFAULT);
-        int style = array.getInt(R.styleable.SuButton_style, 0);
-
-        int color;
-        int textColor;
-        int backColor;
-        if (STYLE_WARN == style) {
-            color = getResources().getColor(R.color.btn_warn);
-            borderColor = color;
-        } else if (STYLE_DANGER == style) {
-            color = getResources().getColor(R.color.btn_danger);
-            borderColor = color;
-        } else if (STYLE_CONFIRM == style) {
-            color = getResources().getColor(R.color.btn_confirm);
-            borderColor = color;
-        } else if (STYLE_DISABLE == style) {
-            color = getResources().getColor(R.color.btn_disable);
-            borderColor = color;
-            stateAnimator = false;
-        } else {
-            stroke = true;
-            color = backgroundColor;
-        }
-        if (stroke) {
-            textColor = color;
-            backColor = Color.WHITE;
-        } else {
-            textColor = Color.WHITE;
-            backColor = color;
-        }
-
-        if (STYLE_DISABLE == style) {
-            textColor = getResources().getColor(R.color.grey_500);
-        }
-
         if (RADIUS_STYLE_CIRCLE == radiusStyle) {
             radius = Integer.MAX_VALUE;
+        }
+        int borderWidth = array.getDimensionPixelSize(R.styleable.SuButton_border_width, getResources().getDimensionPixelSize(R.dimen.btn_border_width));
+        boolean stroke = array.getBoolean(R.styleable.SuButton_stroke, false);
+        boolean stateAnimator = array.getBoolean(R.styleable.SuButton_state_animator, true);
+        int style = array.getInt(R.styleable.SuButton_style, 0);
+
+        int styleColor;
+        int styleBackgroundColor;
+        if (STYLE_WARN == style) {
+            styleColor = getResources().getColor(R.color.btn_warn);
+        } else if (STYLE_DANGER == style) {
+            styleColor = getResources().getColor(R.color.btn_danger);
+        } else if (STYLE_CONFIRM == style) {
+            styleColor = getResources().getColor(R.color.btn_confirm);
+        } else if (STYLE_DISABLE == style) {
+            stateAnimator = false;
+            styleColor = getResources().getColor(R.color.btn_disable);
+        } else {
+            stroke = true;
+            styleColor = getResources().getColor(R.color.btn_normal);
+        }
+        int styleTextColor;
+        if (stroke) {
+            styleTextColor = styleColor;
+            styleBackgroundColor = Color.WHITE;
+        } else {
+            styleTextColor = Color.WHITE;
+            styleBackgroundColor = styleColor;
+        }
+        int borderColor = array.getColor(R.styleable.SuButton_border_color, styleColor);
+        int backgroundColor = array.getColor(R.styleable.SuButton_background_color, styleBackgroundColor);
+
+        if (textColor == null) {
+            textColor = ColorStateList.valueOf(styleTextColor);
+        }
+        if (STYLE_DISABLE == style) {
+            setEnabled(false);
+            backgroundColor = getResources().getColor(R.color.btn_disable);
+            textColor = ColorStateList.valueOf(getResources().getColor(R.color.grey_500));
+        } else {
+            setEnabled(true);
         }
         setTextColor(textColor);
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.btn_text_size));
 
         GradientDrawable gradientDrawable = new GradientDrawable();
-        gradientDrawable.setColor(backColor);
+        gradientDrawable.setColor(backgroundColor);
         gradientDrawable.setCornerRadius(radius);
         gradientDrawable.setStroke(borderWidth, borderColor);
         setBackground(gradientDrawable);

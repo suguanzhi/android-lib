@@ -37,6 +37,6 @@
     <dimen name="input_border_width">1dp</dimen>
     <dimen name="input_clear_padding">5dp</dimen>
 
-    <dimen name="dialog_height">160dp</dimen>
+    <dimen name="dialog_height">180dp</dimen>
 
 </resources>

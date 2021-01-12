@@ -82,6 +82,7 @@
     <declare-styleable name="SuButton">
         <attr name="radius" />
         <attr name="radius_style" />
+        <attr name="android:textColor" />
         <attr name="style">
             <enum name="normal" value="1" />
             <enum name="warn" value="2" />

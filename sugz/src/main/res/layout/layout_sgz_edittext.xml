@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/input_height"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/input_height"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="5dp">
@@ -20,6 +21,6 @@
         android:layout_marginStart="5dp"
         android:padding="2dp"
         android:src="@drawable/ic_sgz_delete_grey"
-        android:visibility="gone" />
+        />
 
 </LinearLayout>

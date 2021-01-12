@@ -70,6 +70,7 @@ public class SuEditText extends LinearLayout {
                 checkCancleVisiable(s);
             }
         });
+        mEtInput.setText("");
         mIvClear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

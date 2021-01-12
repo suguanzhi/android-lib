@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,21 +23,16 @@ public class LoadResultView extends LinearLayout {
     private TextView mTvButton;
 
     public LoadResultView(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public LoadResultView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
+        this(context, attrs,0);
     }
 
     public LoadResultView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
-    }
-
-    private void init(Context context, @Nullable AttributeSet attrs) {
-        LayoutInflater.from(context).inflate(R.layout.layout_sgz_load_result, this);
+        inflate(context,R.layout.layout_sgz_load_result, this);
         mIvIcon = findViewById(R.id.iv_icon);
         mTvTip = findViewById(R.id.tv_tip);
         mTvButton = findViewById(R.id.tv_button);

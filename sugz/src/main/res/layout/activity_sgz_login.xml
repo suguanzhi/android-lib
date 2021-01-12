@@ -83,15 +83,13 @@
 
     <com.android.sgzcommon.view.SuButton
         android:id="@+id/btn_login"
-        style="@style/Button"
         android:layout_width="@dimen/btn_width"
         android:layout_height="@dimen/btn_height"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
-        android:gravity="center"
         android:text="登录"
-        android:textColor="@color/white"
-        android:textSize="@dimen/btn_text_size"
-        />
+        app:radius_style="circle"
+        app:state_animator="false"
+        app:style="confirm" />
 
 </LinearLayout>
