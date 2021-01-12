@@ -33,6 +33,11 @@ public class TitleBar extends LinearLayout {
     private RelativeLayout mRlRight;
 
     boolean isBack;
+    private CharSequence mTitleText;
+    private CharSequence mLeftText;
+    private CharSequence mRightText;
+    private Drawable mLeftDrawable;
+    private Drawable mRightDrawable;
     private OnClickListener listener;
 
     public TitleBar(Context context) {
@@ -97,7 +102,7 @@ public class TitleBar extends LinearLayout {
                     } catch (Throwable t) {
                         t.printStackTrace();
                     }
-                }else {
+                } else {
                     if (listener != null) {
                         listener.onLeftClick(v);
                     }
@@ -122,42 +127,46 @@ public class TitleBar extends LinearLayout {
     }
 
     public void setTitle(CharSequence title) {
+        mTitleText = title;
         mTvTitle.setText(title);
     }
 
     public void setLeftDrawable(Drawable leftDrawable) {
+        mLeftDrawable = leftDrawable;
         mIvLeft.setImageDrawable(leftDrawable);
-        if (leftDrawable == null) {
-            mIvLeft.setVisibility(GONE);
-        } else {
-            mIvLeft.setVisibility(VISIBLE);
-        }
+        updateLeft();
     }
 
     public void setLeftText(CharSequence leftText) {
+        mLeftText = leftText;
         mTvLeft.setText(leftText);
-        if (!TextUtils.isEmpty(leftText)) {
-            mTvLeft.setVisibility(VISIBLE);
-        } else {
-            mTvLeft.setVisibility(GONE);
-        }
+        updateLeft();
     }
 
-    public void setRightDrawable(Drawable right) {
-        mIvRight.setImageDrawable(right);
-        if (right != null) {
-            mIvRight.setVisibility(VISIBLE);
-        } else {
-            mIvRight.setVisibility(GONE);
-        }
+    public void setRightDrawable(Drawable rightDrawable) {
+        mRightDrawable = rightDrawable;
+        mIvRight.setImageDrawable(rightDrawable);
+        updateRight();
     }
 
     public void setRightText(CharSequence rightText) {
-        mTvRight.setText(rightText);
-        if (!TextUtils.isEmpty(rightText)) {
-            mTvRight.setVisibility(VISIBLE);
+        mRightText = rightText;
+        updateRight();
+    }
+
+    private void updateLeft() {
+        if (!TextUtils.isEmpty(mLeftText) || mLeftDrawable != null) {
+            mRlLeft.setVisibility(VISIBLE);
         } else {
-            mTvRight.setVisibility(GONE);
+            mRlLeft.setVisibility(GONE);
+        }
+    }
+
+    private void updateRight() {
+        if (!TextUtils.isEmpty(mLeftText) || mLeftDrawable != null) {
+            mRlRight.setVisibility(VISIBLE);
+        } else {
+            mRlRight.setVisibility(GONE);
         }
     }
 
