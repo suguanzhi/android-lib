@@ -44,7 +44,7 @@
                 android:id="@+id/lrv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:background="@drawable/shape_r10_sd_backgroud" />
+                />
 
             <ProgressBar
                 android:id="@+id/pb_loading"

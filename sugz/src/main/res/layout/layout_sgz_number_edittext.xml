@@ -31,5 +31,5 @@
         android:layout_marginStart="5dp"
         android:layout_weight="0.8"
         android:padding="5dp"
-        android:src="@drawable/ic_sgz_add_grey400" />
+        android:src="@drawable/ic_sgz_add" />
 </LinearLayout>

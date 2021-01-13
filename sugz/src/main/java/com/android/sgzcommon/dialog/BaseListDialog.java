@@ -123,7 +123,7 @@ public abstract class BaseListDialog<V> extends BaseDialog {
                 }
                 if (mItems.size() == 0) {
                     mLrv.empty();
-                    setLayoutParams(getWidth(), UnitUtils.dp2px(300));
+                    setLayoutParams(getWidth(), getWrapHeight());
                 } else {
                     mLrv.gone();
                     setLayoutParams(getWidth(), WindowManager.LayoutParams.WRAP_CONTENT);
@@ -135,10 +135,19 @@ public abstract class BaseListDialog<V> extends BaseDialog {
 
             @Override
             public void onFailed() {
-                setLayoutParams(getWidth(), UnitUtils.dp2px(300));
+                getWrapHeight();
+                setLayoutParams(getWidth(), getWrapHeight());
                 mPbLoading.setVisibility(View.GONE);
                 mRvList.setVisibility(View.GONE);
                 mLrv.error("加载失败！");
+            }
+
+            private int getWrapHeight() {
+                int h = UnitUtils.dp2px(300);
+                if (!TextUtils.isEmpty(mTitle)) {
+                    h += mContext.getResources().getDimensionPixelOffset(R.dimen.row_height);
+                }
+                return h;
             }
         };
     }
@@ -159,10 +168,8 @@ public abstract class BaseListDialog<V> extends BaseDialog {
             mTvTitle.setText(title);
             if (TextUtils.isEmpty(title)) {
                 mTvTitle.setVisibility(View.GONE);
-                mLrv.setBackgroundResource(R.drawable.shape_r10_sd_backgroud);
             } else {
                 mTvTitle.setVisibility(View.VISIBLE);
-                mLrv.setBackgroundResource(R.drawable.shape_r10_bl_br_sd_backgroud);
             }
         }
     }

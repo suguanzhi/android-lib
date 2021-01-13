@@ -97,7 +97,7 @@ public class LoadResultView extends LinearLayout {
     }
 
     public void error(String tip, String btnText) {
-        error(tip, btnText, R.drawable.ic_sgz_load_fail);
+        error(tip, btnText, R.drawable.ic_sgz_fail_cry);
     }
 
     public void error(String tip, String btnText, int resId) {

@@ -20,11 +20,12 @@ public class TestBaseTextListDialog extends BaseTextListDialog<TextListEntity> {
     @Override
     protected void loadList(Map<String, String> data, OnLoadListResponse response) {
         response.onStart();
-        response.onSuccess(mEntityList);
+        response.onFailed();
     }
 
     public TestBaseTextListDialog(Context context) {
         super(context);
+        // setTitleText("列表");
         mEntityList = new ArrayList<>();
         mEntityList.add(new TextListEntity("深刻的反思了的"));
         mEntityList.add(new TextListEntity("深刻的反思了的"));
