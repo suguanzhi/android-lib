@@ -9,16 +9,16 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * RecyclerView嵌套RecyclerView，都是垂直方向滑动，解决冲突
+ * RecyclerView嵌套RecyclerView，都是垂直方向滑动，禁止内部RecyclerView滑动，解决冲突。
  */
 
-public class InnerVerticalRecyclerView extends RecyclerView {
+public class SuRecyclerView extends RecyclerView {
 
-    public InnerVerticalRecyclerView(@NonNull Context context) {
+    public SuRecyclerView(@NonNull Context context) {
         super(context);
     }
 
-    public InnerVerticalRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public SuRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
