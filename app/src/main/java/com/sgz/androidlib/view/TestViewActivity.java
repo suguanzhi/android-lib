@@ -116,9 +116,9 @@ public class TestViewActivity extends BaseActivity {
         mSuperview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //随机设定圆环大小
+                //随机设定值
                 int i = new Random().nextInt(100) + 1;
-                mSuperview.setValue(i);
+                mSuperview.setValue(i,true);
             }
         });
 

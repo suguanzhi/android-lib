@@ -56,9 +56,9 @@ public class TestDialogActivity extends BaseActivity {
                 break;
             case R.id.btn_string_list_dialog:
                 TestBaseTextListDialog dialog = new TestBaseTextListDialog(mActivity);
-                dialog.setOnListClickListener(new BaseListDialog.OnListClickListener<TextListEntity>() {
+                dialog.setOnSelectionListener(new BaseListDialog.OnSelectionListener<TextListEntity>() {
                     @Override
-                    public void onClick(Dialog dialog, int position, TextListEntity loadListEntity) {
+                    public void onSelection(Dialog dialog, int position, TextListEntity loadListEntity) {
 
                     }
                 });

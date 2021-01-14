@@ -23,8 +23,8 @@ public class CircleProgressBar extends View {
     private int mRingColor;
     private int mCircleInColor; //最里面圆的颜色
     private int mRingBackgroundColor;    //圆环背景颜色
-    private int mValue;
     private int mMaxValue;
+    private int mCurrentValue;
     private int mProgressTextSize;
     private int mProgressTextColor;
     private RectF mRectF;
@@ -45,14 +45,14 @@ public class CircleProgressBar extends View {
         mCircleInColor = a.getColor(R.styleable.CircleProgressBar_circle_in_color, context.getResources().getColor(R.color.transparent));
         mRingColor = a.getColor(R.styleable.CircleProgressBar_ring_color, context.getResources().getColor(R.color.amber_500));
         mRingBackgroundColor = a.getColor(R.styleable.CircleProgressBar_ring_background_color, context.getResources().getColor(R.color.grey_300));
-        int value = a.getInt(R.styleable.CircleProgressBar_value, 0);
+        final int value = a.getInt(R.styleable.CircleProgressBar_value, 0);
         mMaxValue = a.getInt(R.styleable.CircleProgressBar_max_value, 100);
         mProgressTextSize = a.getDimensionPixelSize(R.styleable.CircleProgressBar_text_size, UnitUtils.sp2px(14));
         mProgressTextColor = a.getColor(R.styleable.CircleProgressBar_text_color, mRingColor);
         a.recycle();
-        //需要重写onDraw就得调用此
+        setValue(value, true);
+        //非ViewGroup的子类，实现onDraw方法需要调用此方法。
         this.setWillNotDraw(false);
-        setValueOnly(value);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class CircleProgressBar extends View {
      */
     private void drawValueText(Canvas canvas) {
         double s = mMinRadius / Math.sqrt(2);
-        String valueText = mValue + "%";
+        String valueText = mCurrentValue + "%";
         Rect rect = new Rect((int) (mCenterX - s), (int) (mCenterY - s), (int) (mCenterX + s), (int) (mCenterY + s));
         TextPaint textPaint = new TextPaint();
         textPaint.setColor(mProgressTextColor);
@@ -129,7 +129,7 @@ public class CircleProgressBar extends View {
         ringColorPaint.setShader(new SweepGradient(mCenterX, mCenterX, mRingColor, mRingColor));
         //逆时针旋转90度
         canvas.rotate(-90, mCenterX, mCenterY);
-        int sweep = (int) (360 * (mValue / 100f));
+        int sweep = (int) (360 * (mCurrentValue / 100f));
         canvas.drawArc(mRectF, 360, sweep, false, ringColorPaint);
         ringColorPaint.setShader(null);
     }
@@ -145,41 +145,39 @@ public class CircleProgressBar extends View {
      * @return
      */
     public int getValue() {
-        return mValue;
+        return mCurrentValue;
     }
 
-    /**
-     * 设置当前值
-     *
-     * @param value
-     */
-    private void setValueOnly(int value) {
-        if (value > mMaxValue) {
-            value = mMaxValue;
-        }
-        mValue = value;
-    }
 
     /**
      * 设置当前值，并开启动画
      *
      * @param value
+     * @param reset 是否重置，从0开始
      */
-    public void setValue(int value) {
-        setValueOnly(value);
-        startAnimator();
+    public void setValue(int value, boolean reset) {
+        if (reset) {
+            mCurrentValue = 0;
+        }
+        startAnimator(value);
     }
 
     /**
      *
      */
-    private void startAnimator() {
-        valueAnimator = ValueAnimator.ofInt(0, mValue);
+    private void startAnimator(int value) {
+        if (value > mMaxValue) {
+            value = mMaxValue;
+        }
+        if (valueAnimator != null) {
+            valueAnimator.cancel();
+        }
+        valueAnimator = ValueAnimator.ofInt(mCurrentValue, value);
         valueAnimator.setDuration(1000);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mValue = Integer.parseInt(String.valueOf(animation.getAnimatedValue()));
+                mCurrentValue = Integer.parseInt(String.valueOf(animation.getAnimatedValue()));
                 invalidate();
             }
         });

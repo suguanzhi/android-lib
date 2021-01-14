@@ -48,7 +48,7 @@
             android:id="@+id/tv_left"
             style="@style/Button"
             android:layout_width="@dimen/btn_width_min"
-            android:layout_margin="10sp"
+            android:layout_margin="10dp"
             android:text="@string/dialog_two_button_cancle"
             app:state_animator="false"
             app:stroke="true"

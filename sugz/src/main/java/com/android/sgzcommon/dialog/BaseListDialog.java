@@ -36,7 +36,7 @@ public abstract class BaseListDialog<V> extends BaseDialog {
     LoadResultView mLrv;
     private CharSequence mTitle;
     private OnLoadListResponse<V> mLoadResponse;
-    private OnListClickListener<V> mClickListener;
+    private OnSelectionListener<V> mSelectionListener;
     private List<V> mItems;
     private Map<String, String> mData;
 
@@ -67,8 +67,8 @@ public abstract class BaseListDialog<V> extends BaseDialog {
         mTvCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mClickListener != null) {
-                    mClickListener.onClick(BaseListDialog.this, -1, null);
+                if (mSelectionListener != null) {
+                    mSelectionListener.onSelection(BaseListDialog.this, -1, null);
                 }
             }
         });
@@ -95,8 +95,8 @@ public abstract class BaseListDialog<V> extends BaseDialog {
                 @Override
                 public void onItemClick(View view, int position) {
                     if (position < getItems().size()) {
-                        if (mClickListener != null) {
-                            mClickListener.onClick(BaseListDialog.this, position, mItems.get(position));
+                        if (mSelectionListener != null) {
+                            mSelectionListener.onSelection(BaseListDialog.this, position, mItems.get(position));
                         }
                     }
                 }
@@ -203,8 +203,8 @@ public abstract class BaseListDialog<V> extends BaseDialog {
         return R.layout.dialog_sgz_select_list;
     }
 
-    public void setOnListClickListener(OnListClickListener<V> listener) {
-        this.mClickListener = listener;
+    public void setOnSelectionListener(OnSelectionListener<V> listener) {
+        this.mSelectionListener = listener;
     }
 
     public interface OnLoadListResponse<V> {
@@ -215,7 +215,7 @@ public abstract class BaseListDialog<V> extends BaseDialog {
         void onFailed();
     }
 
-    public interface OnListClickListener<V> {
-        void onClick(Dialog dialog, int position, V v);
+    public interface OnSelectionListener<V> {
+        void onSelection(Dialog dialog, int position, V v);
     }
 }
