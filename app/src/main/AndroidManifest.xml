@@ -49,6 +49,7 @@
         <activity android:name=".others.sample.TestBaseAdapterActivity" />
         <activity android:name="com.android.sgzcommon.activity.QRCodeActivity" android:launchMode="singleTask"/>
         <activity android:name="com.android.sgzcommon.activity.BarCodeActivity" />
+        <activity android:name="com.android.sgzcommon.activity.PhotoViewActivity"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"

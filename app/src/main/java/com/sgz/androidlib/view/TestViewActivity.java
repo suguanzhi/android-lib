@@ -8,9 +8,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.sgzcommon.activity.BaseActivity;
+import com.android.sgzcommon.activity.PhotoViewActivity;
 import com.android.sgzcommon.view.CircleProgressBar;
-import com.android.sgzcommon.view.NumberEditText;
 import com.android.sgzcommon.view.LoadResultView;
+import com.android.sgzcommon.view.NumberEditText;
 import com.android.sgzcommon.view.SuButton;
 import com.android.sgzcommon.view.SuGridView;
 import com.android.sgzcommon.view.TitleBar;
@@ -87,6 +88,15 @@ public class TestViewActivity extends BaseActivity {
         } else {
             mCivPicture.setImageBitmap(null);
         }
+        mCivPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                intent.putExtra("path", url);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
         mTbTitle.setOnClickListener(new TitleBar.OnClickListener() {
             @Override
             public void onLeftClick(View v) {

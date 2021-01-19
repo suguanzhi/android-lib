@@ -33,7 +33,7 @@ public abstract class BaseDialog extends OKHttpDialog {
     protected abstract int getContentViewId();
 
     public BaseDialog(Context context) {
-        super(context, R.style.MyDialog);
+        super(context, R.style.SuDialog);
         init(context);
     }
 

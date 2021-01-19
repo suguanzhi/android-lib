@@ -10,6 +10,8 @@ import com.android.sugz.R;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by sgz on 2019/12/14.
  */
@@ -30,8 +32,8 @@ public class TextListAdapter extends BaseRecyclerviewAdapter<String, TextListAda
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.mTvString.setText(getItem(position));
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, String s) {
+        holder.mTvString.setText(s);
         if (position == mItems.size() - 1) {
             holder.mVLine.setVisibility(View.GONE);
         } else {

@@ -23,6 +23,8 @@ import com.android.sugz.R;
 import java.io.File;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by sgz on 2019/5/6 0006.
  */
@@ -40,11 +42,10 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, final int position) {
+    protected void onBindViewHolder(@NonNull BaseViewHolder holder, int position, final PhotoUpload photoUpload) {
         Log.d("PictureGridEditAdapter", "getView: position = " + position);
         if (0 == getItemViewType(position)) {
             final ViewHolder viewHolder = (ViewHolder) holder;
-            final PhotoUpload photoUpload = mItems.get(position);
             photoUpload.setOnProgressListener(new PhotoUpload.OnProgressListener() {
                 @Override
                 public void onProgress(int progress) {
@@ -195,6 +196,7 @@ public class PictureGridEditAdapter extends BaseRecyclerviewAdapter<PhotoUpload,
     }
 
     public class AddViewHolder extends BaseViewHolder {
+
         LinearLayout mLlAdd;
 
         public AddViewHolder(View itemView) {

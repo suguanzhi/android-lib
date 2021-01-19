@@ -11,8 +11,12 @@
     <attr name="value" format="integer" />
     <attr name="max_value" format="integer" />
     <attr name="color" format="color" />
+
     <attr name="border_width" format="dimension" />
     <attr name="border_color" format="color" />
+
+    <attr name="progress_color" format="color" />
+
     <attr name="radius_style">
         <enum name="wrap" value="0" />
         <enum name="circle" value="1" />
@@ -98,15 +102,27 @@
     </declare-styleable>
 
     <declare-styleable name="CircleProgressBar">
-        <attr name="ring_width" format="dimension" />
-        <attr name="ring_color" format="color" />
-        <attr name="ring_background_color" format="color" />
-        <attr name="circle_in_color" format="color" />
+        <attr name="border_width" />
+        <attr name="progress_color" />
+        <attr name="background_color" />
+        <attr name="background_in_color" format="color" />
         <attr name="max_value" />
         <attr name="value" />
         <attr name="text_size" />
         <attr name="text_color" />
+    </declare-styleable>
 
+    <declare-styleable name="HorizontalProgressBar">
+        <attr name="border_width" />
+        <attr name="ring_color" format="color" />
+        <attr name="background_color" />
+        <attr name="progress_color" />
+        <attr name="max_value" />
+        <attr name="value" />
+        <attr name="text_size" />
+        <attr name="text_color" />
+        <attr name="background_text_size" format="dimension" />
+        <attr name="background_text_color" format="color" />
     </declare-styleable>
 
     <declare-styleable name="SuEditText">

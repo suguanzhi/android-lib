@@ -35,8 +35,8 @@ public class BaseTextListAdapter extends BaseRecyclerviewAdapter<TextListItem, B
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mTvText.setText(getItem(position).getItemName());
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, TextListItem textListItem) {
+        holder.mTvText.setText(textListItem.getItemName());
         if (position == mItems.size() - 1) {
             holder.mVLine.setVisibility(View.GONE);
         } else {

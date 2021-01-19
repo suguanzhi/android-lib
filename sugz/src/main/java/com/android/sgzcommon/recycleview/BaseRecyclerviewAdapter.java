@@ -15,6 +15,7 @@ import com.android.volley.toolbox.ImageLoader;
 import java.util.List;
 
 import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -37,6 +38,8 @@ public abstract class BaseRecyclerviewAdapter<E, VH extends RecyclerView.ViewHol
     protected abstract int getItemViewId(int viewType);
 
     protected abstract VH getViewHolder(int viewType, View itemView);
+
+    protected abstract void onBindViewHolder(@NonNull VH holder, int position, E e);
 
     public BaseRecyclerviewAdapter(Context context, List<E> items) {
         this(context, items, null, null);
@@ -81,6 +84,15 @@ public abstract class BaseRecyclerviewAdapter<E, VH extends RecyclerView.ViewHol
             }
         });
         return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull VH holder, int position) {
+        E e = null;
+        if (position < mItems.size()) {
+            e = getItem(position);
+        }
+        onBindViewHolder(holder, position, e);
     }
 
     /**

@@ -15,6 +15,8 @@ import com.android.volley.toolbox.ImageLoader;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by sgz on 2019/5/6 0006.
  */
@@ -36,8 +38,7 @@ public class PictureGridAdapter extends BaseRecyclerviewAdapter<String,PictureGr
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        final String url = getItem(position);
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, String url) {
         if (!TextUtils.isEmpty(url)) {
             if (url.startsWith("http")) {
                 mImageLoader.get(url, holder, 200, 300);

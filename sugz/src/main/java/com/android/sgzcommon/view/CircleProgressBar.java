@@ -19,10 +19,10 @@ public class CircleProgressBar extends View {
     private int mCenterX;
     private int mCenterY;
     private int mMinRadius;
-    private float mRingWidth; //圆环的宽度
-    private int mRingColor;
-    private int mCircleInColor; //最里面圆的颜色
-    private int mRingBackgroundColor;    //圆环背景颜色
+    private float mBorderWidth; //圆环的宽度
+    private int mProgressColor;
+    private int mBackgroundInColor; //最里面圆的颜色
+    private int mBackgroundColor;    //圆环背景颜色
     private int mMaxValue;
     private int mCurrentValue;
     private int mProgressTextSize;
@@ -41,14 +41,14 @@ public class CircleProgressBar extends View {
     public CircleProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleProgressBar);
-        mRingWidth = a.getDimension(R.styleable.CircleProgressBar_ring_width, UnitUtils.dp2px(10));
-        mCircleInColor = a.getColor(R.styleable.CircleProgressBar_circle_in_color, context.getResources().getColor(R.color.transparent));
-        mRingColor = a.getColor(R.styleable.CircleProgressBar_ring_color, context.getResources().getColor(R.color.amber_500));
-        mRingBackgroundColor = a.getColor(R.styleable.CircleProgressBar_ring_background_color, context.getResources().getColor(R.color.grey_300));
+        mBorderWidth = a.getDimension(R.styleable.CircleProgressBar_border_width, UnitUtils.dp2px(10));
+        mBackgroundInColor = a.getColor(R.styleable.CircleProgressBar_background_in_color, context.getResources().getColor(R.color.transparent));
+        mProgressColor = a.getColor(R.styleable.CircleProgressBar_progress_color, context.getResources().getColor(R.color.amber_500));
+        mBackgroundColor = a.getColor(R.styleable.CircleProgressBar_background_color, context.getResources().getColor(R.color.grey_300));
         final int value = a.getInt(R.styleable.CircleProgressBar_value, 0);
         mMaxValue = a.getInt(R.styleable.CircleProgressBar_max_value, 100);
         mProgressTextSize = a.getDimensionPixelSize(R.styleable.CircleProgressBar_text_size, UnitUtils.sp2px(14));
-        mProgressTextColor = a.getColor(R.styleable.CircleProgressBar_text_color, mRingColor);
+        mProgressTextColor = a.getColor(R.styleable.CircleProgressBar_text_color, mProgressColor);
         a.recycle();
         setValue(value, true);
         //非ViewGroup的子类，实现onDraw方法需要调用此方法。
@@ -65,10 +65,10 @@ public class CircleProgressBar extends View {
         super.onLayout(changed, left, top, right, bottom);
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
-        mMinRadius = (int) (Math.min(width, height) / 2 - mRingWidth);
+        mMinRadius = (int) (Math.min(width, height) / 2 - mBorderWidth);
         mCenterX = width / 2;
         mCenterY = height / 2;
-        mRectF = new RectF(mCenterX - mMinRadius - mRingWidth / 2, mCenterY - mMinRadius - mRingWidth / 2, mCenterX + mMinRadius + mRingWidth / 2, mCenterY + mMinRadius + mRingWidth / 2);
+        mRectF = new RectF(mCenterX - mMinRadius - mBorderWidth / 2, mCenterY - mMinRadius - mBorderWidth / 2, mCenterX + mMinRadius + mBorderWidth / 2, mCenterY + mMinRadius + mBorderWidth / 2);
     }
 
     @Override
@@ -76,11 +76,11 @@ public class CircleProgressBar extends View {
         super.onDraw(canvas);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setAntiAlias(true);
-        paint.setColor(mCircleInColor);
+        paint.setColor(mBackgroundInColor);
         drawValueText(canvas);
         canvas.drawCircle(mCenterX, mCenterY, mMinRadius, paint);
-        drawNormalRing(canvas, paint);
-        drawColorRing(canvas, paint);
+        drawBackground(canvas, paint);
+        drawProgress(canvas, paint);
     }
 
     /**
@@ -107,11 +107,11 @@ public class CircleProgressBar extends View {
      *
      * @param canvas
      */
-    private void drawNormalRing(Canvas canvas, Paint paint) {
+    private void drawBackground(Canvas canvas, Paint paint) {
         Paint ringNormalPaint = new Paint(paint);
         ringNormalPaint.setStyle(Paint.Style.STROKE);
-        ringNormalPaint.setStrokeWidth(mRingWidth);
-        ringNormalPaint.setColor(mRingBackgroundColor);
+        ringNormalPaint.setStrokeWidth(mBorderWidth);
+        ringNormalPaint.setColor(mBackgroundColor);
         canvas.drawArc(mRectF, 360, 360, false, ringNormalPaint);
     }
 
@@ -120,13 +120,13 @@ public class CircleProgressBar extends View {
      *
      * @param canvas
      */
-    private void drawColorRing(Canvas canvas, Paint paint) {
+    private void drawProgress(Canvas canvas, Paint paint) {
         Paint ringColorPaint = new Paint(paint);
         ringColorPaint.setStyle(Paint.Style.STROKE);
         ringColorPaint.setStrokeCap(Paint.Cap.ROUND);
-        ringColorPaint.setStrokeWidth(mRingWidth);
-        ringColorPaint.setColor(mRingColor);
-        ringColorPaint.setShader(new SweepGradient(mCenterX, mCenterX, mRingColor, mRingColor));
+        ringColorPaint.setStrokeWidth(mBorderWidth);
+        ringColorPaint.setColor(mProgressColor);
+        ringColorPaint.setShader(new SweepGradient(mCenterX, mCenterX, mProgressColor, mProgressColor));
         //逆时针旋转90度
         canvas.rotate(-90, mCenterX, mCenterY);
         int sweep = (int) (360 * (mCurrentValue / 100f));

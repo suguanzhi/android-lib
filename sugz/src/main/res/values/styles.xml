@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="MyDialog" parent="Theme.AppCompat.Light.Dialog">
+    <style name="SuDialog" parent="Theme.AppCompat.Light.Dialog">
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
+    <style name="ActivityTransparent" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--设置窗口的背景为透明，设置透明背景必须要设置此项-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--设置窗口的背景是否为半透明，设置透明背景必须要设置此项-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--设置状态栏的背景为半透明-->
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="anim_y_stranslate">

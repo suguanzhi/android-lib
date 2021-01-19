@@ -29,7 +29,7 @@ public class LoadingDialog extends Dialog {
     }
 
     public LoadingDialog(Context context) {
-        super(context, R.style.MyDialog);
+        super(context, R.style.SuDialog);
     }
 
     @Override
