@@ -121,13 +121,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showToast(String msg) {
-        //        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-        //        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_sgz_toast, null);
-        //        TextView textView = view.findViewById(R.id.tv_toast);
-        //        textView.setText(msg);
-        //        toast.setView(view);
-        //        toast.setGravity(Gravity.CENTER, 0, 0);
-        //        toast.show();
+        SuToast.showText(this, msg);
+    }
+
+    public void showToastLong(String msg) {
         SuToast.showTextLong(this, msg);
     }
 
