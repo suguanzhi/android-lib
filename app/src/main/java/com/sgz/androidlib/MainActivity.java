@@ -73,6 +73,7 @@ public class MainActivity extends BaseNavigationActivity {
         super.onCreate(savedInstanceState);
         Intent intent = new Intent(this, MyService.class);
         startService(intent);
+        showToast("123456789");
     }
 
     @Override

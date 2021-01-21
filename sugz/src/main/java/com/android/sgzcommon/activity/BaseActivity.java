@@ -11,13 +11,11 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.sgzcommon.activity.utils.EmptyEntity;
@@ -25,10 +23,9 @@ import com.android.sgzcommon.dialog.DatePickDialog;
 import com.android.sgzcommon.dialog.LoadingDialog;
 import com.android.sgzcommon.dialog.OneButtonDialog;
 import com.android.sgzcommon.dialog.TwoButtonDialog;
-import com.android.sgzcommon.toast.SToast;
+import com.android.sgzcommon.toast.SuToast;
 import com.android.sgzcommon.utils.SystemUtils;
 import com.android.sgzcommon.volley.VolleyManager;
-import com.android.sugz.R;
 import com.android.volley.toolbox.ImageLoader;
 
 import org.greenrobot.eventbus.EventBus;
@@ -124,27 +121,20 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showToast(String msg) {
-        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_sgz_toast, null);
-        TextView textView = view.findViewById(R.id.tv_toast);
-        textView.setText(msg);
-        toast.setView(view);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+        //        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
+        //        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_sgz_toast, null);
+        //        TextView textView = view.findViewById(R.id.tv_toast);
+        //        textView.setText(msg);
+        //        toast.setView(view);
+        //        toast.setGravity(Gravity.CENTER, 0, 0);
+        //        toast.show();
+        SuToast.showTextLong(this, msg);
     }
 
     public void showSystemToast(String msg) {
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
-    }
-
-    public void showBigToast(String text) {
-        SToast.getInstance(this).showText(text);
-    }
-
-    public void showSmallToast(String text) {
-        SToast.getInstance(this).showSmallText(text);
     }
 
     /**
