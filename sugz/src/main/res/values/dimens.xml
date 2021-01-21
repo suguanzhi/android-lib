@@ -39,4 +39,7 @@
 
     <dimen name="dialog_height">150dp</dimen>
 
+    <dimen name="qrcode_frame_width">260dp</dimen>
+    <dimen name="qrcode_frame_height">260dp</dimen>
+
 </resources>
