@@ -22,8 +22,8 @@ import androidx.annotation.ColorInt;
 public class TwoButtonDialog extends BaseDialog implements View.OnClickListener {
 
     private String mMsg;
-    private String mLeftText;
-    private String mRightText;
+    private String mButtonLeftText;
+    private String mButtonRightText;
     private String mSecondMsg;
     private TextView mTvMsg;
     private TextView mTvSecondMsg;
@@ -33,6 +33,9 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
 
     private SpannableStringBuilder mMsgSpanBuilder;
     private SpannableStringBuilder mSecondMsgSpanBuilder;
+
+    private static final String DEFAULT_BUTTON_LEFT_TEXT = "取消";
+    private static final String DEFAULT_BUTTON_RIGHT_TEXT = "确定";
 
     public TwoButtonDialog(Context context) {
         super(context);
@@ -62,19 +65,23 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
         mBtnLeft = findViewById(R.id.tv_left);
         mBtnRight = findViewById(R.id.tv_right);
         mBtnLeft.setOnClickListener(this);
-        mBtnRight.setOnClickListener(this::onClick);
+        mBtnRight.setOnClickListener(this);
 
         mMsgSpanBuilder = new SpannableStringBuilder();
         mSecondMsgSpanBuilder = new SpannableStringBuilder();
+        mButtonLeftText = DEFAULT_BUTTON_LEFT_TEXT;
+        mButtonRightText = DEFAULT_BUTTON_RIGHT_TEXT;
 
         setMsg(mMsg);
         setSecondMsg(mSecondMsg);
-        if (!TextUtils.isEmpty(mLeftText)) {
-            mBtnLeft.setText(mLeftText);
-        }
-        if (!TextUtils.isEmpty(mRightText)) {
-            mBtnRight.setText(mRightText);
-        }
+        setButtonLeftText(mButtonLeftText);
+        setButtonRightText(mButtonRightText);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        resetButtonText();
     }
 
     public void setMsgSpan(ClickableSpan clickableSpan, String clickString, @ColorInt int color) {
@@ -132,17 +139,24 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
     }
 
     public void setButtonLeftText(String text) {
-        mLeftText = text;
+        mButtonLeftText = text;
         if (mBtnLeft != null) {
-            mBtnLeft.setText(text);
+            mBtnLeft.setText(mButtonLeftText);
         }
     }
 
     public void setButtonRightText(String text) {
-        mRightText = text;
+        mButtonRightText = text;
         if (mBtnRight != null) {
-            mBtnRight.setText(text);
+            mBtnRight.setText(mButtonRightText);
         }
+    }
+
+    private void resetButtonText(){
+        mButtonLeftText = DEFAULT_BUTTON_LEFT_TEXT;
+        mButtonRightText = DEFAULT_BUTTON_RIGHT_TEXT;
+        setButtonLeftText(mButtonLeftText);
+        setButtonRightText(mButtonRightText);
     }
 
     @Override
