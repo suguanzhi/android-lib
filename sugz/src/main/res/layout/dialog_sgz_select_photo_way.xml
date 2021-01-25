@@ -20,12 +20,12 @@
         style="@style/Button"
         android:layout_marginTop="20dp"
         android:text="相册"
-        app:stroke="true" />
+        app:stroke="true"
+        app:style="primary" />
 
     <com.android.sgzcommon.view.SuButton
         android:id="@+id/btn_cancle"
         style="@style/Button"
-        app:style="normal"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="取消" />

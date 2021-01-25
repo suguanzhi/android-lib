@@ -564,8 +564,8 @@ public class SystemUtils {
      * @param context
      */
     @RequiresPermission(Manifest.permission.VIBRATE)
-    public static void vibrator(Context context) {
-        vibrator(context, 1000);
+    public static void vibrate(Context context) {
+        vibrate(context, 1000);
     }
 
     /**
@@ -574,7 +574,7 @@ public class SystemUtils {
      * @param context
      */
     @RequiresPermission(Manifest.permission.VIBRATE)
-    public static void vibrator(Context context, long time) {
+    public static void vibrate(Context context, long time) {
         Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT < 26) {
             vibrator.vibrate(time);

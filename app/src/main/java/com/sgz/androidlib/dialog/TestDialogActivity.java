@@ -10,6 +10,7 @@ import android.widget.TimePicker;
 import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.dialog.BaseListDialog;
 import com.android.sgzcommon.dialog.DatePickDialog;
+import com.android.sgzcommon.view.SuButton;
 import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
 import com.sgz.androidlib.dialog.sample.TestAutoDismissDialog;
@@ -38,6 +39,8 @@ public class TestDialogActivity extends BaseActivity {
     Button mBtnDatePick;
     @BindView(R.id.btn_time_pick)
     Button mBtnTimePick;
+    @BindView(R.id.btn_one)
+    SuButton mBtnOne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class TestDialogActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_auto_dismiss_dialog, R.id.btn_string_list_dialog, R.id.btn_date_pick, R.id.btn_time_pick})
+    @OnClick({R.id.btn_auto_dismiss_dialog, R.id.btn_string_list_dialog, R.id.btn_date_pick, R.id.btn_time_pick,R.id.btn_one})
     public void onViewClicked(View view) {
         Calendar calendar = Calendar.getInstance();
         switch (view.getId()) {
@@ -98,6 +101,9 @@ public class TestDialogActivity extends BaseActivity {
 
                     }
                 });
+                break;
+            case R.id.btn_one:
+                showOneButtonDialog("一个按钮");
                 break;
         }
     }

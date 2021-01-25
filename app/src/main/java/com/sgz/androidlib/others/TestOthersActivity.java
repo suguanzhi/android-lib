@@ -1,16 +1,13 @@
 package com.sgz.androidlib.others;
 
 import android.content.Intent;
-import android.media.AudioAttributes;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 
 import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.service.entity.VersionDownload;
+import com.android.sgzcommon.utils.SystemUtils;
 import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
 import com.sgz.androidlib.others.sample.TestBaseAdapterActivity;
@@ -61,12 +58,7 @@ public class TestOthersActivity extends BaseActivity {
                 EventBus.getDefault().post(new VersionDownload(url, 101));
                 break;
             case R.id.btn_vibrate:
-                Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT < 26) {
-                    vibrator.vibrate(1000);
-                } else if (Build.VERSION.SDK_INT >= 26) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(1000, AudioAttributes.USAGE_NOTIFICATION_RINGTONE));
-                }
+                SystemUtils.vibrate(mContext);
                 break;
         }
         if (intent != null) {

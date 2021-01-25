@@ -19,7 +19,7 @@ import androidx.appcompat.widget.AppCompatButton;
  */
 public class SuButton extends AppCompatButton {
 
-    private static final int STYLE_NORMAL = 1;
+    private static final int STYLE_PRIMARY = 1;
     private static final int STYLE_WARN = 2;
     private static final int STYLE_DANGER = 3;
     private static final int STYLE_CONFIRM = 4;
@@ -56,7 +56,9 @@ public class SuButton extends AppCompatButton {
 
         int styleColor;
         int styleBackgroundColor;
-        if (STYLE_WARN == style) {
+        if (STYLE_PRIMARY == style) {
+            styleColor = getResources().getColor(R.color.colorPrimary);
+        } else if (STYLE_WARN == style) {
             styleColor = getResources().getColor(R.color.btn_warn);
         } else if (STYLE_DANGER == style) {
             styleColor = getResources().getColor(R.color.btn_danger);

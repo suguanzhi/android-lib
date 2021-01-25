@@ -53,6 +53,14 @@
                 android:text="时间选择"
                 android:textAllCaps="false"
                 app:stroke="true" />
+
+            <com.android.sgzcommon.view.SuButton
+                android:id="@+id/btn_one"
+                style="@style/Button"
+                android:layout_marginTop="10dp"
+                android:text="OneButton"
+                android:textAllCaps="false"
+                app:stroke="true" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
