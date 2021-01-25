@@ -1,5 +1,6 @@
 package com.android.sgzcommon.utils;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -11,10 +12,13 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.media.AudioAttributes;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.WindowManager;
@@ -26,9 +30,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.RequiresPermission;
 import androidx.core.content.FileProvider;
 
 import static android.content.Context.ACTIVITY_SERVICE;
+import static android.content.Context.VIBRATOR_SERVICE;
 
 public class SystemUtils {
 
@@ -550,6 +556,31 @@ public class SystemUtils {
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         intent.putExtra("noFaceDetection", true);
         activity.startActivityForResult(intent, REQUEST_CODE_CROP);
+    }
+
+    /**
+     * 震动，默认震动时长1s
+     *
+     * @param context
+     */
+    @RequiresPermission(Manifest.permission.VIBRATE)
+    public static void vibrator(Context context) {
+        vibrator(context, 1000);
+    }
+
+    /**
+     * 震动
+     *
+     * @param context
+     */
+    @RequiresPermission(Manifest.permission.VIBRATE)
+    public static void vibrator(Context context, long time) {
+        Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT < 26) {
+            vibrator.vibrate(time);
+        } else if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(time, AudioAttributes.USAGE_NOTIFICATION_RINGTONE));
+        }
     }
 
 }
