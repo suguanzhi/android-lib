@@ -78,8 +78,8 @@ public class NumberEditText extends LinearLayout {
                         mEtInput.setText(maxValue + "");
                     }
                 } catch (Exception e) {
+                    value = minValue;
                     e.printStackTrace();
-                    mEtInput.setText(minValue + "");
                 }
                 if (changeListener != null) {
                     changeListener.onValueChange(value, mEtInput.isFocused());
@@ -90,13 +90,6 @@ public class NumberEditText extends LinearLayout {
             @Override
             public void onClick(View v) {
                 requestEditFocus();
-                String s = mEtInput.getText().toString();
-                int value = 0;
-                try {
-                    value = Integer.parseInt(s);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 if (value < maxValue) {
                     ++value;
                 }
@@ -110,13 +103,6 @@ public class NumberEditText extends LinearLayout {
             @Override
             public void onClick(View v) {
                 requestEditFocus();
-                String s = mEtInput.getText().toString();
-                int value = 0;
-                try {
-                    value = Integer.parseInt(s);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 if (value > minValue) {
                     --value;
                 }
