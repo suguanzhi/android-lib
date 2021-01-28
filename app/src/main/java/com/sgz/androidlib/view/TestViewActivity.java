@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.activity.PhotoViewActivity;
@@ -13,6 +15,7 @@ import com.android.sgzcommon.view.CircleProgressBar;
 import com.android.sgzcommon.view.LoadResultView;
 import com.android.sgzcommon.view.NumberEditText;
 import com.android.sgzcommon.view.SuButton;
+import com.android.sgzcommon.view.SuEditText;
 import com.android.sgzcommon.view.SuGridView;
 import com.android.sgzcommon.view.TitleBar;
 import com.android.sgzcommon.view.imageview.CornerImageView;
@@ -55,12 +58,22 @@ public class TestViewActivity extends BaseActivity {
     SuGridView mMgv;
     @BindView(R.id.lrv)
     LoadResultView mLrv;
+    @BindView(R.id.set_input)
+    SuEditText mSetInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_view);
         ButterKnife.bind(this);
+        mSetInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                Log.d("TestViewActivity", "onEditorAction: " + actionId);
+                showToast("搜索！");
+                return true;
+            }
+        });
         mLrv.empty("暂无数据");
         String url = "https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3363295869,2467511306&fm=26&gp=0.jpg";
         if (!TextUtils.isEmpty(url)) {
@@ -128,7 +141,7 @@ public class TestViewActivity extends BaseActivity {
             public void onClick(View v) {
                 //随机设定值
                 int i = new Random().nextInt(100) + 1;
-                mCircleProgressBar.setValue(i,false);
+                mCircleProgressBar.setValue(i, false);
             }
         });
 

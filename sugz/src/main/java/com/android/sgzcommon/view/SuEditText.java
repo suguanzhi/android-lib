@@ -9,9 +9,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.sugz.R;
 
@@ -29,8 +31,9 @@ public class SuEditText extends LinearLayout {
 
     private OnTextChangeListener mTextChangedListener;
     private OnFocusChangeListener mFocusChangeListener;
+    private TextView.OnEditorActionListener mEditorActionListener;
 
-    private static final int RADIUS_STYLE_DEFAULT = 0;
+    private static final int RADIUS_STYLE_WRAP = 0;
     private static final int RADIUS_STYLE_CIRCLE = 1;
 
 
@@ -77,6 +80,7 @@ public class SuEditText extends LinearLayout {
                 }
             }
         });
+        mEtInput.setOnEditorActionListener(mEditorActionListener);
         mEtInput.setText("");
         mIvClear.setOnClickListener(new OnClickListener() {
             @Override
@@ -87,11 +91,15 @@ public class SuEditText extends LinearLayout {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.SuEditText);
         ColorStateList colors = array.getColorStateList(R.styleable.SuEditText_android_textColor);
         int radius = array.getDimensionPixelSize(R.styleable.SuEditText_radius, getResources().getDimensionPixelSize(R.dimen.input_radius));
-        int radiusStyle = array.getInt(R.styleable.SuButton_radius_style, RADIUS_STYLE_DEFAULT);
+        int radiusStyle = array.getInt(R.styleable.SuEditText_radius_style, RADIUS_STYLE_WRAP);
         int backgroundColor = array.getColor(R.styleable.SuEditText_background_color, getResources().getColor(R.color.sgz_input_background));
         int borderWidth = array.getDimensionPixelSize(R.styleable.SuEditText_border_width, getResources().getDimensionPixelSize(R.dimen.input_border_width));
         int borderColor = array.getColor(R.styleable.SuEditText_border_color, getResources().getColor(R.color.sgz_input_border_color));
         int clearPadding = array.getDimensionPixelOffset(R.styleable.SuEditText_clear_padding, getResources().getDimensionPixelOffset(R.dimen.input_clear_padding));
+        int inputType = array.getInt(R.styleable.SuEditText_android_inputType, EditorInfo.TYPE_NULL);
+        int imeOptions = array.getInt(R.styleable.SuEditText_android_imeOptions, EditorInfo.IME_NULL);
+        setInputType(inputType);
+        setImeOptions(imeOptions);
         if (colors != null) {
             setTextColor(colors);
         }
@@ -100,7 +108,6 @@ public class SuEditText extends LinearLayout {
             setClearDrawable(clearSrc);
         }
         mIvClear.setPadding(clearPadding, clearPadding, clearPadding, clearPadding);
-
         if (RADIUS_STYLE_CIRCLE == radiusStyle) {
             radius = Integer.MAX_VALUE;
         }
@@ -110,6 +117,24 @@ public class SuEditText extends LinearLayout {
         gradientDrawable.setStroke(borderWidth, borderColor);
         setBackground(gradientDrawable);
         array.recycle();
+    }
+
+    /**
+     * {@link EditorInfo#inputType}
+     *
+     * @param inputType
+     */
+    private void setInputType(int inputType) {
+        mEtInput.setInputType(inputType);
+    }
+
+    /**
+     * {@link EditorInfo#imeOptions}
+     *
+     * @param options
+     */
+    public void setImeOptions(int options) {
+        mEtInput.setImeOptions(options);
     }
 
     /**
@@ -129,6 +154,14 @@ public class SuEditText extends LinearLayout {
 
     public void setTextColor(ColorStateList colors) {
         mEtInput.setTextColor(colors);
+    }
+
+    public void setText(CharSequence text) {
+        mEtInput.setText(text);
+    }
+
+    public void setHint(CharSequence hint) {
+        mEtInput.setHint(hint);
     }
 
     /**
@@ -157,6 +190,13 @@ public class SuEditText extends LinearLayout {
      */
     public void setOnFocusChangeListener(OnFocusChangeListener listener) {
         mFocusChangeListener = listener;
+    }
+
+    /**
+     * @param listener
+     */
+    public void setOnEditorActionListener(TextView.OnEditorActionListener listener) {
+        mEtInput.setOnEditorActionListener(listener);
     }
 
     /**

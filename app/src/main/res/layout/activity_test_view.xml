@@ -25,9 +25,13 @@
             android:padding="10dp">
 
             <com.android.sgzcommon.view.SuEditText
+                android:id="@+id/set_input"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:paddingStart="10dp"
+                app:radius_style="wrap"
                 app:clear_padding="3dp" />
 
             <com.android.sgzcommon.view.SuButton
@@ -86,18 +90,17 @@
                 android:layout_height="80dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                app:progress_color="@color/green_500"
                 app:border_width="10dp"
+                app:progress_color="@color/green_500"
                 app:value="20" />
 
             <com.android.sgzcommon.view.HorizontalProgressBar
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/red_50"
                 app:border_width="10dp"
-                app:text_size="10sp"
-                />
+                app:text_size="10sp" />
 
             <com.android.sgzcommon.view.SuGridView
                 android:id="@+id/mgv"
