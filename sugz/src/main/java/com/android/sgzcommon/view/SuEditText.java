@@ -27,6 +27,9 @@ public class SuEditText extends LinearLayout {
     private EditText mEtInput;
     private ImageView mIvClear;
 
+    private OnTextChangeListener mTextChangedListener;
+    private OnFocusChangeListener mFocusChangeListener;
+
     private static final int RADIUS_STYLE_DEFAULT = 0;
     private static final int RADIUS_STYLE_CIRCLE = 1;
 
@@ -52,22 +55,26 @@ public class SuEditText extends LinearLayout {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 checkCancleVisiable(mEtInput.getText());
+                if (mFocusChangeListener != null) {
+                    mFocusChangeListener.onFocusChange(v, hasFocus);
+                }
             }
         });
         mEtInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 checkCancleVisiable(s);
+                if (mTextChangedListener != null) {
+                    mTextChangedListener.onTextChanged(s);
+                }
             }
         });
         mEtInput.setText("");
@@ -92,7 +99,7 @@ public class SuEditText extends LinearLayout {
         if (clearSrc != null) {
             setClearDrawable(clearSrc);
         }
-        mIvClear.setPadding(clearPadding,clearPadding,clearPadding,clearPadding);
+        mIvClear.setPadding(clearPadding, clearPadding, clearPadding, clearPadding);
 
         if (RADIUS_STYLE_CIRCLE == radiusStyle) {
             radius = Integer.MAX_VALUE;
@@ -100,7 +107,7 @@ public class SuEditText extends LinearLayout {
         GradientDrawable gradientDrawable = new GradientDrawable();
         gradientDrawable.setColor(backgroundColor);
         gradientDrawable.setCornerRadius(radius);
-        gradientDrawable.setStroke(borderWidth,borderColor);
+        gradientDrawable.setStroke(borderWidth, borderColor);
         setBackground(gradientDrawable);
         array.recycle();
     }
@@ -125,9 +132,37 @@ public class SuEditText extends LinearLayout {
     }
 
     /**
+     * @return
+     */
+    public Editable getText() {
+        return mEtInput.getText();
+    }
+
+    /**
      * @param clearSrc
      */
     private void setClearDrawable(Drawable clearSrc) {
         mIvClear.setImageDrawable(clearSrc);
+    }
+
+    /**
+     * @param listener
+     */
+    public void setTextChangeListener(OnTextChangeListener listener) {
+        mTextChangedListener = listener;
+    }
+
+    /**
+     * @param listener
+     */
+    public void setOnFocusChangeListener(OnFocusChangeListener listener) {
+        mFocusChangeListener = listener;
+    }
+
+    /**
+     *
+     */
+    public interface OnTextChangeListener {
+        void onTextChanged(Editable e);
     }
 }
