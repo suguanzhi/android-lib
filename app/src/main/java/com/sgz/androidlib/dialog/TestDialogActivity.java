@@ -10,6 +10,7 @@ import android.widget.TimePicker;
 import com.android.sgzcommon.activity.BaseActivity;
 import com.android.sgzcommon.dialog.BaseListDialog;
 import com.android.sgzcommon.dialog.DatePickDialog;
+import com.android.sgzcommon.dialog.TwoButtonDialog;
 import com.android.sgzcommon.view.SuButton;
 import com.android.sgzcommon.view.TitleBar;
 import com.sgz.androidlib.R;
@@ -41,6 +42,8 @@ public class TestDialogActivity extends BaseActivity {
     Button mBtnTimePick;
     @BindView(R.id.btn_one)
     SuButton mBtnOne;
+    @BindView(R.id.btn_two)
+    SuButton mBtnTwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,7 @@ public class TestDialogActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.btn_auto_dismiss_dialog, R.id.btn_string_list_dialog, R.id.btn_date_pick, R.id.btn_time_pick,R.id.btn_one})
+    @OnClick({R.id.btn_auto_dismiss_dialog, R.id.btn_string_list_dialog, R.id.btn_date_pick, R.id.btn_time_pick, R.id.btn_one, R.id.btn_two})
     public void onViewClicked(View view) {
         Calendar calendar = Calendar.getInstance();
         switch (view.getId()) {
@@ -103,7 +106,20 @@ public class TestDialogActivity extends BaseActivity {
                 });
                 break;
             case R.id.btn_one:
-                showOneButtonDialog("一个按钮");
+                showOneButtonDialog("一个按钮Dialog");
+                break;
+            case R.id.btn_two:
+                showTwoButtonDialog("两个按钮Dialog", new TwoButtonDialog.OnClickListener() {
+                    @Override
+                    public void onCancle(View view, Dialog dialog) {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onConfirm(View view, Dialog dialog) {
+
+                    }
+                });
                 break;
         }
     }

@@ -44,7 +44,7 @@ public abstract class BaseWebActivity extends BaseActivity implements WebviewHan
         if (TextUtils.isEmpty(title)) {
             mTbTitle.setVisibility(View.GONE);
         }
-        mWarmDialog = new TwoButtonDialog(this, "是否允许打开本地应用浏览商品？");
+        mWarmDialog = new TwoButtonDialog(this, "是否允许打开本地应用？");
         mWebviewHandler = new WebviewHandler(mWvContent, mPbLoading, false);
         mWebviewHandler.addJavascriptInterface(getJavascriptInterface());
         mWebviewHandler.setOnOpenAppListener(new WebviewHandler.OnOpenAppListener() {
@@ -53,8 +53,8 @@ public abstract class BaseWebActivity extends BaseActivity implements WebviewHan
                 mWarmDialog.setOnClickListener(new TwoButtonDialog.OnClickListener() {
                     @Override
                     public void onCancle(View view, Dialog dialog) {
-                        dialog.dismiss();
                         mWebviewHandler.setCanOpenApp(false);
+                        dialog.dismiss();
                     }
 
                     @Override

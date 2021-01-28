@@ -274,14 +274,12 @@ public class BaseActivity extends AppCompatActivity {
         showTwoButtonDialog(msg, "", new TwoButtonDialog.OnClickListener() {
             @Override
             public void onCancle(View view, Dialog dialog) {
-                if (mOneButtonDialog != null) {
-                    mOneButtonDialog.dismiss();
-                }
+                dialog.dismiss();
             }
 
             @Override
             public void onConfirm(View view, Dialog dialog) {
-
+                dialog.dismiss();
             }
         });
     }
@@ -296,14 +294,12 @@ public class BaseActivity extends AppCompatActivity {
         showTwoButtonDialog(msg, secondMsg, new TwoButtonDialog.OnClickListener() {
             @Override
             public void onCancle(View view, Dialog dialog) {
-                if (mTwoButtonDialog != null) {
-                    mTwoButtonDialog.dismiss();
-                }
+                dialog.dismiss();
             }
 
             @Override
             public void onConfirm(View view, Dialog dialog) {
-
+                dialog.dismiss();
             }
         });
     }
@@ -321,6 +317,16 @@ public class BaseActivity extends AppCompatActivity {
         showTwoButtonDialog(msg, secondMsg, listener);
         mTwoButtonDialog.setButtonLeftText(leftText);
         mTwoButtonDialog.setButtonRightText(rightText);
+    }
+
+    /**
+     * 显示有两个按钮的提示框
+     *
+     * @param msg      提示主文本
+     * @param listener 按钮点击监听
+     */
+    public void showTwoButtonDialog(String msg, TwoButtonDialog.OnClickListener listener) {
+        showTwoButtonDialog(msg, "", listener);
     }
 
     /**
@@ -459,6 +465,7 @@ public class BaseActivity extends AppCompatActivity {
 
             @Override
             public void onConfirm(View view, Dialog dialog) {
+                dialog.dismiss();
                 checkRequestPermissions(needPermissions, new OnPermissionResultListener() {
                     @Override
                     public void onResult(List<String> grants, List<String> denies) {

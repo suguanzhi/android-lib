@@ -61,6 +61,14 @@
                 android:text="OneButton"
                 android:textAllCaps="false"
                 app:stroke="true" />
+
+            <com.android.sgzcommon.view.SuButton
+                android:id="@+id/btn_two"
+                style="@style/Button"
+                android:layout_marginTop="10dp"
+                android:text="TwoButton"
+                android:textAllCaps="false"
+                app:stroke="true" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

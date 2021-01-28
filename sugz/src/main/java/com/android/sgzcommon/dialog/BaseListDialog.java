@@ -34,6 +34,8 @@ public abstract class BaseListDialog<V> extends BaseDialog {
     TextView mTvCancle;
     ProgressBar mPbLoading;
     LoadResultView mLrv;
+
+    private boolean isCancleEnable;
     private CharSequence mTitle;
     private OnLoadListResponse<V> mLoadResponse;
     private OnSelectionListener<V> mSelectionListener;
@@ -51,6 +53,11 @@ public abstract class BaseListDialog<V> extends BaseDialog {
      */
     protected abstract void loadList(Map<String, String> data, OnLoadListResponse response);
 
+    @Override
+    protected int getContentViewId() {
+        return R.layout.dialog_sgz_select_list;
+    }
+
     public BaseListDialog(Context context) {
         super(context);
     }
@@ -64,6 +71,9 @@ public abstract class BaseListDialog<V> extends BaseDialog {
         mRvList = findViewById(R.id.rv_list);
         mLrv = findViewById(R.id.lrv);
         mTvCancle = findViewById(R.id.tv_cancle);
+        mIvDelete = findViewById(R.id.iv_delete);
+        setTitleText(mTitle);
+        setCancleEnable(isCancleEnable);
         mTvCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,8 +82,6 @@ public abstract class BaseListDialog<V> extends BaseDialog {
                 }
             }
         });
-        mIvDelete = findViewById(R.id.iv_delete);
-        setTitleText(mTitle);
         mIvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,6 +183,20 @@ public abstract class BaseListDialog<V> extends BaseDialog {
     }
 
     /**
+     * @param enable
+     */
+    public void setCancleEnable(boolean enable) {
+        isCancleEnable = enable;
+        if (mTvCancle != null) {
+            if (isCancleEnable) {
+                mTvCancle.setVisibility(View.VISIBLE);
+            } else {
+                mTvCancle.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    /**
      * @return
      */
     public CharSequence getTitleText() {
@@ -196,11 +218,6 @@ public abstract class BaseListDialog<V> extends BaseDialog {
     public void show(Map<String, String> data) {
         this.mData = data;
         show();
-    }
-
-    @Override
-    protected int getContentViewId() {
-        return R.layout.dialog_sgz_select_list;
     }
 
     public void setOnSelectionListener(OnSelectionListener<V> listener) {
