@@ -20,7 +20,7 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
     private TextView mTvMsg;
     private TextView mTvSecondMsg;
     private TextView mBtn;
-    private OnclickListener listener;
+    private OnClickListener listener;
     public static final String DEFAULT_BUTTON_TEXT = "确定";
 
     public OneButtonDialog(Context context) {
@@ -116,11 +116,11 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
         }
     }
 
-    public void setOnclickListener(OnclickListener listener) {
+    public void setOnclickListener(OnClickListener listener) {
         this.listener = listener;
     }
 
-    public interface OnclickListener {
+    public interface OnClickListener {
 
         void onConfirm(View view, Dialog dialog);
     }

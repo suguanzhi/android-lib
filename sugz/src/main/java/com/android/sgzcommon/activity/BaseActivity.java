@@ -199,7 +199,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param msg 提示主文本
      */
     public void showOneButtonDialog(String msg) {
-        showOneButtonDialog(msg, "", new OneButtonDialog.OnclickListener() {
+        showOneButtonDialog(msg, "", new OneButtonDialog.OnClickListener() {
             @Override
             public void onConfirm(View view, Dialog dialog) {
                 if (mOneButtonDialog != null) {
@@ -216,7 +216,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param secondMsg 提示副文本
      */
     public void showOneButtonDialog(String msg, String secondMsg) {
-        showOneButtonDialog(msg, secondMsg, new OneButtonDialog.OnclickListener() {
+        showOneButtonDialog(msg, secondMsg, new OneButtonDialog.OnClickListener() {
             @Override
             public void onConfirm(View view, Dialog dialog) {
                 if (mOneButtonDialog != null) {
@@ -234,7 +234,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param buttonText 按钮文本
      * @param listener   按钮点击监听
      */
-    public void showOneButtonDialog(String msg, String secondMsg, String buttonText, OneButtonDialog.OnclickListener listener) {
+    public void showOneButtonDialog(String msg, String secondMsg, String buttonText, OneButtonDialog.OnClickListener listener) {
         showOneButtonDialog(msg, secondMsg, listener);
         mOneButtonDialog.setButtonText(buttonText);
     }
@@ -246,7 +246,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param secondMsg 提示副文本
      * @param listener  按钮点击监听
      */
-    public void showOneButtonDialog(String msg, String secondMsg, OneButtonDialog.OnclickListener listener) {
+    public void showOneButtonDialog(String msg, String secondMsg, OneButtonDialog.OnClickListener listener) {
         if (mOneButtonDialog != null) {
             mOneButtonDialog.dismiss();
         }
@@ -271,7 +271,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param msg 提示主文本
      */
     public void showTwoButtonDialog(String msg) {
-        showTwoButtonDialog(msg, "", new TwoButtonDialog.OnclickListener() {
+        showTwoButtonDialog(msg, "", new TwoButtonDialog.OnClickListener() {
             @Override
             public void onCancle(View view, Dialog dialog) {
                 if (mOneButtonDialog != null) {
@@ -293,7 +293,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param secondMsg 提示副文本
      */
     public void showTwoButtonDialog(String msg, String secondMsg) {
-        showTwoButtonDialog(msg, secondMsg, new TwoButtonDialog.OnclickListener() {
+        showTwoButtonDialog(msg, secondMsg, new TwoButtonDialog.OnClickListener() {
             @Override
             public void onCancle(View view, Dialog dialog) {
                 if (mTwoButtonDialog != null) {
@@ -317,7 +317,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param rightText 右边按钮文本
      * @param listener  按钮点击监听
      */
-    public void showTwoButtonDialog(String msg, String secondMsg, String leftText, String rightText, TwoButtonDialog.OnclickListener listener) {
+    public void showTwoButtonDialog(String msg, String secondMsg, String leftText, String rightText, TwoButtonDialog.OnClickListener listener) {
         showTwoButtonDialog(msg, secondMsg, listener);
         mTwoButtonDialog.setButtonLeftText(leftText);
         mTwoButtonDialog.setButtonRightText(rightText);
@@ -330,7 +330,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param secondMsg 提示副文本
      * @param listener  按钮点击监听
      */
-    public void showTwoButtonDialog(String msg, String secondMsg, TwoButtonDialog.OnclickListener listener) {
+    public void showTwoButtonDialog(String msg, String secondMsg, TwoButtonDialog.OnClickListener listener) {
         if (mTwoButtonDialog != null) {
             mTwoButtonDialog.dismiss();
         }
@@ -451,7 +451,7 @@ public class BaseActivity extends AppCompatActivity {
         mPermissionDialog.setButtonLeftText("不用了");
         mPermissionDialog.setButtonRightText("去授权");
         mPermissionDialog.setCanceledOnTouchOutside(false);
-        mPermissionDialog.setOnclickListener(new TwoButtonDialog.OnclickListener() {
+        mPermissionDialog.setOnclickListener(new TwoButtonDialog.OnClickListener() {
             @Override
             public void onCancle(View view, Dialog dialog) {
                 dialog.dismiss();

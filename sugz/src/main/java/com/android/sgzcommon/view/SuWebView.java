@@ -38,7 +38,7 @@ public class SuWebView extends RelativeLayout {
                 if (mWarmDialog == null) {
                     mWarmDialog = new TwoButtonDialog(getContext(), "是否允许打开本地应用浏览商品？");
                 }
-                mWarmDialog.setOnclickListener(new TwoButtonDialog.OnclickListener() {
+                mWarmDialog.setOnclickListener(new TwoButtonDialog.OnClickListener() {
                     @Override
                     public void onCancle(View view, Dialog dialog) {
                         dialog.dismiss();

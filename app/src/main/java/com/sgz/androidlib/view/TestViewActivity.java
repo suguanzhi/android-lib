@@ -50,7 +50,7 @@ public class TestViewActivity extends BaseActivity {
     @BindView(R.id.civ_picture)
     CornerImageView mCivPicture;
     @BindView(R.id.superview)
-    CircleProgressBar mSuperview;
+    CircleProgressBar mCircleProgressBar;
     @BindView(R.id.mgv)
     SuGridView mMgv;
     @BindView(R.id.lrv)
@@ -123,12 +123,12 @@ public class TestViewActivity extends BaseActivity {
         mMgv.setAdapter(adapter);
 
         //mSuperview.setValue(100);
-        mSuperview.setOnClickListener(new View.OnClickListener() {
+        mCircleProgressBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //随机设定值
                 int i = new Random().nextInt(100) + 1;
-                mSuperview.setValue(i,true);
+                mCircleProgressBar.setValue(i,false);
             }
         });
 

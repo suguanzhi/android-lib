@@ -29,7 +29,7 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
     private TextView mTvSecondMsg;
     private TextView mBtnLeft;
     private TextView mBtnRight;
-    private OnclickListener listener;
+    private OnClickListener listener;
 
     private SpannableStringBuilder mMsgSpanBuilder;
     private SpannableStringBuilder mSecondMsgSpanBuilder;
@@ -171,11 +171,11 @@ public class TwoButtonDialog extends BaseDialog implements View.OnClickListener 
         }
     }
 
-    public void setOnclickListener(OnclickListener listener) {
+    public void setOnclickListener(OnClickListener listener) {
         this.listener = listener;
     }
 
-    public interface OnclickListener {
+    public interface OnClickListener {
         void onCancle(View view, Dialog dialog);
 
         void onConfirm(View view, Dialog dialog);

@@ -50,7 +50,7 @@ public abstract class BaseWebActivity extends BaseActivity implements WebviewHan
         mWebviewHandler.setOnOpenAppListener(new WebviewHandler.OnOpenAppListener() {
             @Override
             public void onOpen(final Intent intent) {
-                mWarmDialog.setOnclickListener(new TwoButtonDialog.OnclickListener() {
+                mWarmDialog.setOnclickListener(new TwoButtonDialog.OnClickListener() {
                     @Override
                     public void onCancle(View view, Dialog dialog) {
                         dialog.dismiss();

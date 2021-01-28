@@ -67,7 +67,6 @@
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                app:max="20"
                 app:min="0"
                 app:text_size="25sp"
                 app:value="2" />
@@ -92,6 +91,7 @@
                 app:value="20" />
 
             <com.android.sgzcommon.view.HorizontalProgressBar
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@color/red_50"

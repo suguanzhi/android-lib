@@ -204,7 +204,7 @@ public abstract class BaseFragment extends Fragment {
      * @param msg 提示主文本
      */
     protected void showOneButtonDialog(String msg) {
-        showOneButtonDialog(msg, "", new OneButtonDialog.OnclickListener() {
+        showOneButtonDialog(msg, "", new OneButtonDialog.OnClickListener() {
             @Override
             public void onConfirm(View view, Dialog dialog) {
                 if (mOneButtonDialog != null) {
@@ -221,7 +221,7 @@ public abstract class BaseFragment extends Fragment {
      * @param secondMsg 提示副文本
      */
     protected void showOneButtonDialog(String msg, String secondMsg) {
-        showOneButtonDialog(msg, secondMsg, new OneButtonDialog.OnclickListener() {
+        showOneButtonDialog(msg, secondMsg, new OneButtonDialog.OnClickListener() {
             @Override
             public void onConfirm(View view, Dialog dialog) {
                 if (mOneButtonDialog != null) {
@@ -239,7 +239,7 @@ public abstract class BaseFragment extends Fragment {
      * @param buttonText 按钮文本
      * @param listener   按钮点击监听
      */
-    protected void showOneButtonDialog(String msg, String secondMsg, String buttonText, OneButtonDialog.OnclickListener listener) {
+    protected void showOneButtonDialog(String msg, String secondMsg, String buttonText, OneButtonDialog.OnClickListener listener) {
         showOneButtonDialog(msg, secondMsg, listener);
         mOneButtonDialog.setButtonText(buttonText);
     }
@@ -251,7 +251,7 @@ public abstract class BaseFragment extends Fragment {
      * @param secondMsg 提示副文本
      * @param listener  按钮点击监听
      */
-    protected void showOneButtonDialog(String msg, String secondMsg, OneButtonDialog.OnclickListener listener) {
+    protected void showOneButtonDialog(String msg, String secondMsg, OneButtonDialog.OnClickListener listener) {
         if (mOneButtonDialog != null) {
             mOneButtonDialog.dismiss();
         }
@@ -276,7 +276,7 @@ public abstract class BaseFragment extends Fragment {
      * @param msg 提示主文本
      */
     protected void showTwoButtonDialog(String msg) {
-        showTwoButtonDialog(msg, "", new TwoButtonDialog.OnclickListener() {
+        showTwoButtonDialog(msg, "", new TwoButtonDialog.OnClickListener() {
             @Override
             public void onCancle(View view, Dialog dialog) {
                 if (mOneButtonDialog != null) {
@@ -298,7 +298,7 @@ public abstract class BaseFragment extends Fragment {
      * @param secondMsg 提示副文本
      */
     protected void showTwoButtonDialog(String msg, String secondMsg) {
-        showTwoButtonDialog(msg, secondMsg, new TwoButtonDialog.OnclickListener() {
+        showTwoButtonDialog(msg, secondMsg, new TwoButtonDialog.OnClickListener() {
             @Override
             public void onCancle(View view, Dialog dialog) {
                 if (mTwoButtonDialog != null) {
@@ -322,7 +322,7 @@ public abstract class BaseFragment extends Fragment {
      * @param rightText 右边按钮文本
      * @param listener  按钮点击监听
      */
-    protected void showTwoButtonDialog(String msg, String secondMsg, String leftText, String rightText, TwoButtonDialog.OnclickListener listener) {
+    protected void showTwoButtonDialog(String msg, String secondMsg, String leftText, String rightText, TwoButtonDialog.OnClickListener listener) {
         showTwoButtonDialog(msg, secondMsg, listener);
         mTwoButtonDialog.setButtonLeftText(leftText);
         mTwoButtonDialog.setButtonRightText(rightText);
@@ -335,7 +335,7 @@ public abstract class BaseFragment extends Fragment {
      * @param secondMsg 提示副文本
      * @param listener  按钮点击监听
      */
-    protected void showTwoButtonDialog(String msg, String secondMsg, TwoButtonDialog.OnclickListener listener) {
+    protected void showTwoButtonDialog(String msg, String secondMsg, TwoButtonDialog.OnClickListener listener) {
         if (mTwoButtonDialog != null) {
             mTwoButtonDialog.dismiss();
         }
