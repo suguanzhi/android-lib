@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by sgz on 2019/5/10 0010.
  */
-public abstract class GetPhotosActivity extends BaseActivity implements GetPhotos, ShowImages {
+public abstract class BaseGetPhotosActivity extends BaseActivity implements GetPhotos, ShowImages {
 
     private RecyclerView mShowPhotoView;
     private RecyclerView mTakePhotoView;
@@ -52,7 +52,7 @@ public abstract class GetPhotosActivity extends BaseActivity implements GetPhoto
         mTakePhotoGrid.setOnPhotoGridListener(new OnTakePhotoGridListener() {
             @Override
             public void onPhotos(List<PhotoUpload> uploads) {
-                GetPhotosActivity.this.onPhotos(uploads);
+                BaseGetPhotosActivity.this.onPhotos(uploads);
             }
         });
     }

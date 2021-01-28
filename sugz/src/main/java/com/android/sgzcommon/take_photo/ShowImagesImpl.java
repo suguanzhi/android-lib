@@ -59,7 +59,7 @@ final public class ShowImagesImpl implements ShowImages {
         }, null);
         if (mRecyclerView != null) {
             GridLayoutManager grid = new GridLayoutManager(mContext, mColumn);
-            MarginDecoration decoration = new MarginDecoration(mColumn, mHorizontalMargin, mVerticalMargin);
+            MarginDecoration decoration = new MarginDecoration(mHorizontalMargin, mVerticalMargin);
             mRecyclerView.addItemDecoration(decoration);
             mRecyclerView.setLayoutManager(grid);
             mRecyclerView.setAdapter(mAdapter);

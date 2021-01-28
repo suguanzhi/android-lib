@@ -1,22 +1,16 @@
 package com.sgz.androidlib.activity.sample;
 
 import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.android.sgzcommon.activity.GetPhotosActivity;
+import com.android.sgzcommon.activity.BaseGetPhotosActivity;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
-import com.android.sgzcommon.take_photo.GetPhotosImpl;
 import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
 import com.sgz.androidlib.R;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -25,7 +19,7 @@ import butterknife.BindView;
  * @author sgz
  * @date 2020/6/10
  */
-public class TestGetPhotosActivity extends GetPhotosActivity {
+public class TestBaseGetPhotosActivity extends BaseGetPhotosActivity {
 
     @BindView(R.id.rv_list)
     RecyclerView mRvList;

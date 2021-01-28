@@ -134,10 +134,31 @@ final public class GetPhotosImpl implements GetPhotos {
             }
         });
         GridLayoutManager gridEdit = new GridLayoutManager(mActivity, mColumn);
-        MarginDecoration decoration1 = new MarginDecoration(mColumn, mHorizontalMargin, mVerticalMargin);
+        MarginDecoration decoration1 = new MarginDecoration(mHorizontalMargin, mVerticalMargin);
         if (mRecyclerView != null) {
             mRecyclerView.addItemDecoration(decoration1);
             mRecyclerView.setLayoutManager(gridEdit);
+            mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    View firstChild = gridEdit.findViewByPosition(0);
+                    if (firstChild != null) {
+                        int width = firstChild.getWidth();
+                        Log.d("GetPhotosImpl", "onScrolled: width == " + width);
+                    }
+                    View secondChild = gridEdit.findViewByPosition(1);
+                    if (secondChild != null) {
+                        int width2 = secondChild.getWidth();
+                        Log.d("GetPhotosImpl", "onScrolled: width2 == " + width2);
+                    }
+                }
+            });
             mRecyclerView.setAdapter(mAdapter);
         }
     }

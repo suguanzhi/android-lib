@@ -20,8 +20,8 @@
         android:layout_height="@dimen/icon_second"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:padding="1dp"
         android:background="@drawable/shape_r20_sd_white"
+        android:padding="1dp"
         android:src="@drawable/ic_sgz_delete_circle_red" />
 
     <ProgressBar

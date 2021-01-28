@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.sgzcommon.activity.BaseNavigationActivity;
-import com.sgz.androidlib.activity.sample.TestTakePhotoActivity;
+import com.sgz.androidlib.activity.sample.TestBaseTakePhotoActivity;
 import com.sgz.androidlib.fragment.SecondFragment;
 import com.sgz.androidlib.fragment.sample.TestTakePhotoFragment;
 
@@ -54,7 +54,7 @@ public class MainActivity extends BaseNavigationActivity {
     @Override
     protected Intent getStartActivityIntent(int position) {
         if (2 == position) {
-            Intent intent = new Intent(this, TestTakePhotoActivity.class);
+            Intent intent = new Intent(this, TestBaseTakePhotoActivity.class);
             return intent;
         }
         return super.getStartActivityIntent(position);

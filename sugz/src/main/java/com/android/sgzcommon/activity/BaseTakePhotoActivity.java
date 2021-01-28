@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
  * @author sgz
  * @date 2020/6/24
  */
-public class TakePhotoActivity extends BaseActivity {
+public class BaseTakePhotoActivity extends BaseActivity {
 
     private GetPhotoImpl mTakePhoto;
 

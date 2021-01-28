@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.android.sgzcommon.activity.TakePhotoActivity;
+import com.android.sgzcommon.activity.BaseTakePhotoActivity;
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 import com.android.sgzcommon.utils.BitmapUtils;
 import com.sgz.androidlib.R;
@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  * @author sgz
  * @date 2020/6/10
  */
-public class TestTakePhotoActivity extends TakePhotoActivity {
+public class TestBaseTakePhotoActivity extends BaseTakePhotoActivity {
 
     @BindView(R.id.iv_photo)
     ImageView mIvPhoto;
