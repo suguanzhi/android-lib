@@ -138,37 +138,6 @@ final public class GetPhotosImpl implements GetPhotos {
         if (mRecyclerView != null) {
             mRecyclerView.addItemDecoration(decoration1);
             mRecyclerView.setLayoutManager(gridEdit);
-            mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                }
-
-                @Override
-                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-                    View firstChild = gridEdit.findViewByPosition(0);
-                    if (firstChild != null) {
-                        int width = firstChild.getWidth();
-                        Log.d("GetPhotosImpl", "onScrolled: width0 == " + width);
-                    }
-                    View secondChild = gridEdit.findViewByPosition(1);
-                    if (secondChild != null) {
-                        int width2 = secondChild.getWidth();
-                        Log.d("GetPhotosImpl", "onScrolled: width1 == " + width2);
-                    }
-                    View secondChild2 = gridEdit.findViewByPosition(2);
-                    if (secondChild2 != null) {
-                        int width2 = secondChild2.getWidth();
-                        Log.d("GetPhotosImpl", "onScrolled: width2 == " + width2);
-                    }
-                    View secondChild3 = gridEdit.findViewByPosition(3);
-                    if (secondChild3 != null) {
-                        int width3 = secondChild3.getWidth();
-                        Log.d("GetPhotosImpl", "onScrolled: width3 == " + width3);
-                    }
-                }
-            });
             mRecyclerView.setAdapter(mAdapter);
         }
     }
