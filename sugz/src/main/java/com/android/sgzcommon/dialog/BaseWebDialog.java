@@ -63,7 +63,7 @@ public abstract class BaseWebDialog extends BaseDialog implements WebviewHandler
         mWebviewHandler.setOnOpenAppListener(new WebviewHandler.OnOpenAppListener() {
             @Override
             public void onOpen(final Intent intent) {
-                mWarmDialog.setOnclickListener(new TwoButtonDialog.OnClickListener() {
+                mWarmDialog.setOnClickListener(new TwoButtonDialog.OnClickListener() {
                     @Override
                     public void onCancle(View view, Dialog dialog) {
                         dialog.dismiss();

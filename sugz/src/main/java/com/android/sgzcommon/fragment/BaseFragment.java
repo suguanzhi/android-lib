@@ -255,7 +255,7 @@ public abstract class BaseFragment extends Fragment {
         if (mOneButtonDialog != null) {
             mOneButtonDialog.dismiss();
         }
-        mOneButtonDialog.setOnclickListener(listener);
+        mOneButtonDialog.setOnClickListener(listener);
         mOneButtonDialog.setMsg(msg);
         mOneButtonDialog.setSecondMsg(secondMsg);
         mOneButtonDialog.show();
@@ -339,7 +339,7 @@ public abstract class BaseFragment extends Fragment {
         if (mTwoButtonDialog != null) {
             mTwoButtonDialog.dismiss();
         }
-        mTwoButtonDialog.setOnclickListener(listener);
+        mTwoButtonDialog.setOnClickListener(listener);
         mTwoButtonDialog.setMsg(msg);
         mTwoButtonDialog.setSecondMsg(secondMsg);
         mTwoButtonDialog.show();

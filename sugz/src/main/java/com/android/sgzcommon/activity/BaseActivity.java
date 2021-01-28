@@ -250,7 +250,7 @@ public class BaseActivity extends AppCompatActivity {
         if (mOneButtonDialog != null) {
             mOneButtonDialog.dismiss();
         }
-        mOneButtonDialog.setOnclickListener(listener);
+        mOneButtonDialog.setOnClickListener(listener);
         mOneButtonDialog.setMsg(msg);
         mOneButtonDialog.setSecondMsg(secondMsg);
         mOneButtonDialog.show();
@@ -334,7 +334,7 @@ public class BaseActivity extends AppCompatActivity {
         if (mTwoButtonDialog != null) {
             mTwoButtonDialog.dismiss();
         }
-        mTwoButtonDialog.setOnclickListener(listener);
+        mTwoButtonDialog.setOnClickListener(listener);
         mTwoButtonDialog.setMsg(msg);
         mTwoButtonDialog.setSecondMsg(secondMsg);
         mTwoButtonDialog.show();
@@ -451,7 +451,7 @@ public class BaseActivity extends AppCompatActivity {
         mPermissionDialog.setButtonLeftText("不用了");
         mPermissionDialog.setButtonRightText("去授权");
         mPermissionDialog.setCanceledOnTouchOutside(false);
-        mPermissionDialog.setOnclickListener(new TwoButtonDialog.OnClickListener() {
+        mPermissionDialog.setOnClickListener(new TwoButtonDialog.OnClickListener() {
             @Override
             public void onCancle(View view, Dialog dialog) {
                 dialog.dismiss();

@@ -116,7 +116,7 @@ public class OneButtonDialog extends BaseDialog implements View.OnClickListener 
         }
     }
 
-    public void setOnclickListener(OnClickListener listener) {
+    public void setOnClickListener(OnClickListener listener) {
         this.listener = listener;
     }
 
