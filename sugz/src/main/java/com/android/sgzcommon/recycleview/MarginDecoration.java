@@ -38,7 +38,7 @@ public class MarginDecoration extends RecyclerView.ItemDecoration {
 
         } else {
             if (position % column == column - 1) {
-                outRect.set(0, vMargin, 0, 0);
+                outRect.set(0, vMargin, hMargin, 0);
             } else {
                 outRect.set(0, vMargin, hMargin, 0);
             }
