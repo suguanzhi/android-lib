@@ -2,6 +2,8 @@ package com.android.sgzcommon.http.okhttp.upload;
 
 import java.io.File;
 
+import androidx.annotation.MainThread;
+
 /**
  * @author sgz
  * @date 2020/5/22
@@ -26,6 +28,7 @@ public class UploadEntity {
      * 必须在主线程中调用
      * @param state
      */
+    @MainThread
     public void setState(STATE state) {
         this.state = state;
         if (listener != null) {
@@ -33,7 +36,12 @@ public class UploadEntity {
         }
     }
 
-    void setProgress(int progress) {
+    /**
+     * 必须在主线程中调用
+     * @param progress
+     */
+    @MainThread
+    public void setProgress(int progress) {
         this.progress = progress;
         if (listener != null) {
             listener.onProgress(progress);

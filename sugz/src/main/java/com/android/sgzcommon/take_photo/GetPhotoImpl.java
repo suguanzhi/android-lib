@@ -12,9 +12,9 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
+import com.android.sgzcommon.toast.SuToast;
 
 import java.io.InputStream;
 
@@ -27,7 +27,7 @@ import androidx.core.content.PermissionChecker;
  * @date 2020/6/24
  */
 public class GetPhotoImpl implements GetPhoto {
-    Uri uri;
+    Uri mTakeUri;
     Activity mActivity;
     ContentResolver mContentResolver;
     OnPhotoListener mListener;
@@ -43,7 +43,7 @@ public class GetPhotoImpl implements GetPhoto {
         if (result == PackageManager.PERMISSION_GRANTED) {
             Log.d("TakePhotoGridImpl", "takePhoto: PERMISSION_GRANTED");
             try {
-                String fileName = createFileName();
+                String fileName = createPhotoName();
                 ContentValues contentValues = new ContentValues();
                 //设置文件名
                 contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, fileName);
@@ -51,10 +51,10 @@ public class GetPhotoImpl implements GetPhoto {
                 contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/JPEG");
                 //执行insert操作，向系统文件夹中添加文件
                 //EXTERNAL_CONTENT_URI代表外部存储器，该值不变
-                uri = mContentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                mTakeUri = mContentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
                 //调取系统拍照
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mTakeUri);
                 if (intent.resolveActivity(mActivity.getPackageManager()) != null) {
                     mActivity.startActivityForResult(intent, REQUEST_TAKE_PHOTO_CODE);
                 } else {
@@ -72,7 +72,7 @@ public class GetPhotoImpl implements GetPhoto {
     /**
      * @return
      */
-    private String createFileName() {
+    private String createPhotoName() {
         return "IMG" + System.currentTimeMillis() + ".jpg";
     }
 
@@ -83,11 +83,27 @@ public class GetPhotoImpl implements GetPhoto {
         mActivity.startActivityForResult(intent, REQUEST_CHOOSE_PHOTO_CODE);
     }
 
+    @Override
+    public void onPhoto(Bitmap bitmap) {
+        if (mListener != null) {
+            mListener.onPhoto(bitmap);
+        }
+    }
+
+    /**
+     *
+     * @param listener
+     */
     public void setPhotoListener(OnPhotoListener listener) {
         mListener = listener;
     }
 
-
+    /**
+     *  必须在activity或者fragment的onActivityResult中调用该方法，回调拍照或选择相册的照片。
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("TakePhotoGridImpl", "onActivityResult: requestCode = " + requestCode);
         if (resultCode == Activity.RESULT_OK) {
@@ -95,7 +111,7 @@ public class GetPhotoImpl implements GetPhoto {
                 Bitmap bitmap = null;
                 if (requestCode == REQUEST_TAKE_PHOTO_CODE) {
                     try {
-                        ParcelFileDescriptor parcelFd = mContentResolver.openFileDescriptor(uri, "r");
+                        ParcelFileDescriptor parcelFd = mContentResolver.openFileDescriptor(mTakeUri, "r");
                         bitmap = BitmapFactory.decodeFileDescriptor(parcelFd.getFileDescriptor());
                         parcelFd.close();
                     } catch (Exception e) {
@@ -110,7 +126,7 @@ public class GetPhotoImpl implements GetPhoto {
                         e.printStackTrace();
                     }
                 }
-                mListener.onPhoto(bitmap);
+                onPhoto(bitmap);
             }
         }
     }
@@ -125,7 +141,7 @@ public class GetPhotoImpl implements GetPhoto {
             if (permissions.length > 0 && grantResults.length > 0) {
                 if (Manifest.permission.CAMERA.equals(permissions[0])) {
                     if (PackageManager.PERMISSION_DENIED == grantResults[0]) {
-                        Toast.makeText(mActivity, "缺少照相机权限", Toast.LENGTH_SHORT).show();
+                        SuToast.showText(mActivity, "缺少照相机权限");
                     } else {
                         takePhoto();
                     }

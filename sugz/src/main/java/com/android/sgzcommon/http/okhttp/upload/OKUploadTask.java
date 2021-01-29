@@ -169,7 +169,6 @@ public class OKUploadTask<T extends UploadEntity> {
                         String result = response.body().string();
                         Log.d(TAG, "onResponse: result = " + result);
                         resultSet.setResponse(result);
-                        resultSet.parseResult(result);
                         if (resultSet.isSuccess()) {
                             mHandler.sendMessage(createResponseMessage(ON_SUCCESS, url, ts, listener, resultSet));
                         } else {
@@ -206,7 +205,6 @@ public class OKUploadTask<T extends UploadEntity> {
                         String result = response.body().string();
                         Log.d(TAG, "onResponse: result = " + result);
                         resultSet.setResponse(result);
-                        resultSet.parseResult(result);
                         if (resultSet.isSuccess()) {
                             mHandler.sendMessage(createResponseMessage(ON_SUCCESS, url, ts, listener, resultSet));
                         } else {

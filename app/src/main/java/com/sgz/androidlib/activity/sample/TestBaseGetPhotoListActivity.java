@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.android.sgzcommon.activity.BaseGetPhotosActivity;
+import com.android.sgzcommon.activity.BaseGetPhotoListActivity;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
 import com.sgz.androidlib.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +20,12 @@ import butterknife.BindView;
  * @author sgz
  * @date 2020/6/10
  */
-public class TestBaseGetPhotosActivity extends BaseGetPhotosActivity {
+public class TestBaseGetPhotoListActivity extends BaseGetPhotoListActivity {
 
     @BindView(R.id.rv_list)
     RecyclerView mRvList;
+    @BindView(R.id.rv_list_show)
+    RecyclerView mRvListShow;
 
     @Override
     protected int getContentViewId() {
@@ -31,7 +34,7 @@ public class TestBaseGetPhotosActivity extends BaseGetPhotosActivity {
 
     @Override
     protected int getShowImageGridViewId() {
-        return 0;
+        return R.id.rv_list_show;
     }
 
     @Override
@@ -54,16 +57,17 @@ public class TestBaseGetPhotosActivity extends BaseGetPhotosActivity {
 
             }
         });
-//       List<String> urls = new ArrayList<>();
-//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649E5UR5naT.jpg");
-//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649nLkA0h0K.jpg");
-//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204172649WFtKpW10.jpg");
-//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174314PYsT80qi.jpg");
-//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415fZyHnni9.jpg");
-//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415S6tzuWFU.jpg");
-//       urls.add("http://192.168.0.118:8082/upload/20201204/20201204174415J5bZsSq5.jpg");
-//       setImageUrls(urls);
-       setOnPhotoClickListener(new OnPhotoClickListener() {
+        List<String> urls = new ArrayList<>();
+        urls.add("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=121352583,3553479540&fm=26&gp=0.jpg");
+        urls.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2005235653,1742582269&fm=26&gp=0.jpg");
+        urls.add("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=305022367,1443492564&fm=26&gp=0.jpg");
+        urls.add("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3848402655,92542552&fm=26&gp=0.jpg");
+        urls.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1355153719,3297569375&fm=26&gp=0.jpg");
+        urls.add("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2114611637,2615047297&fm=26&gp=0.jpg");
+        urls.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2941782042,3120113709&fm=26&gp=0.jpg");
+        urls.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2485954775,21433741&fm=26&gp=0.jpg");
+        setImageUrls(urls);
+        setOnPhotoClickListener(new OnPhotoClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("SampleTakePhotoListActivity", "onClick: ---------------------");

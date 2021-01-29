@@ -4,7 +4,7 @@ import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 
 import java.util.List;
 
-public interface OnTakePhotoGridListener {
+public interface OnTakePhotoListListener {
 
     void onPhotos(List<PhotoUpload> uploads);
 }

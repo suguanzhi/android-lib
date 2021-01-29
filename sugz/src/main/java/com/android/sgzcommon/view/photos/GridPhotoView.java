@@ -5,15 +5,11 @@ import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
 import com.android.sgzcommon.take_photo.GetPhotoImpl;
-import com.android.sgzcommon.take_photo.GetPhotos;
 import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
-import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
-import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoListListener;
 
 import java.util.List;
-import java.util.Map;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,11 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
  * @author sgz
  * @date 2020/10/24
  */
-public class GridPhotoView extends RelativeLayout implements GetPhotos {
+public class GridPhotoView extends RelativeLayout {
 
     RecyclerView mRecyclerView;
     PictureGridEditAdapter mAdapter;
-    OnTakePhotoGridListener mListener;
+    OnTakePhotoListListener mListener;
     GetPhotoImpl mTakePhoto;
 
     int mColumn;
@@ -48,46 +44,6 @@ public class GridPhotoView extends RelativeLayout implements GetPhotos {
     }
 
     private void init(Context context){
-
-    }
-
-    @Override
-    public List<PhotoUpload> getPhotoUploads() {
-        return null;
-    }
-
-    @Override
-    public void setOnPhotoClickListener(OnPhotoClickListener listener) {
-
-    }
-
-    @Override
-    public void uploadPhotos(String url, Map<String, String> data, Map<String, String> headers, OnPhotoUploadListener listener) {
-
-    }
-
-    @Override
-    public void clearPhotos() {
-
-    }
-
-    @Override
-    public void notifyPhotoChanged() {
-
-    }
-
-    @Override
-    public void notifyPhotoChanged(int position) {
-
-    }
-
-    @Override
-    public void takePhoto() {
-
-    }
-
-    @Override
-    public void choosePhoto() {
 
     }
 }

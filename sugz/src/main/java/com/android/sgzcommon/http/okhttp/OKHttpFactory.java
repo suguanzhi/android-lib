@@ -133,7 +133,7 @@ public class OKHttpFactory {
                             String result = response.body().string();
                             Log.d("OKHttpFactory", "run: result = " + result);
                             resultSet.setNetCode(response.code());
-                            resultSet.parseResult(result);
+                            resultSet.setResponse(result);
                         } else {
                             if (e == null) {
                                 throw new IllegalArgumentException("response == null && e == null !");
@@ -171,7 +171,7 @@ public class OKHttpFactory {
             Log.d("OKHttpFactory", "run: result = " + result);
             int code = response.code();
             resultSet.setNetCode(code);
-            resultSet.parseResult(result);
+            resultSet.setResponse(result);
         } catch (Exception e) {
             resultSet.setMessage(e.getMessage());
             resultSet.setError(e);

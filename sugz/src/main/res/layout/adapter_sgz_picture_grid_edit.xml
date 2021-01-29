@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_gravity="center">
@@ -24,27 +25,6 @@
         android:padding="1dp"
         android:src="@drawable/ic_sgz_delete_circle_red" />
 
-    <ProgressBar
-        android:id="@+id/pb_progress"
-        style="@style/progressbar_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:max="100"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/tv_progress_tip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="0%"
-        android:textColor="@color/white"
-        android:textSize="8sp"
-        android:visibility="gone" />
-
     <ImageView
         android:id="@+id/iv_upload_state"
         android:layout_width="20dp"
@@ -53,6 +33,16 @@
         android:background="@drawable/shape_r10_sd_white"
         android:src="@drawable/ic_sgz_success"
         android:visibility="gone" />
+
+    <com.android.sgzcommon.view.CircleProgressBar
+        android:id="@+id/cpb_progress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        app:border_width="5dp"
+        app:max_value="100"
+        app:progress_color="@color/green_500"
+        app:value="0" />
 
     <ProgressBar
         android:id="@+id/pb_loading"

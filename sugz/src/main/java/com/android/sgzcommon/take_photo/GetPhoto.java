@@ -1,5 +1,7 @@
 package com.android.sgzcommon.take_photo;
 
+import android.graphics.Bitmap;
+
 /**
  * @author sgz
  * @date 2020/6/24
@@ -16,4 +18,6 @@ public interface GetPhoto {
     void takePhoto();
 
     void choosePhoto();
+
+    void onPhoto(Bitmap bitmap);
 }

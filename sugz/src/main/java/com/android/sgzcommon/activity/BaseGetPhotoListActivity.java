@@ -3,14 +3,13 @@ package com.android.sgzcommon.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.sgzcommon.take_photo.GetPhotos;
-import com.android.sgzcommon.take_photo.GetPhotosImpl;
+import com.android.sgzcommon.take_photo.GetPhotoListImpl;
 import com.android.sgzcommon.take_photo.ShowImages;
 import com.android.sgzcommon.take_photo.ShowImagesImpl;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoListListener;
 
 import java.util.List;
 import java.util.Map;
@@ -23,11 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by sgz on 2019/5/10 0010.
  */
-public abstract class BaseGetPhotosActivity extends BaseActivity implements GetPhotos, ShowImages {
+public abstract class BaseGetPhotoListActivity extends BaseActivity implements ShowImages {
 
-    private RecyclerView mShowPhotoView;
-    private RecyclerView mTakePhotoView;
-    private GetPhotosImpl mTakePhotoGrid;
+    private RecyclerView mShowPhotoRecyclerView;
+    private RecyclerView mGetPhotoRecyclerView;
+    private GetPhotoListImpl mTakePhotoList;
     private ShowImages mShowImageGrid;
 
     @LayoutRes
@@ -45,14 +44,14 @@ public abstract class BaseGetPhotosActivity extends BaseActivity implements GetP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
-        mShowPhotoView = findViewById(getShowImageGridViewId());
-        mTakePhotoView = findViewById(getTakePhotoGridViewId());
-        mShowImageGrid = new ShowImagesImpl(this, mShowPhotoView);
-        mTakePhotoGrid = new GetPhotosImpl(this, mTakePhotoView);
-        mTakePhotoGrid.setOnPhotoGridListener(new OnTakePhotoGridListener() {
+        mGetPhotoRecyclerView = findViewById(getTakePhotoGridViewId());
+        mShowPhotoRecyclerView = findViewById(getShowImageGridViewId());
+        mShowImageGrid = new ShowImagesImpl(this, mShowPhotoRecyclerView);
+        mTakePhotoList = new GetPhotoListImpl(this, mGetPhotoRecyclerView);
+        mTakePhotoList.setOnPhotoListListener(new OnTakePhotoListListener() {
             @Override
             public void onPhotos(List<PhotoUpload> uploads) {
-                BaseGetPhotosActivity.this.onPhotos(uploads);
+                BaseGetPhotoListActivity.this.onPhotos(uploads);
             }
         });
     }
@@ -62,31 +61,28 @@ public abstract class BaseGetPhotosActivity extends BaseActivity implements GetP
         mShowImageGrid.setImageUrls(urls);
     }
 
-    @Override
     public void takePhoto() {
-        mTakePhotoGrid.takePhoto();
+        mTakePhotoList.takePhoto();
     }
 
-    @Override
     public void choosePhoto() {
-        mTakePhotoGrid.choosePhoto();
+        mTakePhotoList.choosePhoto();
     }
 
-    @Override
     public void setOnPhotoClickListener(OnPhotoClickListener listener) {
-        mTakePhotoGrid.setOnPhotoClickListener(listener);
+        mTakePhotoList.setOnPhotoClickListener(listener);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mTakePhotoGrid.onPhotoActivityResult(requestCode, resultCode, data);
+        mTakePhotoList.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        mTakePhotoGrid.onPhotoRequestPermissionsResult(requestCode, permissions, grantResults);
+        mTakePhotoList.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -94,24 +90,20 @@ public abstract class BaseGetPhotosActivity extends BaseActivity implements GetP
         mShowImageGrid.notifyPhotoChanged();
     }
 
-    @Override
     public void notifyPhotoChanged(int position) {
-        mTakePhotoGrid.notifyPhotoChanged(position);
+        mTakePhotoList.notifyPhotoChanged(position);
     }
 
-    @Override
     public List<PhotoUpload> getPhotoUploads() {
-        return mTakePhotoGrid.getPhotoUploads();
+        return mTakePhotoList.getPhotoUploads();
     }
 
-    @Override
     public void clearPhotos() {
-        mTakePhotoGrid.clearPhotos();
+        mTakePhotoList.clearPhotos();
     }
 
-    @Override
     public void uploadPhotos(String url, Map<String, String> data, Map<String, String> headers, OnPhotoUploadListener listener) {
-        mTakePhotoGrid.uploadPhotos(url, data, headers, listener);
+        mTakePhotoList.uploadPhotos(url, data, headers, listener);
     }
 
 }

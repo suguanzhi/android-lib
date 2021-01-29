@@ -32,7 +32,7 @@
         </activity>
         <activity android:name=".activity.sample.TestLoginActivity" />
         <activity android:name=".activity.sample.TestBaseTakePhotoActivity" />
-        <activity android:name=".activity.sample.TestBaseGetPhotosActivity" />
+        <activity android:name=".activity.sample.TestBaseGetPhotoListActivity" />
         <activity android:name=".activity.sample.TestBaseRefreshListActivity" />
         <activity android:name=".activity.sample.TestMyQRCodeActivity" android:launchMode="singleTask"/>
         <activity android:name=".view.sample.TestScrollerLayoutActivity" />

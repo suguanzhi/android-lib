@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.android.sgzcommon.take_photo.GetPhotos;
-import com.android.sgzcommon.take_photo.GetPhotosImpl;
+import com.android.sgzcommon.take_photo.GetPhotoListImpl;
 import com.android.sgzcommon.take_photo.ShowImages;
 import com.android.sgzcommon.take_photo.ShowImagesImpl;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoListListener;
 
 import java.util.List;
 import java.util.Map;
@@ -23,11 +22,11 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * Created by sgz on 2019/12/27.
  */
-public abstract class GetPhotosFragment extends BaseFragment implements GetPhotos, ShowImages {
+public abstract class GetPhotoListFragment extends BaseFragment implements ShowImages {
 
     private RecyclerView mRvShowImages;
     private RecyclerView mRvTakePhotos;
-    private GetPhotosImpl mTakePhotos;
+    private GetPhotoListImpl mTakePhotoList;
     private ShowImages mShowImages;
 
     protected abstract int getShowImageGridViewId();
@@ -41,11 +40,11 @@ public abstract class GetPhotosFragment extends BaseFragment implements GetPhoto
         mRvShowImages = parent.findViewById(getShowImageGridViewId());
         mRvTakePhotos = parent.findViewById(getTakePhotoGridViewId());
         mShowImages = new ShowImagesImpl(mContext, mRvShowImages);
-        mTakePhotos = new GetPhotosImpl(getActivity(), mRvTakePhotos);
-        mTakePhotos.setOnPhotoGridListener(new OnTakePhotoGridListener() {
+        mTakePhotoList = new GetPhotoListImpl(getActivity(), mRvTakePhotos);
+        mTakePhotoList.setOnPhotoListListener(new OnTakePhotoListListener() {
             @Override
             public void onPhotos(List<PhotoUpload> uploads) {
-                GetPhotosFragment.this.onPhotos(uploads);
+                GetPhotoListFragment.this.onPhotos(uploads);
             }
         });
     }
@@ -55,32 +54,29 @@ public abstract class GetPhotosFragment extends BaseFragment implements GetPhoto
         mShowImages.setImageUrls(urls);
     }
 
-    @Override
     public void takePhoto() {
-        mTakePhotos.takePhoto();
+        mTakePhotoList.takePhoto();
     }
 
-    @Override
     public void choosePhoto() {
-        mTakePhotos.choosePhoto();
+        mTakePhotoList.choosePhoto();
     }
 
-    @Override
     public void setOnPhotoClickListener(OnPhotoClickListener listener) {
-        mTakePhotos.setOnPhotoClickListener(listener);
+        mTakePhotoList.setOnPhotoClickListener(listener);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("TakePhotoActivity", "onActivityResult: requestCode = " + requestCode);
         super.onActivityResult(requestCode, resultCode, data);
-        mTakePhotos.onPhotoActivityResult(requestCode, resultCode, data);
+        mTakePhotoList.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        mTakePhotos.onPhotoRequestPermissionsResult(requestCode, permissions, grantResults);
+        mTakePhotoList.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -88,23 +84,19 @@ public abstract class GetPhotosFragment extends BaseFragment implements GetPhoto
         mShowImages.notifyPhotoChanged();
     }
 
-    @Override
     public void notifyPhotoChanged(int position) {
-        mTakePhotos.notifyPhotoChanged(position);
+        mTakePhotoList.notifyPhotoChanged(position);
     }
 
-    @Override
     public List<PhotoUpload> getPhotoUploads() {
-        return mTakePhotos.getPhotoUploads();
+        return mTakePhotoList.getPhotoUploads();
     }
 
-    @Override
     public void clearPhotos() {
-        mTakePhotos.clearPhotos();
+        mTakePhotoList.clearPhotos();
     }
 
-    @Override
     public void uploadPhotos(String url, Map<String, String> data, Map<String, String> headers, OnPhotoUploadListener listener) {
-        mTakePhotos.uploadPhotos(url, data, headers, listener);
+        mTakePhotoList.uploadPhotos(url, data, headers, listener);
     }
 }

@@ -59,7 +59,7 @@ public abstract class ResultSet {
         this.dataName = dataName;
     }
 
-    public void parseResult(String response) {
+    private void parseResult(String response) {
         this.response = response;
         if (TextUtils.isEmpty(dataName)) {
             dataName = dataName();
@@ -148,6 +148,7 @@ public abstract class ResultSet {
 
     public void setResponse(String response) {
         this.response = response;
+        parseResult(response);
     }
 
     public JSONObject getResult() {

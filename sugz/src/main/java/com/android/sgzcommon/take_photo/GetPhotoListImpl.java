@@ -17,9 +17,8 @@ import com.android.sgzcommon.recycleview.MarginDecoration;
 import com.android.sgzcommon.take_photo.adapter.PictureGridEditAdapter;
 import com.android.sgzcommon.take_photo.entity.PhotoUpload;
 import com.android.sgzcommon.take_photo.listener.OnPhotoClickListener;
-import com.android.sgzcommon.take_photo.listener.OnPhotoListener;
 import com.android.sgzcommon.take_photo.listener.OnPhotoUploadListener;
-import com.android.sgzcommon.take_photo.listener.OnTakePhotoGridListener;
+import com.android.sgzcommon.take_photo.listener.OnTakePhotoListListener;
 import com.android.sgzcommon.utils.BitmapUtils;
 import com.android.sgzcommon.utils.FilePathUtils;
 import com.android.sgzcommon.utils.FileUtils;
@@ -31,86 +30,36 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by sgz on 2020/1/10.
  */
-final public class GetPhotosImpl implements GetPhotos {
+final public class GetPhotoListImpl extends GetPhotoImpl {
 
-    Activity mActivity;
     RecyclerView mRecyclerView;
     PictureGridEditAdapter mAdapter;
-    OnTakePhotoGridListener mListener;
-    GetPhotoImpl mTakePhoto;
     ScheduledExecutorService mExecutorService;
+    OnTakePhotoListListener mTakePhotoListListener;
 
-    int mColumn;
-    int mHorizontalMargin;
-    int mVerticalMargin;
-    List<PhotoUpload> mPhotoUploads;
+    List<PhotoUpload> mPhotoUploadList;
 
-    public GetPhotosImpl(Activity activity, RecyclerView recyclerView) {
+    public GetPhotoListImpl(Activity activity, RecyclerView recyclerView) {
         this(activity, recyclerView, 4, 5, 5);
     }
 
-    public GetPhotosImpl(Activity activity, RecyclerView recyclerView, int column, int horizontalMargin, int verticalmargin) {
-        mColumn = column;
-        mActivity = activity;
+    public GetPhotoListImpl(Activity activity, RecyclerView recyclerView, int column, int horizontalMargin, int verticalmargin) {
+        super(activity);
         mRecyclerView = recyclerView;
-        mHorizontalMargin = horizontalMargin;
-        mVerticalMargin = verticalmargin;
+        mPhotoUploadList = new ArrayList<>();
         mExecutorService = Executors.newSingleThreadScheduledExecutor();
-        mPhotoUploads = new ArrayList<>();
-        mTakePhoto = new GetPhotoImpl(activity);
-        mTakePhoto.setPhotoListener(new OnPhotoListener() {
-            @Override
-            public void onPhoto(Bitmap bitmap) {
-                Log.d("GetPhotosImpl", "onPhoto: ");
-                final String path = FilePathUtils.getAppPictureDir(mActivity).getAbsolutePath() + File.separator + "IMG" + System.currentTimeMillis() + ".jpg";
-                final PhotoUpload photoUpload = new PhotoUpload(path);
-                mAdapter.addItemData(photoUpload, mPhotoUploads.size());
-                mExecutorService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        final boolean save = BitmapUtils.saveBimapToLocal(path, bitmap);
-                        bitmap.recycle();
-                        if (mActivity != null) {
-                            mActivity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    photoUpload.setState(UploadEntity.STATE.STATE_UPLOAD_READY);
-                                    if (!save) {
-                                        photoUpload.setState(UploadEntity.STATE.STATE_LOADING_FAIL);
-                                    }
-                                    int position = -1;
-                                    for (int i = 0; i < mPhotoUploads.size(); i++) {
-                                        if (path.equals(mPhotoUploads.get(i).getPath())) {
-                                            position = i;
-                                            break;
-                                        }
-                                    }
-                                    if (position >= 0 && position < mPhotoUploads.size()) {
-                                        mAdapter.notifyItemChanged(position);
-                                    }
-                                    if (mListener != null) {
-                                        mListener.onPhotos(mPhotoUploads);
-                                    }
-                                }
-                            });
-                        }
-                    }
-                });
-            }
-        });
-        mAdapter = new PictureGridEditAdapter(mActivity, mPhotoUploads, new BaseRecyclerviewAdapter.OnItemtClickListener() {
+        mAdapter = new PictureGridEditAdapter(mActivity, mPhotoUploadList, new BaseRecyclerviewAdapter.OnItemtClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 try {
-                    if (position < mPhotoUploads.size()) {
-                        PhotoUpload photoUpload = mPhotoUploads.get(position);
+                    if (position < mPhotoUploadList.size()) {
+                        PhotoUpload photoUpload = mPhotoUploadList.get(position);
                         String path = photoUpload.getPath();
                         Intent intent = new Intent(mActivity, PhotoViewActivity.class);
                         intent.putExtra("path", path);
@@ -133,36 +82,79 @@ final public class GetPhotosImpl implements GetPhotos {
 
             }
         });
-        GridLayoutManager gridEdit = new GridLayoutManager(mActivity, mColumn);
-        MarginDecoration decoration1 = new MarginDecoration(mHorizontalMargin, mVerticalMargin);
+        GridLayoutManager gridEdit = new GridLayoutManager(mActivity, column);
+        MarginDecoration margin = new MarginDecoration(horizontalMargin, verticalmargin);
         if (mRecyclerView != null) {
-            mRecyclerView.addItemDecoration(decoration1);
+            mRecyclerView.addItemDecoration(margin);
             mRecyclerView.setLayoutManager(gridEdit);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
 
     @Override
-    public List<PhotoUpload> getPhotoUploads() {
-        return mPhotoUploads;
+    public void onPhoto(Bitmap bitmap) {
+        Log.d("GetPhotoListImpl", "onPhoto: ");
+        final String path = FilePathUtils.getAppPictureDir(mActivity).getAbsolutePath() + File.separator + "IMG" + System.currentTimeMillis() + ".jpg";
+        final PhotoUpload photoUpload = new PhotoUpload(path);
+        mAdapter.addItemData(photoUpload);
+        mExecutorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                final boolean save = BitmapUtils.saveBimapToLocal(path, bitmap);
+                bitmap.recycle();
+                if (mActivity != null) {
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            photoUpload.setState(UploadEntity.STATE.STATE_UPLOAD_READY);
+                            if (!save) {
+                                photoUpload.setState(UploadEntity.STATE.STATE_LOADING_FAIL);
+                            }
+                            int position = -1;
+                            for (int i = 0; i < mPhotoUploadList.size(); i++) {
+                                if (path.equals(mPhotoUploadList.get(i).getPath())) {
+                                    position = i;
+                                    break;
+                                }
+                            }
+                            if (position >= 0 && position < mPhotoUploadList.size()) {
+                                mAdapter.notifyItemChanged(position);
+                            }
+                            if (mTakePhotoListListener != null) {
+                                mTakePhotoListListener.onPhotos(mPhotoUploadList);
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
-    @Override
+    public List<PhotoUpload> getPhotoUploads() {
+        return mPhotoUploadList;
+    }
+
     public void setOnPhotoClickListener(OnPhotoClickListener listener) {
         mAdapter.setOnTakePhotoClickListener(listener);
     }
 
-    @Override
+    /**
+     *
+     * @param url
+     * @param data
+     * @param headers
+     * @param listener
+     */
     public void uploadPhotos(String url, Map<String, String> data, Map<String, String> headers, final OnPhotoUploadListener listener) {
-        if (mPhotoUploads.size() == 0) {
+        if (mPhotoUploadList.size() == 0) {
             listener.onAllSuccess();
         } else {
             Log.d("TakePhotoGridImpl", "uploadImages: ");
             List<PhotoUpload> needUploadList = new ArrayList<>();
-            for (int i = 0; i < mPhotoUploads.size(); i++) {
-                final PhotoUpload image = mPhotoUploads.get(i);
+            for (int i = 0; i < mPhotoUploadList.size(); i++) {
+                final PhotoUpload image = mPhotoUploadList.get(i);
                 if (PhotoUpload.STATE.STATE_UPLOAD_READY == image.getState() || PhotoUpload.STATE.STATE_UPLOAD_FAIL == image.getState()) {
-                    PhotoUpload photoUpload = mPhotoUploads.get(i);
+                    PhotoUpload photoUpload = mPhotoUploadList.get(i);
                     needUploadList.add(photoUpload);
                 }
             }
@@ -209,30 +201,23 @@ final public class GetPhotosImpl implements GetPhotos {
         }
     }
 
-    public void setOnPhotoGridListener(OnTakePhotoGridListener listener) {
-        mListener = listener;
+    /**
+     *
+     * @param listener
+     */
+    public void setOnPhotoListListener(OnTakePhotoListListener listener) {
+        mTakePhotoListListener = listener;
     }
 
     /**
-     * 调用系统照相机拍照
+     *
      */
-    @Override
-    public void takePhoto() {
-        mTakePhoto.takePhoto();
-    }
-
-    @Override
-    public void choosePhoto() {
-        mTakePhoto.choosePhoto();
-    }
-
-    @Override
     public void clearPhotos() {
         try {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (PhotoUpload upload : mPhotoUploads) {
+                    for (PhotoUpload upload : mPhotoUploadList) {
                         FileUtils.deleteFile(upload.getPath());
                     }
                 }
@@ -240,26 +225,21 @@ final public class GetPhotosImpl implements GetPhotos {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        mPhotoUploads.clear();
+        mPhotoUploadList.clear();
         notifyPhotoChanged();
     }
 
-    public void onPhotoActivityResult(int requestCode, int resultCode, Intent data) {
-        mTakePhoto.onActivityResult(requestCode, resultCode, data);
-        Log.d("TakePhotoGridImpl", "onActivityResult: requestCode = " + requestCode);
-    }
-
-    public void onPhotoRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        mTakePhoto.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-
-    @Override
+    /**
+     *
+     */
     public void notifyPhotoChanged() {
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
+    /**
+     *
+     * @param position
+     */
     public void notifyPhotoChanged(int position) {
         mAdapter.notifyItemChanged(position);
     }
