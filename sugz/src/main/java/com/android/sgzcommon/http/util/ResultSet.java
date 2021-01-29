@@ -169,4 +169,18 @@ public abstract class ResultSet {
     public void setError(Exception error) {
         this.error = error;
     }
+
+    /**
+     *
+     */
+    public void reset() {
+        netCode = 0;
+        success = false;
+        response = null;
+        message = null;
+        data = null;
+        successCodeValue = null;
+        result = null;
+        error = null;
+    }
 }
