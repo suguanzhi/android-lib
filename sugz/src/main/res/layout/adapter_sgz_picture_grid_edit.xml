@@ -41,7 +41,7 @@
         android:layout_centerInParent="true"
         app:border_width="5dp"
         app:max_value="100"
-        app:progress_color="@color/green_500"
+        app:progress_color="@color/colorPrimary"
         app:value="0" />
 
     <ProgressBar
