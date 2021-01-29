@@ -39,7 +39,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerInParent="true"
-        app:border_width="5dp"
+        app:border_width="10dp"
         app:max_value="100"
         app:progress_color="@color/colorPrimary"
         app:value="0" />
