@@ -91,6 +91,9 @@ public abstract class ResultSet {
         } catch (JSONException e) {
             e.printStackTrace();
             message = "result JSONException:" + Log.getStackTraceString(e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = Log.getStackTraceString(e);
         }
     }
 
