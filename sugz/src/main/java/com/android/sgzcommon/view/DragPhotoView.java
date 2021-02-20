@@ -4,9 +4,14 @@ import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import com.android.sgzcommon.utils.UnitUtils;
 
 import uk.co.senab.photoview.PhotoView;
 
@@ -15,14 +20,13 @@ import uk.co.senab.photoview.PhotoView;
  * 存在的背景宽高不适应的bug，su已修改。
  */
 public class DragPhotoView extends PhotoView {
-    private Paint mPaint;
     private float mDownX;
     private float mDownY;
     private float mTranslateY;
     private float mTranslateX;
     private float mMoveScale;
     private float mMinMoveScale;
-    private float mExistMaxY;
+    private float mExitMaxY;
     //控件最大宽度
     private int mWidth;
     //控件最大高度
@@ -30,12 +34,14 @@ public class DragPhotoView extends PhotoView {
     private int mCurrentWidth;
     private int mCurrentHeight;
     private int mMoveAlpha;
-    private static final int MAX_TRANSLATE_Y = 500;
-    private static final long DURATION = 300L;
+    private boolean isAnimating;
     private boolean isCanFinish;
-    private boolean isAnimate;
     private boolean isTouchEvent;
+    private Paint mPaint;
+    private Paint mTipBkgPaint;
+    private TextPaint mTipPaint;
     private DragPhotoView.OnTouchListener mOnTouchListener;
+    private static final String TIP = "松开退出";
 
     public DragPhotoView(Context context) {
         this(context, (AttributeSet) null);
@@ -50,12 +56,19 @@ public class DragPhotoView extends PhotoView {
         this.mMoveScale = 1.0F;
         this.mMinMoveScale = 0.4F;
         this.mMoveAlpha = 255;
-        this.mExistMaxY = 500F;
+        this.mExitMaxY = 500F;
         this.isCanFinish = false;
-        this.isAnimate = false;
+        this.isAnimating = false;
         this.isTouchEvent = false;
         this.mPaint = new Paint();
-        this.mPaint.setColor(-16777216);
+        this.mPaint.setColor(Color.BLACK);
+        mTipPaint = new TextPaint();
+        mTipPaint.setColor(Color.RED);
+        mTipPaint.setTextSize(UnitUtils.sp2px(25));
+        mTipPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        mTipPaint.setTextAlign(Paint.Align.CENTER);
+        mTipBkgPaint = new Paint();
+        mTipBkgPaint.setColor(Color.YELLOW);
     }
 
     @Override
@@ -63,16 +76,26 @@ public class DragPhotoView extends PhotoView {
         //bug修复
         mWidth = MeasureSpec.getSize(widthMeasureSpec);
         mHeight = MeasureSpec.getSize(heightMeasureSpec);
-        mExistMaxY = mHeight / 3;
+        mExitMaxY = mHeight / 3;
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        this.mPaint.setAlpha(this.mMoveAlpha);
-        canvas.drawRect(0.0F, 0.0F, (float) mWidth, (float) mHeight, this.mPaint);
-        canvas.translate(this.mTranslateX, this.mTranslateY);
-        canvas.scale(this.mMoveScale, this.mMoveScale, (float) (this.mCurrentWidth / 2), (float) (this.mCurrentHeight / 2));
+        mPaint.setAlpha(mMoveAlpha);
+        canvas.drawRect(0.0F, 0.0F, (float) mWidth, (float) mHeight, mPaint);
+        if (mTranslateY > mExitMaxY) {
+            Paint.FontMetrics fm = mTipPaint.getFontMetrics();
+            final float tipHeight = fm.bottom - fm.top;
+            final Rect tipBkgRect = new Rect(0, 0, mWidth, (int)tipHeight);
+            mTipBkgPaint.setAlpha(100);
+            canvas.drawRect(0, 0, mWidth, tipHeight, mTipBkgPaint);
+
+            int baseLineY = (int) (tipBkgRect.centerY() - fm.top / 2 - fm.bottom / 2);
+            canvas.drawText(TIP, tipBkgRect.centerX(), baseLineY, mTipPaint);
+        }
+        canvas.translate(mTranslateX, mTranslateY);
+        canvas.scale(mMoveScale, mMoveScale, (float) (mCurrentWidth / 2), (float) (mCurrentHeight / 2));
         super.onDraw(canvas);
     }
 
@@ -129,7 +152,7 @@ public class DragPhotoView extends PhotoView {
     }
 
     private void onActionUp(MotionEvent event) {
-        if (this.mTranslateY > mExistMaxY) {
+        if (mTranslateY > mExitMaxY) {
             if (this.mOnTouchListener != null) {
                 mOnTouchListener.onExit(this, this.mTranslateX, this.mTranslateY, (float) this.mCurrentWidth, (float) this.mCurrentHeight);
             }
@@ -148,7 +171,7 @@ public class DragPhotoView extends PhotoView {
             mTranslateY = 0.0F;
         }
 
-        float percent = mTranslateY / mExistMaxY;
+        float percent = mTranslateY / mExitMaxY;
         if (percent > 1.0F) {
             percent = 1.0F;
         } else if (percent < 0) {
@@ -226,11 +249,11 @@ public class DragPhotoView extends PhotoView {
         });
         animator.addListener(new Animator.AnimatorListener() {
             public void onAnimationStart(Animator animator) {
-                DragPhotoView.this.isAnimate = true;
+                isAnimating = true;
             }
 
             public void onAnimationEnd(Animator animator) {
-                DragPhotoView.this.isAnimate = false;
+                DragPhotoView.this.isAnimating = false;
                 animator.removeAllListeners();
             }
 
