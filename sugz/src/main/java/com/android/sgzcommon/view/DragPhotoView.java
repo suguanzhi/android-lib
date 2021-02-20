@@ -20,22 +20,22 @@ public class DragPhotoView extends PhotoView {
     private float mDownY;
     private float mTranslateY;
     private float mTranslateX;
-    private float mScale;
+    private float mMoveScale;
+    private float mMinMoveScale;
+    private float mExistMaxY;
     //控件最大宽度
-    private int mPWidth;
-    //控件最大高度
-    private int mPHeight;
     private int mWidth;
+    //控件最大高度
     private int mHeight;
-    private float mMinScale;
-    private int mAlpha;
+    private int mCurrentWidth;
+    private int mCurrentHeight;
+    private int mMoveAlpha;
     private static final int MAX_TRANSLATE_Y = 500;
     private static final long DURATION = 300L;
-    private boolean canFinish;
+    private boolean isCanFinish;
     private boolean isAnimate;
     private boolean isTouchEvent;
-    private DragPhotoView.OnTapListener mTapListener;
-    private DragPhotoView.OnExitListener mExitListener;
+    private DragPhotoView.OnTouchListener mOnTouchListener;
 
     public DragPhotoView(Context context) {
         this(context, (AttributeSet) null);
@@ -47,12 +47,11 @@ public class DragPhotoView extends PhotoView {
 
     public DragPhotoView(Context context, AttributeSet attr, int defStyle) {
         super(context, attr, defStyle);
-        this.mPWidth = 2000;
-        this.mPHeight = 3000;
-        this.mScale = 1.0F;
-        this.mMinScale = 0.5F;
-        this.mAlpha = 255;
-        this.canFinish = false;
+        this.mMoveScale = 1.0F;
+        this.mMinMoveScale = 0.4F;
+        this.mMoveAlpha = 255;
+        this.mExistMaxY = 500F;
+        this.isCanFinish = false;
         this.isAnimate = false;
         this.isTouchEvent = false;
         this.mPaint = new Paint();
@@ -62,63 +61,65 @@ public class DragPhotoView extends PhotoView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         //bug修复
-        mPWidth = MeasureSpec.getSize(widthMeasureSpec);
-        mPHeight = MeasureSpec.getSize(heightMeasureSpec);
+        mWidth = MeasureSpec.getSize(widthMeasureSpec);
+        mHeight = MeasureSpec.getSize(heightMeasureSpec);
+        mExistMaxY = mHeight / 3;
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
+    @Override
     protected void onDraw(Canvas canvas) {
-        this.mPaint.setAlpha(this.mAlpha);
-        canvas.drawRect(0.0F, 0.0F, (float) mPWidth, (float) mPHeight, this.mPaint);
+        this.mPaint.setAlpha(this.mMoveAlpha);
+        canvas.drawRect(0.0F, 0.0F, (float) mWidth, (float) mHeight, this.mPaint);
         canvas.translate(this.mTranslateX, this.mTranslateY);
-        canvas.scale(this.mScale, this.mScale, (float) (this.mWidth / 2), (float) (this.mHeight / 2));
+        canvas.scale(this.mMoveScale, this.mMoveScale, (float) (this.mCurrentWidth / 2), (float) (this.mCurrentHeight / 2));
         super.onDraw(canvas);
     }
 
+    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        this.mWidth = w;
-        this.mHeight = h;
+        mCurrentWidth = w;
+        mCurrentHeight = h;
     }
 
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (this.getScale() == 1.0F) {
             switch (event.getAction()) {
                 case 0:
-                    this.onActionDown(event);
-                    this.canFinish = !this.canFinish;
+                    onActionDown(event);
+                    isCanFinish = !isCanFinish;
                     break;
                 case 1:
                     if (event.getPointerCount() == 1) {
-                        this.onActionUp(event);
-                        this.isTouchEvent = false;
-                        this.postDelayed(new Runnable() {
+                        onActionUp(event);
+                        isTouchEvent = false;
+                        postDelayed(new Runnable() {
                             public void run() {
-                                if (DragPhotoView.this.mTranslateX == 0.0F && DragPhotoView.this.mTranslateY == 0.0F && DragPhotoView.this.canFinish && DragPhotoView.this.mTapListener != null) {
-                                    DragPhotoView.this.mTapListener.onTap(DragPhotoView.this);
+                                if (mTranslateX == 0.0F && mTranslateY == 0.0F && isCanFinish && mOnTouchListener != null) {
+                                    mOnTouchListener.onTap(DragPhotoView.this);
                                 }
-
-                                DragPhotoView.this.canFinish = false;
+                                isCanFinish = false;
                             }
                         }, 300L);
                     }
                     break;
                 case 2:
-                    if (this.mTranslateY == 0.0F && this.mTranslateX != 0.0F && !this.isTouchEvent) {
-                        this.mScale = 1.0F;
+                    if (mTranslateY == 0.0F && mTranslateX != 0.0F && !isTouchEvent) {
+                        mMoveScale = 1.0F;
                         return super.dispatchTouchEvent(event);
                     }
 
-                    if (this.mTranslateY >= 0.0F && event.getPointerCount() == 1) {
-                        this.onActionMove(event);
-                        if (this.mTranslateY != 0.0F) {
-                            this.isTouchEvent = true;
+                    if (mTranslateY >= 0.0F && event.getPointerCount() == 1) {
+                        onActionMove(event);
+                        if (mTranslateY != 0.0F) {
+                            isTouchEvent = true;
                         }
 
                         return true;
                     }
 
-                    if (this.mTranslateY >= 0.0F && (double) this.mScale < 0.95D) {
+                    if (mTranslateY >= 0.0F && (double) mMoveScale < 0.95D) {
                         return true;
                     }
             }
@@ -128,12 +129,10 @@ public class DragPhotoView extends PhotoView {
     }
 
     private void onActionUp(MotionEvent event) {
-        if (this.mTranslateY > 500.0F) {
-            if (this.mExitListener == null) {
-                throw new RuntimeException("DragPhotoView: onExitLister can't be null ! call setOnExitListener() ");
+        if (this.mTranslateY > mExistMaxY) {
+            if (this.mOnTouchListener != null) {
+                mOnTouchListener.onExit(this, this.mTranslateX, this.mTranslateY, (float) this.mCurrentWidth, (float) this.mCurrentHeight);
             }
-
-            this.mExitListener.onExit(this, this.mTranslateX, this.mTranslateY, (float) this.mWidth, (float) this.mHeight);
         } else {
             this.performAnimation();
         }
@@ -143,45 +142,49 @@ public class DragPhotoView extends PhotoView {
     private void onActionMove(MotionEvent event) {
         float moveY = event.getY();
         float moveX = event.getX();
-        this.mTranslateX = moveX - this.mDownX;
-        this.mTranslateY = moveY - this.mDownY;
-        if (this.mTranslateY < 0.0F) {
-            this.mTranslateY = 0.0F;
+        mTranslateX = moveX - mDownX;
+        mTranslateY = moveY - mDownY;
+        if (mTranslateY < 0.0F) {
+            mTranslateY = 0.0F;
         }
 
-        float percent = this.mTranslateY / 500.0F;
-        if (this.mScale >= this.mMinScale && this.mScale <= 1.0F) {
-            this.mScale = 1.0F - percent;
-            this.mAlpha = (int) (255.0F * (1.0F - percent));
-            if (this.mAlpha > 255) {
-                this.mAlpha = 255;
-            } else if (this.mAlpha < 0) {
-                this.mAlpha = 0;
-            }
+        float percent = mTranslateY / mExistMaxY;
+        if (percent > 1.0F) {
+            percent = 1.0F;
+        } else if (percent < 0) {
+            percent = 0;
         }
-
-        if (this.mScale < this.mMinScale) {
-            this.mScale = this.mMinScale;
-        } else if (this.mScale > 1.0F) {
-            this.mScale = 1.0F;
+        mMoveScale = 1.0F - percent;
+        mMoveAlpha = (int) (255.0F * mMoveScale);
+        if (mMoveAlpha > 255) {
+            mMoveAlpha = 255;
+        } else if (mMoveAlpha < 0) {
+            mMoveAlpha = 0;
         }
-
-        this.invalidate();
+        float scalePercent = mMoveScale;
+        if (mMoveScale < mMinMoveScale) {
+            scalePercent = 0;
+            mMoveScale = mMinMoveScale;
+        }
+        if (mOnTouchListener != null) {
+            mOnTouchListener.onMovePercent(DragPhotoView.this, scalePercent);
+        }
+        invalidate();
     }
 
     private void performAnimation() {
-        this.getScaleAnimation().start();
-        this.getTranslateXAnimation().start();
-        this.getTranslateYAnimation().start();
-        this.getAlphaAnimation().start();
+        getScaleAnimation().start();
+        getTranslateXAnimation().start();
+        getTranslateYAnimation().start();
+        getAlphaAnimation().start();
     }
 
     private ValueAnimator getAlphaAnimation() {
-        ValueAnimator animator = ValueAnimator.ofInt(new int[]{this.mAlpha, 255});
+        ValueAnimator animator = ValueAnimator.ofInt(new int[]{this.mMoveAlpha, 255});
         animator.setDuration(300L);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                DragPhotoView.this.mAlpha = (Integer) valueAnimator.getAnimatedValue();
+                DragPhotoView.this.mMoveAlpha = (Integer) valueAnimator.getAnimatedValue();
             }
         });
         return animator;
@@ -210,11 +213,14 @@ public class DragPhotoView extends PhotoView {
     }
 
     private ValueAnimator getScaleAnimation() {
-        ValueAnimator animator = ValueAnimator.ofFloat(new float[]{this.mScale, 1.0F});
+        ValueAnimator animator = ValueAnimator.ofFloat(new float[]{this.mMoveScale, 1.0F});
         animator.setDuration(300L);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                DragPhotoView.this.mScale = (Float) valueAnimator.getAnimatedValue();
+                DragPhotoView.this.mMoveScale = (Float) valueAnimator.getAnimatedValue();
+                if (mOnTouchListener != null) {
+                    mOnTouchListener.onMovePercent(DragPhotoView.this, mMoveScale);
+                }
                 DragPhotoView.this.invalidate();
             }
         });
@@ -242,33 +248,29 @@ public class DragPhotoView extends PhotoView {
         this.mDownY = event.getY();
     }
 
-    public float getMinScale() {
-        return this.mMinScale;
+    public float getMinMoveScale() {
+        return this.mMinMoveScale;
     }
 
-    public void setMinScale(float minScale) {
-        this.mMinScale = minScale;
+    public void setMinMoveScale(float minScale) {
+        this.mMinMoveScale = minScale;
     }
 
-    public void setOnTapListener(DragPhotoView.OnTapListener listener) {
-        this.mTapListener = listener;
-    }
-
-    public void setOnExitListener(DragPhotoView.OnExitListener listener) {
-        this.mExitListener = listener;
+    public void setOnTouchListener(DragPhotoView.OnTouchListener listener) {
+        this.mOnTouchListener = listener;
     }
 
     public void finishAnimationCallBack() {
-        this.mTranslateX = (float) (-this.mWidth / 2) + (float) this.mWidth * this.mScale / 2.0F;
-        this.mTranslateY = (float) (-this.mHeight / 2) + (float) this.mHeight * this.mScale / 2.0F;
+        this.mTranslateX = (float) (-this.mCurrentWidth / 2) + (float) this.mCurrentWidth * this.mMoveScale / 2.0F;
+        this.mTranslateY = (float) (-this.mCurrentHeight / 2) + (float) this.mCurrentHeight * this.mMoveScale / 2.0F;
         this.invalidate();
     }
 
-    public interface OnExitListener {
-        void onExit(DragPhotoView var1, float var2, float var3, float var4, float var5);
-    }
+    public interface OnTouchListener {
+        void onTap(DragPhotoView view);
 
-    public interface OnTapListener {
-        void onTap(DragPhotoView var1);
+        void onMovePercent(DragPhotoView view, float percent);
+
+        void onExit(DragPhotoView view, float translateX, float translateY, float width, float height);
     }
 }

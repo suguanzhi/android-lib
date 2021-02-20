@@ -34,17 +34,21 @@ public class PhotoViewActivity extends BaseActivity {
                 }
             }
         }
-        mDpvImage.setOnExitListener(new DragPhotoView.OnExitListener() {
+        mDpvImage.setOnTouchListener(new DragPhotoView.OnTouchListener() {
             @Override
-            public void onExit(DragPhotoView dragPhotoView, float v, float v1, float v2, float v3) {
-                Log.d("PhotoViewActivity", "onExit: v = " + v + "; v1 = " + v1 + "; v2 = " + v2 + ";v3 = " + v3);
-                finish();
+            public void onTap(DragPhotoView view) {
+
             }
-        });
-        mDpvImage.setOnTapListener(new DragPhotoView.OnTapListener() {
+
             @Override
-            public void onTap(DragPhotoView dragPhotoView) {
-                Log.d("PhotoViewActivity", "onTap: ");
+            public void onMovePercent(DragPhotoView view, float percent) {
+                Log.d("PhotoViewActivity", "onMovePercent: percent == " + percent);
+                mIvBack.setAlpha(percent);
+            }
+
+            @Override
+            public void onExit(DragPhotoView view, float translateX, float translateY, float width, float height) {
+                finish();
             }
         });
     }
